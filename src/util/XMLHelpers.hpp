@@ -17,14 +17,11 @@
 
 
 
-namespace rwlibs {
-	namespace xml {
+namespace gripperz {
+namespace util {
 
-/// Boost property tree shorthand.	
+//! Boost property tree shorthand.	
 typedef boost::property_tree::ptree PTree;
-
-/// Boost property tree iterator shorthand.
-typedef PTree::iterator CI;
 		
 /**
  * @class XMLHelpers
@@ -32,19 +29,13 @@ typedef PTree::iterator CI;
  */
 class XMLHelpers
 {
-	public:		
-	// static methods
-		static std::vector<double> readArray(PTree& tree);
-		static double readInt(PTree& tree);
-		static double readDouble(PTree& tree);
-		static rw::math::Q readQ(PTree& tree);
-		
-		static std::string QToString(rw::math::Q q);
-	
-	protected:
-	// static methods
-		static std::pair<bool, int> toInt(const std::string& str);
-		static std::pair<bool, double> toDouble(const std::string& str);
+public:		
+	static std::vector<double> readArray(PTree& tree);
+	static double readInt(PTree& tree);
+	static double readDouble(PTree& tree);
+	static rw::math::Q readQ(PTree& tree);		
+	static std::string QToString(rw::math::Q q);
 };
 
-}} // end namespaces
+} /* util */
+} /* gripperz */

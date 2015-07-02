@@ -4,17 +4,22 @@
 
 
 
+using namespace gripperz::util;
+
 using namespace std;
 USE_ROBWORK_NAMESPACE;
 using namespace robwork;
 using namespace rwsim;
-using namespace rwlibs::xml;
 using namespace boost::numeric;
 using namespace boost::property_tree;
 
 
 
-std::pair<bool, int> XMLHelpers::toInt(const std::string& str)
+typedef PTree::iterator CI;
+
+
+
+std::pair<bool, int> toInt(const std::string& str)
 {
 	std::pair<bool, int> nothing(false, 0);
 	istringstream buf(str);
@@ -28,8 +33,7 @@ std::pair<bool, int> XMLHelpers::toInt(const std::string& str)
 }
 
 
-
-std::pair<bool, double> XMLHelpers::toDouble(const std::string& str)
+std::pair<bool, double> toDouble(const std::string& str)
 {
 	std::pair<bool, double> nothing(false, 0);
 	istringstream buf(str);
@@ -42,7 +46,6 @@ std::pair<bool, double> XMLHelpers::toDouble(const std::string& str)
 	if (buf) return nothing;
 	else return make_pair(true, x);
 }
-
 
 
 std::vector<double> XMLHelpers::readArray(PTree& tree)
@@ -62,7 +65,6 @@ std::vector<double> XMLHelpers::readArray(PTree& tree)
 }
 
 
-
 double XMLHelpers::readInt(PTree& tree)
 {
 	string str = tree.get_value<string>();
@@ -75,7 +77,6 @@ double XMLHelpers::readInt(PTree& tree)
 }
 
 
-
 double XMLHelpers::readDouble(PTree& tree)
 {
 	string str = tree.get_value<string>();
@@ -86,7 +87,6 @@ double XMLHelpers::readDouble(PTree& tree)
 		
 	return okNum.second;
 }
-
 
 
 Q XMLHelpers::readQ(PTree& tree)
@@ -102,14 +102,13 @@ Q XMLHelpers::readQ(PTree& tree)
 }
 
 
-
 std::string XMLHelpers::QToString(rw::math::Q q)
 {
 	stringstream sstr;
 	
 	sstr << ' ';
 	
-	for (int i = 0; i < q.size(); ++i) {
+	for (unsigned i = 0; i < q.size(); ++i) {
 		sstr << q(i) << ' ';
 	}
 	
