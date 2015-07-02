@@ -7,6 +7,7 @@
 #include <rwlibs/csg/CSGModelFactory.hpp>
 
 
+using namespace gripperz::geometry;
 
 using namespace std;
 using namespace rw::geometry;
@@ -18,27 +19,8 @@ using namespace rwlibs::csg;
 
 JawPrimitive::JawPrimitive(const rw::math::Q& initQ)
 {
-	if(!(initQ.size() == 10 || initQ.size() == 11)) {
-		RW_THROW("Size of parameter list must equal 10 or 11 (cut tilt)!");
-	}
-	
-	int i = 0;
-	_type = CutoutType(initQ(i++));
-	_length = initQ(i++);
-	_width = initQ(i++);
-	_depth = initQ(i++);
-	_chamferDepth = initQ(i++);
-	_chamferAngle = initQ(i++);
-	_cutPosition = initQ(i++);
-	_cutDepth = initQ(i++);
-	_cutAngle = initQ(i++);
-	_cutRadius = initQ(i++);
-	
-	if (initQ.size() == 11) {
-		_cutTilt = initQ(i++);
-	}
+	setParameters(initQ);
 }
-
 
 
 JawPrimitive::~JawPrimitive()
@@ -46,21 +28,20 @@ JawPrimitive::~JawPrimitive()
 }
 
 
-
 TriMesh::Ptr JawPrimitive::createMesh(int resolution) const
 {
-	//use CSG
+	/* build base */
 	CSGModel::Ptr base = CSGModelFactory::makeBox(_length, _depth, _width);
 	base->translate(_length/2, 0, _width/2);
 	
-	// make chamfer
+	/* make chamfer */
 	Vector3D<> point(_length, 0.0, (1-_chamferDepth)*_width);
 	Transform3D<> t(Vector3D<>(), RPY<>(0, -_chamferAngle, 0).toRotation3D());
 	Vector3D<> normal = t * Vector3D<>::x();
 	CSGModel::Ptr plane = CSGModelFactory::makePlane(point, -normal);
 	base->subtract(plane);
 	
-	// make cutout
+	/* make cutout */
 	if (_type == Cylindrical) {
 		CSGModel::Ptr cutout = CSGModelFactory::makeCylinder(_cutRadius, 100.0);
 		cutout->rotate(-90*Deg2Rad, 90*Deg2Rad, 0);
@@ -75,47 +56,50 @@ TriMesh::Ptr JawPrimitive::createMesh(int resolution) const
 		base->subtract(cutout);
 	}
 	
+	/* generate mesh */
 	TriMesh::Ptr mesh = base->getTriMesh();
 
 	return mesh;
 }
 
+
 rw::math::Q JawPrimitive::getParameters() const
 {
 	Q q(11);
 	
-	int i = 0;
-	q(i++) = _type;
-	q(i++) = _length;
-	q(i++) = _width;
-	q(i++) = _depth;
-	q(i++) = _chamferDepth;
-	q(i++) = _chamferAngle;
-	q(i++) = _cutPosition;
-	q(i++) = _cutDepth;
-	q(i++) = _cutAngle;
-	q(i++) = _cutRadius;
-	q(i++) = _cutTilt;
+	q(0) = _type;
+	q(1) = _length;
+	q(2) = _width;
+	q(3) = _depth;
+	q(4) = _chamferDepth;
+	q(5) = _chamferAngle;
+	q(6) = _cutPosition;
+	q(7) = _cutDepth;
+	q(8) = _cutAngle;
+	q(9) = _cutRadius;
+	q(10) = _cutTilt;
 	
 	return q;
 }
 
 
 void JawPrimitive::setParameters(const rw::math::Q& q) {
-	int i = 0;
-	_type = (int)q(i++) == 0 ? Prismatic : Cylindrical;
-	_length = q(i++);
-	_width = q(i++);
-	_depth = q(i++);
-	_chamferDepth = q(i++);
-	_chamferAngle = q(i++);
-	_cutPosition = q(i++);
-	_cutDepth = q(i++);
-	_cutAngle = q(i++);
-	_cutRadius = q(i++);
-	_cutTilt = q(i++);
+	if(!(q.size() == 11)) {
+		RW_THROW("initQ must be of size 11!");
+	}
+	
+	_type 			= CutoutType(q(0));
+	_length			= q(1);
+	_width 			= q(2);
+	_depth 			= q(3);
+	_chamferDepth 	= q(4);
+	_chamferAngle 	= q(5);
+	_cutPosition 	= q(6);
+	_cutDepth 		= q(7);
+	_cutAngle 		= q(8);
+	_cutRadius 		= q(9);
+	_cutTilt 		= q(10);
 }
-
 
 
 std::string JawPrimitive::toString() const

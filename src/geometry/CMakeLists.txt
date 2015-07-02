@@ -1,5 +1,5 @@
 SET(SRC_FILES
 	${SRC_FILES}
-	JawPrimitive.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/JawPrimitive.cpp
 	CACHE INTERNAL ""
 )
