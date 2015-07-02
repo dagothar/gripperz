@@ -1,0 +1,5 @@
+SET(SRC_FILES
+	${SRC_FILES}
+	JawPrimitive.cpp
+	CACHE INTERNAL ""
+)
