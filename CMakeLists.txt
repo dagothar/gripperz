@@ -43,6 +43,8 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${ROOT}/bin" CACHE PATH "Runtime directory" 
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${ROOT}/libs" CACHE PATH "Library directory" FORCE)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${ROOT}/libs" CACHE PATH "Archive directory" FORCE)
 
+add_definitions(-std=c++11)
+
 # Target: gripperz
 SET(SRC_FILES CACHE INTERNAL "" FORCE)
 ADD_SUBDIRECTORY(src)

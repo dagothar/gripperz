@@ -161,10 +161,10 @@ double Gripper::getMaxStress() const {
 		double b = 100 * _jawParameters(3);
 		double M = x > length ? 0.0 : (length - x) * _force;
 		double sigma = 6 * M / (b * h * h);
-		if (isinf(sigma)) {
+		if (std::isinf(sigma)) {
 			sigma = 1000000.0;
 		}
-		if (isnan(sigma)) {
+		if (std::isnan(sigma)) {
 			sigma = 0.0;
 		}
 
