@@ -18,8 +18,8 @@
 #include <rwsim/rwsim.hpp>
 #include <rwsim/simulator/GraspTaskSimulator.hpp>
 
-#include "JawPrimitive.hpp"
-#include "TaskDescription.hpp"
+#include <geometry/JawPrimitive.hpp>
+#include <context/TaskDescription.hpp>
 
 namespace rw {
 namespace kinematics {
@@ -28,9 +28,13 @@ class State;
 }
 }
 
-namespace grippers {
+namespace gripperz {
 
+namespace loaders {
 class GripperXMLLoader;
+} /* loaders */
+
+namespace models {
 
 /**
  * Contains detailed evaluation of specific gripper design.
@@ -38,24 +42,20 @@ class GripperXMLLoader;
  * @todo ...
  */
 struct GripperQuality {
-	// typedefs
 	typedef rw::common::Ptr<GripperQuality> Ptr;
 
-	// constructors
 	GripperQuality() :
 			nOfExperiments(0), nOfSuccesses(0), nOfSamples(0),
 			//shape(0.0),
 			coverage(0.0), success(0.0), wrench(0.0), topwrench(0.0), robustness(
-					0.0), maxstress(0.0), alignment(0.0), quality(0.0), volume(0.0) {
+					0.0), maxstress(0.0), volume(0.0), alignment(0.0), quality(0.0) {
 	}
 
-	// methods
 	friend std::ostream& operator<<(std::ostream& stream,
 			const GripperQuality& q) {
 		stream << "GripperQuality:\n" << "- experiments= " << q.nOfExperiments
 				<< '\n' << "- successes= " << q.nOfSuccesses << '\n'
 				<< "- samples= " << q.nOfSamples << '\n'
-				//<< "- shape= " << q.shape << '\n'
 				<< "- coverage= " << q.coverage << '\n' << "- success= "
 				<< q.success << '\n' << "- wrench= " << q.wrench << '\n'
 				<< "- topwrench= " << q.topwrench << '\n' << "- robustness= "
@@ -99,29 +99,20 @@ struct GripperQuality {
  * Gripper contains a GripperQuality structure which describes gripper's qualities.
  * 
  * Default gripper constructor creates gripper with following parameters:
- * - parametrized base: Box 0.15 x 0.1 x 0.05
- * - parametrized jaws: simple cuboids 0.1 x 0.025 x 0.2
- * - force: 50 N
- * - opening: 0.05
- * - jawdist: 0
- * - TCP offset: 0.075 from base
+ * ...
  */
-class Gripper // : public TreeDevice
+class Gripper
 {
 public:
-	// typedefs
 	/// Smart pointer.
 	typedef rw::common::Ptr<Gripper> Ptr;
 
-	// constructors
-	/// Basic constructor.
+public:
 	Gripper(const std::string& name = "gripper");
 
-	/// Destructor.
 	virtual ~Gripper() {
 	}
 
-	// methods
 	std::string getName() {
 		return _name;
 	}
@@ -132,6 +123,7 @@ public:
 	double getForce() {
 		return _force;
 	}
+	
 	void setForce(double force) {
 		_force = force;
 		_quality.maxstress = getMaxStress();
@@ -140,6 +132,7 @@ public:
 	rw::math::Transform3D<> getTCP() {
 		return _tcp;
 	}
+	
 	void setTCP(rw::math::Transform3D<> tcp) {
 		_tcp = tcp;
 	}
@@ -147,6 +140,7 @@ public:
 	double getJawdist() {
 		return _jawdist;
 	}
+	
 	void setJawdist(double jawdist) {
 		_jawdist = jawdist > 0.0 ? jawdist : 0.0;
 	}
@@ -154,6 +148,7 @@ public:
 	double getOpening() {
 		return _opening;
 	}
+	
 	void setOpening(double opening) {
 		_opening = opening;
 	}
@@ -182,7 +177,7 @@ public:
 
 	rw::geometry::Geometry::Ptr getJawGeometry() {
 		using rw::geometry::Geometry;
-		using rw::geometry::JawPrimitive;
+		using gripperz::geometry::JawPrimitive;
 		using rw::common::ownedPtr;
 
 		if (_isJawParametrized) {
@@ -190,7 +185,6 @@ public:
 			_leftGeometry = ownedPtr(
 					new Geometry(new JawPrimitive(_jawParameters),
 							std::string("LeftFingerGeo")));
-			//_rightGeometry = ownedPtr(new Geometry(new JawPrimitive(_jawParameters), std::string("RightFingerGeo")));
 		}
 
 		return new Geometry(*_leftGeometry);
@@ -222,8 +216,6 @@ public:
 	 */
 	void setJawGeometry(rw::math::Q params) {
 		_jawParameters = params;
-		//_leftGeometry = NULL;
-		//_rightGeometry = NULL;
 		_isJawParametrized = true;
 
 		_quality.maxstress = getMaxStress();
@@ -275,14 +267,8 @@ public:
 	 */
 	void setBaseGeometry(rw::math::Q params) {
 		_baseParameters = params;
-		//_baseGeometry = NULL;
 		_isBaseParametrized = true;
 	}
-
-	// DEPRECATED
-	//rw::geometry::JawPrimitive::Ptr getGeometry() { return _jaw; }
-	//void setGeometry(rw::geometry::JawPrimitive::Ptr geometry) { _jaw = geometry; }
-	// /DEPRECATED
 
 	/**
 	 * @brief Updates selected gripper device in the workcell according to data in this class.
@@ -301,11 +287,14 @@ public:
 	 *
 	 * @todo Make this use only TaskDescription.
 	 */
-	void updateGripper(rw::models::WorkCell::Ptr wc,
-			rwsim::dynamics::DynamicWorkCell::Ptr dwc,
-			rw::models::TreeDevice::Ptr dev,
-			rwsim::dynamics::RigidDevice::Ptr ddev,
-			rw::kinematics::State& state, TaskDescription::Ptr td);
+	void updateGripper(
+		rw::models::WorkCell::Ptr wc,
+		rwsim::dynamics::DynamicWorkCell::Ptr dwc,
+		rw::models::TreeDevice::Ptr dev,
+		rwsim::dynamics::RigidDevice::Ptr ddev,
+		rw::kinematics::State& state,
+		context::TaskDescription::Ptr td
+	);
 
 	/// Get gripper quality measurement structure.
 	GripperQuality& getQuality() {
@@ -340,7 +329,7 @@ public:
 	double getVolume() const;
 
 	// friends
-	friend class GripperXMLLoader;
+	friend class loaders::GripperXMLLoader;
 
 private:
 	// data
@@ -370,4 +359,5 @@ private:
 	GripperQuality _quality;
 };
 
-} // namespace grippers
+} /* models */
+} /* gripperz */

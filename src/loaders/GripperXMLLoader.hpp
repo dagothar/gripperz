@@ -6,9 +6,10 @@
 #pragma once
 
 #include <string>
-#include "Gripper.hpp"
+#include <models/Gripper.hpp>
 
-namespace grippers {
+namespace gripperz {
+namespace loaders {
 
 /**
  * @class GripperXMLLoader
@@ -20,14 +21,15 @@ public:
 	/**
 	 * @brief Load gripper design from XML file.
 	 */
-	static Gripper::Ptr load(const std::string& filename);
+	static models::Gripper::Ptr load(const std::string& filename);
 
 	/**
 	 * @brief Save gripper data to XML file.
 	 */
-	static void save(Gripper::Ptr gripper, const std::string& filename);
+	static void save(models::Gripper::Ptr gripper, const std::string& filename);
 
 protected:
 };
 
-} // namespace
+} /* loaders */
+} /* gripperz */

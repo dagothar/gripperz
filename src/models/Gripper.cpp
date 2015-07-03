@@ -7,7 +7,9 @@ using namespace std;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
 using namespace rwsim;
-using namespace grippers;
+using namespace gripperz::models;
+using namespace gripperz::context;
+using namespace gripperz::geometry;
 
 Gripper::Gripper(const std::string& name) :
 		_name(name), _baseGeometry(NULL), _leftGeometry(NULL), _rightGeometry(

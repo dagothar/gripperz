@@ -15,10 +15,6 @@ using namespace boost::property_tree;
 
 
 
-typedef PTree::iterator CI;
-
-
-
 std::pair<bool, int> toInt(const std::string& str)
 {
 	std::pair<bool, int> nothing(false, 0);

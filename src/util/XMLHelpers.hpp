@@ -22,6 +22,8 @@ namespace util {
 
 //! Boost property tree shorthand.	
 typedef boost::property_tree::ptree PTree;
+
+typedef PTree::iterator CI;
 		
 /**
  * @class XMLHelpers

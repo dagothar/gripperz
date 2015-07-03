@@ -1,5 +1,5 @@
 SET(SRC_FILES
 	${SRC_FILES}
-	#Gripper.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Gripper.cpp
 	CACHE INTERNAL ""
 )

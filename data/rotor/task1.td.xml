@@ -19,12 +19,6 @@
 		<Wrench>0</Wrench>
 		<Stress>100</Stress>
 	</Limits>
-	<Baseline>
-		<Shape>1</Shape>
-		<Coverage>1</Coverage>
-		<SuccessRatio>1</SuccessRatio>
-		<Wrench>1</Wrench>
-	</Baseline>
 	<Weights>
 		<Shape>0</Shape>
 		<SuccessRatio>0.33</SuccessRatio>

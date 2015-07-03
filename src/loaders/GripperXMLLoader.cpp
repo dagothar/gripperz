@@ -13,21 +13,24 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem/path.hpp>
 #include <rw/loaders/model3d/STLFile.hpp>
-#include "Gripper.hpp"
-#include "XMLHelpers.hpp"
 
-#define DEBUG cout
+#include <util/XMLHelpers.hpp>
+
+
+#define DEBUG rw::common::Log::debugLog()
+
 
 using namespace std;
 USE_ROBWORK_NAMESPACE
-;
 using namespace robwork;
 using namespace rwsim;
 using namespace rw::loaders;
 using namespace boost::numeric;
 using namespace boost::property_tree;
-using namespace rwlibs::xml;
-using namespace grippers;
+using namespace gripperz::util;
+using namespace gripperz::loaders;
+using namespace gripperz::models;
+
 
 void readJaws(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
 	boost::optional<PTree&> fileNode = tree.get_child_optional("File");
