@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
 			lowerBound,
 			upperBound,
 			0.2, // initial trust region radius
-			1e-6, // stopping trust region radius
+			1e-3, // stopping trust region radius
 			1000 // max number of f evaluations
 		);
 	} catch (dlib::bobyqa_failure& e) {

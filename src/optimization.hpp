@@ -6,6 +6,7 @@
 
 #include "optimization/ObjectiveFunction.hpp"
 #include "optimization/ObjectiveFunctionDecorator.hpp"
+#include "optimization/RevertedFunction.hpp"
 #include "optimization/MappedFunction.hpp"
 #include "optimization/CombinedFunction.hpp"
 #include "optimization/MultiObjectiveFunction.hpp"
