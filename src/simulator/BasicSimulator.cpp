@@ -49,6 +49,11 @@ bool BasicSimulator::isRunning() {
 
 
 void BasicSimulator::graspFinished(SimState& sstate) {
+	/* count slippages as successes */
+	if (sstate._target->getResult()->testStatus	== GraspResult::ObjectSlipped) {
+		sstate._target->getResult()->testStatus = GraspResult::Success;
+	}
+	
 	printGraspResult(sstate);
 }
 

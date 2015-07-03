@@ -5,3 +5,5 @@
  */
 
 #include "simulator/GraspTaskSimulator.hpp"
+#include "simulator/GripperSimulator.hpp"
+#include "simulator/BasicSimulator.hpp"

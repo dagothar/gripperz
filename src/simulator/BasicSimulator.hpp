@@ -16,6 +16,8 @@ namespace simulator {
 /**
  * @class BasicSimulator
  * @brief Uses basic RWSIM simulator to simulate tasks.
+ * 
+ * Assigns status to individual targets. Slippages are counted as successes.
  */
 class BasicSimulator : virtual public GripperSimulator, protected rwsim::simulator::GraspTaskSimulator {
 public:
