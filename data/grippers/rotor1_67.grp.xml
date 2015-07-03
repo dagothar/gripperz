@@ -17,16 +17,16 @@
 	</Parameters>
 	<Result>
 		<Experiments>100</Experiments>
-		<Successes>78</Successes>
-		<Samples>7332</Samples>
-		<Coverage>0.0102291325695581</Coverage>
-		<SuccessRatio>0.8863636363636364</SuccessRatio>
-		<Wrench>0.07462262404288764</Wrench>
-		<TopWrench>0.1368837589478477</TopWrench>
-		<Quality>0.4830438409656782</Quality>
+		<Successes>81</Successes>
+		<Samples>8068</Samples>
+		<Coverage>0.009430708542605247</Coverage>
+		<SuccessRatio>0.8804347826086957</SuccessRatio>
+		<Wrench>0.06215289167346292</Wrench>
+		<TopWrench>0.1307920363852426</TopWrench>
+		<Quality>0.5375575172644512</Quality>
 		<Robustness>0</Robustness>
 		<MaxStress>7.403107802741533</MaxStress>
-		<Alignment>0.01219308304578333</Alignment>
+		<Alignment>0.05006421071503551</Alignment>
 		<Volume>4.793319585842514e-06</Volume>
 	</Result>
 </Gripper>

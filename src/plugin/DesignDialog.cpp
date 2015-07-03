@@ -4,14 +4,16 @@
 #include <rwsim/rwsim.hpp>
 #include <QtGui>
 #include <QRadioButton>
-#include "GripperXMLLoader.hpp"
+
+#include <loaders/GripperXMLLoader.hpp>
 
 using namespace std;
 USE_ROBWORK_NAMESPACE
 ;
 using namespace robwork;
 using namespace rwsim;
-using namespace grippers;
+using namespace gripperz::loaders;
+using namespace gripperz::models;
 
 DesignDialog::DesignDialog(QWidget* parent, Gripper::Ptr gripper,
 		std::string wd) :

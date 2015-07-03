@@ -14,27 +14,32 @@
 #include <rwlibs/algorithms/kdtree/KDTreeQ.hpp>
 #include <fstream>
 #include <iostream>
-#include "JawPrimitive.hpp"
+
+#include <geometry/JawPrimitive.hpp>
 #include "RenderTarget.hpp"
-#include "TaskGenerator.hpp"
+#include <grasps/TaskGenerator.hpp>
 #include "DesignDialog.hpp"
-#include "GripperTaskSimulator.hpp"
-#include "GripperXMLLoader.hpp"
+#include <simulator/GripperTaskSimulator.hpp>
+#include <loaders/GripperXMLLoader.hpp>
+#include <loaders/TaskDescriptionLoader.hpp>
 #include "TaskDialog.hpp"
 
-using namespace std;
 
+using namespace std;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
-
 USE_ROBWORKSIM_NAMESPACE
 using namespace robworksim;
-
 using namespace rws;
 using namespace rwlibs::proximitystrategies;
 using namespace rwlibs::simulation;
 using namespace rwlibs::task;
-using namespace grippers;
+using namespace gripperz::models;
+using namespace gripperz::context;
+using namespace gripperz::loaders;
+using namespace gripperz::grasps;
+using namespace gripperz::simulator;
+
 
 GraspPlugin::GraspPlugin() :
 		RobWorkStudioPlugin("GraspPlugin", QIcon(":/pa_icon.png")), _wc(NULL), _dwc(

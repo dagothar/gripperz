@@ -6,7 +6,7 @@
 #pragma once
 
 #include <QDialog>
-#include "TaskDescription.hpp"
+#include <context/TaskDescription.hpp>
 #include "ui_TaskDialog.h"
 
 class QLineEdit;
@@ -24,8 +24,11 @@ class TaskDialog: public QDialog {
 public:
 	// constructors
 	/// Constructor
-	TaskDialog(QWidget* parent = 0, grippers::TaskDescription::Ptr td = 0,
-			std::string wd = "");
+	TaskDialog(
+		QWidget* parent = 0,
+		gripperz::context::TaskDescription::Ptr td = 0,
+		std::string wd = ""
+	);
 
 	/// Destructor
 	virtual ~TaskDialog() {
@@ -44,7 +47,7 @@ private:
 	void updateTaskDescription();
 
 	// data
-	grippers::TaskDescription::Ptr _td;
+	gripperz::context::TaskDescription::Ptr _td;
 	bool _changed;
 
 	// GUI

@@ -11,10 +11,12 @@
 #include <QObject>
 #include <QtGui>
 #include <QTimer>
-#include "TaskGenerator.hpp"
-#include "Gripper.hpp"
-#include "GripperTaskSimulator.hpp"
-#include "TaskDescription.hpp"
+
+#include <grasps/TaskGenerator.hpp>
+#include <models/Gripper.hpp>
+#include <simulator/GripperTaskSimulator.hpp>
+#include <context/TaskDescription.hpp>
+
 #include "ui_GraspPlugin.h"
 
 /**
@@ -106,15 +108,15 @@ private:
 	rw::models::TreeDevice::Ptr _dev; // gripper device
 	rwsim::dynamics::RigidDevice::Ptr _ddev; // dynamic gripper device
 	rwsim::dynamics::DynamicWorkCell::Ptr _dwc; // dynamic workcell
-	grippers::GripperTaskSimulator::Ptr _graspSim; // simulator
+	gripperz::simulator::GripperTaskSimulator::Ptr _graspSim; // simulator
 	rw::kinematics::State _initState; // workcell initial state
 
 	rw::graphics::Render::Ptr _render; // used to render targets
 	QTimer *_timer; // used to update RWS view periodically
 
 	// grippers
-	grippers::Gripper::Ptr _gripper;
-	std::vector<grippers::Gripper::Ptr> _gripperList;
+	gripperz::models::Gripper::Ptr _gripper;
+	std::vector<gripperz::models::Gripper::Ptr> _gripperList;
 
 	// flags
 	bool _slowMotion;
@@ -128,11 +130,11 @@ private:
 	rw::math::Transform3D<> _wTtarget; // target for grasping
 
 	int _nOfTargetsToGen;
-	grippers::TaskGenerator::Ptr _generator;
+	gripperz::grasps::TaskGenerator::Ptr _generator;
 	rwlibs::task::GraspTask::Ptr _tasks; // grasp tasks planned or loaded from file
 	rwlibs::task::GraspTask::Ptr _samples; // all samples
 
-	grippers::TaskDescription::Ptr _td;
+	gripperz::context::TaskDescription::Ptr _td;
 
 	/* GUI */
 	Ui::evaluationWidget ui;
