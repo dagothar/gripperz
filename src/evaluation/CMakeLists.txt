@@ -1,5 +1,6 @@
 SET(SRC_FILES
 	${SRC_FILES}
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperEvaluator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/GripperObjectiveFunction.cpp
 	CACHE INTERNAL ""
 )

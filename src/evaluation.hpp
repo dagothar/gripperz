@@ -5,3 +5,4 @@
  */
 
 #include "evaluation/GripperEvaluator.hpp"
+#include "evaluation/GripperObjectiveFunction.hpp"
