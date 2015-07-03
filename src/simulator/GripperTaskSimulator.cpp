@@ -9,6 +9,7 @@
 
 
 #define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
 
 
 using namespace std;
@@ -111,8 +112,6 @@ double GripperTaskSimulator::calculateInterference(SimState& sstate,
 	result->interferenceAngles = interferenceAngles;
 	result->interferences = interferences;
 	result->interference = interference;
-	
-	RW_WARN("");
 
 	return interference;
 }
@@ -319,7 +318,7 @@ double GripperTaskSimulator::calculateQuality() {
 }
 
 void GripperTaskSimulator::printGraspResult(SimState& sstate) {
-	DEBUG << "Grasp result " << getNrTargetsDone() << ": "
+	INFO << "Grasp result " << getNrTargetsDone() << ": "
 			<< GraspTask::toString(
 					(GraspTask::TestStatus) sstate._target->getResult()->testStatus)
 			<< endl;

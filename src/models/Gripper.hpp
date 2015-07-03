@@ -181,7 +181,6 @@ public:
 		using rw::common::ownedPtr;
 
 		if (_isJawParametrized) {
-			std::cout << "Generating jaw geometry..." << std::endl;
 			_leftGeometry = ownedPtr(
 					new Geometry(new JawPrimitive(_jawParameters),
 							std::string("LeftFingerGeo")));

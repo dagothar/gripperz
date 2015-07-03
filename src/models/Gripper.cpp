@@ -3,6 +3,11 @@
 #include <rw/rw.hpp>
 #include <rwsim/rwsim.hpp>
 
+
+#define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
+
+
 using namespace std;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
@@ -28,14 +33,14 @@ void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,
 	Geometry::Ptr rightGeometry = getJawGeometry();
 
 	// remove existing objects
-	cout << "- Removing objects..." << endl;
+	DEBUG << "- Removing objects..." << endl;
 	wc->removeObject(wc->findObject("gripper.Base").get());
 	wc->removeObject(wc->findObject("gripper.LeftFinger").get());
 	wc->removeObject(wc->findObject("gripper.RightFinger").get());
-	cout << "- Objects removed." << endl;
+	DEBUG << "- Objects removed." << endl;
 
 	// create and add new objects
-	cout << "- Adding new objects..." << endl;
+	DEBUG << "- Adding new objects..." << endl;
 
 	// if base is parametrized, the box has to be moved from origin by half its height
 	Transform3D<> baseT;
@@ -79,14 +84,11 @@ void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,
 	rightobj->addGeometry(rightGeometry);
 	wc->add(rightobj);
 	dwc->findBody("gripper.RightFinger")->setObject(rightobj);
-	cout << "Objects added." << endl;
+	DEBUG << "Objects added." << endl;
 
 	// set tcp
-	//string tcpFrameName = wc->getPropertyMap().get<string>("gripperTCP");
-	MovableFrame* tcp = (MovableFrame*) td->getGripperTCP(); //wc->findFrame<MovableFrame>(tcpFrameName);
+	MovableFrame* tcp = (MovableFrame*) td->getGripperTCP();
 	tcp->setTransform(_tcp, state);
-
-	//cout << "LOL" << tcp->getName() << endl;
 
 	// set bounds
 	double minOpening = _jawdist;
@@ -99,7 +101,7 @@ void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,
 	// set force
 	ddev->setMotorForceLimits(Q(2, _force, _force));
 
-	cout << "Gripper updated!" << endl;
+	DEBUG << "Gripper updated!" << endl;
 }
 
 double Gripper::getCrossHeight(double x) const {

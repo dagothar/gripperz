@@ -9,6 +9,9 @@
 #include <rwlibs/proximitystrategies/ProximityStrategyFactory.hpp>
 
 
+#define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
+
 
 using namespace std;
 
@@ -57,7 +60,6 @@ SurfaceSample TaskGenerator::sample(TriMeshSurfaceSampler& sampler, ProximityMod
     Transform3D<> target;
     double graspW = 0.0;
     do { 
-		//RW_WARN("SAMPLELOOP");
         target = sampler.sample();
         Vector3D<> pos = target.P();
         
@@ -202,7 +204,6 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::filterTasks(const rwlibs::task::Gras
 			result.clear();
 			Q key = node.key;
 			nntree->nnSearchRect(key-diff, key+diff, result);
-			//nntree->nnSearchElipse(key, diff, result);
 
 			int removed = 0;
 			BOOST_FOREACH (const NNSearch::KDNode* n, result) {
@@ -370,13 +371,8 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
         oq(0) = std::min(_openQ(0), oq(0) );
         _td->getGripperDevice()->setQ(oq, state);
         
-        //cout << "oq=" << oq << endl;
-        
         // then check for collision
         moveFrameW(wTobj * target, _td->getGripperTCP(), _td->getGripperMovable(), state);
-        
-        //cout << "gripper movable: " << _td->getGripperMovable()->getTransform(state) << endl;
-        //cout << "target: " << _td->getTargetFrame()->getTransform(state) << endl;
         
         CollisionDetector::QueryResult result;
         if (!cdetect->inCollision(state, &result, true)) {
@@ -406,20 +402,12 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
             gtarget1.result->objectTtcpTarget = target;
 			asubtask.addTarget(gtarget1);
             atask->addSubTask(asubtask);
-            
-            //cout << "TARGET" << endl;
         } else {			
 			++failures_in_row;
 			if (failures_in_row > 10000) {
 				RW_THROW("Something is rotten in the state of RobWork: " << successes << "/" << failures_in_row);
 				break;
 			}
-			
-			//cout << "collision, frames: ";
-			//BOOST_FOREACH (const rw::kinematics::FramePair& frames, result.collidingFrames) {
-				//cout << frames.first->getName() << "--" << frames.second->getName() << "  ";
-			//}
-			//cout << endl;
 
 			GraspTarget gtarget(target);
             gtarget.result = ownedPtr(new GraspResult());
@@ -440,22 +428,22 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
     int nsamples = _samples->getAllTargets().size();
     
     // preliminary filtering
-    cout << "Preliminary filtering" << endl;
+    DEBUG << "Preliminary filtering" << endl;
     Q preDist = _td->getPrefilteringDistance();
 	double R = 2.0 * sin(0.25 * preDist(1));
 	Q diff(7, preDist(0), preDist(0), preDist(0), R, R, R, preDist(2));
 	
-	cout << " - filtering targets... ";
+	DEBUG << " - filtering targets... ";
     _tasks = filterTasks(_tasks, diff);
     int nftargets = countTasks(_tasks, GraspResult::UnInitialized);
-    cout << nftargets << " out of " << ntargets << endl;
+    DEBUG << nftargets << " out of " << ntargets << endl;
     
-    cout << " - filtering samples... ";
+    DEBUG << " - filtering samples... ";
     _samples = filterTasks(_samples, diff);
     int nfsamples = countTasks(_samples, GraspResult::UnInitialized);
-    cout << nfsamples << " out of " << nsamples << endl;
+    DEBUG << nfsamples << " out of " << nsamples << endl;
     
-    cout << "Generated " << ntargets << " tasks & "	<< nsamples << " samples." << endl;
+    INFO << "Generated " << ntargets << " tasks & "	<< nsamples << " samples." << endl;
     
 	return _tasks;
 }

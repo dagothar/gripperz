@@ -27,6 +27,10 @@
 #include <simulator/GripperTaskSimulator.hpp>
 
 
+#define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
+
+
 using namespace std;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
@@ -111,15 +115,15 @@ int main(int argc, char* argv[]) {
 	}
 
 	/* load data */
-	cout << "* Loading dwc... ";
+	INFO << "* Loading dwc... ";
 	DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load(dwcFilename);
-	cout << "Loaded." << endl;
-	cout << "* Loading task description... ";
+	INFO << "Loaded." << endl;
+	INFO << "* Loading task description... ";
 	TaskDescription::Ptr td = TaskDescriptionLoader::load(tdFilename, dwc);
-	cout << "Loaded." << endl;
-	cout << "* Loading gripper... ";
+	INFO << "Loaded." << endl;
+	INFO << "* Loading gripper... ";
 	Gripper::Ptr gripper = GripperXMLLoader::load(gripperFilename);
-	cout << "Loaded." << endl;
+	INFO << "Loaded." << endl;
 
 	if (vm.count("out")) {
 		outFilename = vm["out"].as<string>();
@@ -145,7 +149,7 @@ int main(int argc, char* argv[]) {
 	td->getInitState().upgrade();
 	
 	/* generate grasps */
-	cout << "Generating grasps... nsamples=" << nsamples << endl;
+	DEBUG << "Generating grasps... nsamples=" << nsamples << endl;
 	TaskGenerator::Ptr generator = new TaskGenerator(td);
 
 	if (useSamples) {
@@ -157,23 +161,23 @@ int main(int argc, char* argv[]) {
 
 	GraspTask::Ptr tasks = generator->getTasks();
 	GraspTask::Ptr samples = generator->getSamples();
-	cout << "Grasps generated." << endl;
-	cout << "Tasks: " << tasks->getAllTargets().size() << endl;
-	cout << "Samples: " << samples->getAllTargets().size()
+	DEBUG << "Grasps generated." << endl;
+	DEBUG << "Tasks: " << tasks->getAllTargets().size() << endl;
+	DEBUG << "Samples: " << samples->getAllTargets().size()
 			<< endl;
 
 	/* perform simulation */
 	//Log::log().setLevel(Log::Debug);
 	if (!nosim) {
-		cout << "Starting simulation..." << endl;
+		INFO << "Starting simulation..." << endl;
 		GripperTaskSimulator::Ptr sim = ownedPtr(
 				new GripperTaskSimulator(gripper, tasks, samples, td, cores));
-		cout << "Simulator created." << endl;
+		DEBUG << "Simulator created." << endl;
 
 		try {
-			cout << "Launching..." << endl;
+			DEBUG << "Launching..." << endl;
 			sim->startSimulation(td->getInitState());
-			cout << "Launched." << endl;
+			DEBUG << "Launched." << endl;
 		} catch (...) {
 			cout << "Error starting simulation..." << endl;
 			return -1;
@@ -188,7 +192,7 @@ int main(int argc, char* argv[]) {
 
 	/* perform robustness tests */
 	if (testRobustness) {
-		cout << "Starting robustness test..." << endl;
+		INFO << "Starting robustness test..." << endl;
 
 		// perturbate only succesful tasks
 		tasks = TaskGenerator::copyTasks(tasks, true);
@@ -206,8 +210,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	/* display results */
-	cout << "\nRESULTS" << endl;
-	cout << gripper->getQuality() << endl;
+	INFO << "\nRESULTS" << endl;
+	INFO << gripper->getQuality() << endl;
 
 	/* save results */
 	GripperXMLLoader::save(gripper, gripperFilename);

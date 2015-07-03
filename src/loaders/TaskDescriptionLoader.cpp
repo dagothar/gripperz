@@ -146,7 +146,7 @@ void TaskDescriptionLoader::readGripper(PTree& tree, TaskDescription::Ptr task)
 	DEBUG << "\t movable frame: [" << movableName << "]" << endl;
 	MovableFrame* movableFrame = task->getWorkCell()->findFrame<MovableFrame>(movableName);
 	task->setGripperMovable(movableFrame);
-	if (movableFrame) {
+	if (!movableFrame) {
 		RW_THROW("Gripper movable frame not found!");
 	}
 		
