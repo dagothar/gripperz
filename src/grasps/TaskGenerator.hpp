@@ -2,6 +2,7 @@
  * @file TaskGenerator.hpp
  * @brief Based on ParJawGripSampler by Jimmy
  * @author Adam Wolniakowski
+ * @date 3-07-2015
  */
 
 # pragma once
@@ -13,10 +14,12 @@
 #include <vector>
 #include <string>
 #include <rw/geometry/TriMeshSurfaceSampler.hpp>
-#include "TaskDescription.hpp"
+
+#include <context/TaskDescription.hpp>
 #include "SurfaceSample.hpp"
 
-namespace grippers {
+namespace gripperz {
+namespace grasps {
 
 /**
  * @class TaskGenerator
@@ -24,15 +27,12 @@ namespace grippers {
  */
 class TaskGenerator {
 public:
-	// types
 	/// Smart pointer type to this class.
 	typedef rw::common::Ptr<TaskGenerator> Ptr;
 
-	// constructors
-	/// Constructor.
-	TaskGenerator(TaskDescription::Ptr td);
-
-	// methods		
+public:
+	TaskGenerator(context::TaskDescription::Ptr td);
+	
 	/**
 	 * @brief Generates a number of tasks
 	 * .
@@ -47,9 +47,12 @@ public:
 	 * @param nTargets [in] number of targets to generate
 	 * @param state [in] state
 	 */
-	virtual rwlibs::task::GraspTask::Ptr generateTask(int nTargets,
-			rw::kinematics::State state, std::vector<SurfaceSample>* ssamples =
-					NULL, int nSamples = 0);
+	virtual rwlibs::task::GraspTask::Ptr generateTask(
+		int nTargets,
+		rw::kinematics::State state,
+		std::vector<SurfaceSample>* ssamples = NULL,
+		int nSamples = 0
+	);
 
 	/// Get previously generated tasks.
 	rwlibs::task::GraspTask::Ptr getTasks() {
@@ -75,14 +78,16 @@ public:
 	 */
 	static rwlibs::task::GraspTask::Ptr filterTasks(
 			const rwlibs::task::GraspTask::Ptr tasks,
-			rw::math::Q diff = rw::math::Q(7, 0.01, 0.01, 0.01, 0.1, 0.1, 0.1,
-					15 * rw::math::Deg2Rad));
+			rw::math::Q diff = rw::math::Q(7, 0.01, 0.01, 0.01, 0.1, 0.1, 0.1, 15 * rw::math::Deg2Rad)
+	);
 
 	/**
 	 * @brief Counts tasks with specified status.
 	 */
-	static int countTasks(const rwlibs::task::GraspTask::Ptr tasks,
-			const rwlibs::task::GraspResult::TestStatus status);
+	static int countTasks(
+		const rwlibs::task::GraspTask::Ptr tasks,
+		const rwlibs::task::GraspResult::TestStatus status
+	);
 
 	/**
 	 * @brief Makes a copy of a task
@@ -93,7 +98,8 @@ public:
 	 */
 	static rwlibs::task::GraspTask::Ptr copyTasks(
 			const rwlibs::task::GraspTask::Ptr tasks,
-			bool onlySuccesses = false);
+			bool onlySuccesses = false
+	);
 
 	/**
 	 * @brief Creates a new task with perturbed targets
@@ -104,28 +110,35 @@ public:
 	 * @param perturbations [in] number of perturbed grasps to generate
 	 */
 	static rwlibs::task::GraspTask::Ptr addPerturbations(
-			rwlibs::task::GraspTask::Ptr tasks, double sigma_p, double sigma_a,
-			int perturbations);
+		rwlibs::task::GraspTask::Ptr tasks,
+		double sigma_p,
+		double sigma_a,
+		int perturbations
+	);
 
 	/**
 	 * @brief Generates samples on the surface.
 	 */
-	SurfaceSample sample(rw::geometry::TriMeshSurfaceSampler& sampler,
-			rw::proximity::ProximityModel::Ptr object,
-			rw::proximity::ProximityModel::Ptr ray,
-			rw::proximity::CollisionStrategy::Ptr cstrategy);
+	SurfaceSample sample(
+		rw::geometry::TriMeshSurfaceSampler& sampler,
+		rw::proximity::ProximityModel::Ptr object,
+		rw::proximity::ProximityModel::Ptr ray,
+		rw::proximity::CollisionStrategy::Ptr cstrategy
+	);
 
 protected:
-	// methods
 	/**
 	 * @brief Helper function for moving gripper TCP frame into position.
 	 */
-	static void moveFrameW(const rw::math::Transform3D<>& wTtcp,
-			rw::kinematics::Frame* tcp, rw::kinematics::MovableFrame* base,
-			rw::kinematics::State& state);
+	static void moveFrameW(
+		const rw::math::Transform3D<>& wTtcp,
+		rw::kinematics::Frame* tcp,
+		rw::kinematics::MovableFrame* base,
+		rw::kinematics::State& state
+	);
 
 	// data
-	TaskDescription::Ptr _td;
+	context::TaskDescription::Ptr _td;
 
 	rw::math::Q _openQ;
 	rw::math::Q _closeQ;
@@ -134,4 +147,5 @@ protected:
 	rwlibs::task::GraspTask::Ptr _samples;
 };
 
-} // namespace
+} /* grasps */
+} /* gripperz */

@@ -14,7 +14,8 @@
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
-#include "XMLHelpers.hpp"
+
+#include <util/XMLHelpers.hpp>
 
 
 
@@ -29,7 +30,8 @@ using namespace boost::numeric;
 using namespace boost::property_tree;
 using boost::algorithm::trim;
 
-using namespace rwlibs::xml;
+using namespace gripperz::grasps;
+using namespace gripperz::util;
 
  
 

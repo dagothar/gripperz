@@ -16,7 +16,8 @@ USE_ROBWORK_NAMESPACE;
 using namespace robwork;
 using namespace rw::math;
 using namespace rwsim;
-using namespace grippers;
+using namespace gripperz::context;
+using namespace gripperz::grasps;
 
 
 

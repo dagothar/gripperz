@@ -8,16 +8,18 @@
 
 #include <rw/models/WorkCell.hpp>
 #include <rwsim/simulator/GraspTaskSimulator.hpp>
-#include "TaskDescription.hpp"
-#include "Gripper.hpp"
+
+#include <context/TaskDescription.hpp>
+#include <models/Gripper.hpp>
 
 namespace rwsim {
 namespace simulator {
 class GraspTaskSimulator;
-}
-}
+} /* simulator */
+} /* rwsim */
 
-namespace grippers {
+namespace gripperz {
+namespace simulator {
 
 /**
  * @class GripperTaskSimulator
@@ -32,11 +34,10 @@ namespace grippers {
  */
 class GripperTaskSimulator: public rwsim::simulator::GraspTaskSimulator {
 public:
-	// typedefs
 	/// Smart pointer type.
 	typedef rw::common::Ptr<GripperTaskSimulator> Ptr;
 
-	// constructors
+public:
 	/**
 	 * @brief Constructor.
 	 *
@@ -46,18 +47,16 @@ public:
 	 * @param td [in] task description
 	 */
 	GripperTaskSimulator(
-		Gripper::Ptr gripper,
+		models::Gripper::Ptr gripper,
 		rwlibs::task::GraspTask::Ptr tasks,
 		rwlibs::task::GraspTask::Ptr samples,
-		TaskDescription::Ptr td,
+		context::TaskDescription::Ptr td,
 		int nThreads=1
 	);
 
-	/// Destructor.
 	virtual ~GripperTaskSimulator() {
 	}
 
-	// methods
 	/**
 	 * @brief Load all samples created by grasp generator.
 	 *
@@ -70,12 +69,11 @@ public:
 	/**
 	 * @brief Get the simulated gripper's quality
 	 */
-	GripperQuality getGripperQuality() const {
+	models::GripperQuality getGripperQuality() const {
 		return _quality;
 	}
 
 protected:
-	// methods
 	/// @copydoc GraspTaskSimulator::graspFinished
 	virtual void graspFinished(SimState& sstate);
 
@@ -86,7 +84,6 @@ protected:
 	virtual void simulationFinished(SimState& sstate);
 
 private:
-	// methods
 	/**
 	 * @brief Returns interference measurement for given grasp.
 	 *
@@ -99,8 +96,10 @@ private:
 	 * @param sstate [in] current simulation state
 	 * @param state0 [in] initial kinematic state
 	 */
-	double calculateInterference(SimState& sstate,
-			const rw::kinematics::State& state0);
+	double calculateInterference(
+		SimState& sstate,
+		const rw::kinematics::State& state0
+	);
 
 	/**
 	 * @brief Returns alignment index for all performed grasps
@@ -154,12 +153,12 @@ private:
 	 */
 	void evaluateGripper();
 
-	// data
-	Gripper::Ptr _gripper;
-	TaskDescription::Ptr _td;
+	models::Gripper::Ptr _gripper;
+	context::TaskDescription::Ptr _td;
 	rwlibs::task::GraspTask::Ptr _samples;
 
-	GripperQuality _quality; // quality of the simulated gripper
+	models::GripperQuality _quality; // quality of the simulated gripper
 };
 
-} // end namespaces
+} /* simulator */
+} /* namespace gripperz */

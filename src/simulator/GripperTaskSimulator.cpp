@@ -5,19 +5,24 @@
 #include <rwlibs/algorithms/StablePose0DModel.hpp>
 #include <algorithm>
 #include <vector>
-#include "TaskGenerator.hpp"
+#include <grasps/TaskGenerator.hpp>
 
-#define DEBUG cout
+
+#define DEBUG rw::common::Log::debugLog()
+
 
 using namespace std;
 USE_ROBWORK_NAMESPACE
-;
 using namespace robwork;
 using namespace rwsim;
 using namespace rwsim::simulator;
 using namespace rw::common;
 using namespace rwlibs::algorithms;
-using namespace grippers;
+using namespace gripperz::simulator;
+using namespace gripperz::context;
+using namespace gripperz::models;
+using namespace gripperz::grasps;
+
 
 GripperTaskSimulator::GripperTaskSimulator(
 	Gripper::Ptr gripper,
@@ -25,7 +30,11 @@ GripperTaskSimulator::GripperTaskSimulator(
 	rwlibs::task::GraspTask::Ptr samples,
 	TaskDescription::Ptr td,
 	int nThreads
-) :	GraspTaskSimulator(td->getDynamicWorkCell(), nThreads), _gripper(gripper), _samples(samples), _td(td)
+) :
+	GraspTaskSimulator(td->getDynamicWorkCell(), nThreads),
+	_gripper(gripper),
+	_td(td),
+	_samples(samples)
 {
 	setWallTimeLimit(10.0);
 	setSimTimeLimit(0.0);
@@ -109,17 +118,14 @@ double GripperTaskSimulator::calculateInterference(SimState& sstate,
 }
 
 double GripperTaskSimulator::calculateWrench(SimState& sstate) const {
-	//return 0.0;
 	
 	Q& qual = sstate._target->getResult()->qualityAfterLifting;
-	//qual = _gripper->getForce() * qual;
 
 	if (qual.size() >= 1) {
 		return qual(1);
 	} else {
-		//DEBUG << "No wrench measurement!" << endl;
 		return 0.0;
-	} //sstate._target->getResult()->qualityAfterLifting(1); // use average wrench from origin
+	}
 }
 
 double GripperTaskSimulator::calculateCoverage(double actualRatio) {
@@ -128,7 +134,6 @@ double GripperTaskSimulator::calculateCoverage(double actualRatio) {
 		return 0.0;
 	}
 
-	//DEBUG << "CALCULATING COVERAGE - " << endl;
 
 	double coverage = 0.0;
 
@@ -138,18 +143,14 @@ double GripperTaskSimulator::calculateCoverage(double actualRatio) {
 
 	/* okTargets is the number of succesful targets after filtering +
 	 * the number of slippages + the number of interferences */
-	//DEBUG << "Filtering targets..." << endl;
 	GraspTask::Ptr coverageTasks = TaskGenerator::filterTasks(_gtask, diff);
 	int okTargets = TaskGenerator::countTasks(coverageTasks,
 			GraspResult::Success);
-	//DEBUG << "Successful tasks: " << okTargets;
 	okTargets += TaskGenerator::countTasks(coverageTasks,
 			GraspResult::ObjectSlipped);
 	okTargets += TaskGenerator::countTasks(coverageTasks,
 			GraspResult::Interference);
-	//DEBUG << " + interference= " << okTargets << endl;
 
-	//DEBUG << "Filtering samples..." << endl;
 	int allTargets = TaskGenerator::countTasks(
 			TaskGenerator::filterTasks(_samples, diff),
 			GraspResult::UnInitialized);
@@ -174,16 +175,15 @@ rw::math::Q GripperTaskSimulator::calculateWrenchMeasurement() const {
 
 	int successes = 0;
 	typedef std::pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
-	//DEBUG << "WRENCHES!" << endl;
+
 	BOOST_FOREACH (TaskTarget p, _gtask->getAllTargets()) {
-		//DEBUG << "??? " << p.second->getResult()->testStatus << endl;
+
 		if (p.second->getResult()->testStatus == GraspResult::Success
 				|| p.second->getResult()->testStatus
 						== GraspResult::ObjectSlipped) {
 			successes++;
 
 			Q result = p.second->getResult()->qualityAfterLifting;
-			//DEBUG << result << endl;
 
 			wrench(0) += result(0);
 			wrench(1) += result(1);
@@ -200,8 +200,6 @@ rw::math::Q GripperTaskSimulator::calculateWrenchMeasurement() const {
 	if (wrenches.size() > 0) {
 		for (int i = 0; i < num; ++i) {
 			wrench(2) += wrenches[i];
-
-			//cout << wrench(2) << endl;
 		}
 	}
 
@@ -258,7 +256,6 @@ double getPoseAlignment(vector<Rotation3D<> >& rot_before,
 		double variance = 0.0;
 		BOOST_FOREACH (double diff, diffs) {
 			double dvar = diff - avg_diff;
-			//DEBUG << "Dvar= " << dvar << endl;
 			variance += dvar * dvar;
 		}
 		variance = sqrt(variance / n);
@@ -349,7 +346,6 @@ void GripperTaskSimulator::simulationFinished(SimState& sstate) {
 }
 
 void GripperTaskSimulator::evaluateGripper() {
-	TaskDescription::Qualities& b = _td->getBaseline();
 	TaskDescription::Qualities& w = _td->getWeights();
 
 	DEBUG << "EVALUATION - " << endl;
@@ -378,7 +374,7 @@ void GripperTaskSimulator::evaluateGripper() {
 	DEBUG << "* Outcomes (success/interference/drop/fail): " << successes << "/"
 			<< interferences << "/" << drops << "/" << failures << endl;
 
-	double successRatio = (1.0 * successes / actual) / b.success;
+	double successRatio = (1.0 * successes / actual);
 
 	/* alignment */
 	DEBUG << "CALCULATING ALIGNMENT - " << endl;
@@ -388,12 +384,12 @@ void GripperTaskSimulator::evaluateGripper() {
 	/* wrench */
 	DEBUG << "CALCULATING WRENCH - " << endl;
 	Q wrenchMeasurement = calculateWrenchMeasurement();
-	double wrench = wrenchMeasurement(1) / b.wrench;
-	double topwrench = wrenchMeasurement(2) / b.wrench;
+	double wrench = wrenchMeasurement(1);
+	double topwrench = wrenchMeasurement(2);
 
 	/* coverage */
 	DEBUG << "CALCULATING COVERAGE - " << endl;
-	double coverage = calculateCoverage(1.0 * actual / filtered) / b.coverage;
+	double coverage = calculateCoverage(1.0 * actual / filtered);
 
 	/* Calculate quality
 	 * 

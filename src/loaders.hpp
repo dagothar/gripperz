@@ -5,3 +5,4 @@
  */
 
 #include "loaders/TaskDescriptionLoader.hpp"
+#include "loaders/GripperXMLLoader.hpp"
