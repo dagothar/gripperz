@@ -1,3 +1,9 @@
+/**
+ * @file createGripperXML.cpp
+ * @author Adam Wolniakowski
+ * @date 3-07-2015
+ */
+ 
 #include <iostream>
 #include <rw/rw.hpp>
 #include <rw/loaders/model3d/STLFile.hpp>
@@ -5,9 +11,9 @@
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/option.hpp>
 #include <boost/program_options/parsers.hpp>
-#include "Gripper.hpp"
-#include "GripperXMLLoader.hpp"
-#include "JawPrimitive.hpp"
+#include <models/Gripper.hpp>
+#include <loaders/GripperXMLLoader.hpp>
+#include <geometry/JawPrimitive.hpp>
 
 
 
@@ -16,7 +22,9 @@ USE_ROBWORK_NAMESPACE;
 using namespace robwork;
 using namespace rw::models;
 using namespace boost::program_options;
-using namespace grippers;
+using namespace gripperz::models;
+using namespace gripperz::loaders;
+using namespace gripperz::geometry;
 namespace po = boost::program_options;
 
 
@@ -91,7 +99,6 @@ int main(int argc, char* argv[])
 		
 		if (vm.count("tcp")) {
 			cout << "Found tcp" << endl;
-			//gripper->setTCP(Transform3D<>(Vector3D<>(0, 0, gripper->getJawParameters()[1]-vm["tcp"].as<double>())));
 			gripper->setTCP(Transform3D<>(Vector3D<>(0, 0, vm["tcp"].as<double>())));
 		}
 		
@@ -120,10 +127,6 @@ int main(int argc, char* argv[])
 			gripper->getQuality().topwrench = qualities(3);
 			gripper->getQuality().alignment = qualities(4);
 			gripper->getQuality().quality = qualities(5);
-			
-			/*if (qualities.size() > 5) {
-				gripper->getQuality().alignment = qualities(5);
-			}*/
 		}
 		
 		if (vm.count("stl")) {

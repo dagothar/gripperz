@@ -1,3 +1,9 @@
+/**
+ * @file evaluateGripper.cpp
+ * @author Adam Wolniakowski
+ * @date 3-07-2015
+ */
+
 #include <iostream>
 #include <rw/rw.hpp>
 #include <rw/RobWork.hpp>
@@ -13,15 +19,16 @@
 #include <rwlibs/proximitystrategies/ProximityStrategyFactory.hpp>
 #include <rwsimlibs/ode/ODEPlugin.hpp>
 
-#include "TaskDescription.hpp"
-#include "Gripper.hpp"
-#include "GripperXMLLoader.hpp"
-#include "TaskGenerator.hpp"
-#include "GripperTaskSimulator.hpp"
+#include <context/TaskDescription.hpp>
+#include <loaders/TaskDescriptionLoader.hpp>
+#include <models/Gripper.hpp>
+#include <loaders/GripperXMLLoader.hpp>
+#include <grasps/TaskGenerator.hpp>
+#include <simulator/GripperTaskSimulator.hpp>
+
 
 using namespace std;
 USE_ROBWORK_NAMESPACE
-;
 using namespace robwork;
 using namespace rw::models;
 using namespace rw::common;
@@ -33,30 +40,16 @@ using namespace rwsim::loaders;
 using namespace rwsim::simulator;
 using namespace boost::program_options;
 namespace po = boost::program_options;
-using namespace grippers;
+using namespace gripperz::models;
+using namespace gripperz::context;
+using namespace gripperz::simulator;
+using namespace gripperz::grasps;
+using namespace gripperz::loaders;
 
-/**
- * @class EvaluateGripper
- * @brief Simulates and evaluates single gripper loaded from XML file in a context of
- * loaded WorkCell and task description.
- * 
- * Designed for evaluate-gripper command line tool.
- */
-class EvaluateGripper {
-public:
-	// constructors
-
-private:
-	// methods
-	// data
-};
 
 int main(int argc, char* argv[]) {
 	Math::seed();
 	RobWork::getInstance()->initialize();
-	
-	// register ODE plugin
-	//ExtensionRegistry::getInstance()->registerExtensions(&odeplugin);
 
 	// options
 	int cores, ntargets, nsamples, rtargets;

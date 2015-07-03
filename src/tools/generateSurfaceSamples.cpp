@@ -1,3 +1,9 @@
+/**
+ * @file generateSurfaceSamples.cpp
+ * @author Adam Wolniakowski
+ * @date 3-07-2015
+ */
+
 #include <iostream>
 #include <rw/rw.hpp>
 #include <rwsim/rwsim.hpp>
@@ -8,12 +14,14 @@
 #include <boost/program_options/option.hpp>
 #include <boost/program_options/parsers.hpp>
 #include <rwlibs/proximitystrategies/ProximityStrategyFactory.hpp>
-#include "TaskDescription.hpp"
-#include "TaskGenerator.hpp"
+
+#include <context/TaskDescription.hpp>
+#include <loaders/TaskDescriptionLoader.hpp>
+#include <grasps/TaskGenerator.hpp>
+
 
 using namespace std;
 USE_ROBWORK_NAMESPACE
-;
 using namespace robwork;
 using namespace rw::models;
 using namespace rw::loaders;
@@ -24,7 +32,10 @@ using namespace rwsim::loaders;
 using namespace rwsim::simulator;
 using namespace boost::program_options;
 namespace po = boost::program_options;
-using namespace grippers;
+using namespace gripperz::context;
+using namespace gripperz::grasps;
+using namespace gripperz::loaders;
+
 
 int main(int argc, char* argv[]) {
 	/* initialize stuff */
