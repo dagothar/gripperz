@@ -46,6 +46,7 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${ROOT}/libs" CACHE PATH "Archive directory"
 # Target: gripperz
 SET(SRC_FILES CACHE INTERNAL "" FORCE)
 ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(test)
 
 add_library(gripperz ${SRC_FILES})
 target_link_libraries(gripperz -lGL -lGLU -lglut -lm ${ROBWORKSTUDIO_LIBRARIES} ${ROBWORK_LIBRARIES} ${ROBWORKSIM_LIBRARIES})
