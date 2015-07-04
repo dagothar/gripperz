@@ -20,7 +20,7 @@ MappedFunction::~MappedFunction() {
 
 
 double MappedFunction::operator()(const std::vector<double>& x) {
-	std::vector<double> unpacked = _mapping->unpack(x);
+	std::vector<double> unpacked = _mapping->map(x);
 	
 	return ObjectiveFunctionDecorator::operator()(unpacked);
 }

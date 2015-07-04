@@ -32,7 +32,7 @@ double mapParameter(double p, const ParameterMapping::Range& before, const Param
 }
 
 
-std::vector<double> ParameterMapping::pack(const std::vector<double> params) const {
+std::vector<double> ParameterMapping::map(const std::vector<double> params) const {
 	if (params.size() != _map.size()) {
 		RW_THROW("Map and parameters size mismatch!");
 	}
@@ -46,7 +46,7 @@ std::vector<double> ParameterMapping::pack(const std::vector<double> params) con
 }
 
 	
-std::vector<double> ParameterMapping::unpack(const std::vector<double> params) const {
+std::vector<double> ParameterMapping::unmap(const std::vector<double> params) const {
 	if (params.size() != _map.size()) {
 		RW_THROW("Map and parameters size mismatch!");
 	}

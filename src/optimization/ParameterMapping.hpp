@@ -38,14 +38,14 @@ public:
 	void setMap(const Map& map) { _map = map; }
 
 	/**
-	 * @brief Maps the parameter vector into normalized vector (using bounds).
+	 * @brief Maps the parameter vector.
 	 */
-	virtual std::vector<double> pack(const std::vector<double> params) const;
+	virtual std::vector<double> map(const std::vector<double> params) const;
 	
 	/**
-	 * @brief Un-maps normalized parameters into a real space (using bounds).
+	 * @brief Un-maps normalized parameters.
 	 */
-	virtual std::vector<double> unpack(const std::vector<double> params) const;
+	virtual std::vector<double> unmap(const std::vector<double> params) const;
 	
 private:
 	Map _map;

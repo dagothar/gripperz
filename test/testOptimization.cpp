@@ -27,13 +27,13 @@ BOOST_AUTO_TEST_CASE (ParameterMappingTest) {
 	
 	/* test packing */
 	vector<double> p0{-10.0, 0.0, 10.0};
-	vector<double> p1 = mapping.pack(p0);
+	vector<double> p1 = mapping.map(p0);
 	BOOST_CHECK (p1[0] == 0.0);
 	BOOST_CHECK (p1[1] == 0.5);
 	BOOST_CHECK (p1[2] == 1.0);
 	
 	/* test unpacking */
-	vector<double> p2 = mapping.unpack(p1);
+	vector<double> p2 = mapping.unmap(p1);
 	BOOST_CHECK (p2[0] == -10.0);
 	BOOST_CHECK (p2[1] == 0.0);
 	BOOST_CHECK (p2[2] == 10.0);
@@ -74,6 +74,6 @@ BOOST_AUTO_TEST_CASE (ObjectiveFunctionsTest) {
 	ParameterMapping mapping(map);
 	ObjectiveFunction::Ptr mapped = new MappedFunction(comb, &mapping);
 	double y3 = mapped->operator()(x0);
-	BOOST_CHECK (y3 == 7);
+	BOOST_CHECK (y3 == 1);
 	//cout << y3;
 }
