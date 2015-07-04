@@ -20,4 +20,9 @@ if (BUILD_TESTS)
 	add_executable(test-optimization testOptimization.cpp)
 	target_link_libraries(test-optimization gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 	add_dependencies(test-optimization gripperz)
+	
+	# Target: test-gripper-objective
+	add_executable(test-gripper-objective testGripperObjective.cpp)
+	add_dependencies(test-gripper-objective gripperz)
+	target_link_libraries(test-gripper-objective gripperz)
 endif ()

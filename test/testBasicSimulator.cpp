@@ -10,6 +10,7 @@
 #include <rw/rw.hpp>
 #include <rwsim/rwsim.hpp>
 #include <simulator/BasicSimulator.hpp>
+#include <simulator/InterferenceSimulator.hpp>
 
 
 using namespace std;
@@ -31,7 +32,7 @@ int main(int argc, char* argv[]) {
 	GraspTask::Ptr tasks = GraspTask::load("../data/tasks/rotor1_67.tasks.xml");
 	
 	/* create simulator */
-	GripperSimulator::Ptr simulator = new BasicSimulator(dwc, 1);
+	GripperSimulator::Ptr simulator = new InterferenceSimulator(dwc, 1);
 	
 	/* run simulation */
 	cout << "Running simulation..." << endl;

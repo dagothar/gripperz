@@ -7,3 +7,4 @@
 #include "simulator/GraspTaskSimulator.hpp"
 #include "simulator/GripperSimulator.hpp"
 #include "simulator/BasicSimulator.hpp"
+#include "simulator/InterferenceSimulator.hpp"

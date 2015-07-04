@@ -1,5 +1,5 @@
 /**
- * @file BasicSimulator.hpp
+ * @file BasicSimulator.cpp
  * @author Adam Wolniakowski
  * @date 3-07-2015
  */
