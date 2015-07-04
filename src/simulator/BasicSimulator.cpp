@@ -39,6 +39,8 @@ rwlibs::task::GraspTask::Ptr BasicSimulator::getTasks() {
 
 
 void BasicSimulator::start(const rw::kinematics::State& initState) {
+	_initState = initState;
+	
 	GraspTaskSimulator::startSimulation(initState);
 }
 
@@ -49,12 +51,17 @@ bool BasicSimulator::isRunning() {
 
 
 void BasicSimulator::graspFinished(SimState& sstate) {
+	evaluateGrasp(sstate);
+	
+	printGraspResult(sstate);
+}
+
+
+void BasicSimulator::evaluateGrasp(SimState& sstate) {
 	/* count slippages as successes */
 	if (sstate._target->getResult()->testStatus	== GraspResult::ObjectSlipped) {
 		sstate._target->getResult()->testStatus = GraspResult::Success;
 	}
-	
-	printGraspResult(sstate);
 }
 
 

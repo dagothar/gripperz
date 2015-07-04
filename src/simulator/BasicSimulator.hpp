@@ -48,13 +48,23 @@ public:
 	unsigned getThreads() const { return _threads; }
 
 protected:
+	const rw::kinematics::State& getInitState() const { return _initState; }
+	
 	//! Inherited from GraspTaskSimulator
 	virtual void graspFinished(SimState& sstate);
+	
+	/**
+	 * @brief Evaluates a grasp and changes the status if necessary.
+	 * Changes ObjectSlipped to Success.
+	 */
+	virtual void evaluateGrasp(SimState& sstate);
 	
 	virtual void printGraspResult(SimState& sstate);
 	
 private:
 	unsigned _threads;
+	
+	rw::kinematics::State _initState;
 };
 
 } /* simulator */
