@@ -46,6 +46,12 @@ public:
 	virtual bool isRunning();
 	
 	unsigned getThreads() const { return _threads; }
+	
+	/**
+	 * @brief Returns the vector of thread simulators.
+	 * Inherited from GraspTaskSimulator.
+	 */
+	std::vector<rwsim::simulator::ThreadSimulator::Ptr> getSimulators();
 
 protected:
 	const rw::kinematics::State& getInitState() const { return _initState; }

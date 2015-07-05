@@ -15,6 +15,7 @@
 #include <grasps/TaskGenerator.hpp>
 #include <models/Gripper.hpp>
 #include <simulator/GripperTaskSimulator.hpp>
+#include <simulator/BasicSimulator.hpp>
 #include <context/TaskDescription.hpp>
 
 #include "ui_GraspPlugin.h"
@@ -109,6 +110,7 @@ private:
 	rwsim::dynamics::RigidDevice::Ptr _ddev; // dynamic gripper device
 	rwsim::dynamics::DynamicWorkCell::Ptr _dwc; // dynamic workcell
 	gripperz::simulator::GripperTaskSimulator::Ptr _graspSim; // simulator
+	gripperz::simulator::BasicSimulator::Ptr _basicSim; // simulator
 	rw::kinematics::State _initState; // workcell initial state
 
 	rw::graphics::Render::Ptr _render; // used to render targets

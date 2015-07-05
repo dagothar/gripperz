@@ -369,7 +369,7 @@ void GraspPlugin::updateSim() {
 		return;
 
 	if (!_silentMode && _graspSim->isRunning())
-		getRobWorkStudio()->setState(_graspSim->getSimulator()->getState());
+		getRobWorkStudio()->setState(_graspSim->getSimulators()[0]->getState());
 
 	// check out the number of tasks already performed and update progress bar accordingly
 	ui.progressBar->setValue(_graspSim->getNrTargetsDone());

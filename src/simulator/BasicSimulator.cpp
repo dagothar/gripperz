@@ -50,6 +50,11 @@ bool BasicSimulator::isRunning() {
 }
 
 
+std::vector<rwsim::simulator::ThreadSimulator::Ptr> BasicSimulator::getSimulators() {
+	return GraspTaskSimulator::getSimulators();
+}
+
+
 void BasicSimulator::graspFinished(SimState& sstate) {
 	evaluateGrasp(sstate);
 	
