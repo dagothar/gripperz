@@ -2,5 +2,6 @@ SET(SRC_FILES
 	${SRC_FILES}
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceSample.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TaskGenerator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TaskStatistics.cpp
 	CACHE INTERNAL ""
 )

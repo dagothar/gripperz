@@ -63,6 +63,7 @@ int main(int argc, char* argv[]) {
 	TaskGenerator::Ptr generator = new TaskGenerator(td);
 	generator->generateTask(100, td->getInitState());
 	GraspTask::Ptr tasks = generator->getTasks();
+	GraspTask::Ptr samples = generator->getSamples();
 	
 	/* simulate tasks */
 	simulator->loadTasks(tasks);
@@ -71,7 +72,8 @@ int main(int argc, char* argv[]) {
 	while (simulator->isRunning()) {}
 	
 	/* evaluate gripper */
-	GripperQuality::Ptr quality = evaluator->evaluateGripper(gripper, simulator->getTasks());
+	Log::log().setLevel(Log::Debug);
+	GripperQuality::Ptr quality = evaluator->evaluateGripper(gripper, simulator->getTasks(), samples);
 	gripper->setQuality(*quality);
 	
 	INFO << "\nRESULTS" << endl;

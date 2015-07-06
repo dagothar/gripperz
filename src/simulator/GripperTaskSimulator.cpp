@@ -270,6 +270,8 @@ double getPoseAlignment(vector<Rotation3D<> >& rot_before,
 	return alignment;
 }
 
+
+
 double GripperTaskSimulator::calculateAlignment() const {
 	double alignment = 0.0;
 

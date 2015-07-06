@@ -6,3 +6,4 @@
 
 #include "grasps/SurfaceSample.hpp"
 #include "grasps/TaskGenerator.hpp"
+#include "grasps/TaskStaticstics.hpp"
