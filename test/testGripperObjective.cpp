@@ -9,6 +9,7 @@
 #include <sstream>
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
+#include <evaluation/GripperEvaluationManagerFactory.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <loaders/GripperXMLLoader.hpp>
 #include <simulation/InterferenceSimulator.hpp>
@@ -82,13 +83,8 @@ int main(int argc, char* argv[]) {
 		MapGripperBuilder::TcpOffset
 	};
 	GripperBuilder::Ptr builder = new MapGripperBuilder(new Gripper, params);
-	TaskGenerator::Ptr generator = new TaskGenerator(td);
-	//generator->setSurfaceSamples(NULL);
-	GripperSimulator::Ptr simulator = new InterferenceSimulator(dwc, td->getInterferenceLimit(), td->getInterferenceObjects());
-	GripperEvaluator::Ptr evaluator = new GripperEvaluator(td);
-	GripperEvaluationManager::Configuration config;
-	config.nOfGraspsPerEvaluation = 100;
-	GripperEvaluationManager::Ptr manager = new GripperEvaluationManager(td, generator, simulator, evaluator, config);
+	
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, 100);
 	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 	
 	/* initialize combiners */

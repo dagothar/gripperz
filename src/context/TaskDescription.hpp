@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include "Context.hpp"
+
 #include <rw/rw.hpp>
 #include <rwsim/rwsim.hpp>
 #include <vector>
@@ -14,7 +16,6 @@
 #include <boost/optional.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
-
 #include <util/XMLHelpers.hpp>
 
 namespace gripperz {
@@ -25,7 +26,7 @@ namespace context {
  * 
  * @brief Contains description of a task.
  */
-class TaskDescription {
+class TaskDescription : public Context {
 public:
 	//! Smart pointer to this type of class.
 	typedef rw::common::Ptr<TaskDescription> Ptr;
