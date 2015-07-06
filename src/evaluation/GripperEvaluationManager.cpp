@@ -10,7 +10,7 @@
 using namespace gripperz::evaluation;
 using namespace gripperz::models;
 using namespace gripperz::context;
-using namespace gripperz::simulator;
+using namespace gripperz::simulation;
 using namespace gripperz::grasps;
 using namespace gripperz::models;
 using namespace rwlibs::task;
@@ -19,13 +19,13 @@ using namespace rwlibs::task;
 GripperEvaluationManager::GripperEvaluationManager(
 	context::TaskDescription::Ptr context,
 	grasps::TaskGenerator::Ptr generator,
-	simulator::GripperSimulator::Ptr simulator,
+	simulation::GripperSimulator::Ptr simulation,
 	evaluation::GripperEvaluator::Ptr evaluator,
 	const Configuration& configuration
 ) :
 	_context(context),
 	_generator(generator),
-	_simulator(simulator),
+	_simulation(simulation),
 	_evaluator(evaluator),
 	_config(configuration)
 {}
@@ -56,11 +56,11 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 	 * Simulate grasping.
 	 */
 	try {
-		_simulator->loadTasks(targets);
+		_simulation->loadTasks(targets);
 		
-		_simulator->start(_context->getInitState());
+		_simulation->start(_context->getInitState());
 		
-		while (_simulator->isRunning()) {
+		while (_simulation->isRunning()) {
 		}
 	} catch (...) {
 		RW_THROW("Exception during grasp simulation!");

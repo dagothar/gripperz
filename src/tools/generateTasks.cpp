@@ -28,7 +28,7 @@ using namespace rwlibs::task;
 using namespace rwsim;
 using namespace rwsim::dynamics;
 using namespace rwsim::loaders;
-using namespace rwsim::simulator;
+using namespace rwsim::simulation;
 using namespace boost::program_options;
 namespace po = boost::program_options;
 using namespace grippers;

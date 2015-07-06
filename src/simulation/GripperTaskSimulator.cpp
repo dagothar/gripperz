@@ -16,10 +16,10 @@ using namespace std;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
 using namespace rwsim;
-using namespace rwsim::simulator;
+using namespace rwsim::simulation;
 using namespace rw::common;
 using namespace rwlibs::algorithms;
-using namespace gripperz::simulator;
+using namespace gripperz::simulation;
 using namespace gripperz::context;
 using namespace gripperz::models;
 using namespace gripperz::grasps;

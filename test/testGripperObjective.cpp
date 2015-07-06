@@ -10,14 +10,14 @@
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
-#include <simulator/InterferenceSimulator.hpp>
+#include <simulation/InterferenceSimulator.hpp>
 
 
 using namespace std;
 using namespace gripperz::evaluation;
 using namespace gripperz::optimization;
 using namespace gripperz::context;
-using namespace gripperz::simulator;
+using namespace gripperz::simulation;
 using namespace gripperz::grasps;
 using namespace gripperz::loaders;
 USE_ROBWORK_NAMESPACE

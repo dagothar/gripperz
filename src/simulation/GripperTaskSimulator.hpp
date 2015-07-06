@@ -13,13 +13,13 @@
 #include <models/Gripper.hpp>
 
 namespace rwsim {
-namespace simulator {
+namespace simulation {
 class GraspTaskSimulator;
-} /* simulator */
+} /* simulation */
 } /* rwsim */
 
 namespace gripperz {
-namespace simulator {
+namespace simulation {
 
 /**
  * @class GripperTaskSimulator
@@ -160,5 +160,5 @@ private:
 	models::GripperQuality _quality; // quality of the simulated gripper
 };
 
-} /* simulator */
+} /* simulation */
 } /* namespace gripperz */

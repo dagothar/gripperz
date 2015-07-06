@@ -12,7 +12,7 @@
 #define INFO rw::common::Log::infoLog()
 
 
-using namespace gripperz::simulator;
+using namespace gripperz::simulation;
 using namespace rwlibs::task;
 using namespace std;
 

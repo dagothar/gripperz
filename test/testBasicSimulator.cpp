@@ -9,14 +9,14 @@
 #include <sstream>
 #include <rw/rw.hpp>
 #include <rwsim/rwsim.hpp>
-#include <simulator/BasicSimulator.hpp>
-#include <simulator/InterferenceSimulator.hpp>
+#include <simulation/BasicSimulator.hpp>
+#include <simulation/InterferenceSimulator.hpp>
 #include <context/TaskDescription.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 
 
 using namespace std;
-using namespace gripperz::simulator;
+using namespace gripperz::simulation;
 using namespace gripperz::context;
 using namespace gripperz::loaders;
 USE_ROBWORK_NAMESPACE

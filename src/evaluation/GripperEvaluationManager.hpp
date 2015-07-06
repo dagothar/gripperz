@@ -9,7 +9,7 @@
 #include <rw/common/Ptr.hpp>
 #include <context/TaskDescription.hpp>
 #include <grasps/TaskGenerator.hpp>
-#include <simulator/GripperSimulator.hpp>
+#include <simulation/GripperSimulator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
 #include <models/Gripper.hpp>
 
@@ -37,7 +37,7 @@ public:
 	GripperEvaluationManager(
 		context::TaskDescription::Ptr context,
 		grasps::TaskGenerator::Ptr generator,
-		simulator::GripperSimulator::Ptr simulator,
+		simulation::GripperSimulator::Ptr simulation,
 		evaluation::GripperEvaluator::Ptr evaluator,
 		const Configuration& configuration
 	);
@@ -48,7 +48,7 @@ public:
 	
 	grasps::TaskGenerator::Ptr getGenerator() { return _generator; }
 	
-	simulator::GripperSimulator::Ptr getSimulator() { return _simulator; }
+	simulation::GripperSimulator::Ptr getSimulator() { return _simulation; }
 	
 	evaluation::GripperEvaluator::Ptr getEvaluator() { return _evaluator; }
 	
@@ -67,7 +67,7 @@ protected:
 private:
 	context::TaskDescription::Ptr _context;
 	grasps::TaskGenerator::Ptr _generator;
-	simulator::GripperSimulator::Ptr _simulator;
+	simulation::GripperSimulator::Ptr _simulation;
 	evaluation::GripperEvaluator::Ptr _evaluator;
 	
 	Configuration _config;

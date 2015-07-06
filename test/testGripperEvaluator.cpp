@@ -11,7 +11,7 @@
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <loaders/GripperXMLLoader.hpp>
 #include <grasps/TaskGenerator.hpp>
-#include <simulator/InterferenceSimulator.hpp>
+#include <simulation/InterferenceSimulator.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -19,7 +19,7 @@
 
 using namespace std;
 using namespace gripperz::evaluation;
-using namespace gripperz::simulator;
+using namespace gripperz::simulation;
 using namespace gripperz::context;
 using namespace gripperz::loaders;
 using namespace gripperz::models;

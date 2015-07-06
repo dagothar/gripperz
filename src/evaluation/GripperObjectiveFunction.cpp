@@ -8,14 +8,14 @@
 
 #include <rwlibs/task/GraspTask.hpp>
 #include <grasps/TaskGenerator.hpp>
-#include <simulator/GripperTaskSimulator.hpp>
+#include <simulation/GripperTaskSimulator.hpp>
 
 
 using namespace std;
 using namespace gripperz::evaluation;
 using namespace gripperz::models;
 using namespace gripperz::context;
-using namespace gripperz::simulator;
+using namespace gripperz::simulation;
 using namespace gripperz::grasps;
 using namespace rw::common;
 using namespace rw::math;

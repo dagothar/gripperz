@@ -19,7 +19,7 @@
 #include "RenderTarget.hpp"
 #include <grasps/TaskGenerator.hpp>
 #include "DesignDialog.hpp"
-#include <simulator/GripperTaskSimulator.hpp>
+#include <simulation/GripperTaskSimulator.hpp>
 #include <loaders/GripperXMLLoader.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include "TaskDialog.hpp"
@@ -38,13 +38,13 @@ using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::loaders;
 using namespace gripperz::grasps;
-using namespace gripperz::simulator;
+using namespace gripperz::simulation;
 using namespace gripperz::evaluation;
 
 
 GraspPlugin::GraspPlugin() :
 		RobWorkStudioPlugin("GraspPlugin", QIcon(":/pa_icon.png")), _wc(NULL), _dwc(
-				NULL), _simulator(NULL), _slowMotion(false), _showTasks(true), _showSamples(
+				NULL), _simulation(NULL), _slowMotion(false), _showTasks(true), _showSamples(
 				false), _showSuccesses(false), _silentMode(false), _nOfTargetsToGen(
 				10), _tasks(NULL), _td(NULL), _wd(""), _interferenceLimit(0.1), _wrenchLimit(
 				0.0) {
@@ -75,14 +75,14 @@ void GraspPlugin::initialize() {
 
 void GraspPlugin::startSimulation() {
 
-	_simulator = ownedPtr(
+	_simulation = ownedPtr(
 		new InterferenceSimulator(_dwc, _td->getInterferenceLimit(), _td->getInterferenceObjects())
 	);
-	_simulator->loadTasks(_tasks);
+	_simulation->loadTasks(_tasks);
 
 	try {
 		_td->getInitState().upgrade();
-		_simulator->start(_td->getInitState());
+		_simulation->start(_td->getInitState());
 	} catch (...) {
 		return;
 	}
@@ -173,8 +173,8 @@ void GraspPlugin::guiEvent() {
 	}
 
 	else if (obj == ui.stopButton) {
-		if (_simulator->isRunning()) {
-			_simulator->stop();
+		if (_simulation->isRunning()) {
+			_simulation->stop();
 		}
 	}
 
@@ -367,17 +367,17 @@ void GraspPlugin::updateGripper() {
 }
 
 void GraspPlugin::updateSim() {
-	if (_simulator == NULL || _wc == NULL || _dwc == NULL)
+	if (_simulation == NULL || _wc == NULL || _dwc == NULL)
 		return;
 
-	if (!_silentMode && _simulator->isRunning()) {
-		getRobWorkStudio()->setState(_simulator->getSimulators()[0]->getState());
+	if (!_silentMode && _simulation->isRunning()) {
+		getRobWorkStudio()->setState(_simulation->getSimulators()[0]->getState());
 	}
 
 	// check out the number of tasks already performed and update progress bar accordingly
-	ui.progressBar->setValue(_simulator->getNrTasksDone());
+	ui.progressBar->setValue(_simulation->getNrTasksDone());
 
-	if (!_simulator->isRunning()) {
+	if (!_simulation->isRunning()) {
 		_timer->stop();
 
 		//_gripper->getQuality() = GripperQuality(_graspSim->getGripperQuality());

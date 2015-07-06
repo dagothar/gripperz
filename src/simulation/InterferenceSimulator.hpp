@@ -8,12 +8,11 @@
 
 #include "BasicSimulator.hpp"
 
-#include <rwsim/simulator/GraspTaskSimulator.hpp>
 #include <rw/math/Metric.hpp>
 #include <rw/math/MetricFactory.hpp>
 
 namespace gripperz {
-namespace simulator {
+namespace simulation {
 
 /**
  * @class InterferenceSimulator
@@ -70,5 +69,5 @@ private:
 	InterferenceMetric::Ptr _metric;
 };
 
-} /* simulator */
+} /* simulation */
 } /* gripperz */

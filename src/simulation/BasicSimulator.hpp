@@ -11,11 +11,11 @@
 #include <rwsim/simulator/GraspTaskSimulator.hpp>
 
 namespace gripperz {
-namespace simulator {
+namespace simulation {
 
 /**
  * @class BasicSimulator
- * @brief Uses basic RWSIM simulator to simulate tasks.
+ * @brief Uses basic RWSIM simulation to simulate tasks.
  * 
  * Assigns status to individual targets. Slippages are counted as successes.
  */
@@ -52,7 +52,7 @@ public:
 	unsigned getThreads() const { return _threads; }
 	
 	/**
-	 * @brief Returns the vector of thread simulators.
+	 * @brief Returns the vector of thread simulations.
 	 * Inherited from GraspTaskSimulator.
 	 */
 	std::vector<rwsim::simulator::ThreadSimulator::Ptr> getSimulators();
@@ -77,5 +77,5 @@ private:
 	rw::kinematics::State _initState;
 };
 
-} /* simulator */
+} /* simulation */
 } /* gripperz */

@@ -11,11 +11,11 @@
 #include <rwlibs/task/GraspTask.hpp>
 
 namespace gripperz {
-namespace simulator {
+namespace simulation {
 
 /**
  * @class GripperSimulator
- * @brief Interface for gripper simulators.
+ * @brief Interface for gripper simulations.
  */
 class GripperSimulator {
 public:
@@ -45,5 +45,5 @@ public:
 	virtual unsigned getNrTasksDone() const = 0;
 };
 
-} /* simulator */
+} /* simulation */
 } /* gripperz */
