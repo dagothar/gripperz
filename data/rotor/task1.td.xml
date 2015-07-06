@@ -18,7 +18,7 @@
 		<Interference>1</Interference>
 		<Wrench>0</Wrench>
 		<Stress>100</Stress>
-		<Volume>50</Volume>
+		<Volume>100</Volume>
 	</Limits>
 	<Weights>
 		<Shape>0</Shape>
