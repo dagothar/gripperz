@@ -8,13 +8,17 @@
 #include <vector>
 #include <sstream>
 #include <evaluation/GripperObjectiveFunction.hpp>
+#include <evaluation/GripperEvaluationManager.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
+#include <simulator/InterferenceSimulator.hpp>
 
 
 using namespace std;
 using namespace gripperz::evaluation;
 using namespace gripperz::optimization;
 using namespace gripperz::context;
+using namespace gripperz::simulator;
+using namespace gripperz::grasps;
 using namespace gripperz::loaders;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
@@ -57,7 +61,14 @@ int main(int argc, char* argv[]) {
 	TaskDescription::Ptr td = TaskDescriptionLoader::load("../data/rotor/task1.td.xml", dwc);
 	
 	/* create objective function */
-	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(td);
+	TaskGenerator::Ptr generator = new TaskGenerator(td);
+	//generator->setSurfaceSamples(NULL);
+	GripperSimulator::Ptr simulator = new InterferenceSimulator(dwc, td->getInterferenceLimit(), td->getInterferenceObjects());
+	GripperEvaluator::Ptr evaluator = new GripperEvaluator(td);
+	GripperEvaluationManager::Configuration config;
+	config.nOfGraspsPerEvaluation = 100;
+	GripperEvaluationManager::Ptr manager = new GripperEvaluationManager(td, generator, simulator, evaluator, config);
+	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(manager);
 	
 	/* read grippers */
 	unsigned n = 0;

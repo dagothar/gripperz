@@ -6,3 +6,4 @@
 
 #include "evaluation/GripperEvaluator.hpp"
 #include "evaluation/GripperObjectiveFunction.hpp"
+#include "evaluation/GripperEvaluationManager.hpp"

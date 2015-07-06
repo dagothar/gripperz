@@ -53,6 +53,12 @@ public:
 		std::vector<SurfaceSample>* ssamples = NULL,
 		int nSamples = 0
 	);
+	
+	//! Temporary.
+	virtual rwlibs::task::GraspTask::Ptr generateTasks(
+		int nTargets,
+		rw::kinematics::State state
+	);
 
 	/// Get previously generated tasks.
 	rwlibs::task::GraspTask::Ptr getTasks() {
@@ -63,6 +69,9 @@ public:
 	rwlibs::task::GraspTask::Ptr getSamples() {
 		return _samples;
 	}
+	
+	std::vector<SurfaceSample>& getSurfaceSamples() { return _ssamples; }
+	void setSurfaceSamples(const std::vector<SurfaceSample>& ssamples) { _ssamples = ssamples; }
 
 	/**
 	 * @brief Filters grasp tasks.
@@ -145,6 +154,8 @@ protected:
 
 	rwlibs::task::GraspTask::Ptr _tasks;
 	rwlibs::task::GraspTask::Ptr _samples;
+	
+	std::vector<SurfaceSample> _ssamples;
 };
 
 } /* grasps */

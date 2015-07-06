@@ -22,8 +22,8 @@ using namespace rw::math;
 using namespace rwlibs::task;
 
 
-GripperObjectiveFunction::GripperObjectiveFunction(context::TaskDescription::Ptr td) :
-	_td(td)
+GripperObjectiveFunction::GripperObjectiveFunction(evaluation::GripperEvaluationManager::Ptr manager) :
+	_manager(manager)
 {
 }
 
@@ -63,61 +63,23 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 	Gripper::Ptr gripper = NULL;
 	try {
 		gripper = parametersToGripper(x);
-		gripper->updateGripper(
-			_td->getWorkCell(),
-			_td->getDynamicWorkCell(),
-			_td->getGripperDevice(),
-			_td->getGripperDynamicDevice(),
-			_td->getInitState(),
-			_td
-		);
-		_td->getInitState().upgrade();
 	} catch (...) {
 		RW_THROW("Exception during gripper generation!");
 	}
 	
-	/*
-	 * Generate grasps.
-	 */
-	GraspTask::Ptr targets = NULL;
-	GraspTask::Ptr samples = NULL;
-	try {
-		TaskGenerator::Ptr taskGenerator = ownedPtr(new TaskGenerator(_td));
-		taskGenerator->generateTask(100, _td->getInitState(), NULL, 0);
-		
-		targets = taskGenerator->getTasks();
-		samples = taskGenerator->getSamples();
-	} catch (...) {
-		RW_THROW("Exception during grasp generation!");
-	}
-	
-	/*
-	 * Simulate grasping.
-	 */
-	try {
-		GripperTaskSimulator::Ptr taskSimulator = ownedPtr(new GripperTaskSimulator(gripper, targets, samples, _td, 1));
-		
-		taskSimulator->startSimulation(_td->getInitState());
-		
-		while (taskSimulator->isRunning()) {
-		}
-
-		gripper->getQuality() = taskSimulator->getGripperQuality();
-	} catch (...) {
-		RW_THROW("Exception during grasp simulation!");
-	}
+	GripperQuality::Ptr q = _manager->evaluateGripper(gripper);
 	
 	/*
 	 * Extract results.
 	 */
-	GripperQuality& q = gripper->getQuality();
-	results[0] = q.success;
-	results[1] = q.robustness;
-	results[2] = q.alignment;
-	results[3] = q.coverage;
-	results[4] = q.wrench;
-	results[5] = -q.maxstress / _td->getStressLimit();
-	results[6] = -1000.0 * q.volume;
+	
+	results[0] = q->success;
+	results[1] = q->robustness;
+	results[2] = q->alignment;
+	results[3] = q->coverage;
+	results[4] = q->wrench;
+	results[5] = q->maxstress;
+	results[6] = q->volume;
 	
 	return results;
 }

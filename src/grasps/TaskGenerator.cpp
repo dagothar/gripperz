@@ -300,6 +300,14 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::addPerturbations(rwlibs::task::Grasp
 }
 
 
+rwlibs::task::GraspTask::Ptr TaskGenerator::generateTasks(
+	int nTargets,
+	rw::kinematics::State state
+) {
+	return generateTask(nTargets, state, &_ssamples, 0);
+}
+
+
 
 rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinematics::State state, std::vector<SurfaceSample>* ssamples, int nSamples)
 {

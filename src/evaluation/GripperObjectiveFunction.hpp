@@ -7,7 +7,7 @@
 #pragma once
 
 #include <models/Gripper.hpp>
-#include <context/TaskDescription.hpp>
+#include <evaluation/GripperEvaluationManager.hpp>
 #include <optimization/MultiObjectiveFunction.hpp>
 
 namespace gripperz {
@@ -29,7 +29,7 @@ public:
 	static const unsigned NObjectives = 7;
 	
 public:
-	GripperObjectiveFunction(context::TaskDescription::Ptr td);
+	GripperObjectiveFunction(evaluation::GripperEvaluationManager::Ptr manager);
 	
 	virtual ~GripperObjectiveFunction();
 	
@@ -52,7 +52,7 @@ public:
 	static models::Gripper::Ptr parametersToGripper(const std::vector<double>& parameters);
 
 private:
-	context::TaskDescription::Ptr _td;
+	evaluation::GripperEvaluationManager::Ptr _manager;
 };
 
 } /* evaluation */
