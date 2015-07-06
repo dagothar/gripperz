@@ -16,6 +16,8 @@
 #include <models/Gripper.hpp>
 #include <simulator/GripperTaskSimulator.hpp>
 #include <simulator/BasicSimulator.hpp>
+#include <simulator/InterferenceSimulator.hpp>
+#include <evaluation/GripperEvaluator.hpp>
 #include <context/TaskDescription.hpp>
 
 #include "ui_GraspPlugin.h"
@@ -109,8 +111,8 @@ private:
 	rw::models::TreeDevice::Ptr _dev; // gripper device
 	rwsim::dynamics::RigidDevice::Ptr _ddev; // dynamic gripper device
 	rwsim::dynamics::DynamicWorkCell::Ptr _dwc; // dynamic workcell
-	gripperz::simulator::GripperTaskSimulator::Ptr _graspSim; // simulator
-	gripperz::simulator::BasicSimulator::Ptr _basicSim; // simulator
+	//gripperz::simulator::GripperTaskSimulator::Ptr _graspSim; // simulator
+	gripperz::simulator::InterferenceSimulator::Ptr _simulator; // simulator
 	rw::kinematics::State _initState; // workcell initial state
 
 	rw::graphics::Render::Ptr _render; // used to render targets
