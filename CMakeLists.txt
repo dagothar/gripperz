@@ -5,8 +5,9 @@ PROJECT(gripperz)
 ## Options
 OPTION(BUILD_TESTS "Build tests" ON)
 OPTION(BUILD_TOOLS "Build tools" ON)
+OPTION(BUILD_SANDBOX "Build sandbox" OFF)
 OPTION(BUILD_PLUGIN "Build plugin" ON)
-OPTION(BUILD_DOCS "Build documentation" ON)
+OPTION(BUILD_DOCS "Build documentation" OFF)
 
 # Used to resolve absolute path names
 SET(ROOT ${CMAKE_CURRENT_SOURCE_DIR})
@@ -58,7 +59,7 @@ IF(BUILD_DOCS)
 	find_package(Doxygen)
 	if(DOXYGEN_FOUND)
 		configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
-		add_custom_target(doc #ALL
+		add_custom_target(doc ALL
 			${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
 			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 			COMMENT "Generating API documentation with Doxygen" VERBATIM
