@@ -22,7 +22,8 @@ using namespace rw::math;
 using namespace rwlibs::task;
 
 
-GripperObjectiveFunction::GripperObjectiveFunction(evaluation::GripperEvaluationManager::Ptr manager) :
+GripperObjectiveFunction::GripperObjectiveFunction(GripperBuilder::Ptr builder, evaluation::GripperEvaluationManager::Ptr manager) :
+	_builder(builder),
 	_manager(manager)
 {
 }
@@ -62,7 +63,7 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 	 */
 	Gripper::Ptr gripper = NULL;
 	try {
-		gripper = parametersToGripper(x);
+		gripper = _builder->parametersToGripper(x);
 	} catch (...) {
 		RW_THROW("Exception during gripper generation!");
 	}

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <models/Gripper.hpp>
+#include <models/GripperBuilder.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <optimization/MultiObjectiveFunction.hpp>
 
@@ -29,7 +30,7 @@ public:
 	static const unsigned NObjectives = 7;
 	
 public:
-	GripperObjectiveFunction(evaluation::GripperEvaluationManager::Ptr manager);
+	GripperObjectiveFunction(models::GripperBuilder::Ptr builder, evaluation::GripperEvaluationManager::Ptr manager);
 	
 	virtual ~GripperObjectiveFunction();
 	
@@ -44,6 +45,12 @@ public:
 	 */
 	virtual std::vector<double> operator()(const std::vector<double>& x);
 	
+	models::GripperBuilder::Ptr getBuilder() { return _builder; }
+	void setBuilder(models::GripperBuilder::Ptr builder) { _builder = builder; }
+	
+	evaluation::GripperEvaluationManager::Ptr getEvaluationManager() { return _manager; }
+	void setEvaluationManager(evaluation::GripperEvaluationManager::Ptr manager) { _manager = manager; }
+	
 	/**
 	 * @brief Builds gripper object from parameters.
 	 * @param parameters [in] parameters
@@ -52,6 +59,7 @@ public:
 	static models::Gripper::Ptr parametersToGripper(const std::vector<double>& parameters);
 
 private:
+	models::GripperBuilder::Ptr _builder;
 	evaluation::GripperEvaluationManager::Ptr _manager;
 };
 

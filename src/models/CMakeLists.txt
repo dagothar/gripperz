@@ -1,5 +1,7 @@
 SET(SRC_FILES
 	${SRC_FILES}
 	${CMAKE_CURRENT_SOURCE_DIR}/Gripper.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/GripperBuilder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MapGripperBuilder.cpp
 	CACHE INTERNAL ""
 )

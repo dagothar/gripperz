@@ -19,9 +19,22 @@ using namespace gripperz::geometry;
 Gripper::Gripper(const std::string& name) :
 		_name(name), _baseGeometry(NULL), _leftGeometry(NULL), _rightGeometry(
 				NULL), _tcp(Transform3D<>(Vector3D<>(0, 0, 0.075))), _jawdist(
-				0), _opening(0.05), _force(50) {
+				0), _opening(0.05), _force(25) {
 	setBaseGeometry(Q(3, 0.15, 0.1, 0.05));
-	setJawGeometry(Q(10, 0, 0.1, 0.025, 0.02, 0, 0, 0.05, 0, 90 * Deg2Rad, 0));
+	
+	Q jawGeo(11);
+	jawGeo(0) = 0;
+	jawGeo(1) = 0.1;
+	jawGeo(2) = 0.025;
+	jawGeo(3) = 0.02;
+	jawGeo(4) = 0;
+	jawGeo(5) = 0;
+	jawGeo(6) = 0.075;
+	jawGeo(7) = 0;
+	jawGeo(8) = 0;
+	jawGeo(9) = 0;
+	jawGeo(10) = 0;
+	setJawGeometry(jawGeo);
 }
 
 void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,

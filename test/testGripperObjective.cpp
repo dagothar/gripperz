@@ -10,7 +10,10 @@
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
+#include <loaders/GripperXMLLoader.hpp>
 #include <simulation/InterferenceSimulator.hpp>
+#include <optimization/CombineObjectivesFactory.hpp>
+#include <models/MapGripperBuilder.hpp>
 
 
 using namespace std;
@@ -20,6 +23,7 @@ using namespace gripperz::context;
 using namespace gripperz::simulation;
 using namespace gripperz::grasps;
 using namespace gripperz::loaders;
+using namespace gripperz::models;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
 USE_ROBWORKSIM_NAMESPACE
@@ -60,7 +64,24 @@ int main(int argc, char* argv[]) {
 	cout << "Loading context..." << endl;
 	TaskDescription::Ptr td = TaskDescriptionLoader::load("../data/rotor/task1.td.xml", dwc);
 	
+	/* read weights */
+	cout << "Please input 7 weights (success, robustness, alignment, coverage, wrench, stress, volume): ";
+	vector<double> weights = readVector(cin);
+	cout << "Weights: " << vectorToString(weights) << endl;
+	
 	/* create objective function */
+	vector<MapGripperBuilder::ParameterName> params{
+		MapGripperBuilder::Length,
+		MapGripperBuilder::Width,
+		MapGripperBuilder::Depth,
+		MapGripperBuilder::ChfDepth,
+		MapGripperBuilder::ChfAngle,
+		MapGripperBuilder::CutDepth,
+		MapGripperBuilder::CutAngle,
+		MapGripperBuilder::CutTilt, 
+		MapGripperBuilder::TcpOffset
+	};
+	GripperBuilder::Ptr builder = new MapGripperBuilder(new Gripper, params);
 	TaskGenerator::Ptr generator = new TaskGenerator(td);
 	//generator->setSurfaceSamples(NULL);
 	GripperSimulator::Ptr simulator = new InterferenceSimulator(dwc, td->getInterferenceLimit(), td->getInterferenceObjects());
@@ -68,12 +89,16 @@ int main(int argc, char* argv[]) {
 	GripperEvaluationManager::Configuration config;
 	config.nOfGraspsPerEvaluation = 100;
 	GripperEvaluationManager::Ptr manager = new GripperEvaluationManager(td, generator, simulator, evaluator, config);
-	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(manager);
+	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
+	
+	/* initialize combiners */
+	CombineObjectives::Ptr sumMethod = CombineObjectivesFactory::make("sum", weights);
+	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
 	
 	/* read grippers */
 	unsigned n = 0;
 	while (true) {
-		cout << "#" << n << "> ";
+		cout << "#" << n++ << "> ";
 		cout << "Please input 9 parameters (length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp): ";
 		vector<double> param = readVector(cin);
 		
@@ -81,6 +106,13 @@ int main(int argc, char* argv[]) {
 		vector<double> result = (*func)(param);
 		
 		cout << "Objectives (success, robustness, alignment, coverage, wrench, stress, volume): " << vectorToString(result) << endl;
+		
+		cout << "Sum=" << sumMethod->combine(result)
+			<< " Log=" << logMethod->combine(result) << endl;
+		
+		/* save gripper */
+		Gripper::Ptr grp = builder->parametersToGripper(param);
+		GripperXMLLoader::save(grp, "obj.grp.xml");
 	}
 	
 	return 0;
