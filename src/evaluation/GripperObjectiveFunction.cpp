@@ -10,6 +10,9 @@
 #include <grasps/TaskGenerator.hpp>
 #include <simulation/GripperTaskSimulator.hpp>
 
+#define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
+
 
 using namespace std;
 using namespace gripperz::evaluation;
@@ -35,16 +38,25 @@ GripperObjectiveFunction::~GripperObjectiveFunction() {
 
 bool areParametersOk(const std::vector<double>& p) {
 	// if tcp > length
-	if (p[8] > p[0]) return false;
+	if (p[8] > p[0]) {
+		DEBUG << "tcp > length" << endl;
+		return false;
+	}
 	
 	// if cut depth > width
-	if (p[5] > p[2]) return false;
+	if (p[5] > p[2]) {
+		DEBUG << "cut depth > width" << endl;
+		return false;
+	}
 	
 	// check if cutout doesn't fall under chamfer
 	double chflength = p[3] * p[1] * sin(p[4] * Deg2Rad);
 	if (p[8] > p[0] - chflength) {
 		double y = p[1] - (p[8] - chflength) * cos(p[4] * Deg2Rad);
-		if (p[5] > y) return false;
+		if (p[5] > y) {
+			DEBUG << "too thin under cutout" << endl;
+			return false;
+		}
 	}
 	
 	return true;
@@ -54,9 +66,9 @@ bool areParametersOk(const std::vector<double>& p) {
 std::vector<double> GripperObjectiveFunction::operator()(const std::vector<double>& x) {
 	vector<double> results(NObjectives, 0.0);
 	
-	if (!areParametersOk(x)) {
-		return results;
-	}
+	//if (!areParametersOk(x)) {
+	//	return results;
+	//}
 	
 	/*
 	 * Build gripper.
@@ -68,19 +80,24 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 		RW_THROW("Exception during gripper generation!");
 	}
 	
-	GripperQuality::Ptr q = _manager->evaluateGripper(gripper);
+	try {
+		GripperQuality::Ptr q = _manager->evaluateGripper(gripper);
+		
+		/*
+		 * Extract results.
+		 */
+		results[0] = q->success;
+		results[1] = q->robustness;
+		results[2] = q->alignment;
+		results[3] = q->coverage;
+		results[4] = q->wrench;
+		results[5] = q->maxstress;
+		results[6] = q->volume;
+	} catch (...) {
+		INFO << "Exception during gripper evaluation!" << endl;
+	}
 	
-	/*
-	 * Extract results.
-	 */
 	
-	results[0] = q->success;
-	results[1] = q->robustness;
-	results[2] = q->alignment;
-	results[3] = q->coverage;
-	results[4] = q->wrench;
-	results[5] = q->maxstress;
-	results[6] = q->volume;
 	
 	return results;
 }
