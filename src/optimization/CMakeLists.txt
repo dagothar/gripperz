@@ -12,5 +12,6 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/CombineProduct.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CombineLog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ParameterMapping.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Optimizer.cpp
 	CACHE INTERNAL ""
 )

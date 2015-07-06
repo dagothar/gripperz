@@ -18,6 +18,7 @@
 		<Interference>1</Interference>
 		<Wrench>0</Wrench>
 		<Stress>75</Stress>
+		<Volume>0.02</Volume>
 	</Limits>
 	<Baseline>
 		<Shape>1</Shape>

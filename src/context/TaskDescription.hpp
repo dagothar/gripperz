@@ -106,6 +106,14 @@ public:
 	void setStressLimit(double limit) {
 		_stressLimit = limit;
 	}
+	
+	double getVolumeLimit() const {
+		return _volumeLimit;
+	}
+	
+	void setVolumeLimit(double limit) {
+		_volumeLimit = limit;
+	}
 
 	std::vector<rw::models::Object::Ptr> getInterferenceObjects() {
 		return _interferenceObjects;
@@ -249,6 +257,7 @@ protected:
 	double _interferenceLimit;
 	double _wrenchLimit;
 	double _stressLimit;
+	double _volumeLimit;
 	std::vector<rw::models::Object::Ptr> _interferenceObjects;
 	rw::math::Q _prefilteringDistance; // distance used to filter samples at the start, so they are more uniform
 	rw::math::Q _coverageDistance; // distance used for filtering grasps for coverage

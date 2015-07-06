@@ -39,6 +39,28 @@ public:
 	 */
 	virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
 
+protected:
+	//! Calculates the success index of the gripper.
+	virtual double calculateSuccess(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
+	
+	//! Calculates the robustness index of the gripper.
+	virtual double calculateRobustness(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
+	
+	//! Calculates the coverage index of the gripper.
+	virtual double calculateCoverage(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
+	
+	//! Calculates the alignment index of the gripper.
+	virtual double calculateAlignment(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
+	
+	//! Calculates the wrench index of the gripper.
+	virtual double calculateWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
+	
+	//! Calculates the stress index of the gripper.
+	virtual double calculateStress(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
+	
+	//! Calculates the volume index of the gripper.
+	virtual double calculateVolume(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
+
 private:
 	context::TaskDescription::Ptr _context;
 };

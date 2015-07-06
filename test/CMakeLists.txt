@@ -25,4 +25,9 @@ if (BUILD_TESTS)
 	add_executable(test-gripper-objective testGripperObjective.cpp)
 	add_dependencies(test-gripper-objective gripperz)
 	target_link_libraries(test-gripper-objective gripperz)
+	
+	# Target: test-gripper-evaluator
+	add_executable(test-gripper-evaluator testGripperEvaluator.cpp)
+	add_dependencies(test-gripper-evaluator gripperz)
+	target_link_libraries(test-gripper-evaluator gripperz)
 endif ()

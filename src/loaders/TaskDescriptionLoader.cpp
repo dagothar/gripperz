@@ -208,6 +208,16 @@ void TaskDescriptionLoader::readLimits(PTree& tree, TaskDescription::Ptr task)
 	} else {
 		task->setStressLimit(0.0);
 	}
+	
+	boost::optional<PTree&> volumeNode = tree.get_child_optional("Volume");
+	if (volumeNode) {
+		DEBUG << "\tVolume limit: ";
+		double volumeLimit = XMLHelpers::readDouble(volumeNode.get());
+		task->setVolumeLimit(volumeLimit);
+		DEBUG << volumeLimit << endl;
+	} else {
+		task->setVolumeLimit(0.02);
+	}
 }
 
 
@@ -354,6 +364,7 @@ void TaskDescriptionLoader::save(const TaskDescription::Ptr td, const std::strin
 	tree.put("TaskDescription.Limits.Interference", td->getInterferenceLimit());
 	tree.put("TaskDescription.Limits.Wrench", td->getWrenchLimit());
 	tree.put("TaskDescription.Limits.Stress", td->getStressLimit());
+	tree.put("TaskDescription.Limits.Volume", td->getVolumeLimit());
 	
 	// save weights
 	tree.put("TaskDescription.Weights.Coverage", td->getWeights().coverage);
