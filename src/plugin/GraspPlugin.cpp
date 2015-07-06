@@ -68,6 +68,8 @@ void GraspPlugin::initialize() {
 
 	getRobWorkStudio()->keyEvent().add(
 			boost::bind(&GraspPlugin::keyEventListener, this, _1, _2), this);
+			
+	Log::log().setLevel(Log::Info);
 }
 
 void GraspPlugin::startSimulation() {
@@ -378,6 +380,8 @@ void GraspPlugin::updateSim() {
 		_timer->stop();
 
 		_gripper->getQuality() = GripperQuality(_graspSim->getGripperQuality());
+		
+		cout << _gripper->getQuality() << endl;
 
 		log().info() << "Simulation is finished." << endl;
 	}

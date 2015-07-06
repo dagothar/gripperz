@@ -50,6 +50,11 @@ bool BasicSimulator::isRunning() {
 }
 
 
+unsigned BasicSimulator::getNrTasksDone() const {
+	return const_cast<BasicSimulator*>(this)->GraspTaskSimulator::getNrTargetsDone();
+}
+
+
 std::vector<rwsim::simulator::ThreadSimulator::Ptr> BasicSimulator::getSimulators() {
 	return GraspTaskSimulator::getSimulators();
 }

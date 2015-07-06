@@ -45,6 +45,8 @@ public:
 	
 	virtual bool isRunning();
 	
+	unsigned getNrTasksDone() const;
+	
 	unsigned getThreads() const { return _threads; }
 	
 	/**
