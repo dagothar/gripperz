@@ -173,9 +173,9 @@ void GraspPlugin::guiEvent() {
 	}
 
 	else if (obj == ui.stopButton) {
-		/*if (_graspSim->isRunning()) {
-			_graspSim->pauseSimulation(); // there should be some way to stop the simulation
-		}*/
+		if (_simulator->isRunning()) {
+			_simulator->stop();
+		}
 	}
 
 	else if (obj == ui.loadTaskButton) {

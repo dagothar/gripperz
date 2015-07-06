@@ -38,6 +38,8 @@ public:
 	 */
 	virtual void start(const rw::kinematics::State& initState) = 0;
 	
+	virtual void stop() = 0;
+	
 	virtual bool isRunning() = 0;
 	
 	virtual unsigned getNrTasksDone() const = 0;

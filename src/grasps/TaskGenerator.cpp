@@ -379,6 +379,8 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
             ++successes;
             failures_in_row = 0;
             
+            DEBUG << "Adding target and sample" << endl;
+            
             // make new subtask (for tasks)
             GraspSubTask subtask;
             subtask.offset = wTobj;
@@ -408,6 +410,8 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
 				RW_THROW("Something is rotten in the state of RobWork: " << successes << "/" << failures_in_row);
 				break;
 			}
+			
+			DEBUG << "Adding sample" << endl;
 
 			GraspTarget gtarget(target);
             gtarget.result = ownedPtr(new GraspResult());

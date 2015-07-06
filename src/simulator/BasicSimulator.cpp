@@ -45,6 +45,11 @@ void BasicSimulator::start(const rw::kinematics::State& initState) {
 }
 
 
+void BasicSimulator::stop() {
+	GraspTaskSimulator::pauseSimulation();
+}
+
+
 bool BasicSimulator::isRunning() {
 	return GraspTaskSimulator::isRunning();
 }

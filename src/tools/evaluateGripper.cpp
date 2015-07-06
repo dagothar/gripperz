@@ -25,6 +25,8 @@
 #include <loaders/GripperXMLLoader.hpp>
 #include <grasps/TaskGenerator.hpp>
 #include <simulator/GripperTaskSimulator.hpp>
+#include <simulator/InterferenceSimulator.hpp>
+#include <evaluation/GripperEvaluator.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -47,6 +49,7 @@ namespace po = boost::program_options;
 using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::simulator;
+using namespace gripperz::evaluation;
 using namespace gripperz::grasps;
 using namespace gripperz::loaders;
 
@@ -54,6 +57,7 @@ using namespace gripperz::loaders;
 int main(int argc, char* argv[]) {
 	Math::seed();
 	RobWork::getInstance()->initialize();
+	Log::log().setLevel(Log::Debug);
 
 	// options
 	int cores, ntargets, nsamples, rtargets;
@@ -118,7 +122,7 @@ int main(int argc, char* argv[]) {
 	INFO << "* Loading dwc... ";
 	DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load(dwcFilename);
 	INFO << "Loaded." << endl;
-	INFO << "* Loading task description... ";
+	INFO << "* Loading task description... " << tdFilename << " " << endl;
 	TaskDescription::Ptr td = TaskDescriptionLoader::load(tdFilename, dwc);
 	INFO << "Loaded." << endl;
 	INFO << "* Loading gripper... ";
@@ -153,8 +157,7 @@ int main(int argc, char* argv[]) {
 	TaskGenerator::Ptr generator = new TaskGenerator(td);
 
 	if (useSamples) {
-		generator->generateTask(ntargets, td->getInitState(), &ssamples,
-				nsamples);
+		generator->generateTask(ntargets, td->getInitState(), &ssamples, nsamples);
 	} else {
 		generator->generateTask(ntargets, td->getInitState(), NULL, nsamples);
 	}
@@ -163,20 +166,27 @@ int main(int argc, char* argv[]) {
 	GraspTask::Ptr samples = generator->getSamples();
 	DEBUG << "Grasps generated." << endl;
 	DEBUG << "Tasks: " << tasks->getAllTargets().size() << endl;
-	DEBUG << "Samples: " << samples->getAllTargets().size()
-			<< endl;
+	DEBUG << "Samples: " << samples->getAllTargets().size()	<< endl;
 
 	/* perform simulation */
-	//Log::log().setLevel(Log::Debug);
 	if (!nosim) {
 		INFO << "Starting simulation..." << endl;
-		GripperTaskSimulator::Ptr sim = ownedPtr(
-				new GripperTaskSimulator(gripper, tasks, samples, td, cores));
+		GripperSimulator::Ptr sim = ownedPtr(
+			new InterferenceSimulator(
+				dwc,
+				td->getInterferenceLimit(),
+				td->getInterferenceObjects(),
+				MetricFactory::makeTransform3DMetric<double>(1.0, 1.0),
+				cores
+			)
+		);
+		sim->loadTasks(tasks);
 		DEBUG << "Simulator created." << endl;
 
 		try {
 			DEBUG << "Launching..." << endl;
-			sim->startSimulation(td->getInitState());
+			Log::log().setLevel(Log::Info);
+			sim->start(td->getInitState());
 			DEBUG << "Launched." << endl;
 		} catch (...) {
 			cout << "Error starting simulation..." << endl;
@@ -184,14 +194,18 @@ int main(int argc, char* argv[]) {
 		}
 
 		while (sim->isRunning()) {
-			//cout << "Running..." << endl;
 		}
+		
+		Log::log().setLevel(Log::Debug);
+		
+		GripperEvaluator::Ptr evaluator = ownedPtr(new GripperEvaluator(td));
+		GripperQuality::Ptr quality = evaluator->evaluateGripper(gripper, tasks, samples);
 
-		gripper->getQuality() = sim->getGripperQuality();
+		gripper->setQuality(*quality);
 	}
 
 	/* perform robustness tests */
-	if (testRobustness) {
+	/*if (testRobustness) {
 		INFO << "Starting robustness test..." << endl;
 
 		// perturbate only succesful tasks
@@ -207,7 +221,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		gripper->getQuality().robustness = sim->getGripperQuality().success;
-	}
+	}*/
 
 	/* display results */
 	INFO << "\nRESULTS" << endl;
