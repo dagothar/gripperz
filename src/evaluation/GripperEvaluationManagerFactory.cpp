@@ -16,8 +16,12 @@ using namespace gripperz::simulation;
 using namespace rw::common;
 
 
-GripperEvaluationManager::Ptr GripperEvaluationManagerFactory::getEvaluationManager(context::TaskDescription::Ptr td, unsigned nTargets) {
-	TaskGenerator::Ptr generator = ownedPtr(new TaskGenerator(td));
+GripperEvaluationManager::Ptr GripperEvaluationManagerFactory::getEvaluationManager(
+	context::TaskDescription::Ptr td,
+	unsigned nTargets,
+	const std::vector<SurfaceSample>& ssamples
+) {
+	TaskGenerator::Ptr generator = ownedPtr(new TaskGenerator(td, ssamples));
 	
 	GripperSimulator::Ptr simulator = ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects()));
 	

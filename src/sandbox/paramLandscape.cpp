@@ -69,9 +69,11 @@ int main(int argc, char* argv[]) {
 	cout << "Loading workcell..." << endl;
 	DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load("../data/rotor/Scene.dwc.xml");
 	cout << "Loading context..." << endl;
-	TaskDescription::Ptr td = TaskDescriptionLoader::load("../data/rotor/task3.td.xml", dwc);
+	TaskDescription::Ptr td = TaskDescriptionLoader::load("../data/rotor/task1.td.xml", dwc);
 	cout << "Loading gripper..." << endl;
 	Gripper::Ptr gripper = GripperXMLLoader::load("../data/grippers/template.grp.xml");
+	cout << "Loading samples..." << endl;
+	vector<SurfaceSample> ssamples = SurfaceSample::loadFromXML("../data/rotor/samples1.xml");
 	
 	/* read weights */
 	cout << "Please input 7 weights (success, robustness, alignment, coverage, wrench, stress, volume): ";
@@ -80,11 +82,11 @@ int main(int argc, char* argv[]) {
 	
 	/* create objective function */
 	vector<MapGripperBuilder::ParameterName> params{
-		MapGripperBuilder::CutTilt
+		MapGripperBuilder::Length
 	};
 	GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, params);
 	
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, 100);
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, 100, ssamples);
 	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 	
 	/* initialize combiners */
@@ -94,7 +96,7 @@ int main(int argc, char* argv[]) {
 	/* simulate grippers */
 	ofstream results("results.txt");
 	unsigned n = 0;
-	for (double x = -90.0; x < 90.0; x += 10) {	
+	for (double x = 0.01; x < 0.2; x += 0.02) {	
 		n++;
 		
 		/* evaluate */

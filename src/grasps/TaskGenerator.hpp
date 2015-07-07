@@ -31,7 +31,7 @@ public:
 	typedef rw::common::Ptr<TaskGenerator> Ptr;
 
 public:
-	TaskGenerator(context::TaskDescription::Ptr td);
+	TaskGenerator(context::TaskDescription::Ptr td, const std::vector<SurfaceSample>& ssamples=std::vector<SurfaceSample>());
 	
 	/**
 	 * @brief Generates a number of tasks

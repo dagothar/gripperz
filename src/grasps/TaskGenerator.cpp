@@ -24,10 +24,11 @@ using namespace gripperz::grasps;
 
 
 
-TaskGenerator::TaskGenerator(TaskDescription::Ptr td) :
+TaskGenerator::TaskGenerator(TaskDescription::Ptr td, const std::vector<SurfaceSample>& ssamples) :
 	_td(td),
 	_tasks(NULL),
-	_samples(NULL)
+	_samples(NULL),
+	_ssamples(ssamples)
 {
 	_openQ = Q(1, td->getGripperDevice()->getBounds().second[0]);
 	_closeQ = Q(1, td->getGripperDevice()->getBounds().first[0]);
