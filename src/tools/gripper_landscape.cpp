@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
 	string gripperFilename;
 	string outDir;
 	string samplesFilename;
-	vector<MapGripperBuilder::ParameterName> parameters{MapGripperBuilder::Length};
+	vector<int> parameters{0, 1, 2, 3, 4, 5, 6, 7, 8};
 	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
 
 	/* define CLI options */
@@ -114,6 +114,7 @@ int main(int argc, char* argv[]) {
 		("cores,c", value<int>(&cores)->default_value(1), "number of threads to use")
 		("resolution,r", value<int>(&resolution)->default_value(10), "how many samples per parameter")
 		("ntargets,t", value<int>(&ntargets)->default_value(100), "number of tasks to generate")
+		("parameters,p", value<vector<int> >(&parameters)->multitoken(), "parameters to landscape (0-8)")
 		("dwc", value<string>(&dwcFilename)->required(), "dynamic workcell file")
 		("td", value<string>(&tdFilename)->required(), "task description file")
 		("gripper,g", value<string>(&gripperFilename)->required(), "gripper file")
@@ -162,9 +163,12 @@ int main(int argc, char* argv[]) {
 	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
 	
 	/* landscapes */
-	BOOST_FOREACH (MapGripperBuilder::ParameterName name, parameters) {
+	BOOST_FOREACH (int id, parameters) {
+		MapGripperBuilder::ParameterName name = static_cast<MapGripperBuilder::ParameterName>(id);
+		
 		string paramName = MapGripperBuilder::parameterNameToString(name);
 		ofstream dataFile(outDir + "/" + paramName + ".csv");
+		dataFile << "# " << paramName << ", success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog" << endl;
 		
 		GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, vector<MapGripperBuilder::ParameterName>{name});
 		MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
