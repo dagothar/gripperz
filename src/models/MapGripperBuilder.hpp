@@ -22,7 +22,7 @@ public:
 	
 	//! Names of the parameters.
 	typedef enum {
-		Length,
+		Length=0,
 		Width,
 		Depth,
 		ChfDepth,
@@ -49,6 +49,8 @@ public:
 	
 	const std::vector<ParameterName>& getParameterList() const { return _parameters; }
 	void setParameterList(const std::vector<ParameterName>& parameters) { _parameters = parameters; }
+	
+	static std::string parameterNameToString(ParameterName parameter);
 	
 protected:
 	void applyParameter(Gripper::Ptr gripper, ParameterName name, double value);

@@ -5,6 +5,9 @@
  */
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <map>
 #include <rw/rw.hpp>
 #include <rw/RobWork.hpp>
 #include <rw/common/Log.hpp>
@@ -27,6 +30,11 @@
 #include <simulation/GripperTaskSimulator.hpp>
 #include <simulation/InterferenceSimulator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
+#include <models/MapGripperBuilder.hpp>
+#include <evaluation/GripperObjectiveFunction.hpp>
+#include <evaluation/GripperEvaluationManager.hpp>
+#include <evaluation/GripperEvaluationManagerFactory.hpp>
+#include <optimization/CombineObjectivesFactory.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -49,26 +57,52 @@ namespace po = boost::program_options;
 using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::simulation;
+using namespace gripperz::optimization;
 using namespace gripperz::evaluation;
 using namespace gripperz::grasps;
 using namespace gripperz::loaders;
+
+
+string vectorToString(const vector<double>& v) {
+	stringstream sstr;
+	
+	for (unsigned i = 0; i < v.size(); ++i) {
+		sstr << v[i] << ", ";
+	}
+	
+	return sstr.str();
+}
 
 
 int main(int argc, char* argv[]) {
 	/* initialize robwork */
 	Math::seed();
 	RobWork::getInstance()->initialize();
-	Log::log().setLevel(Log::Debug);
+	Log::log().setLevel(Log::Info);
+	
+	/* parameter bounds */
+	map<MapGripperBuilder::ParameterName, pair<double, double> > bounds;
+	bounds[MapGripperBuilder::Length] = make_pair(0.0, 0.2);
+	bounds[MapGripperBuilder::Width] = make_pair(0.0, 0.05);
+	bounds[MapGripperBuilder::Depth] = make_pair(0.0, 0.05);
+	bounds[MapGripperBuilder::ChfDepth] = make_pair(0.0, 1.0);
+	bounds[MapGripperBuilder::ChfAngle] = make_pair(0.0, 90.0);
+	bounds[MapGripperBuilder::CutDepth] = make_pair(0.0, 0.05);
+	bounds[MapGripperBuilder::CutAngle] = make_pair(0.0, 180.0);
+	bounds[MapGripperBuilder::CutTilt] = make_pair(-90.0, 90.0);
+	bounds[MapGripperBuilder::TcpOffset] = make_pair(0.0, 0.2);
 
 	/* options */
 	int cores, ntargets, resolution;
 	string dwcFilename;
 	string tdFilename;
 	string gripperFilename;
-	string outFilename;
+	string outDir;
 	string samplesFilename;
+	vector<MapGripperBuilder::ParameterName> parameters{MapGripperBuilder::Length};
+	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
 
-	/* parse CLI */
+	/* define CLI options */
 	string usage =
 			"This is a script used to generate tasks for a single gripper, simulate them and"
 					" evaluate gripper's performance.\n\n"
@@ -83,9 +117,11 @@ int main(int argc, char* argv[]) {
 		("dwc", value<string>(&dwcFilename)->required(), "dynamic workcell file")
 		("td", value<string>(&tdFilename)->required(), "task description file")
 		("gripper,g", value<string>(&gripperFilename)->required(), "gripper file")
-		("ssamples", value<string>(), "surface samples file")
-		("out,o", value<string>(), "task file");
+		("samples,s", value<string>(&samplesFilename), "surface samples file")
+		("out,o", value<string>(&outDir)->required(), "output directory");
 	variables_map vm;
+	
+	/* parse CLI */
 	try {
 		store(command_line_parser(argc, argv).options(desc).run(), vm);
 		notify(vm);
@@ -115,13 +151,44 @@ int main(int argc, char* argv[]) {
 
 	vector<SurfaceSample> ssamples;
 	if (vm.count("samples")) {
-		samplesFilename = vm["samples"].as<string>();
-
-		// load samples
+		INFO << "* Loading samples... ";
 		ssamples = SurfaceSample::loadFromXML(samplesFilename);
+		INFO << "Loaded." << endl;
 	}
 	
-	rw::kinematics::State initState = td->getInitState();
+	/* construct objective function */
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, ntargets, ssamples);
+	CombineObjectives::Ptr sumMethod = CombineObjectivesFactory::make("sum", weights);
+	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
+	
+	/* landscapes */
+	BOOST_FOREACH (MapGripperBuilder::ParameterName name, parameters) {
+		string paramName = MapGripperBuilder::parameterNameToString(name);
+		ofstream dataFile(outDir + "/" + paramName + ".csv");
+		
+		GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, vector<MapGripperBuilder::ParameterName>{name});
+		MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
+		
+		double range = bounds[name].second - bounds[name].first;
+		int n = 0;
+		for (double x = bounds[name].first; x <= bounds[name].second; x+= range / resolution) {
+			cout << "# Evaluating " << paramName << "= " << x << endl;
+			vector<double> param{x};
+			vector<double> result = (*func)(param);
+			double q_sum = sumMethod->combine(result);
+			double q_log = logMethod->combine(result);
+			
+			cout << x << ", " << vectorToString(result) << q_sum << ", " << q_log << endl;
+			dataFile << x << ", " << vectorToString(result) << q_sum << ", " << q_log << endl;
+			
+			Gripper::Ptr grp = builder->parametersToGripper(param);
+			stringstream sstr;
+			sstr << outDir << "/" << paramName << "_" << n++ << ".grp.xml";
+			GripperXMLLoader::save(grp, sstr.str());
+		}
+		
+		dataFile.close();
+	}
 
 	return 0;
 }

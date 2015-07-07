@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Gripper name="gripper">
+	<Parameters>
+		<Geometry>
+			<Jaws>
+				<Q> 0 0.1 0.025 0.02 1 45 0.075 0.01 120 0 0 </Q>
+			</Jaws>
+			<Base>
+				<Q> 0.15 0.1 0.05 </Q>
+			</Base>
+		</Geometry>
+		<Offset>0.075</Offset>
+		<Jawdist>0</Jawdist>
+		<Opening>0.05</Opening>
+		<Force>25</Force>
+		<Stroke>0.05</Stroke>
+	</Parameters>
+	<Result>
+		<Experiments>0</Experiments>
+		<Successes>0</Successes>
+		<Samples>0</Samples>
+		<Coverage>0</Coverage>
+		<SuccessRatio>0</SuccessRatio>
+		<Wrench>0</Wrench>
+		<TopWrench>0</TopWrench>
+		<Quality>0</Quality>
+		<Robustness>0</Robustness>
+		<MaxStress>7.500000000000462</MaxStress>
+		<Alignment>0</Alignment>
+		<Volume>50</Volume>
+	</Result>
+</Gripper>

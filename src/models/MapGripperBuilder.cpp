@@ -150,3 +150,44 @@ std::vector<double> MapGripperBuilder::gripperToParameters(Gripper::Ptr gripper)
 	
 	return params;
 }
+
+
+std::string MapGripperBuilder::parameterNameToString(ParameterName parameter) {
+	switch (parameter) {
+		case Length:
+			return "length";
+		
+		case Width:
+			return "width";
+		
+		case Depth:
+			return "depth";
+		
+		case ChfDepth:
+			return "chfdepth";
+		
+		case ChfAngle:
+			return "chfangle";
+		
+		case CutDepth:
+			return "cutdepth";
+		
+		case CutAngle:
+			return "cutangle";
+		
+		case CutTilt:
+			return "cuttilt";
+		
+		case TcpOffset:
+			return "tcpoffset";
+		
+		case Force:
+			return "force";
+		
+		default:
+			RW_WARN("Parameter not implemented!");
+	};
+	
+	RW_THROW("Should not have got here");
+	return "";
+}
