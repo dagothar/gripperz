@@ -79,6 +79,8 @@ void GraspPlugin::startSimulation() {
 		new InterferenceSimulator(_dwc, _td->getInterferenceLimit(), _td->getInterferenceObjects())
 	);
 	_simulation->loadTasks(_tasks);
+	
+	Log::log().setLevel(Log::Info);
 
 	try {
 		_td->getInitState().upgrade();

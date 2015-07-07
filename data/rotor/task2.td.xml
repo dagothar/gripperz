@@ -35,7 +35,7 @@
 		<Volume>1.0</Volume>
 		<Alignment>2.5</Alignment>
 	</Weights>
-	<TeachDistance> 10 10 10 30 90</TeachDistance>
+	<TeachDistance> 10 10 10 45 90</TeachDistance>
 	<PrefilteringDistance> 0.001 15 15 </PrefilteringDistance>
 	<CoverageDistance> 0.001 15 15 </CoverageDistance>
 	<HintGrasps>

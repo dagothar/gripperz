@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
 	/* simulate grippers */
 	ofstream results("results.txt");
 	unsigned n = 0;
-	for (double x = -90.0; x < 90.0; x += 0.10) {	
+	for (double x = -90.0; x < 90.0; x += 10) {	
 		n++;
 		
 		/* evaluate */
