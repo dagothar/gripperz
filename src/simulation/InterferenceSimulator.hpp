@@ -31,8 +31,8 @@ public:
 		rwsim::dynamics::DynamicWorkCell::Ptr dwc,
 		double limit,
 		const std::vector<rw::models::Object::Ptr>& objects,
-		InterferenceMetric::Ptr metric = rw::math::MetricFactory::makeTransform3DMetric<double>(1.0, 1.0),
-		unsigned threads=1
+		unsigned nThreads=1,
+		InterferenceMetric::Ptr metric = rw::math::MetricFactory::makeTransform3DMetric<double>(1.0, 1.0)
 	);
 	
 	virtual ~InterferenceSimulator();

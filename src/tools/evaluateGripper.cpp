@@ -176,7 +176,6 @@ int main(int argc, char* argv[]) {
 				dwc,
 				td->getInterferenceLimit(),
 				td->getInterferenceObjects(),
-				MetricFactory::makeTransform3DMetric<double>(1.0, 1.0),
 				cores
 			)
 		);
@@ -205,23 +204,32 @@ int main(int argc, char* argv[]) {
 	}
 
 	/* perform robustness tests */
-	/*if (testRobustness) {
+	if (testRobustness) {
 		INFO << "Starting robustness test..." << endl;
 
 		// perturbate only succesful tasks
 		tasks = TaskGenerator::copyTasks(tasks, true);
-		tasks = TaskGenerator::addPerturbations(tasks, sigma_p,
-				sigma_a * Deg2Rad, rtargets);
+		tasks = TaskGenerator::addPerturbations(tasks, sigma_p,	sigma_a * Deg2Rad, rtargets);
 
-		GripperTaskSimulator::Ptr sim = new GripperTaskSimulator(gripper, tasks,
-				samples, td);
-		sim->startSimulation(td->getInitState());
+		GripperSimulator::Ptr sim = ownedPtr(
+			new InterferenceSimulator(
+				dwc,
+				td->getInterferenceLimit(),
+				td->getInterferenceObjects(),
+				cores
+			)
+		);
+		sim->loadTasks(tasks);
+		sim->start(td->getInitState());
 
 		while (sim->isRunning()) {
 		}
 
-		gripper->getQuality().robustness = sim->getGripperQuality().success;
-	}*/
+		GripperEvaluator::Ptr evaluator = ownedPtr(new GripperEvaluator(td));
+		GripperQuality::Ptr quality = evaluator->evaluateGripper(gripper, tasks, samples);
+		
+		gripper->getQuality().robustness = quality->success;
+	}
 
 	/* display results */
 	INFO << "\nRESULTS" << endl;

@@ -19,11 +19,12 @@ using namespace rw::common;
 GripperEvaluationManager::Ptr GripperEvaluationManagerFactory::getEvaluationManager(
 	context::TaskDescription::Ptr td,
 	unsigned nTargets,
-	const std::vector<SurfaceSample>& ssamples
+	const std::vector<SurfaceSample>& ssamples,
+	unsigned nThreads
 ) {
 	TaskGenerator::Ptr generator = ownedPtr(new TaskGenerator(td, ssamples));
 	
-	GripperSimulator::Ptr simulator = ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects()));
+	GripperSimulator::Ptr simulator = ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads));
 	
 	GripperEvaluator::Ptr evaluator = ownedPtr(new GripperEvaluator(td));
 	

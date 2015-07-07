@@ -24,10 +24,10 @@ InterferenceSimulator::InterferenceSimulator(
 	rwsim::dynamics::DynamicWorkCell::Ptr dwc,
 	double limit,
 	const std::vector<rw::models::Object::Ptr>& objects,
-	InterferenceMetric::Ptr metric,
-	unsigned threads
+	unsigned nThreads,
+	InterferenceMetric::Ptr metric
 ) :
-	BasicSimulator(dwc, threads),
+	BasicSimulator(dwc, nThreads),
 	_interferenceLimit(limit),
 	_interferenceObjects(objects),
 	_metric(metric)
