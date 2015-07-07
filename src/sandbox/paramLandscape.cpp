@@ -63,7 +63,7 @@ string vectorToString(const vector<double>& v) {
 int main(int argc, char* argv[]) {
 	Math::seed();
 	RobWork::getInstance()->initialize();
-	//Log::log().setLevel(Log::Debug);
+	Log::log().setLevel(Log::Debug);
 	
 	/* load data */
 	cout << "Loading workcell..." << endl;
@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
 	};
 	GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, params);
 	
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, 100, ssamples);
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, 100);
 	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 	
 	/* initialize combiners */

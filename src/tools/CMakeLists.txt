@@ -13,4 +13,9 @@ if (BUILD_TOOLS)
 	add_executable(generate-surface-samples generateSurfaceSamples.cpp)
 	add_dependencies(generate-surface-samples gripperz)
 	target_link_libraries(generate-surface-samples gripperz)
+	
+	# Target: gripper_landscape
+	add_executable(gripper_landscape gripper_landscape.cpp)
+	add_dependencies(gripper_landscape gripperz)
+	target_link_libraries(gripper_landscape gripperz)
 endif ()

@@ -305,7 +305,9 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTasks(
 	int nTargets,
 	rw::kinematics::State state
 ) {
-	return generateTask(nTargets, state, &_ssamples, 0);
+	std::vector<SurfaceSample> ssamples = _ssamples;
+	rwlibs::task::GraspTask::Ptr tasks = generateTask(nTargets, state, &ssamples, 0);
+	return tasks;
 }
 
 
@@ -315,7 +317,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
 	Transform3D<> wTobj = Kinematics::worldTframe(_td->getTargetObject()->getBase(), state);
 	
 	// setup task
-	GraspTask::Ptr gtask = new GraspTask;
+	GraspTask::Ptr gtask = ownedPtr(new GraspTask);
 	gtask->getSubTasks().resize(1);
 	GraspSubTask& stask = gtask->getSubTasks()[0];
 	gtask->setGripperID(_td->getGripperID());
@@ -328,7 +330,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
     gtask->setGraspControllerID(_td->getControllerID());
     
     // setup all samples
-	GraspTask::Ptr atask = new GraspTask;
+	GraspTask::Ptr atask = ownedPtr(new GraspTask);
 	atask->getSubTasks().resize(1);
     
     // prepare
@@ -388,7 +390,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
             ++successes;
             failures_in_row = 0;
             
-            DEBUG << "Adding target and sample" << endl;
+            //DEBUG << "Adding target and sample" << endl;
             
             // make new subtask (for tasks)
             GraspSubTask subtask;
@@ -420,7 +422,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
 				break;
 			}
 			
-			DEBUG << "Adding sample" << endl;
+			//DEBUG << "Adding sample" << endl;
 
 			GraspTarget gtarget(target);
             gtarget.result = ownedPtr(new GraspResult());

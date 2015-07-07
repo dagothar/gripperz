@@ -48,7 +48,7 @@ public:
 	
 	grasps::TaskGenerator::Ptr getGenerator() { return _generator; }
 	
-	simulation::GripperSimulator::Ptr getSimulator() { return _simulation; }
+	simulation::GripperSimulator::Ptr getSimulator() { return _simulator; }
 	
 	evaluation::GripperEvaluator::Ptr getEvaluator() { return _evaluator; }
 	
@@ -58,7 +58,7 @@ public:
 	virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper);
 
 protected:
-	virtual void applyGripperParametrization(models::Gripper::Ptr gripper);
+	virtual void applyGripperParametrization(models::Gripper::Ptr gripper, rw::kinematics::State& state);
 	
 	virtual void generateTasks(models::Gripper::Ptr gripper);
 	
@@ -67,7 +67,7 @@ protected:
 private:
 	context::TaskDescription::Ptr _context;
 	grasps::TaskGenerator::Ptr _generator;
-	simulation::GripperSimulator::Ptr _simulation;
+	simulation::GripperSimulator::Ptr _simulator;
 	evaluation::GripperEvaluator::Ptr _evaluator;
 	
 	Configuration _config;

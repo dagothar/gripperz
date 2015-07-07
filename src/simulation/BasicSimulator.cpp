@@ -41,6 +41,7 @@ rwlibs::task::GraspTask::Ptr BasicSimulator::getTasks() {
 void BasicSimulator::start(const rw::kinematics::State& initState) {
 	_initState = initState;
 	
+	GraspTaskSimulator::init(_dwc, initState);
 	GraspTaskSimulator::startSimulation(initState);
 }
 

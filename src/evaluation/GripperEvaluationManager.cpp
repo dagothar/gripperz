@@ -6,7 +6,11 @@
 
 #include "GripperEvaluationManager.hpp"
 
+#define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
 
+
+using namespace std;
 using namespace gripperz::evaluation;
 using namespace gripperz::models;
 using namespace gripperz::context;
@@ -14,6 +18,7 @@ using namespace gripperz::simulation;
 using namespace gripperz::grasps;
 using namespace gripperz::models;
 using namespace rwlibs::task;
+using namespace rw::kinematics;
 
 
 GripperEvaluationManager::GripperEvaluationManager(
@@ -25,7 +30,7 @@ GripperEvaluationManager::GripperEvaluationManager(
 ) :
 	_context(context),
 	_generator(generator),
-	_simulation(simulation),
+	_simulator(simulation),
 	_evaluator(evaluator),
 	_config(configuration)
 {}
@@ -36,7 +41,9 @@ GripperEvaluationManager::~GripperEvaluationManager() {
 
 
 GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripper) {
-	applyGripperParametrization(gripper);
+	State state = _context->getInitState();
+	
+	applyGripperParametrization(gripper, state);
 	
 	/*
 	 * Generate grasps.
@@ -44,7 +51,8 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 	GraspTask::Ptr targets = NULL;
 	GraspTask::Ptr samples = NULL;
 	try {
-		_generator->generateTasks(_config.nOfGraspsPerEvaluation, _context->getInitState());
+		DEBUG << "Planning tasks" << endl;
+		_generator->generateTasks(_config.nOfGraspsPerEvaluation, state);
 		
 		targets = _generator->getTasks();
 		samples = _generator->getSamples();
@@ -56,11 +64,11 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 	 * Simulate grasping.
 	 */
 	try {
-		_simulation->loadTasks(targets);
+		_simulator->loadTasks(targets);
 		
-		_simulation->start(_context->getInitState());
+		_simulator->start(state);
 		
-		while (_simulation->isRunning()) {
+		while (_simulator->isRunning()) {
 		}
 	} catch (...) {
 		RW_THROW("Exception during grasp simulation!");
@@ -80,15 +88,17 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 }
 
 
-void GripperEvaluationManager::applyGripperParametrization(models::Gripper::Ptr gripper) {
+void GripperEvaluationManager::applyGripperParametrization(models::Gripper::Ptr gripper, rw::kinematics::State& state) {
 	gripper->updateGripper(
 		_context->getWorkCell(),
 		_context->getDynamicWorkCell(),
 		_context->getGripperDevice(),
 		_context->getGripperDynamicDevice(),
-		_context->getInitState(),
+		state,
 		_context
 	);
+	
+	DEBUG << "Updated gripper" << endl;
 }
 	
 

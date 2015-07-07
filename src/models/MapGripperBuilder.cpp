@@ -6,6 +6,9 @@
 
 #include "MapGripperBuilder.hpp"
 
+#define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
+
 
 using namespace gripperz::models;
 using namespace rw::common;
@@ -87,6 +90,8 @@ Gripper::Ptr MapGripperBuilder::parametersToGripper(const std::vector<double>& p
 	for (unsigned i = 0; i < params.size(); ++i) {
 		applyParameter(gripper, _parameters[i], params[i]);
 	}
+	
+	DEBUG << "Gripper jaw geometry: " << gripper->getJawParameters() << endl;
 	
 	return gripper;
 }
