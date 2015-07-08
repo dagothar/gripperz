@@ -197,6 +197,7 @@ public:
         StepState _currentState;
 
         rw::kinematics::State _state;
+        rw::kinematics::State _homeState;
         rw::common::Timer _wallTimer;
         rwlibs::task::GraspSubTask *_task;
         rwlibs::task::GraspTarget *_target;
@@ -220,7 +221,7 @@ public:
 
         bool _stopped;
 
-        rwlibs::control::JointController *_graspController;
+        rwlibs::control::JointController::Ptr _graspController;
     };
 
 protected:

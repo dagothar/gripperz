@@ -56,8 +56,8 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 		
 		targets = _generator->getTasks();
 		samples = _generator->getSamples();
-	} catch (...) {
-		RW_THROW("Exception during grasp generation!");
+	} catch (const std::exception& e) {
+		RW_THROW("Exception during grasp generation! " << e.what());
 	}
 	
 	/*
@@ -70,8 +70,8 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 		
 		while (_simulator->isRunning()) {
 		}
-	} catch (...) {
-		RW_THROW("Exception during grasp simulation!");
+	} catch (const std::exception& e) {
+		RW_THROW("Exception during grasp simulation! " << e.what());
 	}
 	
 	/*
@@ -80,8 +80,8 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 	GripperQuality::Ptr quality = NULL;
 	try {
 		quality = _evaluator->evaluateGripper(gripper, targets, samples);
-	} catch (...) {
-		RW_THROW("Exception during gripper evaluation!");
+	} catch (const std::exception& e) {
+		RW_THROW("Exception during gripper evaluation! " << e.what());
 	}
 	
 	return quality;

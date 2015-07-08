@@ -25,7 +25,7 @@
 		</RigidBody>	
 	</RigidDevice>
 
-	<!-- controller -->
+	<!-- controller ->
 	<PDDeviceController name="graspController" device="gripper" type="Position">
 		<Sync>False</Sync>
 		<PDParams>10 0.3</PDParam>

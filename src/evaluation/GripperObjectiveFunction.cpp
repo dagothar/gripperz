@@ -76,8 +76,8 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 	Gripper::Ptr gripper = NULL;
 	try {
 		gripper = _builder->parametersToGripper(x);
-	} catch (...) {
-		RW_THROW("Exception during gripper generation!");
+	} catch (const std::exception& e) {
+		RW_THROW("Exception during gripper generation! " << e.what());
 	}
 	
 	try {
@@ -93,8 +93,8 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 		results[4] = q->wrench;
 		results[5] = q->maxstress;
 		results[6] = q->volume;
-	} catch (...) {
-		INFO << "Exception during gripper evaluation!" << endl;
+	} catch (const std::exception& e) {
+		RW_THROW ("Exception during gripper evaluation! " << e.what());
 	}
 	
 	

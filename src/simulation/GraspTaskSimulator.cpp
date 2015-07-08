@@ -19,6 +19,7 @@
 #include <rwsim/simulator/PhysicsEngineFactory.hpp>
 #include <rwsim/sensor/BodyContactSensor.hpp>
 #include <rwsim/dynamics/SuctionCup.hpp>
+#include <rwsim/control/PDController.hpp>
 
 using namespace rw::math;
 using namespace rw::common;
@@ -179,8 +180,8 @@ void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 	std::string controllerName = _gtask->getGraspControllerID(); // _roottask->getPropertyMap().get<std::string>("ControllerName", "GraspController");
 	_simGraspController =
 			_dwc->findController(controllerName);
-	if (_simGraspController == NULL)
-		RW_THROW("No controller exist with the name: " << controllerName);
+	//if (_simGraspController == NULL)
+	//	RW_THROW("No controller exist with the name: " << controllerName);
 
 	std::string tcpName = _gtask->getTCPID(); //_roottask->getPropertyMap().get<std::string>("TCP");
 	_tcp = _dwc->getWorkcell()->findFrame(tcpName);
@@ -190,8 +191,97 @@ void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 }
 
 //----- simulation control and query function api
-void GraspTaskSimulator::startSimulation(
-		const rw::kinematics::State& initState) {
+void GraspTaskSimulator::startSimulation(const rw::kinematics::State& initState) {
+	/* initialize variables */
+	_nrOfExperiments = 0;
+	if (_totalNrOfExperiments == 0) {
+		_requestSimulationStop = true;
+		return;
+	}
+	_requestSimulationStop = false;
+	_failed = 0;
+	_success = 0;
+	_slipped = 0;
+	_collision = 0;
+	_timeout = 0;
+	_simfailed = 0;
+	_skipped = 0;
+	_nrOfExperiments = 0;
+	_lastSaveTaskIndex = 0;
+	_stat = std::vector<int>(GraspResult::SizeOfStatusArray, 0);
+	_timedStatePaths.clear();
+	_simStates.clear();
+	_simulators.clear();
+	_homeState = initState;
+	
+	_collisionDetector = ownedPtr(
+		new CollisionDetector(_dwc->getWorkcell(), ProximityStrategyFactory::makeDefaultCollisionStrategy())
+	);
+
+	/* initialize simulators */
+	for (int i = 0; i < _nrOfThreads; i++) {
+		/* physics engine */
+		Log::debugLog() << "Making physics engine";
+		PhysicsEngine::Ptr engine = PhysicsEngine::Factory::makePhysicsEngine("ODE", _dwc);
+		if(engine==NULL) {
+			RW_THROW("No physics engine loaded!");
+		}
+		
+		/* configure SimState */
+		SimState sstate;
+		sstate._state = _homeState.clone();
+		_hbase->getMovableFrame()->setTransform(Transform3D<>(Vector3D<>(100, 100, 100)), sstate._state);
+		
+		/* dynamic simulator */
+		Log::debugLog() << "Making simulator";
+		DynamicSimulator::Ptr sim = ownedPtr(new DynamicSimulator(_dwc, engine));
+		Log::debugLog() << "Initializing simulator";
+		try {
+			//State istate = sstate._state;
+			sim->init(sstate._state);
+		} catch (const std::exception& e) {
+			RW_THROW("could not initialize simulator!\n failed with: "	<< e.what());
+		}
+		
+		/* add grasp controller */
+		//sstate._graspController = dynamic_cast<rwlibs::control::JointController*>(_simGraspController->getControllerHandle(sim).get());
+		PDController::Ptr ctrlr = ownedPtr(new PDController("ctrlr", _dhand, rwlibs::control::JointController::POSITION, PDParam(10, 0.3), 0.01));
+		sstate._graspController = ctrlr;
+		sim->addController(ctrlr);
+		if (sstate._graspController == NULL) {
+			RW_THROW("Only JointControllers are valid graspcontrollers!");
+		}
+		
+		/* add body contact sensors */
+		for (size_t j = 0; j < _objects.size(); j++) {
+			sstate._bsensors.push_back(
+				ownedPtr(new BodyContactSensor("SimTaskObjectSensor", _objects[j]->getBodyFrame()))
+			);
+			sim->addSensor(sstate._bsensors.back(), sstate._state);
+		}
+		sstate._state.upgrade();
+		sstate._homeState = sstate._state;
+		//_homeState.upgrade();		
+		
+		/* thread simulator */
+		Log::debugLog() << "Creating Thread simulator";
+		ThreadSimulator::Ptr tsim = ownedPtr(new ThreadSimulator(sim));
+		ThreadSimulator::StepCallback cb(boost::bind(&GraspTaskSimulator::stepCB, this, _1, _2));
+		tsim->setStepCallBack(cb);
+		tsim->setRealTimeScale(0);
+		tsim->setTimeStep(0.01);
+		_simulators.push_back(tsim);
+		
+		_simStates[tsim] = sstate;
+		
+		/* start simulator */
+		_simulators[i]->start();
+	}
+
+	
+}
+
+/*void GraspTaskSimulator::startSimulation(const rw::kinematics::State& initState) {
 			
 	_nrOfExperiments = 0;
 	init(_dwc, initState);
@@ -261,11 +351,11 @@ void GraspTaskSimulator::startSimulation(
 	}
 	Log::debugLog() << "Starting simulators..\n";
 	for (size_t i = 0; i < _simulators.size(); i++) {
-		_simulators[i]->setState(_simStates[_simulators[i]]._state);
+		//_simulators[i]->setState(_simStates[_simulators[i]]._state);
 		_simulators[i]->start();
 	}
 	Log::debugLog() << "Simulators started..\n";
-}
+}*/
 
 void GraspTaskSimulator::pauseSimulation() {
 	_requestSimulationStop = true;
@@ -318,6 +408,8 @@ int GraspTaskSimulator::getNrTargetsDone() {
 void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 		const rw::kinematics::State& state) {
 	SimState &sstate = _simStates[sim];
+	
+	//std::cout << "SimState: " << &sstate << std::endl;
 
 	int delay = _stepDelayMs;
 
@@ -367,14 +459,14 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 		sstate._target->getResult()->testStatus =
 				GraspResult::SimulationFailure;
 		_stat[GraspResult::SimulationFailure]++;
-		sim->reset(_homeState);
+		sim->reset(sstate._homeState);
 		sstate._currentState = NEW_GRASP;
 
 		graspFinished(sstate);
 	}
 
 	if (sstate._currentState != NEW_GRASP) {
-		if (getMaxObjectDistance(_objects, _homeState, state)
+		if (getMaxObjectDistance(_objects, sstate._homeState, state)
 				> _maxObjectGripperDistanceThreshold) {
 			_simfailed++;
 
@@ -603,7 +695,7 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 	}
 
 	if (sstate._currentState == NEW_GRASP) {
-		State nstate = _homeState;
+		State nstate = sstate._homeState;
 		// pop new task from queue
 		// if all tasks
 
@@ -641,13 +733,13 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 				}
 			}
 			Transform3D<> wTref = Kinematics::worldTframe(sstate._taskRefFrame,
-					_homeState);
+					sstate._homeState);
 			Transform3D<> refToffset = sstate._taskOffset;
 			Transform3D<> offsetTtarget = sstate._target->pose;
 			Transform3D<> mbaseTtcp = Kinematics::frameTframe(_mbase, _tcp,
-					_homeState);
+					sstate._homeState);
 			Transform3D<> wTmparent = Kinematics::worldTframe(
-					_mbase->getParent(_homeState), _homeState);
+					_mbase->getParent(sstate._homeState), sstate._homeState);
 
 			// and calculate the home lifting position
 			sstate._wTtcp_initTarget = wTref * refToffset * offsetTtarget
@@ -667,7 +759,7 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 			for (size_t i = 0; i < _objects.size(); i++) {
 				Transform3D<> tobj =
 						_objects[i]->getMovableFrame()->getTransform(
-								_homeState);
+								sstate._homeState);
 				_objects[i]->getMovableFrame()->setTransform(tobj, nstate);
 			}
 			// set max force
