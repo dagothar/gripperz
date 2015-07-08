@@ -158,7 +158,7 @@ int main(int argc, char* argv[]) {
 	}
 	
 	/* construct objective function */
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, ntargets, ssamples);
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, ntargets, ssamples, cores);
 	CombineObjectives::Ptr sumMethod = CombineObjectivesFactory::make("sum", weights);
 	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
 	

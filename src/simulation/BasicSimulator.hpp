@@ -7,8 +7,7 @@
 #pragma once
 
 #include "GripperSimulator.hpp"
-
-#include <rwsim/simulator/GraspTaskSimulator.hpp>
+#include "GraspTaskSimulator.hpp"
 
 namespace gripperz {
 namespace simulation {
@@ -19,7 +18,7 @@ namespace simulation {
  * 
  * Assigns status to individual targets. Slippages are counted as successes.
  */
-class BasicSimulator : virtual public GripperSimulator, protected rwsim::simulator::GraspTaskSimulator {
+class BasicSimulator : virtual public GripperSimulator, protected GraspTaskSimulator {
 public:
 	//! Smart pointer.
 	typedef rw::common::Ptr<BasicSimulator> Ptr;
