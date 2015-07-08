@@ -63,7 +63,7 @@ GraspTaskSimulator::GraspTaskSimulator(
 				GraspResult::SizeOfStatusArray, 0), _initialized(false), _nrOfThreads(
 				1), _currentTargetIndex(0), _alwaysResting(false), _wallTimeLimit(
 				30.0), _simTimeLimit(30.0), _storeTimedStatePaths(false), _forceSimulateAll(false){
-	if (nrThreads > 0 && nrThreads < 8)
+	if (nrThreads > 0 && nrThreads < 20)
 		_nrOfThreads = nrThreads;
 
 }
