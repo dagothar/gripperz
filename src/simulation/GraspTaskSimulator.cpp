@@ -75,22 +75,24 @@ void GraspTaskSimulator::init(rwsim::dynamics::DynamicWorkCell::Ptr dwc,
 		const rw::kinematics::State& initState, std::string engineID) {
 	_dwc = dwc;
 	_collisionDetector = ownedPtr(
-			new CollisionDetector(dwc->getWorkcell(),
-					ProximityStrategyFactory::makeDefaultCollisionStrategy()));
+		new CollisionDetector(dwc->getWorkcell(), ProximityStrategyFactory::makeDefaultCollisionStrategy())
+	);
 
 	// initialize simulators
 	_simStates.clear();
 	_simulators.clear();
 
 	for (int i = 0; i < _nrOfThreads; i++) {
+		
 		Log::debugLog() << "Making physics engine";
-		PhysicsEngine::Ptr engine = PhysicsEngine::Factory::makePhysicsEngine(
-				engineID, _dwc);
-		if(engine==NULL)
+		PhysicsEngine::Ptr engine = PhysicsEngine::Factory::makePhysicsEngine(engineID, _dwc);
+		if(engine==NULL) {
 			RW_THROW("No physics engine loaded!");
+		}
+		
 		Log::debugLog() << "Making simulator";
-		DynamicSimulator::Ptr sim = ownedPtr(
-				new DynamicSimulator(_dwc, engine));
+		DynamicSimulator::Ptr sim = ownedPtr(new DynamicSimulator(_dwc, engine));
+		
 		Log::debugLog() << "Initializing simulator";
 		try {
 			State istate = initState;
@@ -100,18 +102,15 @@ void GraspTaskSimulator::init(rwsim::dynamics::DynamicWorkCell::Ptr dwc,
 					"could not initialize simulator!\n failed with: "
 							<< e.what());
 		}
+		
 		Log::debugLog() << "Creating Thread simulator";
-
-		ThreadSimulator::Ptr tsim = ownedPtr(
-				new ThreadSimulator(sim, initState));
-		ThreadSimulator::StepCallback cb(
-				boost::bind(&GraspTaskSimulator::stepCB, this, _1, _2));
-
+		ThreadSimulator::Ptr tsim = ownedPtr(new ThreadSimulator(sim, initState));
+		ThreadSimulator::StepCallback cb(boost::bind(&GraspTaskSimulator::stepCB, this, _1, _2));
 		tsim->setStepCallBack(cb);
 		tsim->setRealTimeScale(0);
 		tsim->setTimeStep(0.005);
-
 		_simulators.push_back(tsim);
+		
 		_homeState = initState;
 	}
 
@@ -193,14 +192,13 @@ void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 //----- simulation control and query function api
 void GraspTaskSimulator::startSimulation(
 		const rw::kinematics::State& initState) {
+			
 	_nrOfExperiments = 0;
-	if (!_initialized)
-		init(_dwc, initState);
+	init(_dwc, initState);
 
 	if (_totalNrOfExperiments == 0) {
 		_requestSimulationStop = true;
 		return;
-		//RW_THROW("there are no tasks to simulate!");
 	}
 
 	_requestSimulationStop = false;
@@ -251,7 +249,7 @@ void GraspTaskSimulator::startSimulation(
 		sstate._state.upgrade();
 
 		_simulators[i]->setRealTimeScale(0);
-		_simulators[i]->setTimeStep(0.005);
+		_simulators[i]->setTimeStep(0.01);
 
 		sstate._graspController =
 				dynamic_cast<rwlibs::control::JointController*>(_simGraspController->getControllerHandle(sim).get());
@@ -756,21 +754,23 @@ void GraspTaskSimulator::simulationFinished(SimState& sstate) {
 }
 
 std::vector<rw::sensor::Contact3D> GraspTaskSimulator::getObjectContacts(
-		const rw::kinematics::State& state, RigidBody::Ptr object,
-		BodyContactSensor::Ptr sensor, std::vector<Body::Ptr>& gripperbodies) {
+	const rw::kinematics::State& state,
+	RigidBody::Ptr object,
+	BodyContactSensor::Ptr sensor,
+	std::vector<Body::Ptr>& gripperbodies
+) {
 	const std::vector<rw::sensor::Contact3D>& contacts = sensor->getContacts(state);
 	const std::vector<Body::Ptr>& bodies = sensor->getBodies(state);
 
 	RW_ASSERT(bodies.size() == contacts.size());
 	std::vector<rw::sensor::Contact3D> contactres;
-	std::map<std::string, Frame*> frameTree = Kinematics::buildFrameMap(
-			_hand->getBase(), state);
+	std::map<std::string, Frame*> frameTree = Kinematics::buildFrameMap(_hand->getBase(), state);
 	frameTree[_hand->getBase()->getName()] = _hand->getBase();
+	
 	for (size_t i = 0; i < bodies.size(); i++) {
 		if (bodies[i] != NULL) {
 			// test that the body frame is part of the gripper
-			if (frameTree.find(bodies[i]->getBodyFrame()->getName())
-					!= frameTree.end()) {
+			if (frameTree.find(bodies[i]->getBodyFrame()->getName()) != frameTree.end()) {
 
 				contactres.push_back(contacts[i]);
 				contactres.back().mu =
@@ -778,11 +778,11 @@ std::vector<rw::sensor::Contact3D> GraspTaskSimulator::getObjectContacts(
 								object->getMaterialID(),
 								bodies[i]->getMaterialID()).parameters[0].second(
 								0);
+								
 				// allso save the body of the gripper that is in contact
-				if (std::find(gripperbodies.begin(), gripperbodies.end(),
-						bodies[i]) == gripperbodies.end())
+				if (std::find(gripperbodies.begin(), gripperbodies.end(), bodies[i]) == gripperbodies.end()) {
 					gripperbodies.push_back(bodies[i]);
-
+				}
 			}
 		} else {
 			//std::cout << "Body: NULL" << std::endl;
@@ -792,23 +792,39 @@ std::vector<rw::sensor::Contact3D> GraspTaskSimulator::getObjectContacts(
 }
 
 GraspTaskSimulator::GraspedObject GraspTaskSimulator::getObjectContacts(
-		const rw::kinematics::State& state, SimState &sstate) {
+		const rw::kinematics::State& state,
+		SimState &sstate
+) {
 	std::vector<GraspedObject> result;
 	for (size_t i = 0; i < _objects.size(); i++) {
+		
 		GraspedObject obj;
 		obj.object = _objects[i].get();
-		obj.contacts = getObjectContacts(state, _objects[i],
-				sstate._bsensors[i], obj.bodies);
-		if (obj.contacts.size() > 0)
+		
+		obj.contacts = getObjectContacts(
+			state,
+			_objects[i],
+			sstate._bsensors[i],
+			obj.bodies
+		);
+		
+		if (obj.contacts.size() > 0) {
 			result.push_back(obj);
+		}
 	}
-	if (result.size() == 0)
+	
+	if (result.size() == 0) {
 		return GraspedObject();
+	}
+	
 	int bestIdx = 0;
 	for (size_t i = 1; i < result.size(); i++) {
-		if (result[i].contacts.size() > result[bestIdx].contacts.size())
+		
+		if (result[i].contacts.size() > result[bestIdx].contacts.size()) {
 			bestIdx = (int) i;
+		}
 	}
+	
 	return result[bestIdx];
 }
 

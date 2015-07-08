@@ -234,15 +234,14 @@ protected:
 	virtual void simulationFinished(SimState& sstate);
 	
 private:
-
-    //std::vector<rw::sensor::Contact3D> getObjectContacts(const rw::kinematics::State& state);
-
-
     GraspedObject getObjectContacts(const rw::kinematics::State& state, SimState &sstate);
-    std::vector<rw::sensor::Contact3D> getObjectContacts(const rw::kinematics::State& state,
-                                                         rwsim::dynamics::RigidBody::Ptr object,
-                                                         rwsim::sensor::BodyContactSensor::Ptr sensor,
-                                                         std::vector<rwsim::dynamics::Body::Ptr>& bodies);
+    
+    std::vector<rw::sensor::Contact3D> getObjectContacts(
+		const rw::kinematics::State& state,
+		rwsim::dynamics::RigidBody::Ptr object,
+		rwsim::sensor::BodyContactSensor::Ptr sensor,
+		std::vector<rwsim::dynamics::Body::Ptr>& bodies
+	);
 
 
     rw::math::Q calcGraspQuality(const rw::kinematics::State& state, SimState &sstate);
