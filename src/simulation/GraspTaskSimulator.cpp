@@ -74,52 +74,6 @@ GraspTaskSimulator::~GraspTaskSimulator() {
 
 void GraspTaskSimulator::init(rwsim::dynamics::DynamicWorkCell::Ptr dwc,
 		const rw::kinematics::State& initState, std::string engineID) {
-	_dwc = dwc;
-	_collisionDetector = ownedPtr(
-		new CollisionDetector(dwc->getWorkcell(), ProximityStrategyFactory::makeDefaultCollisionStrategy())
-	);
-
-	// initialize simulators
-	_simStates.clear();
-	_simulators.clear();
-
-	for (int i = 0; i < _nrOfThreads; i++) {
-		
-		Log::debugLog() << "Making physics engine";
-		PhysicsEngine::Ptr engine = PhysicsEngine::Factory::makePhysicsEngine(engineID, _dwc);
-		if(engine==NULL) {
-			RW_THROW("No physics engine loaded!");
-		}
-		
-		Log::debugLog() << "Making simulator";
-		DynamicSimulator::Ptr sim = ownedPtr(new DynamicSimulator(_dwc, engine));
-		
-		Log::debugLog() << "Initializing simulator";
-		try {
-			State istate = initState;
-			sim->init(istate);
-		} catch (const std::exception& e) {
-			RW_THROW(
-					"could not initialize simulator!\n failed with: "
-							<< e.what());
-		}
-		
-		Log::debugLog() << "Creating Thread simulator";
-		ThreadSimulator::Ptr tsim = ownedPtr(new ThreadSimulator(sim, initState));
-		ThreadSimulator::StepCallback cb(boost::bind(&GraspTaskSimulator::stepCB, this, _1, _2));
-		tsim->setStepCallBack(cb);
-		tsim->setRealTimeScale(0);
-		tsim->setTimeStep(0.005);
-		_simulators.push_back(tsim);
-		
-		_homeState = initState;
-	}
-
-	_timedStatePaths.clear();
-
-	_initialized = true;
-	Log::debugLog() << "Initialization of GrasspTaskSimulator done!";
-
 }
 
 void GraspTaskSimulator::load(const std::string& filename) {
@@ -277,85 +231,7 @@ void GraspTaskSimulator::startSimulation(const rw::kinematics::State& initState)
 		/* start simulator */
 		_simulators[i]->start();
 	}
-
-	
 }
-
-/*void GraspTaskSimulator::startSimulation(const rw::kinematics::State& initState) {
-			
-	_nrOfExperiments = 0;
-	init(_dwc, initState);
-
-	if (_totalNrOfExperiments == 0) {
-		_requestSimulationStop = true;
-		return;
-	}
-
-	_requestSimulationStop = false;
-
-	_failed = 0;
-	_success = 0;
-	_slipped = 0;
-	_collision = 0;
-	_timeout = 0;
-	_simfailed = 0;
-	_skipped = 0;
-	_nrOfExperiments = 0;
-	_lastSaveTaskIndex = 0;
-	_stat = std::vector<int>(GraspResult::SizeOfStatusArray, 0);
-
-	Log::debugLog() << "Remove sim task object sensor\n";
-	// remove all sensors if there are any
-	// first remove any SimTaskObjectSensor from the simulator
-	for (size_t i = 0; i < _simulators.size(); i++) {
-		if (_simStates.find(_simulators[i]) != _simStates.end()) {
-			BOOST_FOREACH(BodyContactSensor::Ptr sensor, _simStates[_simulators[i]]._bsensors) {
-				_simulators[i]->getSimulator()->removeSensor(sensor);
-			}
-		}
-	}
-
-	_simStates.clear();
-	_homeState = initState;
-
-	// FOR NOW WE ONLY USE ONE THREAD
-	Log::debugLog() << "Initialize each simulator with sensor objects..\n";
-	for (size_t i = 0; i < _simulators.size(); i++) {
-		DynamicSimulator::Ptr sim = _simulators[i]->getSimulator();
-		SimState sstate;
-		sstate._state = _homeState;
-
-		_hbase->getMovableFrame()->setTransform(
-				Transform3D<>(Vector3D<>(100, 100, 100)), sstate._state);
-
-		for (size_t j = 0; j < _objects.size(); j++) {
-			sstate._bsensors.push_back(
-					ownedPtr(
-							new BodyContactSensor("SimTaskObjectSensor",
-									_objects[j]->getBodyFrame())));
-			sim->addSensor(sstate._bsensors.back(), sstate._state);
-		}
-		_homeState.upgrade();
-		sstate._state.upgrade();
-
-		_simulators[i]->setRealTimeScale(0);
-		_simulators[i]->setTimeStep(0.01);
-
-		sstate._graspController =
-				dynamic_cast<rwlibs::control::JointController*>(_simGraspController->getControllerHandle(sim).get());
-		if (sstate._graspController == NULL)
-			RW_THROW("Only JointControllers are valid graspcontrollers!");
-
-		_simStates[_simulators[i]] = sstate;
-
-	}
-	Log::debugLog() << "Starting simulators..\n";
-	for (size_t i = 0; i < _simulators.size(); i++) {
-		//_simulators[i]->setState(_simStates[_simulators[i]]._state);
-		_simulators[i]->start();
-	}
-	Log::debugLog() << "Simulators started..\n";
-}*/
 
 void GraspTaskSimulator::pauseSimulation() {
 	_requestSimulationStop = true;

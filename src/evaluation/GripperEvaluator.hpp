@@ -37,14 +37,14 @@ public:
 	 * @brief Evaluates gripper quality.
 	 * Uses gripper parameters and statistics in task performance to calculate the gripper quality.
 	 */
-	virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
+	virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples, rwlibs::task::GraspTask::Ptr rtasks=NULL);
 
 protected:
 	//! Calculates the success index of the gripper.
 	virtual double calculateSuccess(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
 	
 	//! Calculates the robustness index of the gripper.
-	virtual double calculateRobustness(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
+	virtual double calculateRobustness(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples, rwlibs::task::GraspTask::Ptr rtasks=NULL);
 	
 	//! Calculates the coverage index of the gripper.
 	virtual double calculateCoverage(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);

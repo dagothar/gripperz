@@ -19,6 +19,7 @@ using namespace gripperz::grasps;
 using namespace gripperz::models;
 using namespace rwlibs::task;
 using namespace rw::kinematics;
+using namespace rw::math;
 
 
 GripperEvaluationManager::GripperEvaluationManager(
@@ -75,11 +76,29 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 	}
 	
 	/*
+	 * Simulate grasps with noise for robustness.
+	 */
+	GraspTask::Ptr rtargets = NULL;
+	try {
+		rtargets = TaskGenerator::copyTasks(targets, true);
+		rtargets = TaskGenerator::addPerturbations(rtargets, 0.003,	8 * Deg2Rad, 100);
+		
+		_simulator->loadTasks(rtargets);
+		
+		_simulator->start(state);
+		
+		while (_simulator->isRunning()) {
+		}
+	} catch (const std::exception& e) {
+		RW_THROW("Exception during grasp simulation for robustness: " << e.what());
+	}
+	
+	/*
 	 * Evaluate gripper.
 	 */
 	GripperQuality::Ptr quality = NULL;
 	try {
-		quality = _evaluator->evaluateGripper(gripper, targets, samples);
+		quality = _evaluator->evaluateGripper(gripper, targets, samples, rtargets);
 	} catch (const std::exception& e) {
 		RW_THROW("Exception during gripper evaluation! " << e.what());
 	}

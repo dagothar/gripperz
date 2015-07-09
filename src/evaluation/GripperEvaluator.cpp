@@ -38,11 +38,11 @@ GripperEvaluator::~GripperEvaluator()
 {}
 
 
-GripperQuality::Ptr GripperEvaluator::evaluateGripper(Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
+GripperQuality::Ptr GripperEvaluator::evaluateGripper(Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples, rwlibs::task::GraspTask::Ptr rtasks) {
 	GripperQuality::Ptr quality = ownedPtr(new GripperQuality());
 	
 	quality->success = calculateSuccess(gripper, tasks, samples);
-	quality->robustness = calculateRobustness(gripper, tasks, samples);
+	quality->robustness = calculateRobustness(gripper, tasks, samples, rtasks);
 	quality->coverage = calculateCoverage(gripper, tasks, samples);
 	quality->alignment = calculateAlignment(gripper, tasks, samples);
 	quality->wrench = calculateWrench(gripper, tasks, samples);
@@ -54,7 +54,7 @@ GripperQuality::Ptr GripperEvaluator::evaluateGripper(Gripper::Ptr gripper, rwli
 
 
 double GripperEvaluator::calculateSuccess(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
-	DEBUG << "CALCULATING STRESS - " << endl;
+	DEBUG << "CALCULATING SUCCESS - " << endl;
 	std::vector<std::pair<class GraspSubTask*, class GraspTarget*> > allTargets = tasks->getAllTargets();
 	int nAllTargets = allTargets.size();
 	
@@ -73,10 +73,28 @@ double GripperEvaluator::calculateSuccess(models::Gripper::Ptr gripper, rwlibs::
 }
 
 
-double GripperEvaluator::calculateRobustness(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
-	RW_WARN("Robustness is not implemented yet.");
+double GripperEvaluator::calculateRobustness(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples, rwlibs::task::GraspTask::Ptr rtasks) {
+	if (rtasks == NULL) {
+		RW_WARN("Not calculating robustness.");
+		return 1.0;
+	}
 	
-	return 1.0;
+	DEBUG << "CALCULATING ROBUSTNESS - " << endl;
+	std::vector<std::pair<class GraspSubTask*, class GraspTarget*> > allTargets = rtasks->getAllTargets();
+	int nAllTargets = allTargets.size();
+	
+	int successes = TaskStatistics::countTasksWithResult(rtasks, GraspResult::Success);
+	int filtered = TaskStatistics::countTasksWithResult(rtasks, GraspResult::Filtered);
+	int failures = TaskStatistics::countTasksWithResult(rtasks, GraspResult::SimulationFailure);
+	
+	DEBUG << "alltargets= " << nAllTargets << endl;
+	DEBUG << "successes= " << successes << endl;
+	DEBUG << "filtered= " << filtered << endl;
+	DEBUG << "failures= " << failures << endl;
+	
+	double robustnessIndex = 1.0 * successes / (nAllTargets - filtered - failures);
+	
+	return robustnessIndex;
 }
 
 
