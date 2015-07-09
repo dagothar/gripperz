@@ -16,7 +16,7 @@ namespace optimization {
  * @class DlibFunction
  * @brief Dlib function interface.
  */
-class DlibWrapper {
+class DlibWrapper: public DlibFunction {
 public:
 	typedef rw::common::Ptr<DlibWrapper> Ptr;
 	

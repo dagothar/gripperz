@@ -20,3 +20,4 @@
 #include "optimization/DlibWrapper.hpp"
 #include "optimization/DlibUtil.hpp"
 #include "optimization/Optimizer.hpp"
+#include "optimization/BOBYQAOptimizer.hpp"

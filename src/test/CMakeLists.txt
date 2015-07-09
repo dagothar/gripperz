@@ -16,6 +16,11 @@ if (BUILD_TESTS)
 	add_dependencies(test-dlib-rosenbrock gripperz)
 	target_link_libraries(test-dlib-rosenbrock gripperz)
 	
+	# Target: test_bobyqa
+	add_executable(test_bobyqa testBOBYQA.cpp)
+	add_dependencies(test_bobyqa gripperz)
+	target_link_libraries(test_bobyqa gripperz)
+	
 	# Target: test-optimization
 	add_executable(test-optimization testOptimization.cpp)
 	target_link_libraries(test-optimization gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
