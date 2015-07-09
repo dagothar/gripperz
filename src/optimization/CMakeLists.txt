@@ -13,5 +13,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/CombineLog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ParameterMapping.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Optimizer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DlibFunction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DlibWrapper.cpp
 	CACHE INTERNAL ""
 )
