@@ -64,6 +64,7 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 	/*
 	 * Simulate grasping.
 	 */
+	DEBUG << " --- SIMULATING TASKS ---" << endl;
 	try {
 		_simulator->loadTasks(targets);
 		
@@ -80,6 +81,7 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 	 */
 	GraspTask::Ptr rtargets = NULL;
 	if (_config.nOfRobustnessTargets != 0) {
+		DEBUG << " --- SIMULATING ROBUSTNESS ---" << endl;
 		try {
 			rtargets = TaskGenerator::copyTasks(targets, true);
 			rtargets = TaskGenerator::addPerturbations(rtargets, _config.sigma_p,	_config.sigma_a * Deg2Rad, _config.nOfRobustnessTargets);
