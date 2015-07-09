@@ -20,9 +20,9 @@ class GripperEvaluationManagerFactory {
 public:
 	static GripperEvaluationManager::Ptr getEvaluationManager(
 		context::TaskDescription::Ptr td,
-		unsigned nTargets=100,
-		const std::vector<grasps::SurfaceSample>& ssamples=std::vector<grasps::SurfaceSample>(),
-		unsigned nThreads=1
+		const GripperEvaluationManager::Configuration& config,
+		unsigned nThreads=1,
+		const std::vector<grasps::SurfaceSample>& ssamples=std::vector<grasps::SurfaceSample>()
 	);
 };
 

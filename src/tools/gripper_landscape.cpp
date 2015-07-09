@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
 	bounds[MapGripperBuilder::TcpOffset] = make_pair(0.0, 0.2);
 
 	/* options */
-	int cores, ntargets, resolution;
+	int cores, ntargets, nrobust, resolution;
 	string dwcFilename;
 	string tdFilename;
 	string gripperFilename;
@@ -112,8 +112,9 @@ int main(int argc, char* argv[]) {
 	desc.add_options()
 		("help,h", "help message")
 		("cores,c", value<int>(&cores)->default_value(1), "number of threads to use")
-		("resolution,r", value<int>(&resolution)->default_value(10), "how many samples per parameter")
+		("res", value<int>(&resolution)->default_value(10), "how many samples per parameter")
 		("ntargets,t", value<int>(&ntargets)->default_value(100), "number of tasks to generate")
+		("nrobust,r", value<int>(&nrobust)->default_value(0), "number of robustness tasks to generate")
 		("parameters,p", value<vector<int> >(&parameters)->multitoken(), "parameters to landscape (0-8)")
 		("dwc", value<string>(&dwcFilename)->required(), "dynamic workcell file")
 		("td", value<string>(&tdFilename)->required(), "task description file")
@@ -158,7 +159,10 @@ int main(int argc, char* argv[]) {
 	}
 	
 	/* construct objective function */
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, ntargets, ssamples, cores);
+	GripperEvaluationManager::Configuration config;
+	config.nOfRobustnessTargets = nrobust;
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, cores, ssamples);
+	
 	CombineObjectives::Ptr sumMethod = CombineObjectivesFactory::make("sum", weights);
 	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
 	

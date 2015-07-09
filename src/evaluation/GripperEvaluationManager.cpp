@@ -79,18 +79,20 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 	 * Simulate grasps with noise for robustness.
 	 */
 	GraspTask::Ptr rtargets = NULL;
-	try {
-		rtargets = TaskGenerator::copyTasks(targets, true);
-		rtargets = TaskGenerator::addPerturbations(rtargets, 0.003,	8 * Deg2Rad, 100);
-		
-		_simulator->loadTasks(rtargets);
-		
-		_simulator->start(state);
-		
-		while (_simulator->isRunning()) {
+	if (_config.nOfRobustnessTargets != 0) {
+		try {
+			rtargets = TaskGenerator::copyTasks(targets, true);
+			rtargets = TaskGenerator::addPerturbations(rtargets, _config.sigma_p,	_config.sigma_a * Deg2Rad, _config.nOfRobustnessTargets);
+			
+			_simulator->loadTasks(rtargets);
+			
+			_simulator->start(state);
+			
+			while (_simulator->isRunning()) {
+			}
+		} catch (const std::exception& e) {
+			RW_THROW("Exception during grasp simulation for robustness: " << e.what());
 		}
-	} catch (const std::exception& e) {
-		RW_THROW("Exception during grasp simulation for robustness: " << e.what());
 	}
 	
 	/*

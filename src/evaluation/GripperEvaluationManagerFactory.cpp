@@ -18,18 +18,15 @@ using namespace rw::common;
 
 GripperEvaluationManager::Ptr GripperEvaluationManagerFactory::getEvaluationManager(
 	context::TaskDescription::Ptr td,
-	unsigned nTargets,
-	const std::vector<SurfaceSample>& ssamples,
-	unsigned nThreads
+	const GripperEvaluationManager::Configuration& config,
+	unsigned nThreads,
+	const std::vector<grasps::SurfaceSample>& ssamples
 ) {
 	TaskGenerator::Ptr generator = ownedPtr(new TaskGenerator(td, ssamples));
 	
 	GripperSimulator::Ptr simulator = ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads));
 	
 	GripperEvaluator::Ptr evaluator = ownedPtr(new GripperEvaluator(td));
-	
-	GripperEvaluationManager::Configuration config;
-	config.nOfGraspsPerEvaluation = nTargets;
 	
 	return ownedPtr(new GripperEvaluationManager(td, generator, simulator, evaluator, config));
 }

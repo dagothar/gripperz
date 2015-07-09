@@ -86,7 +86,8 @@ int main(int argc, char* argv[]) {
 	};
 	GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, params);
 	
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, 100, ssamples);
+	GripperEvaluationManager::Configuration config;
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, 1, ssamples);
 	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 	
 	/* initialize combiners */

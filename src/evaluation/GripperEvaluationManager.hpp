@@ -26,9 +26,19 @@ public:
 	typedef rw::common::Ptr<GripperEvaluationManager> Ptr;
 	
 	//! Configuration.
-	typedef struct {
+	struct Configuration {
 		unsigned nOfGraspsPerEvaluation;
-	} Configuration;
+		unsigned nOfRobustnessTargets;
+		double sigma_a;
+		double sigma_p;
+		
+		Configuration() :
+			nOfGraspsPerEvaluation(100),
+			nOfRobustnessTargets(0),
+			sigma_a(8.0),
+			sigma_p(0.003)
+		{}
+	};
 
 public:
 	/**
