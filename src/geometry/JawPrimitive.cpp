@@ -30,14 +30,17 @@ JawPrimitive::~JawPrimitive()
 
 TriMesh::Ptr JawPrimitive::createMesh(int resolution) const
 {
+	double chfAngle = (_chamferAngle == (90.0 * Deg2Rad)) ? 89.9 * Deg2Rad : _chamferAngle; /* to prevent null geometry */
+	
 	/* build base */
 	CSGModel::Ptr base = CSGModelFactory::makeBox(_length, _depth, _width);
 	base->translate(_length/2, 0, _width/2);
 	
 	if (_length > 0.0 && _depth > 0.0 && _width > 0.0) {
+		
 		/* make chamfer */
 		Vector3D<> point(_length, 0.0, (1-_chamferDepth)*_width);
-		Transform3D<> t(Vector3D<>(), RPY<>(0, -_chamferAngle, 0).toRotation3D());
+		Transform3D<> t(Vector3D<>(), RPY<>(0, -chfAngle, 0).toRotation3D());
 		Vector3D<> normal = t * Vector3D<>::x();
 		CSGModel::Ptr plane = CSGModelFactory::makePlane(point, -normal);
 		base->subtract(plane);
