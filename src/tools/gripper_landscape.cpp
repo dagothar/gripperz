@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 		("dwc", value<string>(&dwcFilename)->required(), "dynamic workcell file")
 		("td", value<string>(&tdFilename)->required(), "task description file")
 		("gripper,g", value<string>(&gripperFilename)->required(), "gripper file")
-		("samples,s", value<string>(&samplesFilename), "surface samples file")
+		("ssamples,s", value<string>(&samplesFilename), "surface samples file")
 		("out,o", value<string>(&outDir)->required(), "output directory");
 	variables_map vm;
 	
@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
 	INFO << "Loaded." << endl;
 
 	vector<SurfaceSample> ssamples;
-	if (vm.count("samples")) {
+	if (vm.count("ssamples")) {
 		INFO << "* Loading samples... ";
 		ssamples = SurfaceSample::loadFromXML(samplesFilename);
 		INFO << "Loaded." << endl;

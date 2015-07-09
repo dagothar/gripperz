@@ -35,6 +35,9 @@
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <evaluation/GripperEvaluationManagerFactory.hpp>
 #include <optimization/CombineObjectivesFactory.hpp>
+#include <optimization/RevertedFunction.hpp>
+#include <optimization/CombinedFunction.hpp>
+#include <optimization/BOBYQAOptimizer.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -93,7 +96,7 @@ int main(int argc, char* argv[]) {
 	bounds[MapGripperBuilder::TcpOffset] = make_pair(0.0, 0.2);
 
 	/* options */
-	int cores, ntargets, resolution;
+	int cores, ntargets, nrobust, maxfev;
 	string dwcFilename;
 	string tdFilename;
 	string gripperFilename;
@@ -101,6 +104,10 @@ int main(int argc, char* argv[]) {
 	string samplesFilename;
 	vector<int> parameters{0, 1, 2, 3, 4, 5, 6, 7, 8};
 	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
+	
+	BOBYQAOptimizer::ConstraintList constraints{
+		{0, 0.2}, {0, 0.05}, {0, 0.05}, {0, 1}, {0, 45}, {0, 0.05}, {0, 180}, {-90, 90}, {0, 0.2}
+	};
 
 	/* define CLI options */
 	string usage =
@@ -112,13 +119,15 @@ int main(int argc, char* argv[]) {
 	desc.add_options()
 		("help,h", "help message")
 		("cores,c", value<int>(&cores)->default_value(1), "number of threads to use")
-		("resolution,r", value<int>(&resolution)->default_value(10), "how many samples per parameter")
 		("ntargets,t", value<int>(&ntargets)->default_value(100), "number of tasks to generate")
-		("parameters,p", value<vector<int> >(&parameters)->multitoken(), "parameters to landscape (0-8)")
+		("nrobust,r", value<int>(&nrobust)->default_value(0), "number of robustness tasks to generate")
+		("maxfev,m", value<int>(&maxfev)->default_value(1000), "max number of function evaluations")
+		("parameters,p", value<vector<int> >(&parameters)->multitoken(), "parameters to optimize")
+		("weights,w", value<vector<double> >(&weights)->multitoken(), "7 weights for objectives (0-6)")
 		("dwc", value<string>(&dwcFilename)->required(), "dynamic workcell file")
 		("td", value<string>(&tdFilename)->required(), "task description file")
-		("gripper,g", value<string>(&gripperFilename)->required(), "gripper file")
-		("samples,s", value<string>(&samplesFilename), "surface samples file")
+		("gripper,g", value<string>(&gripperFilename)->required(), "initial gripper design")
+		("ssamples,s", value<string>(&samplesFilename), "surface samples file")
 		("out,o", value<string>(&outDir)->required(), "output directory");
 	variables_map vm;
 	
@@ -157,43 +166,42 @@ int main(int argc, char* argv[]) {
 		INFO << "Loaded." << endl;
 	}
 	
-	/* construct objective function */
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, ntargets, ssamples, cores);
-	CombineObjectives::Ptr sumMethod = CombineObjectivesFactory::make("sum", weights);
-	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
-	
-	/* landscapes */
-	BOOST_FOREACH (int id, parameters) {
-		MapGripperBuilder::ParameterName name = static_cast<MapGripperBuilder::ParameterName>(id);
-		
-		string paramName = MapGripperBuilder::parameterNameToString(name);
-		ofstream dataFile(outDir + "/" + paramName + ".csv");
-		dataFile << "# " << paramName << ", success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog" << endl;
-		
-		GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, vector<MapGripperBuilder::ParameterName>{name});
-		MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
-		
-		double range = bounds[name].second - bounds[name].first;
-		int n = 0;
-		for (double x = bounds[name].first; x <= bounds[name].second; x+= range / resolution) {
-			cout << "# Evaluating " << paramName << "= " << x << endl;
-			vector<double> param{x};
-			vector<double> result = (*func)(param);
-			double q_sum = sumMethod->combine(result);
-			double q_log = logMethod->combine(result);
-			
-			cout << x << ", " << vectorToString(result) << q_sum << ", " << q_log << endl;
-			dataFile << x << ", " << vectorToString(result) << q_sum << ", " << q_log << endl;
-			
-			Gripper::Ptr grp = builder->parametersToGripper(param);
-			stringstream sstr;
-			sstr << outDir << "/" << paramName << "_" << n++ << ".grp.xml";
-			GripperXMLLoader::save(grp, sstr.str());
-		}
-		
-		dataFile.close();
-	}
+	/* set up objective fuction */
+	GripperEvaluationManager::Configuration config;
+	config.nOfGraspsPerEvaluation = ntargets;
+	config.nOfRobustnessTargets = nrobust;
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, cores, ssamples);
 
+	vector<MapGripperBuilder::ParameterName> params;
+	BOOST_FOREACH (int id, parameters) {
+		params.push_back(static_cast<MapGripperBuilder::ParameterName>(id));
+	}
+	GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, params);
+	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
+	
+	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
+	ObjectiveFunction::Ptr objective = new RevertedFunction(new CombinedFunction(func, logMethod));
+	
+	/* perform optimization */
+	BOBYQAOptimizer::ConstraintList constr;
+	BOOST_FOREACH (int p, parameters) {
+		constr.push_back(constraints[p]);
+	}
+	BOBYQAOptimizer::Configuration opt_config;
+	opt_config.initialTrustRegionRadius = 0.01;
+	opt_config.finalTrustRegionRadius = 0.001;
+
+	Optimizer::Ptr optimizer = new BOBYQAOptimizer(opt_config, constr);
+	
+	/* perform optimization */
+	vector<double> initialGuess = builder->gripperToParameters(gripper);
+	vector<double> result = optimizer->minimize(objective, initialGuess);
+	
+	/* print result */
+	cout << "Result." << endl;
+	Gripper::Ptr opt_gripper = builder->parametersToGripper(result);
+	GripperXMLLoader::save(opt_gripper, "optGripper.grp.xml");
+	
 	return 0;
 }
 
