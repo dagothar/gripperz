@@ -263,8 +263,14 @@ rwlibs::task::GraspTask::Ptr  TaskGenerator::copyTasks(const rwlibs::task::Grasp
 
 rwlibs::task::GraspTask::Ptr TaskGenerator::addPerturbations(rwlibs::task::GraspTask::Ptr tasks, double sigma_p, double sigma_a, int perturbations)
 {
+	int origTargets = tasks->getAllTargets().size();
+	if (origTargets == 0) {
+		RW_WARN("No tasks to perturb");
+		return tasks->clone();
+	}
+	
 	GraspTask::Ptr perturbed = tasks->clone();
-	int perturbationsPerTarget = perturbations / tasks->getAllTargets().size() + 1;
+	int perturbationsPerTarget = perturbations / origTargets + 1;
 	
 	int generated = 0;
 	bool stop = false;

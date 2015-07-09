@@ -710,9 +710,9 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 }
 
 void GraspTaskSimulator::simulationFinished(SimState& sstate) {
-	Log::infoLog() << "Simulation finished:" << endl;
+	Log::debugLog() << "Simulation finished:" << endl;
 
-	Log::infoLog() << "-- target nr: " << std::setw(5) << _currentTargetIndex
+	Log::debugLog() << "-- target nr: " << std::setw(5) << _currentTargetIndex
 			<< " success:" << std::setw(5) << _success << " slipped:"
 			<< std::setw(5) << _slipped << " failed:" << std::setw(5) << _failed
 			<< " collisions:" << std::setw(5) << _collision << " timeouts:"

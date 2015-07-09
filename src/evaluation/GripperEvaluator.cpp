@@ -67,7 +67,13 @@ double GripperEvaluator::calculateSuccess(models::Gripper::Ptr gripper, rwlibs::
 	DEBUG << "filtered= " << filtered << endl;
 	DEBUG << "failures= " << failures << endl;
 	
-	double successIndex = 1.0 * successes / (nAllTargets - filtered - failures);
+	double validTasks = nAllTargets - filtered - failures;
+	if (validTasks == 0) {
+		RW_WARN("No valid tasks");
+		return 0.0;
+	}
+	
+	double successIndex = 1.0 * successes /  validTasks;
 	
 	return successIndex;
 }
@@ -92,7 +98,13 @@ double GripperEvaluator::calculateRobustness(models::Gripper::Ptr gripper, rwlib
 	DEBUG << "filtered= " << filtered << endl;
 	DEBUG << "failures= " << failures << endl;
 	
-	double robustnessIndex = 1.0 * successes / (nAllTargets - filtered - failures);
+	double validTasks = nAllTargets - filtered - failures;
+	if (validTasks == 0) {
+		RW_WARN("No valid tasks");
+		return 0.0;
+	}
+	
+	double robustnessIndex = 1.0 * successes / validTasks;
 	
 	return robustnessIndex;
 }
