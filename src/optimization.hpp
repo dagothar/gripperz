@@ -16,3 +16,7 @@
 #include "optimization/CombineProduct.hpp"
 #include "optimization/CombineLog.hpp"
 #include "optimization/ParameterMapping.hpp"
+#include "optimization/DlibFunction.hpp"
+#include "optimization/DlibWrapper.hpp"
+#include "optimization/DlibUtil.hpp"
+#include "optimization/Optimizer.hpp"

@@ -5,6 +5,7 @@
  */
 
 #include "DlibWrapper.hpp"
+#include "DlibUtil.hpp"
 
 
 using namespace std;
@@ -20,11 +21,7 @@ DlibWrapper::~DlibWrapper() {}
 
 
 double DlibWrapper::operator()(const dlib::matrix<double, 0, 1>& x) {
-	vector<double> params(x.nr());
-	
-	for (unsigned i = 0; i < params.size(); ++i) {
-		params[i] = x(i);
-	}
+	vector<double> params = DlibUtil::dlibToVector(x);
 	
 	double y = _objFunc->operator()(params);
 	
