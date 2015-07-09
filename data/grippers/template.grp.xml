@@ -19,14 +19,14 @@
 		<Experiments>0</Experiments>
 		<Successes>0</Successes>
 		<Samples>0</Samples>
-		<Coverage>0.2838709677419355</Coverage>
-		<SuccessRatio>0.5978260869565217</SuccessRatio>
-		<Wrench>0.1010108210684364</Wrench>
+		<Coverage>0.2961783439490446</Coverage>
+		<SuccessRatio>0.6979166666666666</SuccessRatio>
+		<Wrench>0.09273987299789883</Wrench>
 		<TopWrench>0</TopWrench>
 		<Quality>0</Quality>
 		<Robustness>1</Robustness>
 		<MaxStress>0.9249999999999954</MaxStress>
-		<Alignment>0.1511392341054504</Alignment>
+		<Alignment>0.1015249505791487</Alignment>
 		<Volume>0.5</Volume>
 	</Result>
 </Gripper>

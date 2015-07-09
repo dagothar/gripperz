@@ -34,26 +34,28 @@ TriMesh::Ptr JawPrimitive::createMesh(int resolution) const
 	CSGModel::Ptr base = CSGModelFactory::makeBox(_length, _depth, _width);
 	base->translate(_length/2, 0, _width/2);
 	
-	/* make chamfer */
-	Vector3D<> point(_length, 0.0, (1-_chamferDepth)*_width);
-	Transform3D<> t(Vector3D<>(), RPY<>(0, -_chamferAngle, 0).toRotation3D());
-	Vector3D<> normal = t * Vector3D<>::x();
-	CSGModel::Ptr plane = CSGModelFactory::makePlane(point, -normal);
-	base->subtract(plane);
-	
-	/* make cutout */
-	if (_type == Cylindrical) {
-		CSGModel::Ptr cutout = CSGModelFactory::makeCylinder(_cutRadius, 100.0);
-		cutout->rotate(-90*Deg2Rad, 90*Deg2Rad, 0);
-		cutout->rotate(_cutTilt, 0, 0);
-		cutout->translate(_cutPosition, 0, _cutDepth-_cutRadius);
-		base->subtract(cutout);
-	} else {
-		CSGModel::Ptr cutout = CSGModelFactory::makeWedge(_cutAngle);
-		cutout->rotate(-90*Deg2Rad, 90*Deg2Rad, 0);
-		cutout->rotate(_cutTilt, 0, 0);
-		cutout->translate(_cutPosition, 0, _cutDepth);
-		base->subtract(cutout);
+	if (_length > 0.0 && _depth > 0.0 && _width > 0.0) {
+		/* make chamfer */
+		Vector3D<> point(_length, 0.0, (1-_chamferDepth)*_width);
+		Transform3D<> t(Vector3D<>(), RPY<>(0, -_chamferAngle, 0).toRotation3D());
+		Vector3D<> normal = t * Vector3D<>::x();
+		CSGModel::Ptr plane = CSGModelFactory::makePlane(point, -normal);
+		base->subtract(plane);
+		
+		/* make cutout */
+		if (_type == Cylindrical) {
+			CSGModel::Ptr cutout = CSGModelFactory::makeCylinder(_cutRadius, 100.0);
+			cutout->rotate(-90*Deg2Rad, 90*Deg2Rad, 0);
+			cutout->rotate(_cutTilt, 0, 0);
+			cutout->translate(_cutPosition, 0, _cutDepth-_cutRadius);
+			base->subtract(cutout);
+		} else {
+			CSGModel::Ptr cutout = CSGModelFactory::makeWedge(_cutAngle);
+			cutout->rotate(-90*Deg2Rad, 90*Deg2Rad, 0);
+			cutout->rotate(_cutTilt, 0, 0);
+			cutout->translate(_cutPosition, 0, _cutDepth);
+			base->subtract(cutout);
+		}
 	}
 	
 	/* generate mesh */
