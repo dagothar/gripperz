@@ -108,8 +108,10 @@ std::stack<std::pair<GraspSubTask*, GraspTarget*> > generateTaskList(
 
 void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 
-	while (!_taskQueue.empty())
+	while (!_taskQueue.empty()) {
 		_taskQueue.pop();
+	}
+	
 	_gtask = graspTasks;
 	_timedStatePaths.clear();
 	int nrOfTargets = 0;
@@ -119,8 +121,10 @@ void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 	_objects = _dwc->findBodies<RigidBody>();
 	std::string handName = _gtask->getGripperID();
 	_dhand = _dwc->findDevice(handName);
-	if (_dhand == NULL)
+	if (_dhand == NULL) {
 		RW_THROW("No such gripper in dynamic workcell: " << handName);
+	}
+	
 	_rhand = _dhand.cast<RigidDevice>();
 	_hand = _dhand->getKinematicModel();
 	_gripperDim = (int) _hand->getDOF();
@@ -131,13 +135,13 @@ void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 		RW_THROW("The gripper base must be a KinematicBody: " << handName);
 	_mbase = _hbase->getMovableFrame();
 
-	std::string controllerName = _gtask->getGraspControllerID(); // _roottask->getPropertyMap().get<std::string>("ControllerName", "GraspController");
-	_simGraspController =
-			_dwc->findController(controllerName);
+	//std::string controllerName = _gtask->getGraspControllerID(); // _roottask->getPropertyMap().get<std::string>("ControllerName", "GraspController");
+	//_simGraspController =
+	//		_dwc->findController(controllerName);
 	//if (_simGraspController == NULL)
 	//	RW_THROW("No controller exist with the name: " << controllerName);
 
-	std::string tcpName = _gtask->getTCPID(); //_roottask->getPropertyMap().get<std::string>("TCP");
+	std::string tcpName = _gtask->getTCPID();
 	_tcp = _dwc->getWorkcell()->findFrame(tcpName);
 
 	Log::debugLog() << "LOAD TASKS DONE, nr of tasks: " << nrOfTargets
