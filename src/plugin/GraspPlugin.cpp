@@ -592,6 +592,11 @@ void GraspPlugin::showTasks() {
 				rt.color[1] = 1.0;
 				rt.color[2] = 0.0;
 				rt.color[3] = 0.5;
+			} else if (rt.ctarget.getResult()->testStatus == GraspResult::Interference) {
+				rt.color[0] = 1.0;
+				rt.color[1] = 1.0;
+				rt.color[2] = 0.0;
+				rt.color[3] = 0.5;
 			} else {
 				rt.color[0] = 1.0;
 				rt.color[1] = 0.0;

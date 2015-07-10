@@ -91,12 +91,19 @@ void GraspTaskSimulator::load(const std::string& filename) {
 
 namespace {
 
-std::stack<std::pair<GraspSubTask*, GraspTarget*> > generateTaskList(
-		GraspTask::Ptr graspTasks, int &count) {
+std::stack<std::pair<GraspSubTask*, GraspTarget*> > generateTaskList(GraspTask::Ptr graspTasks, int &count) {
+	
 	std::stack<std::pair<GraspSubTask*, GraspTarget*> > queue;
+	if (graspTasks == NULL) {
+		return queue;
+	}
+	
 	for (int i = (int) (graspTasks->getSubTasks().size() - 1); i > -1; i--) {
+		
 		GraspSubTask *subtask = &graspTasks->getSubTasks()[i];
+		
 		for (int j = (int) (subtask->targets.size() - 1); j > -1; j--) {
+			
 			queue.push(std::make_pair(subtask, &subtask->targets[j]));
 			count++;
 		}
