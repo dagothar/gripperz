@@ -622,7 +622,7 @@ void GraspPlugin::showTasks() {
 
 void GraspPlugin::test() {
 
-	BOOST_FOREACH (Gripper::Ptr g, _gripperList) {
+	/*BOOST_FOREACH (Gripper::Ptr g, _gripperList) {
 		// load gripper
 		_gripper = g;
 		updateGripper();
@@ -630,6 +630,13 @@ void GraspPlugin::test() {
 		string filename = _gripper->getName() + ".png";
 		log().info() << "Saving image " + filename + "..." << endl;
 		getRobWorkStudio()->saveViewGL(QString::fromStdString(filename));
+	}*/
+	
+	log().info() << "Stress: " << _gripper->getMaxStress() << endl;
+	
+	log().info() << "Heights: " << endl;
+	for (double x = 0.0; x <= _gripper->getLength(); x += 0.01) {
+		log().info() << "x= " << x << " y= " << _gripper->getCrossHeight(x) << endl;
 	}
 
 }

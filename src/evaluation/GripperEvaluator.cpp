@@ -296,7 +296,7 @@ double GripperEvaluator::calculateStress(models::Gripper::Ptr gripper, rwlibs::t
 	double maxstress = gripper->getMaxStress();
 	DEBUG << "Gripper stress= " << maxstress << endl;
 	
-	double stress = 1.0 - maxstress / _context->getStressLimit();
+	double stress = 1.0 - (maxstress / _context->getStressLimit());
 	
 	if (stress < 0.0) {
 		stress = 0.0;

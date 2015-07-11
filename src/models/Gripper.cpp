@@ -158,17 +158,17 @@ double Gripper::getCrossHeight(double x) const {
 	double lwidth = _width;
 
 	// check if to subtract from the width due to the chamfering
-	double d = _length - _chfdepth * _width * tan(_chfangle);
+	double d = _length - _chfdepth * _width * tan(Deg2Rad * _chfangle);
 	if (x > d) {
-		lwidth = _width - (x - d) * 1.0 / tan(_chfangle);
+		lwidth = _width - (x - d) * 1.0 / tan(Deg2Rad * _chfangle);
 	}
 
 	// check if subtract from the width due to the cut
 	double cutpos = _length - _tcpoffset;
 	double cutdist = abs(x - cutpos);
 
-	if (cutdist < _cutdepth * tan(_cutangle / 2.0)) {
-		lwidth -= _cutdepth - cutdist * tan(1.57 - _cutangle / 2.0);
+	if (cutdist < _cutdepth * tan(Deg2Rad * _cutangle / 2.0)) {
+		lwidth -= _cutdepth - cutdist * tan(1.57 - Deg2Rad * _cutangle / 2.0);
 	}
 
 	if (lwidth < 0.0) {
@@ -183,9 +183,10 @@ double Gripper::getMaxStress() const {
 	double sigmaMax = 0.0;
 
 	for (double x = 0.0; x < _length; x += 0.001) {
+		
 		double h = 100 * getCrossHeight(x);
 		double b = 100 * _depth;
-		double M = x > _length ? 0.0 : (_length - x) * _force;
+		double M = (_length - x) * _force;
 		double sigma = 6 * M / (b * h * h);
 		if (std::isinf(sigma)) {
 			sigma = 1000000.0;
