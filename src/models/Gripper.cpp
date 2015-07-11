@@ -182,7 +182,7 @@ double Gripper::getCrossHeight(double x) const {
 double Gripper::getMaxStress() const {
 	double sigmaMax = 0.0;
 
-	for (double x = 0.0; x < _length; x += 0.001) {
+	for (double x = 0.001; x < _length; x += 0.001) {
 		
 		double h = 100 * getCrossHeight(x);
 		double b = 100 * _depth;

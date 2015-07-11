@@ -4,10 +4,10 @@
 		<length>0.1</length>
 		<width>0.025</width>
 		<depth>0.02</depth>
-		<chfdepth>1</chfdepth>
+		<chfdepth>0.75</chfdepth>
 		<chfangle>45</chfangle>
-		<cutdepth>0.01</cutdepth>
-		<cutangle>120</cutangle>
+		<cutdepth>0</cutdepth>
+		<cutangle>0</cutangle>
 		<cuttilt>0</cuttilt>
 		<tcpoffset>0.025</tcpoffset>
 		<jawdist>0</jawdist>
@@ -18,14 +18,14 @@
 		<basez>0.05</basez>
 	</parameters>
 	<qualities>
-		<success>0.6</success>
-		<robustness>0.7912087912087912</robustness>
-		<alignment>0.1134330671597779</alignment>
-		<coverage>0.301418439716312</coverage>
-		<wrench>0.09265948495366312</wrench>
+		<success>0</success>
+		<robustness>0</robustness>
+		<alignment>0</alignment>
+		<coverage>0</coverage>
+		<wrench>0</wrench>
 		<topwrench>0</topwrench>
-		<stress>0.8032246249073799</stress>
-		<volume>0.5</volume>
+		<stress>0</stress>
+		<volume>0</volume>
 		<quality>0</quality>
 	</qualities>
 </gripper>
