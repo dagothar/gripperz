@@ -11,7 +11,6 @@
 		</Geometry>
 		<Offset>0.075</Offset>
 		<Jawdist>0</Jawdist>
-		<Opening>0.05</Opening>
 		<Force>25</Force>
 		<Stroke>0.05</Stroke>
 	</Parameters>

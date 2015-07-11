@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 		("help,h", "help message")
 		("cores,c", value<int>(&cores)->default_value(1), "number of threads to use")
 		("ntargets,t", value<int>(&ntargets)->default_value(100), "number of tasks to generate")
-		("nrobust,r", value<int>(&nrobust)->default_value(0), "number of robustness tasks to generate")
+		("nrobust,r", value<int>(&nrobust)->default_value(100), "number of robustness tasks to generate")
 		("maxfev,m", value<int>(&maxfev)->default_value(1000), "max number of function evaluations")
 		("parameters,p", value<vector<int> >(&parameters)->multitoken(), "parameters to optimize")
 		("weights,w", value<vector<double> >(&weights)->multitoken(), "7 weights for objectives (0-6)")

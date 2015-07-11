@@ -34,7 +34,7 @@ public:
 		
 		Configuration() :
 			nOfGraspsPerEvaluation(100),
-			nOfRobustnessTargets(0),
+			nOfRobustnessTargets(100),
 			sigma_a(8.0),
 			sigma_p(0.003)
 		{}

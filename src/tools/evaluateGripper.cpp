@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
 		("gripper,g", value<string>(&gripperFilename)->required(), "gripper file")
 		("ssamples", value<string>(), "surface samples file")
 		//("out,o", value<string>(), "task file")
-		("nrobust,r", value<int>(&rtargets), "test robustnesss with s number of targets")
+		("nrobust,r", value<int>(&rtargets)->default_value(100), "test robustnesss with s number of targets")
 		("sigma_a",	value<double>(&sigma_a)->default_value(8), "Standard deviation in of angle in degrees.")
 		("sigma_p",	value<double>(&sigma_p)->default_value(0.003), "Standard deviation of position in meters.");
 	variables_map vm;
@@ -118,12 +118,6 @@ int main(int argc, char* argv[]) {
 	INFO << "* Loading gripper... ";
 	Gripper::Ptr gripper = GripperXMLLoader::load(gripperFilename);
 	INFO << "Loaded." << endl;
-
-	//if (vm.count("out")) {
-		//outFilename = vm["out"].as<string>();
-	//} else {
-		//outFilename = gripper->getName() + ".tasks.xml";
-	//}
 
 	vector<SurfaceSample> ssamples;
 	if (vm.count("samples")) {
