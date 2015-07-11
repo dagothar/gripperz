@@ -30,8 +30,6 @@ TaskGenerator::TaskGenerator(TaskDescription::Ptr td, const std::vector<SurfaceS
 	_samples(NULL),
 	_ssamples(ssamples)
 {
-	_openQ = Q(1, td->getGripperDevice()->getBounds().second[0]);
-	_closeQ = Q(1, td->getGripperDevice()->getBounds().first[0]);
 }
 
 
@@ -330,8 +328,8 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
     stask.offset = wTobj;
     stask.approach = Transform3D<>(Vector3D<>(0, 0, 0.1));
     stask.retract = Transform3D<>(Vector3D<>(0, 0, 0.1));
-    stask.openQ = _openQ;
-    stask.closeQ = _closeQ;
+    stask.openQ = Q(1, _td->getGripperDevice()->getBounds().second[0]);
+    stask.closeQ = Q(1, _td->getGripperDevice()->getBounds().first[0]);
     gtask->setTCPID(_td->getGripperTCP()->getName());
     gtask->setGraspControllerID(_td->getControllerID());
     
@@ -383,7 +381,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
 
         // distance between grasping points is graspW
         
-        Q oq = _openQ;
+        Q oq = Q(1, _td->getGripperDevice()->getBounds().second[0]);
         //oq(0) = std::max(_closeQ(0), _closeQ(0)+(graspW+0.01)/2.0);
         //oq(0) = std::min(_openQ(0), oq(0) );
         _td->getGripperDevice()->setQ(oq, state);
@@ -404,7 +402,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
 			subtask.approach = Transform3D<>(Vector3D<>(0, 0, 0.3));
 			subtask.retract = Transform3D<>(Vector3D<>(0, 0, 0.1));
 			subtask.openQ = oq;
-			subtask.closeQ = _closeQ;
+			subtask.closeQ = Q(1, _td->getGripperDevice()->getBounds().first[0]);
             
             GraspTarget gtarget(target);
             gtarget.result = ownedPtr(new GraspResult());

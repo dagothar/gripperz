@@ -150,9 +150,6 @@ protected:
 	// data
 	context::TaskDescription::Ptr _td;
 
-	rw::math::Q _openQ;
-	rw::math::Q _closeQ;
-
 	rwlibs::task::GraspTask::Ptr _tasks;
 	rwlibs::task::GraspTask::Ptr _samples;
 	

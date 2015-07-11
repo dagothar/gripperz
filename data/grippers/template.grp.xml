@@ -18,11 +18,11 @@
 		<basez>0.05</basez>
 	</parameters>
 	<qualities>
-		<success>0.3555555555555556</success>
-		<robustness>0.6521739130434783</robustness>
-		<alignment>0.01550753279481485</alignment>
-		<coverage>0.3246268656716418</coverage>
-		<wrench>0.05569524828745152</wrench>
+		<success>0.6236559139784946</success>
+		<robustness>0.8041237113402062</robustness>
+		<alignment>0.095863882458846</alignment>
+		<coverage>0.2409638554216867</coverage>
+		<wrench>0.08861988826581116</wrench>
 		<topwrench>0</topwrench>
 		<stress>0.8032246249073799</stress>
 		<volume>0.5</volume>
