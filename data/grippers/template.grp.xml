@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Gripper name="gripper">
-	<Parameters>
-		<Geometry>
-			<Jaws>
-				<Q> 0 0.1 0.025 0.02 1 45 0.075 0.01 120 0 0 </Q>
-			</Jaws>
-			<Base>
-				<Q> 0.15 0.1 0.05 </Q>
-			</Base>
-		</Geometry>
-		<Offset>0.025</Offset>
-		<Jawdist>0</Jawdist>
-		<Force>25</Force>
-		<Stroke>0.05</Stroke>
-	</Parameters>
-	<Result>
-		<Experiments>0</Experiments>
-		<Successes>0</Successes>
-		<Samples>0</Samples>
-		<Coverage>0.27217125382263</Coverage>
-		<SuccessRatio>0.6914893617021277</SuccessRatio>
-		<Wrench>0.1080947857135576</Wrench>
-		<TopWrench>0</TopWrench>
-		<Quality>0</Quality>
-		<Robustness>1</Robustness>
-		<MaxStress>0.9249999999999954</MaxStress>
-		<Alignment>0.1021918172833112</Alignment>
-		<Volume>0.5</Volume>
-	</Result>
-</Gripper>
+<gripper name="gripper">
+	<parameters>
+		<length>0.1</length>
+		<width>0.025</width>
+		<depth>0.02</depth>
+		<chfdepth>1</chfdepth>
+		<chfangle>45</chfangle>
+		<cutdepth>0.01</cutdepth>
+		<cutangle>120</cutangle>
+		<cuttilt>0</cuttilt>
+		<tcpoffset>0.025</tcpoffset>
+		<jawdist>0</jawdist>
+		<stroke>0.05</stroke>
+		<force>25</force>
+		<basex>0.15</basex>
+		<basey>0.1</basey>
+		<basez>0.05</basez>
+	</parameters>
+	<qualities>
+		<success>0</success>
+		<robustness>0</robustness>
+		<alignment>0</alignment>
+		<coverage>0</coverage>
+		<wrench>0</wrench>
+		<topwrench>0</topwrench>
+		<stress>0</stress>
+		<volume>0</volume>
+		<quality>0</quality>
+	</qualities>
+</gripper>
