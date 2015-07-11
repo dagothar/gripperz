@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Task 1. - no constraints
+-->
+<TaskDescription>
+	<Target>object</Target>
+	<Gripper>
+		<Name>gripper</Name>
+		<TCP>TCPgripper</TCP>
+		<Movable>gripper.Base</Movable>
+		<Controller>graspController</Controller>
+	</Gripper>
+	<InterferenceObjects>
+		<Object>ob1</Object>
+		<Object>ob2</Object>
+		<Object>ob3</Object>
+		<Object>ob4</Object>
+		<Object>ob5</Object>
+		<Object>ob6</Object>
+		<Object>ob7</Object>
+		<Object>ob8</Object>
+	</InterferenceObjects>
+	<Limits>
+		<Interference>1</Interference>
+		<Wrench>0</Wrench>
+		<Stress>25</Stress>
+		<Volume>100</Volume>
+	</Limits>
+	<Baseline>
+		<Shape>1</Shape>
+		<Coverage>1</Coverage>
+		<SuccessRatio>1</SuccessRatio>
+		<Wrench>1</Wrench>
+	</Baseline>
+	<Weights>
+		<Shape>0</Shape>
+		<SuccessRatio>0.33</SuccessRatio>
+		<Coverage>1.0</Coverage>
+		<Wrench>3.0</Wrench>
+		<Stress>1.0</Stress>
+		<Volume>1.0</Volume>
+		<Alignment>2.5</Alignment>
+	</Weights>
+	<TeachDistance> 10 10 10 45 360</TeachDistance>
+	<PrefilteringDistance> 0.001 15 15 </PrefilteringDistance>
+	<CoverageDistance> 0.001 15 15 </CoverageDistance>
+
+	<Alignment>
+		<StablePose0D>
+			<Iterations>100</Iterations>
+			<MinInliers>10</MinInliers>
+			<DataThreshold>0.5</DataThreshold>
+			<ModelThreshold>0.5</ModelThreshold>
+			<Weight>0.5</Weight>
+		</StablePose0D>
+		<StablePose1D>
+			<Iterations>100</Iterations>
+			<MinInliers>10</MinInliers>
+			<DataThreshold>0.5</DataThreshold>
+			<ModelThreshold>0.5</ModelThreshold>
+			<Weight>0.5</Weight>
+		</StablePose1D>
+	</Alignment>
+</TaskDescription>

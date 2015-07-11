@@ -1,0 +1,33 @@
+<WorkCell name="Belt dolt">
+	
+	<!-- this is used for task description -->
+	<Property name="taskDescription">task_float.td.xml</Property>
+
+	<!-- gripper -->
+	<Frame name="gripper" refframe="WORLD">
+		<RPY>0 0 180</RPY>
+		<Pos>0 0 0.3</Pos>
+	</Frame>
+	
+	<Include file ="gripper/Gripper.xml"/>
+	
+	<!-- gripper TCP frame -->
+	<Frame name="TCPgripper" refframe="gripper.Base" type="Movable">
+		<RPY>0 0 0</RPY>
+		<Pos>0 0 0.05</Pos>
+	</Frame>
+ 
+	<!-- object (the target) -->
+	<Frame name="object" refframe="WORLD" type="Movable">
+		<RPY>90 90 90</RPY>
+		<Pos>0 0 0.06</Pos>
+		<Drawable name="objectGeo">
+			<Polytope file="tthing.stl"/>
+		</Drawable>
+	</Frame>
+	
+	<!-- collision setup -->
+	<CollisionSetup file ="SceneCollisionSetup.xml"/>
+	
+</WorkCell>
+
