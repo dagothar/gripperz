@@ -12,17 +12,17 @@
 		<tcpoffset>0.025</tcpoffset>
 		<jawdist>0</jawdist>
 		<stroke>0.05</stroke>
-		<force>25</force>
+		<force>10</force>
 		<basex>0.15</basex>
 		<basey>0.1</basey>
 		<basez>0.05</basez>
 	</parameters>
 	<qualities>
-		<success>0.6236559139784946</success>
-		<robustness>0.8041237113402062</robustness>
-		<alignment>0.095863882458846</alignment>
-		<coverage>0.2409638554216867</coverage>
-		<wrench>0.08861988826581116</wrench>
+		<success>0.6</success>
+		<robustness>0.7912087912087912</robustness>
+		<alignment>0.1134330671597779</alignment>
+		<coverage>0.301418439716312</coverage>
+		<wrench>0.09265948495366312</wrench>
 		<topwrench>0</topwrench>
 		<stress>0.8032246249073799</stress>
 		<volume>0.5</volume>
