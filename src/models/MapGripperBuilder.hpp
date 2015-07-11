@@ -31,8 +31,9 @@ public:
 		CutAngle,
 		CutTilt,
 		TcpOffset,
-		Force,
-		Stroke
+		Jawdist,
+		Stroke,
+		Force
 	} ParameterName;
 
 public:

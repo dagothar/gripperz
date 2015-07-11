@@ -104,11 +104,9 @@ void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,
 	tcp->setTransform(_tcp, state);
 
 	// set bounds
-	double minOpening = _jawdist;
-	if (minOpening < 0.0)
-		minOpening = 0.0;
+	double minOpening = 0.5*_jawdist;
 
-	dev->setBounds(make_pair(Q(1, minOpening), Q(1, _opening)));
+	dev->setBounds(make_pair(Q(1, minOpening), Q(1, minOpening + 0.5*_stroke)));
 	dev->setQ(Q(1, minOpening), state);
 
 	// set force

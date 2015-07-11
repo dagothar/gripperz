@@ -378,14 +378,14 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
 		
 		++samples;
 		
-		double& graspW = ssample.graspW;
+		//double& graspW = ssample.graspW;
 		Transform3D<>& target = ssample.transform;
 
         // distance between grasping points is graspW
         
         Q oq = _openQ;
-        oq(0) = std::max(_closeQ(0), _closeQ(0)+(graspW+0.01)/2.0);
-        oq(0) = std::min(_openQ(0), oq(0) );
+        //oq(0) = std::max(_closeQ(0), _closeQ(0)+(graspW+0.01)/2.0);
+        //oq(0) = std::min(_openQ(0), oq(0) );
         _td->getGripperDevice()->setQ(oq, state);
         
         // then check for collision
@@ -424,7 +424,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
         } else {			
 			++failures_in_row;
 			if (failures_in_row > 10000) {
-				RW_THROW("Something is rotten in the state of RobWork: " << successes << "/" << failures_in_row);
+				RW_WARN("Something is rotten in the state of RobWork: " << successes << "/" << failures_in_row);
 				break;
 			}
 			

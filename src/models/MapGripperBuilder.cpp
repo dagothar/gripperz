@@ -71,6 +71,14 @@ void MapGripperBuilder::applyParameter(Gripper::Ptr gripper, ParameterName name,
 		case Force:
 			gripper->setForce(value);
 			break;
+			
+		case Stroke:
+			gripper->setStroke(value);
+			break;
+		
+		case Jawdist:
+			gripper->setJawdist(value);
+			break;
 		
 		default:
 			RW_WARN("Parameter not implemented!");
@@ -130,6 +138,12 @@ double MapGripperBuilder::fetchParameter(Gripper::Ptr gripper, ParameterName nam
 		
 		case Force:
 			return gripper->getForce();
+			
+		case Stroke:
+			return gripper->getStroke();
+		
+		case Jawdist:
+			return gripper->getJawdist();
 		
 		default:
 			RW_WARN("Parameter not implemented!");
@@ -183,6 +197,12 @@ std::string MapGripperBuilder::parameterNameToString(ParameterName parameter) {
 		
 		case Force:
 			return "force";
+		
+		case Stroke:
+			return "stroke";
+			
+		case Jawdist:
+			return "jawdist";
 		
 		default:
 			RW_WARN("Parameter not implemented!");

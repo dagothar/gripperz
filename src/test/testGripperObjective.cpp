@@ -80,7 +80,10 @@ int main(int argc, char* argv[]) {
 		MapGripperBuilder::CutDepth,
 		MapGripperBuilder::CutAngle,
 		MapGripperBuilder::CutTilt, 
-		MapGripperBuilder::TcpOffset
+		MapGripperBuilder::TcpOffset,
+		MapGripperBuilder::Jawdist,
+		MapGripperBuilder::Stroke,
+		MapGripperBuilder::Force
 	};
 	GripperBuilder::Ptr builder = new MapGripperBuilder(new Gripper, params);
 	
@@ -96,7 +99,7 @@ int main(int argc, char* argv[]) {
 	unsigned n = 0;
 	while (true) {
 		cout << "#" << n++ << "> ";
-		cout << "Please input 9 parameters (length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp): ";
+		cout << "Please input 12 parameters (length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force): ";
 		vector<double> param = readVector(cin);
 		
 		/* evaluate */

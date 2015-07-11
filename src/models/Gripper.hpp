@@ -153,10 +153,10 @@ public:
 		_opening = opening;
 	}
 
-	/*double getStroke() { return _stroke; }
-	 void setStroke(double stroke) {
-	 _stroke = stroke;
-	 }*/
+	double getStroke() { return _stroke; }
+	void setStroke(double stroke) {
+		_stroke = stroke;
+	}
 
 	bool isJawParametrized() const {
 		return _isJawParametrized;

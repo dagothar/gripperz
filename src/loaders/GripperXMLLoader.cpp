@@ -89,22 +89,18 @@ void readParameters(PTree& tree, Gripper::Ptr gripper,
 	gripper->setTCP(Transform3D<>(Vector3D<>(0, 0, offset)));
 
 	double jawdist = XMLHelpers::readDouble(tree.get_child("Jawdist"));
-	double opening = XMLHelpers::readDouble(tree.get_child("Opening"));
+	//double opening = XMLHelpers::readDouble(tree.get_child("Opening"));
+	double stroke = XMLHelpers::readDouble(tree.get_child("Stroke"));
 	double force = XMLHelpers::readDouble(tree.get_child("Force"));
 
 	gripper->setJawdist(jawdist);
-	gripper->setOpening(opening);
+	//gripper->setOpening(opening);
 	gripper->setForce(force);
-
-	// it is also possible to dispense with Jawdist, and use Stroke, which overwrites it instead
-	boost::optional<PTree&> strokeNode = tree.get_child_optional("Stroke");
-	if (strokeNode) {
-		double stroke = XMLHelpers::readDouble(strokeNode.get());
-		gripper->setJawdist(opening - stroke);
-	}
+	gripper->setStroke(stroke);
 
 	DEBUG << "Offset: " << offset << endl;
-	DEBUG << "Opening: " << opening << endl;
+	DEBUG << "Jawdist: " << jawdist << endl;
+	DEBUG << "Stroke: " << stroke << endl;
 	DEBUG << "Force: " << force << endl;
 }
 
@@ -232,10 +228,8 @@ void GripperXMLLoader::save(Gripper::Ptr gripper, const std::string& filename) {
 	//tree.put("Gripper.Parameters.Offset", gripper->getJawParameters()[1]-gripper->getTCP().P()[2]);
 	tree.put("Gripper.Parameters.Offset", gripper->getTCP().P()[2]);
 	tree.put("Gripper.Parameters.Jawdist", gripper->getJawdist());
-	tree.put("Gripper.Parameters.Opening", gripper->getOpening());
 	tree.put("Gripper.Parameters.Force", gripper->getForce());
-	tree.put("Gripper.Parameters.Stroke",
-			gripper->getOpening() - gripper->getJawdist());
+	tree.put("Gripper.Parameters.Stroke", gripper->getStroke());
 
 	GripperQuality& q = gripper->getQuality();
 	tree.put("Gripper.Result.Experiments", q.nOfExperiments);

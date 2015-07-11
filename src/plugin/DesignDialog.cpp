@@ -112,11 +112,10 @@ void DesignDialog::_updateGripper() {
 		// update general parameters
 		_gripper->setName(ui.nameEdit->text().toStdString());
 		//_gripper->setTCP(Transform3D<>(Vector3D<>(0, 0, ui.lengthEdit->text().toDouble() - ui.tcpEdit->text().toDouble())));
-		_gripper->setTCP(
-				Transform3D<>(Vector3D<>(0, 0, ui.tcpEdit->text().toDouble())));
+		_gripper->setTCP(Transform3D<>(Vector3D<>(0, 0, ui.tcpEdit->text().toDouble())));
 		_gripper->setForce(ui.forceEdit->text().toDouble());
 		_gripper->setJawdist(ui.jawdistEdit->text().toDouble());
-		_gripper->setOpening(ui.openingEdit->text().toDouble());
+		_gripper->setStroke(ui.openingEdit->text().toDouble());
 	}
 }
 
@@ -178,8 +177,7 @@ void DesignDialog::_updateGUI() {
 		ui.wrenchEdit->setText(QString::number(_gripper->getQuality().wrench));
 		ui.topWrenchEdit->setText(
 				QString::number(_gripper->getQuality().topwrench));
-		ui.qualityEdit->setText(
-				QString::number(_gripper->getQuality().quality));
+		ui.qualityEdit->setText(QString::number(_gripper->getQuality().quality));
 
 		// update general parameters area
 		ui.nameEdit->setText(QString::fromStdString(_gripper->getName()));
@@ -187,6 +185,6 @@ void DesignDialog::_updateGUI() {
 		ui.tcpEdit->setText(QString::number(_gripper->getTCP().P()[2]));
 		ui.forceEdit->setText(QString::number(_gripper->getForce()));
 		ui.jawdistEdit->setText(QString::number(_gripper->getJawdist()));
-		ui.openingEdit->setText(QString::number(_gripper->getOpening()));
+		ui.openingEdit->setText(QString::number(_gripper->getStroke()));
 	}
 }

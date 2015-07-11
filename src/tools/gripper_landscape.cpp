@@ -91,6 +91,9 @@ int main(int argc, char* argv[]) {
 	bounds[MapGripperBuilder::CutAngle] = make_pair(0.0, 180.0);
 	bounds[MapGripperBuilder::CutTilt] = make_pair(-90.0, 90.0);
 	bounds[MapGripperBuilder::TcpOffset] = make_pair(0.0, 0.2);
+	bounds[MapGripperBuilder::Jawdist] = make_pair(0.0, 100.0);
+	bounds[MapGripperBuilder::Stroke] = make_pair(0.0, 0.05);
+	bounds[MapGripperBuilder::Force] = make_pair(0.0, 0.05);
 
 	/* options */
 	int cores, ntargets, nrobust, resolution;
@@ -99,7 +102,7 @@ int main(int argc, char* argv[]) {
 	string gripperFilename;
 	string outDir;
 	string samplesFilename;
-	vector<int> parameters{0, 1, 2, 3, 4, 5, 6, 7, 8};
+	vector<int> parameters{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
 
 	/* define CLI options */
