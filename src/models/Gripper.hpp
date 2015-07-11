@@ -108,166 +108,68 @@ public:
 	typedef rw::common::Ptr<Gripper> Ptr;
 
 public:
-	Gripper(const std::string& name = "gripper");
+	Gripper(const std::string& name="gripper");
 
 	virtual ~Gripper() {
 	}
 
-	std::string getName() {
-		return _name;
-	}
-	void setName(const std::string& name) {
-		_name = name;
-	}
-
-	double getForce() {
-		return _force;
-	}
+	std::string getName() const { return _name;	}
+	void setName(const std::string& name) {	_name = name; }
 	
-	void setForce(double force) {
-		_force = force;
-		_quality.maxstress = getMaxStress();
-	}
-
-	rw::math::Transform3D<> getTCP() {
-		return _tcp;
-	}
+	double getLength() const { return _length; }
+	void setLength(double x) { _length = x; }
 	
-	void setTCP(rw::math::Transform3D<> tcp) {
-		_tcp = tcp;
-	}
-
-	double getJawdist() {
-		return _jawdist;
-	}
+	double getWidth() const { return _width; }
+	void setWidth(double x) { _width = x; }
 	
-	void setJawdist(double jawdist) {
-		_jawdist = jawdist > 0.0 ? jawdist : 0.0;
-	}
-
-	double getOpening() {
-		return _opening;
-	}
+	double getDepth() const { return _depth; }
+	void setDepth(double x) { _depth = x; }
 	
-	void setOpening(double opening) {
-		_opening = opening;
-	}
+	double getChfDepth() const { return _chfdepth; }
+	void setChfDepth(double x) { _chfdepth = x; }
+	
+	double getChfAngle() const { return _chfangle; }
+	void setChfAngle(double x) { _chfangle = x; }
+	
+	double getCutDepth() const { return _cutdepth; }
+	void setCutDepth(double x) { _cutdepth = x; }
+	
+	double getCutAngle() const { return _cutangle; }
+	void setCutAngle(double x) { _cutangle = x; }
+	
+	double getCutTilt() const { return _cuttilt; }
+	void setCutTilt(double x) { _cuttilt = x; }
 
-	double getStroke() { return _stroke; }
-	void setStroke(double stroke) {
-		_stroke = stroke;
-	}
+	double getForce() const { return _force; }
+	void setForce(double force) { _force = force; }
 
-	bool isJawParametrized() const {
-		return _isJawParametrized;
-	}
+	double getTcpOffset() const { return _tcpoffset; }
+	void setTcpOffset(double tcp) {	_tcpoffset = tcp; }
+
+	double getJawdist() const {	return _jawdist; }
+	void setJawdist(double jawdist) { _jawdist = jawdist; }
+
+	double getStroke() const { return _stroke; }
+	void setStroke(double stroke) {	_stroke = stroke; }
+	
+	double getBaseX() const { return _basex; }
+	void setBaseX(double x) { _basex = x; }
+	
+	double getBaseY() const { return _basey; }
+	void setBaseY(double y) { _basey = y; }
+	
+	double getBaseZ() const { return _basez; }
+	void setBaseZ(double z) { _basez = z; }
 
 	/**
-	 * @brief Returns vector of jaw parameters.
-	 *
-	 * If jaw geometry is not parametrized, returns Q of zero length.
+	 * @brief Creates finger geometry
 	 */
-	rw::math::Q getJawParameters() const {
-		if (_isJawParametrized) {
-			return _jawParameters;
-		} else {
-			return rw::math::Q();
-		}
-	}
-
-	rw::geometry::Geometry::Ptr getJawGeometry() {
-		using rw::geometry::Geometry;
-		using gripperz::geometry::JawPrimitive;
-		using rw::common::ownedPtr;
-
-		if (_isJawParametrized) {
-			_leftGeometry = ownedPtr(
-					new Geometry(new JawPrimitive(_jawParameters),
-							std::string("LeftFingerGeo")));
-		}
-
-		return new Geometry(*_leftGeometry);
-	}
-
-	/// Set jaws geometry to a mesh.
-	void setJawGeometry(rw::geometry::Geometry::Ptr geo) {
-		_leftGeometry = geo;
-		_rightGeometry = geo;
-		_isJawParametrized = false;
-	}
+	rw::geometry::Geometry::Ptr getFingerGeometry();
 
 	/**
-	 * @brief Set parametrized jaw geometry.
-	 *
-	 * JawPrimitive is used to generate geometry mesh from given parameters.
-	 * Parameters are (in order):
-	 * - type (0 for prismatic, 1 for cylindrical)
-	 * - length
-	 * - width
-	 * - depth
-	 * - chamfer depth
-	 * - chamfer angle
-	 * - cut position
-	 * - cut depth
-	 * - cut angle
-	 * - cut radius
-	 * - cut tilt
+	 * @brief Creates base geometry.
 	 */
-	void setJawGeometry(rw::math::Q params) {
-		_jawParameters = params;
-		_isJawParametrized = true;
-
-		_quality.maxstress = getMaxStress();
-		_quality.volume = getVolume();
-	}
-
-	bool isBaseParametrized() const {
-		return _isBaseParametrized;
-	}
-
-	/**
-	 * @brief Returns vector of base parameters.
-	 *
-	 * If base geometry is not parametrized, returns Q of zero length.
-	 */
-	rw::math::Q getBaseParameters() const {
-		if (_isBaseParametrized) {
-			return _baseParameters;
-		} else {
-			return rw::math::Q();
-		}
-	}
-
-	rw::geometry::Geometry::Ptr getBaseGeometry() {
-		using rw::geometry::Geometry;
-		using rw::geometry::Box;
-		using rw::common::ownedPtr;
-
-		if (_isBaseParametrized) {
-			_baseGeometry = ownedPtr(
-					new Geometry(new Box(_baseParameters),
-							std::string("BaseGeo")));
-		}
-
-		return _baseGeometry;
-	}
-
-	/// Set base geometry to a mesh.
-	void setBaseGeometry(rw::geometry::Geometry::Ptr geo) {
-		_baseGeometry = geo;
-		_isBaseParametrized = false;
-	}
-
-	/**
-	 * @brief Sets parametrized base geometry.
-	 *
-	 * Box is used to generate mesh using given parameters.
-	 * Parameters are the dimensions of the box (length x width x depth).
-	 */
-	void setBaseGeometry(rw::math::Q params) {
-		_baseParameters = params;
-		_isBaseParametrized = true;
-	}
+	rw::geometry::Geometry::Ptr getBaseGeometry();
 
 	/**
 	 * @brief Updates selected gripper device in the workcell according to data in this class.
@@ -295,10 +197,7 @@ public:
 		context::TaskDescription::Ptr td
 	);
 
-	GripperQuality& getQuality() {
-		return _quality;
-	}
-	
+	GripperQuality& getQuality() { return _quality; }
 	void setQuality(const GripperQuality& quality) { _quality = quality; }
 
 	/**
@@ -332,30 +231,26 @@ public:
 	friend class loaders::GripperXMLLoader;
 
 private:
-	// data
 	std::string _name;
-
-	// gripper geometry parametrizations
-	bool _isBaseParametrized;
-	bool _isJawParametrized;
-	rw::math::Q _baseParameters;
-	rw::math::Q _jawParameters;
-
-	// gripper part geometries
-	rw::geometry::Geometry::Ptr _baseGeometry;
-	rw::geometry::Geometry::Ptr _leftGeometry;
-	rw::geometry::Geometry::Ptr _rightGeometry;
-
-	//rw::geometry::JawPrimitive::Ptr _jaw;
-
-	// kinematic & dynamic parameters
-	rw::math::Transform3D<> _tcp;
+	
+	/* parameters */
+	double _length;
+	double _width;
+	double _depth;
+	double _chfdepth;
+	double _chfangle;
+	double _cutdepth;
+	double _cutangle;
+	double _cuttilt;
+	double _tcpoffset;
 	double _jawdist;
-	double _opening;
-	double _force;
 	double _stroke;
-
-	// quality
+	double _force;
+	double _basex;
+	double _basey;
+	double _basez;
+	
+	/* quality */
 	GripperQuality _quality;
 };
 

@@ -32,94 +32,54 @@ using namespace gripperz::loaders;
 using namespace gripperz::models;
 
 
-void readJaws(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
-	boost::optional<PTree&> fileNode = tree.get_child_optional("File");
-	if (fileNode) {
-		// read jaw geometry from STL file
-		string filename = path + (*fileNode).get_value<string>();
-		DEBUG << "Jaw geometry from file: " << filename << endl;
-
-		TriMesh::Ptr mesh = STLFile::load(filename);
-		gripper->setJawGeometry(ownedPtr(new Geometry(mesh)));
-
-		return;
-	}
-
-	// else use parametrization
-	Q params = XMLHelpers::readQ(tree.get_child("Q"));
-	params(5) *= Deg2Rad;
-	params(8) *= Deg2Rad;
-	if (params.size() == 11) { // to accomodate for cut tilt
-		params(10) *= Deg2Rad;
-	}
-
-	DEBUG << "Jaw geometry from parameters: " << params << endl;
-	gripper->setJawGeometry(params);
-}
-
-void readBase(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
-	boost::optional<PTree&> fileNode = tree.get_child_optional("File");
-	if (fileNode) {
-		// read base geometry from STL file
-		string filename = (*fileNode).get_value<string>();
-		DEBUG << "Base geometry from file: " << filename << endl;
-
-		TriMesh::Ptr mesh = STLFile::load(filename);
-		gripper->setBaseGeometry(ownedPtr(new Geometry(mesh)));
-
-		return;
-	}
-
-	// else use parametrization
-	Q params = XMLHelpers::readQ(tree.get_child("Q"));
-	DEBUG << "Base geometry from parameters: " << params << endl;
-	gripper->setBaseGeometry(params);
-}
-
-void readGeometry(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
-	readJaws(tree.get_child("Jaws"), gripper, path);
-	readBase(tree.get_child("Base"), gripper, path);
-}
-
-void readParameters(PTree& tree, Gripper::Ptr gripper,
-		const std::string& path) {
-	readGeometry(tree.get_child("Geometry"), gripper, path);
-
-	double offset = XMLHelpers::readDouble(tree.get_child("Offset"));
-	gripper->setTCP(Transform3D<>(Vector3D<>(0, 0, offset)));
-
-	double jawdist = XMLHelpers::readDouble(tree.get_child("Jawdist"));
-	//double opening = XMLHelpers::readDouble(tree.get_child("Opening"));
-	double stroke = XMLHelpers::readDouble(tree.get_child("Stroke"));
-	double force = XMLHelpers::readDouble(tree.get_child("Force"));
-
+void readParameters(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
+	double length = XMLHelpers::readDouble(tree.get_child("length"));
+	double width = XMLHelpers::readDouble(tree.get_child("width"));;
+	double depth = XMLHelpers::readDouble(tree.get_child("depth"));
+	double chfdepth = XMLHelpers::readDouble(tree.get_child("chfdepth"));
+	double chfangle = XMLHelpers::readDouble(tree.get_child("chfangle"));
+	double cutdepth = XMLHelpers::readDouble(tree.get_child("cutdepth"));
+	double cutangle = XMLHelpers::readDouble(tree.get_child("cutangle"));
+	double cuttilt = XMLHelpers::readDouble(tree.get_child("cuttilt"));
+	double tcpoffset = XMLHelpers::readDouble(tree.get_child("tcpoffset"));
+	double jawdist = XMLHelpers::readDouble(tree.get_child("jawdist"));
+	double stroke = XMLHelpers::readDouble(tree.get_child("stroke"));
+	double force = XMLHelpers::readDouble(tree.get_child("force"));
+	double basex = XMLHelpers::readDouble(tree.get_child("basex"));
+	double basey = XMLHelpers::readDouble(tree.get_child("basey"));
+	double basez = XMLHelpers::readDouble(tree.get_child("basez"));
+	
+	gripper->setLength(length);
+	gripper->setWidth(width);
+	gripper->setDepth(depth);
+	gripper->setChfDepth(chfdepth);
+	gripper->setChfAngle(chfangle);
+	gripper->setCutDepth(cutdepth);
+	gripper->setCutAngle(cutangle);
+	gripper->setCutTilt(cuttilt);
+	gripper->setTcpOffset(tcpoffset);
 	gripper->setJawdist(jawdist);
-	//gripper->setOpening(opening);
-	gripper->setForce(force);
 	gripper->setStroke(stroke);
-
-	DEBUG << "Offset: " << offset << endl;
-	DEBUG << "Jawdist: " << jawdist << endl;
-	DEBUG << "Stroke: " << stroke << endl;
-	DEBUG << "Force: " << force << endl;
+	gripper->setForce(force);
+	gripper->setBaseX(basex);
+	gripper->setBaseY(basey);
+	gripper->setBaseZ(basez);
 }
+
 
 void readResult(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
+	
 	GripperQuality& result = gripper->getQuality();
 
-	result.nOfExperiments = XMLHelpers::readInt(tree.get_child("Experiments"));
-	result.nOfSuccesses = XMLHelpers::readInt(tree.get_child("Successes"));
-	result.nOfSamples = XMLHelpers::readInt(tree.get_child("Samples"));
-	result.coverage = XMLHelpers::readDouble(tree.get_child("Coverage"));
-	result.success = XMLHelpers::readDouble(tree.get_child("SuccessRatio"));
-	result.wrench = XMLHelpers::readDouble(tree.get_child("Wrench"));
-	result.topwrench = XMLHelpers::readDouble(tree.get_child("TopWrench"));
-	result.quality = XMLHelpers::readDouble(tree.get_child("Quality"));
+	result.coverage = XMLHelpers::readDouble(tree.get_child("coverage"));
+	result.success = XMLHelpers::readDouble(tree.get_child("success"));
+	result.wrench = XMLHelpers::readDouble(tree.get_child("wrench"));
+	result.topwrench = XMLHelpers::readDouble(tree.get_child("topwrench"));
+	result.quality = XMLHelpers::readDouble(tree.get_child("quality"));
 
 	// robustness is optional, because it was introduced recently,
 	// and we want to maintain compatibility
-	boost::optional<PTree&> robustnessNode = tree.get_child_optional(
-			"Robustness");
+	boost::optional<PTree&> robustnessNode = tree.get_child_optional("robustness");
 	if (robustnessNode) {
 		result.robustness = XMLHelpers::readDouble(robustnessNode.get());
 	} else {
@@ -128,7 +88,7 @@ void readResult(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
 
 	// maxstress is optional, because it was introduced recently,
 	// and we want to maintain compatibility
-	boost::optional<PTree&> stressNode = tree.get_child_optional("MaxStress");
+	boost::optional<PTree&> stressNode = tree.get_child_optional("stress");
 	if (stressNode) {
 		result.maxstress = XMLHelpers::readDouble(stressNode.get());
 	} else {
@@ -136,7 +96,7 @@ void readResult(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
 	}
 
 	// volume is optional
-	boost::optional<PTree&> volumeNode = tree.get_child_optional("Volume");
+	boost::optional<PTree&> volumeNode = tree.get_child_optional("volume");
 	if (volumeNode) {
 		result.volume = XMLHelpers::readDouble(volumeNode.get());
 	} else {
@@ -144,7 +104,7 @@ void readResult(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
 	}
 
 	// alignment is optional
-	boost::optional<PTree&> alignNode = tree.get_child_optional("Alignment");
+	boost::optional<PTree&> alignNode = tree.get_child_optional("alignment");
 	if (alignNode) {
 		result.alignment = XMLHelpers::readDouble(alignNode.get());
 	} else {
@@ -158,8 +118,8 @@ void readResult(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
 Gripper::Ptr readGripper(PTree& tree, const std::string& path) {
 	Gripper::Ptr gripper = ownedPtr(new Gripper);
 
-	readParameters(tree.get_child("Parameters"), gripper, path);
-	readResult(tree.get_child("Result"), gripper, path);
+	readParameters(tree.get_child("parameters"), gripper, path);
+	readResult(tree.get_child("qualities"), gripper, path);
 
 	return gripper;
 }
@@ -175,10 +135,9 @@ Gripper::Ptr GripperXMLLoader::load(const std::string& filename) {
 		PTree tree;
 		read_xml(filename, tree);
 
-		gripper = readGripper(tree.get_child("Gripper"), gripperPath);
-		string name =
-				tree.get_child("Gripper").get_child("<xmlattr>.name").get_value<
-						string>();
+		gripper = readGripper(tree.get_child("gripper"), gripperPath);
+		string name = tree.get_child("gripper").get_child("<xmlattr>.name").get_value<string>();
+		
 		gripper->setName(name);
 	} catch (const ptree_error& e) {
 		// Convert from parse errors to RobWork errors.
@@ -191,60 +150,38 @@ Gripper::Ptr GripperXMLLoader::load(const std::string& filename) {
 void GripperXMLLoader::save(Gripper::Ptr gripper, const std::string& filename) {
 	PTree tree;
 
-	tree.put("Gripper.<xmlattr>.name", gripper->getName());
-
-	// save jaw geometry
-	if (gripper->isJawParametrized()) {
-		Q params = gripper->getJawParameters();
-		params(5) *= Rad2Deg;
-		params(8) *= Rad2Deg;
-		if (params.size() == 11) { // when using cut tilt
-			params(10) *= Rad2Deg;
-		}
-		tree.put("Gripper.Parameters.Geometry.Jaws.Q",
-				XMLHelpers::QToString(params));
-	} else {
-		// save STL file
-		boost::filesystem::path p(filename);
-		string stlfile = p.parent_path().string() + "/jaw.stl";
-		STLFile::save(*gripper->_leftGeometry->getGeometryData()->getTriMesh(),
-				stlfile);
-		tree.put("Gripper.Parameters.Geometry.Jaws.File", filename);
-	}
-
-	// save base geometry
-	if (gripper->isBaseParametrized()) {
-		tree.put("Gripper.Parameters.Geometry.Base.Q",
-				XMLHelpers::QToString(gripper->getBaseParameters()));
-	} else {
-		// save STL file
-		boost::filesystem::path p(filename);
-		string stlfile = p.parent_path().string() + "/base.stl";
-		STLFile::save(*gripper->_baseGeometry->getGeometryData()->getTriMesh(),
-				stlfile);
-		tree.put("Gripper.Parameters.Geometry.Base.File", filename);
-	}
-
-	//tree.put("Gripper.Parameters.Offset", gripper->getJawParameters()[1]-gripper->getTCP().P()[2]);
-	tree.put("Gripper.Parameters.Offset", gripper->getTCP().P()[2]);
-	tree.put("Gripper.Parameters.Jawdist", gripper->getJawdist());
-	tree.put("Gripper.Parameters.Force", gripper->getForce());
-	tree.put("Gripper.Parameters.Stroke", gripper->getStroke());
-
+	/* save name */
+	tree.put("gripper.<xmlattr>.name", gripper->getName());
+	
+	/* save parameters */
+	tree.put("gripper.parameters.length", gripper->getLength());
+	tree.put("gripper.parameters.width", gripper->getWidth());
+	tree.put("gripper.parameters.depth", gripper->getDepth());
+	tree.put("gripper.parameters.chfdepth", gripper->getChfDepth());
+	tree.put("gripper.parameters.chfangle", gripper->getChfAngle());
+	tree.put("gripper.parameters.cutdepth", gripper->getCutDepth());
+	tree.put("gripper.parameters.cutangle", gripper->getCutAngle());
+	tree.put("gripper.parameters.cuttilt", gripper->getCutTilt());
+	tree.put("gripper.parameters.tcpoffset", gripper->getTcpOffset());
+	tree.put("gripper.parameters.jawdist", gripper->getJawdist());
+	tree.put("gripper.parameters.stroke", gripper->getStroke());
+	tree.put("gripper.parameters.force", gripper->getForce());
+	tree.put("gripper.parameters.basex", gripper->getBaseX());
+	tree.put("gripper.parameters.basey", gripper->getBaseY());
+	tree.put("gripper.parameters.basez", gripper->getBaseZ());
+	
+	/* save qualities */
 	GripperQuality& q = gripper->getQuality();
-	tree.put("Gripper.Result.Experiments", q.nOfExperiments);
-	tree.put("Gripper.Result.Successes", q.nOfSuccesses);
-	tree.put("Gripper.Result.Samples", q.nOfSamples);
-	//tree.put("Gripper.Result.Shape", q->shape);
-	tree.put("Gripper.Result.Coverage", q.coverage);
-	tree.put("Gripper.Result.SuccessRatio", q.success);
-	tree.put("Gripper.Result.Wrench", q.wrench);
-	tree.put("Gripper.Result.TopWrench", q.topwrench);
-	tree.put("Gripper.Result.Quality", q.quality);
-	tree.put("Gripper.Result.Robustness", q.robustness);
-	tree.put("Gripper.Result.MaxStress", q.maxstress);
-	tree.put("Gripper.Result.Alignment", q.alignment);
-	tree.put("Gripper.Result.Volume", q.volume);
+	
+	tree.put("gripper.qualities.success", q.success);
+	tree.put("gripper.qualities.robustness", q.robustness);
+	tree.put("gripper.qualities.alignment", q.alignment);
+	tree.put("gripper.qualities.coverage", q.coverage);
+	tree.put("gripper.qualities.wrench", q.wrench);
+	tree.put("gripper.qualities.topwrench", q.topwrench);
+	tree.put("gripper.qualities.stress", q.maxstress);
+	tree.put("gripper.qualities.volume", q.volume);
+	tree.put("gripper.qualities.quality", q.quality);
 
 	try {
 		boost::property_tree::xml_writer_settings<char> settings('\t', 1);

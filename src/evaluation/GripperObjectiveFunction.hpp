@@ -50,13 +50,6 @@ public:
 	
 	evaluation::GripperEvaluationManager::Ptr getEvaluationManager() { return _manager; }
 	void setEvaluationManager(evaluation::GripperEvaluationManager::Ptr manager) { _manager = manager; }
-	
-	/**
-	 * @brief Builds gripper object from parameters.
-	 * @param parameters [in] parameters
-	 * @return Gripper object
-	 */
-	static models::Gripper::Ptr parametersToGripper(const std::vector<double>& parameters);
 
 private:
 	models::GripperBuilder::Ptr _builder;

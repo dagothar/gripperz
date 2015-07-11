@@ -101,37 +101,3 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 	
 	return results;
 }
-
-
-Gripper::Ptr GripperObjectiveFunction::parametersToGripper(const std::vector<double>& p) {
-	Gripper::Ptr gripper = ownedPtr(new Gripper());
-	
-	/*
-	 * Apply jaw parametrization.
-	 */
-	Q jawParameters(11);
-	Q& j = jawParameters;
-	j(0) = 0.0; // cut type
-	j(1) = p[0]; // length
-	j(2) = p[1]; // width
-	j(3) = p[2]; // depth
-	j(4) = p[3]; // chf. depth
-	j(5) = p[4] * Deg2Rad; // chf.angle
-	j(6) = p[8]; // cut position = tcp
-	j(7) = p[5]; // cut depth
-	j(8) = p[6] * Deg2Rad; // cut angle
-	j(9) = 0.0; // cut radius
-	j(10) = p[7] * Deg2Rad; // cut tilt
-	
-	gripper->setJawGeometry(jawParameters);
-	
-	/*
-	 * Apply other parametrization.
-	 */
-	gripper->setForce(25.0);
-	gripper->setJawdist(0.0);
-	gripper->setOpening(0.05);
-	gripper->setTCP(Transform3D<>(Vector3D<>(0.0, 0.0, p[8])));
-	
-	return gripper;
-}

@@ -9,7 +9,7 @@
 				<Q> 0.15 0.1 0.05 </Q>
 			</Base>
 		</Geometry>
-		<Offset>0.075</Offset>
+		<Offset>0.025</Offset>
 		<Jawdist>0</Jawdist>
 		<Force>25</Force>
 		<Stroke>0.05</Stroke>

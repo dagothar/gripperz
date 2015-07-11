@@ -16,34 +16,66 @@ using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::geometry;
 
+
+
 Gripper::Gripper(const std::string& name) :
-		_name(name), _baseGeometry(NULL), _leftGeometry(NULL), _rightGeometry(
-				NULL), _tcp(Transform3D<>(Vector3D<>(0, 0, 0.075))), _jawdist(
-				0), _opening(0.05), _force(25) {
-	setBaseGeometry(Q(3, 0.15, 0.1, 0.05));
-	
-	Q jawGeo(11);
-	jawGeo(0) = 0;
-	jawGeo(1) = 0.1;
-	jawGeo(2) = 0.025;
-	jawGeo(3) = 0.02;
-	jawGeo(4) = 0;
-	jawGeo(5) = 0;
-	jawGeo(6) = 0.075;
-	jawGeo(7) = 0;
-	jawGeo(8) = 0;
-	jawGeo(9) = 0;
-	jawGeo(10) = 0;
-	setJawGeometry(jawGeo);
+	_name(name),
+	_length(0.1),
+	_width(0.025),
+	_depth(0.02),
+	_chfdepth(0),
+	_chfangle(0),
+	_cutdepth(0),
+	_cutangle(0),
+	_cuttilt(0),
+	_tcpoffset(0.025),
+	_jawdist(0),
+	_stroke(0.05),
+	_force(25),
+	_basex(0.15),
+	_basey(0.1),
+	_basez(0.05)
+{
 }
+
+
+rw::geometry::Geometry::Ptr Gripper::getFingerGeometry() {
+	Q q(11);
+	
+	q(0) = 0;
+	q(1) = _length;
+	q(2) = _width;
+	q(3) = _depth;
+	q(4) = _chfdepth;
+	q(5) = _chfangle * Deg2Rad;
+	q(6) = _length - _tcpoffset;
+	q(7) = _cutdepth;
+	q(8) = _cutangle * Deg2Rad;
+	q(9) = 0.0;
+	q(10) = _cuttilt * Deg2Rad;
+	
+	Geometry::Ptr fingerGeo = ownedPtr(new Geometry(new JawPrimitive(q), std::string("FingerGeo")));
+	
+	return fingerGeo;
+}
+
+
+rw::geometry::Geometry::Ptr Gripper::getBaseGeometry() {
+	Q q(3, _basex, _basey, _basez);
+	
+	Geometry::Ptr baseGeo = ownedPtr(new Geometry(new Box(q), std::string("BaseGeo")));
+	
+	return baseGeo;
+}
+
 
 void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,
 		rwsim::dynamics::DynamicWorkCell::Ptr dwc,
 		rw::models::TreeDevice::Ptr dev, rwsim::dynamics::RigidDevice::Ptr ddev,
 		rw::kinematics::State& state, TaskDescription::Ptr td) {
 	Geometry::Ptr baseGeometry = getBaseGeometry();
-	Geometry::Ptr leftGeometry = getJawGeometry();
-	Geometry::Ptr rightGeometry = getJawGeometry();
+	Geometry::Ptr leftGeometry = getFingerGeometry();
+	Geometry::Ptr rightGeometry = getFingerGeometry();
 
 	// remove existing objects
 	DEBUG << "- Removing objects..." << endl;
@@ -57,9 +89,7 @@ void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,
 
 	// if base is parametrized, the box has to be moved from origin by half its height
 	Transform3D<> baseT;
-	if (_isBaseParametrized) {
-		baseT = Transform3D<>(-0.5 * _baseParameters(2) * Vector3D<>::z());
-	}
+	baseT = Transform3D<>(-0.5 * _basez * Vector3D<>::z());
 
 	RigidObject* baseobj = new RigidObject(wc->findFrame("gripper.Base"));
 	Model3D* basemodel = new Model3D("BaseModel");
@@ -101,7 +131,7 @@ void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,
 
 	// set tcp
 	MovableFrame* tcp = (MovableFrame*) td->getGripperTCP();
-	tcp->setTransform(_tcp, state);
+	tcp->setTransform(Transform3D<>(Vector3D<>(0, 0, _length - _tcpoffset)), state);
 
 	// set bounds
 	double minOpening = 0.5*_jawdist;
@@ -115,62 +145,43 @@ void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,
 	DEBUG << "Gripper updated!" << endl;
 }
 
+
 double Gripper::getCrossHeight(double x) const {
-	if (_isJawParametrized) { // jaw is parametrized -- easy
 
-		double length = _jawParameters(1);
+	if (x > _length)
+		return 0.0; // far beyond the gripper
 
-		if (x > length)
-			return 0.0; // far beyond the gripper
+	double lwidth = _width;
 
-		//double depth = _jawParameters(3);
-		double width = _jawParameters(2);
-		double lwidth = width;
-
-		// check if to subtract from the width due to the chamfering
-		double chfDepth = _jawParameters(4);
-		double chfAngle = _jawParameters(5);
-		double d = length - chfDepth * width * tan(chfAngle);
-		if (x > d) {
-			lwidth = width - (x - d) * 1.0 / tan(chfAngle);
-		}
-
-		// check if subtract from the width due to the cut
-		double cutPos = _jawParameters(6);
-		double cutDepth = _jawParameters(7);
-		double cutAngle = _jawParameters(8);
-		double cutDist = abs(x - cutPos);
-
-		if (cutDist < cutDepth * tan(cutAngle / 2.0)) {
-			lwidth -= cutDepth - cutDist * tan(1.57 - cutAngle / 2.0);
-		}
-
-		if (lwidth < 0.0) {
-			lwidth = 0.0;
-		}
-
-		return lwidth;
-
-	} else {
-		// TODO: calculate stl's crossection somehow
-
-		return 0.0;
+	// check if to subtract from the width due to the chamfering
+	double d = _length - _chfdepth * _width * tan(_chfangle);
+	if (x > d) {
+		lwidth = _width - (x - d) * 1.0 / tan(_chfangle);
 	}
+
+	// check if subtract from the width due to the cut
+	double cutpos = _length - _tcpoffset;
+	double cutdist = abs(x - cutpos);
+
+	if (cutdist < _cutdepth * tan(_cutangle / 2.0)) {
+		lwidth -= _cutdepth - cutdist * tan(1.57 - _cutangle / 2.0);
+	}
+
+	if (lwidth < 0.0) {
+		lwidth = 0.0;
+	}
+
+	return lwidth;
 }
 
+
 double Gripper::getMaxStress() const {
-	if (!_isJawParametrized) {
-		return 0.0; // TODO: add calculations for STL
-	}
-
-	double length = _jawParameters(1);
-
 	double sigmaMax = 0.0;
 
-	for (double x = 0.0; x < length; x += 0.001) {
+	for (double x = 0.0; x < _length; x += 0.001) {
 		double h = 100 * getCrossHeight(x);
-		double b = 100 * _jawParameters(3);
-		double M = x > length ? 0.0 : (length - x) * _force;
+		double b = 100 * _depth;
+		double M = x > _length ? 0.0 : (_length - x) * _force;
 		double sigma = 6 * M / (b * h * h);
 		if (std::isinf(sigma)) {
 			sigma = 1000000.0;
@@ -187,6 +198,7 @@ double Gripper::getMaxStress() const {
 	return sigmaMax;
 }
 
+
 double Gripper::getVolume() const {
-	return 1e6 * _jawParameters(1) * _jawParameters(2) * _jawParameters(3);
+	return 1e6 * _length * _width * _depth;
 }

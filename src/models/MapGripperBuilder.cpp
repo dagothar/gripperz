@@ -28,44 +28,42 @@ MapGripperBuilder::~MapGripperBuilder() {
 
 
 void MapGripperBuilder::applyParameter(Gripper::Ptr gripper, ParameterName name, double value) {
-	Q jawP = gripper->getJawParameters();
 	
 	switch (name) {
 		case Length:
-			jawP(1) = value;
+			gripper->setLength(value);
 			break;
 		
 		case Width:
-			jawP(2) = value;
+			gripper->setWidth(value);
 			break;
 		
 		case Depth:
-			jawP(3) = value;
+			gripper->setDepth(value);
 			break;
 		
 		case ChfDepth:
-			jawP(4) = value;
+			gripper->setChfDepth(value);
 			break;
 		
 		case ChfAngle:
-			jawP(5) = value * Deg2Rad;
+			gripper->setChfAngle(value);
 			break;
 		
 		case CutDepth:
-			jawP(7) = value;
+			gripper->setCutDepth(value);
 			break;
 		
 		case CutAngle:
-			jawP(8) = value * Deg2Rad;
+			gripper->setCutAngle(value);
 			break;
 		
 		case CutTilt:
-			jawP(10) = value * Deg2Rad;
+			gripper->setCutTilt(value);
 			break;
 		
 		case TcpOffset:
-			jawP(6) = value;
-			gripper->setTCP(Transform3D<>(Vector3D<>(0, 0, value)));
+			gripper->setTcpOffset(value);
 			break;
 		
 		case Force:
@@ -83,8 +81,6 @@ void MapGripperBuilder::applyParameter(Gripper::Ptr gripper, ParameterName name,
 		default:
 			RW_WARN("Parameter not implemented!");
 	}
-	
-	gripper->setJawGeometry(jawP);
 }
 
 
@@ -99,42 +95,39 @@ Gripper::Ptr MapGripperBuilder::parametersToGripper(const std::vector<double>& p
 		applyParameter(gripper, _parameters[i], params[i]);
 	}
 	
-	DEBUG << "Gripper jaw geometry: " << gripper->getJawParameters() << endl;
-	
 	return gripper;
 }
 
 
 double MapGripperBuilder::fetchParameter(Gripper::Ptr gripper, ParameterName name) {
-	Q jawP = gripper->getJawParameters();
-	
+
 	switch (name) {
 		case Length:
-			return jawP(1);
+			return gripper->getLength();
 		
 		case Width:
-			return jawP(2);
+			return gripper->getWidth();
 		
 		case Depth:
-			return jawP(3);
+			return gripper->getDepth();
 		
 		case ChfDepth:
-			return jawP(4);
+			return gripper->getChfDepth();
 		
 		case ChfAngle:
-			return jawP(5) * Rad2Deg;
+			return gripper->getChfAngle();
 		
 		case CutDepth:
-			return jawP(7);
+			return gripper->getCutDepth();
 		
 		case CutAngle:
-			return jawP(8) * Rad2Deg;
+			return gripper->getCutAngle();
 		
 		case CutTilt:
-			return jawP(10) * Rad2Deg;
+			return gripper->getCutTilt();
 		
 		case TcpOffset:
-			return jawP(6);
+			return gripper->getTcpOffset();
 		
 		case Force:
 			return gripper->getForce();
