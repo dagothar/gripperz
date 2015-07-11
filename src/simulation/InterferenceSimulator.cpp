@@ -68,5 +68,7 @@ double InterferenceSimulator::calculateObjectInterference(rw::models::Object::Pt
 
 	double objInt = _metric->distance(Tbefore, Tafter);
 	
+	//INFO << "Interference " << object->getName() << ": " << objInt << endl;
+	
 	return objInt;
 }

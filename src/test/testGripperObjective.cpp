@@ -113,6 +113,10 @@ int main(int argc, char* argv[]) {
 		/* save gripper */
 		Gripper::Ptr grp = builder->parametersToGripper(param);
 		GripperXMLLoader::save(grp, "obj.grp.xml");
+		
+		/* save stls */
+		STLFile::save(*grp->getFingerGeometry()->getGeometryData()->getTriMesh(), "finger.stl");
+		STLFile::save(*grp->getBaseGeometry()->getGeometryData()->getTriMesh(), "base.stl");
 	}
 	
 	return 0;

@@ -34,7 +34,7 @@ using namespace gripperz::models;
 
 void readParameters(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
 	double length = XMLHelpers::readDouble(tree.get_child("length"));
-	double width = XMLHelpers::readDouble(tree.get_child("width"));;
+	double width = XMLHelpers::readDouble(tree.get_child("width"));
 	double depth = XMLHelpers::readDouble(tree.get_child("depth"));
 	double chfdepth = XMLHelpers::readDouble(tree.get_child("chfdepth"));
 	double chfangle = XMLHelpers::readDouble(tree.get_child("chfangle"));

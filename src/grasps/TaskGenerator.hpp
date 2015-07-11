@@ -129,6 +129,7 @@ public:
 	 * @brief Generates samples on the surface.
 	 */
 	SurfaceSample sample(
+		const rw::kinematics::State& state,
 		rw::geometry::TriMeshSurfaceSampler& sampler,
 		rw::proximity::ProximityModel::Ptr object,
 		rw::proximity::ProximityModel::Ptr ray,

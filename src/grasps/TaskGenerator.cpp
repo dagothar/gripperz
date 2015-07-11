@@ -47,9 +47,9 @@ void TaskGenerator::moveFrameW(const Transform3D<>& wTtcp, Frame* tcp,
 
 
 
-SurfaceSample TaskGenerator::sample(TriMeshSurfaceSampler& sampler, ProximityModel::Ptr object, ProximityModel::Ptr ray, CollisionStrategy::Ptr cstrategy)
+SurfaceSample TaskGenerator::sample(const rw::kinematics::State& state, TriMeshSurfaceSampler& sampler, ProximityModel::Ptr object, ProximityModel::Ptr ray, CollisionStrategy::Ptr cstrategy)
 {
-	Transform3D<> wTobj = Kinematics::worldTframe(_td->getTargetObject()->getBase(), _td->getInitState());
+	Transform3D<> wTobj = Kinematics::worldTframe(_td->getTargetObject()->getBase(), state);
 
     // choose a random number in the total area
     TriMesh::Ptr mesh = sampler.getMesh();
@@ -373,7 +373,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
 			ssample = ssamples->back();
 			ssamples->pop_back();
 		} else {
-			ssample = sample(sampler, object, ray, cstrategy);
+			ssample = sample(state, sampler, object, ray, cstrategy);
 		}
 		
 		++samples;

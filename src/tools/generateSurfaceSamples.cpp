@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
 	cout << "Generating samples..." << endl;
 	vector<SurfaceSample> samples;
 	for (int i = 0; i < number; ++i) {
-		SurfaceSample ssample = generator->sample(sampler, object, ray,
+		SurfaceSample ssample = generator->sample(td->getInitState(), sampler, object, ray,
 				cstrategy);
 		samples.push_back(ssample);
 	}

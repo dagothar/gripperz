@@ -69,10 +69,14 @@ rw::geometry::Geometry::Ptr Gripper::getBaseGeometry() {
 }
 
 
-void Gripper::updateGripper(rw::models::WorkCell::Ptr wc,
-		rwsim::dynamics::DynamicWorkCell::Ptr dwc,
-		rw::models::TreeDevice::Ptr dev, rwsim::dynamics::RigidDevice::Ptr ddev,
-		rw::kinematics::State& state, TaskDescription::Ptr td) {
+void Gripper::updateGripper(
+	rw::models::WorkCell::Ptr wc,
+	rwsim::dynamics::DynamicWorkCell::Ptr dwc,
+	rw::models::TreeDevice::Ptr dev,
+	rwsim::dynamics::RigidDevice::Ptr ddev,
+	rw::kinematics::State& state,
+	TaskDescription::Ptr td
+) {
 	Geometry::Ptr baseGeometry = getBaseGeometry();
 	Geometry::Ptr leftGeometry = getFingerGeometry();
 	Geometry::Ptr rightGeometry = getFingerGeometry();

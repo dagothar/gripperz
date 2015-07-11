@@ -66,10 +66,6 @@ bool areParametersOk(const std::vector<double>& p) {
 std::vector<double> GripperObjectiveFunction::operator()(const std::vector<double>& x) {
 	vector<double> results(NObjectives, 0.0);
 	
-	//if (!areParametersOk(x)) {
-	//	return results;
-	//}
-	
 	/*
 	 * Build gripper.
 	 */

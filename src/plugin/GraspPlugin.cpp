@@ -347,12 +347,14 @@ TaskDialog* sdialog = new TaskDialog(this, _td, _wd);
 sdialog->exec();
 }
 
+
 void GraspPlugin::loadGripper(const std::string& filename) {
 	cout << "Loading gripper from: " << filename << endl;
 	Gripper::Ptr gripper = GripperXMLLoader::load(filename);
 	_gripperList.push_back(gripper);
 	ui.gripperCombo->addItem(QString::fromStdString(gripper->getName()));
 }
+
 
 void GraspPlugin::updateGripper() {
 	cout << "Updating gripper..." << endl;
@@ -367,6 +369,7 @@ void GraspPlugin::updateGripper() {
 
 	getRobWorkStudio()->setState(_td->getInitState());
 }
+
 
 void GraspPlugin::updateSim() {
 	if (_simulation == NULL || _wc == NULL || _dwc == NULL)
@@ -415,6 +418,7 @@ GraspTask::Ptr GraspPlugin::generateTasks(int nTasks) {
 
 	return task;
 }
+
 
 void GraspPlugin::planTasks() {
 	_nOfTargetsToGen = ui.nAutoEdit->text().toInt();
