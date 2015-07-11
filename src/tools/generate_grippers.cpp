@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
 	bounds[MapGripperBuilder::Stroke] = make_pair(0.0, 0.05);
 	bounds[MapGripperBuilder::Force] = make_pair(0.0, 20.0);
 	
-	Q lower(11), upper(11);
+	Q lower(12), upper(12);
 	for (unsigned i = 0; i < 12; ++i) {
 		lower(i) = bounds[static_cast<MapGripperBuilder::ParameterName>(i)].first;
 		upper(i) = bounds[static_cast<MapGripperBuilder::ParameterName>(i)].second;
@@ -192,7 +192,7 @@ int main(int argc, char* argv[]) {
 	
 	/* generate grippers */
 	unsigned tries = 0;
-	unsigned generated = 0;
+	int generated = 0;
 	while (generated < ngrippers) {
 		cout << "# Trying gripper " << ++tries << endl;
 		cout << "# Grippers generated so far: " << generated << endl;
@@ -202,21 +202,29 @@ int main(int argc, char* argv[]) {
 		vector<double> vparams = Math::toStdVector(qparams, 12);
 		
 		/* test gripper */
-		double q = (*objective)(vparams);
-		cout << "Gripper quality= " << q << endl;
+		double q = 0;
+		try {
+			q = (*objective)(vparams);
+			cout << "Gripper quality= " << q << endl;
+		} catch (exception& e) {
+			RW_WARN ("Exception during gripper evaluation: " << e.what());
+		}
+		
+		stringstream sstr;
+		sstr << name << "_" << tries;
+		Gripper::Ptr grp = builder->parametersToGripper(vparams);
+		grp->setName(sstr.str());
 		
 		if (q > 0.0) {
 			++generated;
-			
-			stringstream sstr;
-			sstr << name << generated;
-			Gripper::Ptr grp = builder->parametersToGripper(vparams);
-			grp->setName(sstr.str());
+	
 			GripperXMLLoader::save(grp, sstr.str() + ".grp.xml");
 			
 			cout << "Gripper OK" << endl;
 		} else {
 			cout << "Gripper NOT OK" << endl;
+
+			GripperXMLLoader::save(grp, "_" + sstr.str() + ".grp.xml");
 		}
 	}
 	
