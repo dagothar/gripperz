@@ -93,7 +93,5 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 		RW_THROW ("Exception during gripper evaluation! " << e.what());
 	}
 	
-	
-	
 	return results;
 }

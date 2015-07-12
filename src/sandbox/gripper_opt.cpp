@@ -37,6 +37,7 @@
 #include <optimization/CombineObjectivesFactory.hpp>
 #include <optimization/RevertedFunction.hpp>
 #include <optimization/CombinedFunction.hpp>
+#include <optimization/MappedFunction.hpp>
 #include <optimization/BOBYQAOptimizer.hpp>
 
 
@@ -82,18 +83,6 @@ int main(int argc, char* argv[]) {
 	Math::seed();
 	RobWork::getInstance()->initialize();
 	Log::log().setLevel(Log::Info);
-	
-	/* parameter bounds */
-	map<MapGripperBuilder::ParameterName, pair<double, double> > bounds;
-	bounds[MapGripperBuilder::Length] = make_pair(0.0, 0.2);
-	bounds[MapGripperBuilder::Width] = make_pair(0.0, 0.05);
-	bounds[MapGripperBuilder::Depth] = make_pair(0.0, 0.05);
-	bounds[MapGripperBuilder::ChfDepth] = make_pair(0.0, 1.0);
-	bounds[MapGripperBuilder::ChfAngle] = make_pair(0.0, 90.0);
-	bounds[MapGripperBuilder::CutDepth] = make_pair(0.0, 0.05);
-	bounds[MapGripperBuilder::CutAngle] = make_pair(0.0, 180.0);
-	bounds[MapGripperBuilder::CutTilt] = make_pair(-90.0, 90.0);
-	bounds[MapGripperBuilder::TcpOffset] = make_pair(0.0, 0.2);
 
 	/* options */
 	int cores, ntargets, nrobust, maxfev;
@@ -102,11 +91,11 @@ int main(int argc, char* argv[]) {
 	string gripperFilename;
 	string outDir;
 	string samplesFilename;
-	vector<int> parameters{0, 1, 2, 3, 4, 5, 6, 7, 8};
+	vector<int> parameters{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
 	
 	BOBYQAOptimizer::ConstraintList constraints{
-		{0, 0.2}, {0, 0.05}, {0, 0.05}, {0, 1}, {0, 45}, {0, 0.05}, {0, 180}, {-90, 90}, {0, 0.2}
+		{0, 0.2}, {0, 0.05}, {0, 0.05}, {0, 1}, {0, 45}, {0, 0.05}, {0, 180}, {-90, 90}, {0, 0.2}, {0, 0.05}, {0, 0.05}, {0, 20}
 	};
 
 	/* define CLI options */
@@ -180,12 +169,24 @@ int main(int argc, char* argv[]) {
 	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 	
 	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
-	ObjectiveFunction::Ptr objective = new RevertedFunction(new CombinedFunction(func, logMethod));
+	
+	ParameterMapping::Map map;
+	BOOST_FOREACH (int id, parameters) {
+		map.push_back({{-1.0, 1.0}, constraints[id]});
+	}
+	ParameterMapping::Ptr mapping = new ParameterMapping(map);
+	
+	ObjectiveFunction::Ptr objective = new RevertedFunction(
+		new MappedFunction(
+			new CombinedFunction(func, logMethod),
+			mapping
+		)
+	);
 	
 	/* perform optimization */
 	BOBYQAOptimizer::ConstraintList constr;
 	BOOST_FOREACH (int p, parameters) {
-		constr.push_back(constraints[p]);
+		constr.push_back({-1.0, 1.0});
 	}
 	BOBYQAOptimizer::Configuration opt_config;
 	opt_config.initialTrustRegionRadius = 0.01;
@@ -194,12 +195,12 @@ int main(int argc, char* argv[]) {
 	Optimizer::Ptr optimizer = new BOBYQAOptimizer(opt_config, constr);
 	
 	/* perform optimization */
-	vector<double> initialGuess = builder->gripperToParameters(gripper);
+	vector<double> initialGuess = mapping->unmap(builder->gripperToParameters(gripper));
 	vector<double> result = optimizer->minimize(objective, initialGuess);
 	
 	/* print result */
 	cout << "Result." << endl;
-	Gripper::Ptr opt_gripper = builder->parametersToGripper(result);
+	Gripper::Ptr opt_gripper = builder->parametersToGripper(mapping->map(result));
 	GripperXMLLoader::save(opt_gripper, "optGripper.grp.xml");
 	
 	return 0;

@@ -462,7 +462,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
     int nfsamples = countTasks(_samples, GraspResult::UnInitialized);
     DEBUG << nfsamples << " out of " << nsamples << endl;
     
-    INFO << "Generated " << ntargets << " tasks & "	<< nsamples << " samples." << endl;
+    DEBUG << "Generated " << ntargets << " tasks & "	<< nsamples << " samples." << endl;
     
 	return _tasks;
 }

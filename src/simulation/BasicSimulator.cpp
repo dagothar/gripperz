@@ -82,7 +82,7 @@ void BasicSimulator::evaluateGrasp(SimState& sstate) {
 
 
 void BasicSimulator::printGraspResult(SimState& sstate) {
-	INFO << "Grasp result " << getNrTargetsDone() << ": "
+	DEBUG << "Grasp result " << getNrTargetsDone() << ": "
 		<< GraspTask::toString((GraspTask::TestStatus) sstate._target->getResult()->testStatus)
 		<< endl;
 }

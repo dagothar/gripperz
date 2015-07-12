@@ -2,7 +2,7 @@
 
 DIR=`dirname "$0"`
 
-NAMES=("length" "width" "depth" "chfdepth" "chfangle" "cutdepth" "cutangle" "cuttilt" "tcpoffset")
+NAMES=("length" "width" "depth" "chfdepth" "chfangle" "cutdepth" "cutangle" "cuttilt" "tcpoffset" "jawdist" "stroke" "force")
 
 for n in "${NAMES[@]}"
 do

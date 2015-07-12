@@ -4,10 +4,10 @@
 		<length>0.1</length>
 		<width>0.025</width>
 		<depth>0.02</depth>
-		<chfdepth>0.75</chfdepth>
+		<chfdepth>0.5</chfdepth>
 		<chfangle>45</chfangle>
-		<cutdepth>0</cutdepth>
-		<cutangle>0</cutangle>
+		<cutdepth>0.01</cutdepth>
+		<cutangle>90</cutangle>
 		<cuttilt>0</cuttilt>
 		<tcpoffset>0.025</tcpoffset>
 		<jawdist>0</jawdist>
