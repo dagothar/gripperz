@@ -182,8 +182,9 @@ int main(int argc, char* argv[]) {
 		MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 		
 		double range = bounds[name].second - bounds[name].first;
+		double step = range / resolution;
 		int n = 0;
-		for (double x = bounds[name].first; x <= bounds[name].second; x+= range / resolution) {
+		for (double x = bounds[name].first; x < bounds[name].second + step; x+= step) {
 			cout << "# Evaluating " << paramName << "= " << x << endl;
 			vector<double> param{x};
 			vector<double> result = (*func)(param);

@@ -45,5 +45,5 @@ par(new=TRUE)
 plot(qlog~val, type='l', col='black', lwd=3, axes = FALSE, xlab = "", ylab = "", ylim=range(c(0, 1)))
 par(new=F)
 
-legend("topright", legend=c("success", "robustness", "coverage", "wrench", "alignment", "stress", "volume", "average", "Q"), col=c("red", "darkred", "green", "blue", "darkorange", "violet", "cyan", "black", "black"), lty=c(1, 1, 1, 1, 1, 1, 2, 1), lwd=lwd)
+legend("topright", legend=c("success", "robustness", "alignment", "coverage", "wrench", "stress", "volume", "average", "Q"), col=c("red", "darkred", "darkorange", "green", "blue", "violet", "cyan", "black", "black"), lty=c(1, 1, 1, 1, 1, 1, 1, 2, 1), lwd=lwd)
 dev.off()
