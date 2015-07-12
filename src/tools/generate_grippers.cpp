@@ -109,6 +109,7 @@ int main(int argc, char* argv[]) {
 	string dwcFilename;
 	string tdFilename;
 	int ngrippers;
+	int last = 0;
 	string name;
 	string samplesFilename;
 	vector<MapGripperBuilder::ParameterName> params{
@@ -144,6 +145,7 @@ int main(int argc, char* argv[]) {
 		("td", value<string>(&tdFilename)->required(), "task description file")
 		("name,n", value<string>(&name)->required(), "name for grippers")
 		("ngrippers,g", value<int>(&ngrippers)->required(), "number of grippers to generate")
+		("last,l", value<int>(&last)->default_value(0), "last generated index (to continue after crash)")
 		("ssamples,s", value<string>(&samplesFilename), "surface samples file");
 	variables_map vm;
 	
@@ -192,7 +194,7 @@ int main(int argc, char* argv[]) {
 	
 	/* generate grippers */
 	unsigned tries = 0;
-	int generated = 0;
+	int generated = last;
 	while (generated < ngrippers) {
 		cout << "# Trying gripper " << ++tries << endl;
 		cout << "# Grippers generated so far: " << generated << endl;
