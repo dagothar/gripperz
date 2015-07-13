@@ -57,10 +57,13 @@ public:
 	context::TaskDescription::Ptr getContext() { return _context; }
 	
 	grasps::TaskGenerator::Ptr getGenerator() { return _generator; }
+	void setSimulator(grasps::TaskGenerator::Ptr gen) { _generator = gen; }
 	
 	simulation::GripperSimulator::Ptr getSimulator() { return _simulator; }
+	void setSimulator(simulation::GripperSimulator::Ptr sim) { _simulator = sim; }
 	
 	evaluation::GripperEvaluator::Ptr getEvaluator() { return _evaluator; }
+	void setEvaluator(evaluation::GripperEvaluator::Ptr evaluator) { _evaluator = evaluator; }
 	
 	Configuration getConfiguration() const { return _config; }
 	void setConfiguration(const Configuration& config) { _config = config; }
