@@ -8,6 +8,7 @@
 #include <simulation/InterferenceSimulator.hpp>
 #include <grasps/TaskGenerator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
+#include "GripperEvaluationManagerBuilder.hpp"
 
 
 using namespace gripperz::evaluation;
@@ -22,13 +23,16 @@ GripperEvaluationManager::Ptr GripperEvaluationManagerFactory::getEvaluationMana
 	unsigned nThreads,
 	const std::vector<grasps::SurfaceSample>& ssamples
 ) {
-	TaskGenerator::Ptr generator = ownedPtr(new TaskGenerator(td, ssamples));
+	GripperEvaluationManagerBuilder builder(td, nThreads, ssamples);
 	
-	GripperSimulator::Ptr simulator = ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads));
+	GripperEvaluationManager::Ptr manager = builder
+		.generator(ownedPtr(new TaskGenerator(td, ssamples)))
+		.simulator(ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads)))
+		.evaluator(ownedPtr(new GripperEvaluator(td)))
+		.configuration(config)
+		.build();
 	
-	GripperEvaluator::Ptr evaluator = ownedPtr(new GripperEvaluator(td));
-	
-	return ownedPtr(new GripperEvaluationManager(td, generator, simulator, evaluator, config));
+	return manager;
 }
 
 
