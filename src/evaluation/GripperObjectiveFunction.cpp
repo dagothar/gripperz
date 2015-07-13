@@ -79,6 +79,10 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 		RW_THROW("Exception during gripper generation! " << e.what());
 	}
 	
+	/*
+	 * Evaluate gripper.
+	 */
+	
 	try {
 		
 		GripperQuality::Ptr q = _manager->evaluateGripper(gripper);
@@ -98,6 +102,13 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 		results[6] = q->volume;
 	} catch (const std::exception& e) {
 		RW_THROW ("Exception during gripper evaluation! " << e.what());
+	}
+	
+	/*
+	 * Callback (if exists).
+	 */
+	if (_callback) {
+		_callback(x, results);
 	}
 	
 	return results;

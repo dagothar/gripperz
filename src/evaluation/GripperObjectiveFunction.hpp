@@ -10,6 +10,7 @@
 #include <models/GripperBuilder.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <optimization/MultiObjectiveFunction.hpp>
+#include <boost/function.hpp>
 
 namespace gripperz {
 namespace evaluation {
@@ -56,6 +57,9 @@ public:
 	
 	//! Returns last obtained gripper quality.
 	models::GripperQuality::Ptr getLastGripperQuality() const { return _lastQuality; }
+	
+	//! Sets function evaluation callback.
+	void setCallback(const boost::function<void(std::vector<double>, std::vector<double>)>& cb) { _callback = cb; }
 
 private:
 	models::GripperBuilder::Ptr _builder;
@@ -63,6 +67,8 @@ private:
 	
 	models::Gripper::Ptr _lastGripper;
 	models::GripperQuality::Ptr _lastQuality;
+	
+	boost::function<void(std::vector<double>, std::vector<double>)> _callback;
 };
 
 } /* evaluation */

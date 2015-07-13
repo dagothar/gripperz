@@ -155,7 +155,7 @@ bool Gripper::isSane() const {
 	if (_length == 0.0 || _width == 0.0 || _depth == 0.0) return false;
 	
 	/* is TCP < length? */
-	if (_tcpoffset > _length) return false;
+	if (_tcpoffset >= _length) return false;
 	
 	/* is cut depth < depth? */
 	if (_cutdepth >= _width) return false;
