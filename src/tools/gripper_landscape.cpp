@@ -179,7 +179,7 @@ int main(int argc, char* argv[]) {
 		dataFile << "# " << paramName << ", success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog" << endl;
 		
 		GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, vector<MapGripperBuilder::ParameterName>{name});
-		MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
+		GripperObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 		
 		double range = bounds[name].second - bounds[name].first;
 		double step = range / resolution;
@@ -194,7 +194,7 @@ int main(int argc, char* argv[]) {
 			cout << x << ", " << vectorToString(result) << q_sum << ", " << q_log << endl;
 			dataFile << x << ", " << vectorToString(result) << q_sum << ", " << q_log << endl;
 			
-			Gripper::Ptr grp = builder->parametersToGripper(param);
+			Gripper::Ptr grp = func->getLastGripper();
 			stringstream sstr;
 			sstr << outDir << "/" << paramName << "_" << n++ << ".grp.xml";
 			GripperXMLLoader::save(grp, sstr.str());

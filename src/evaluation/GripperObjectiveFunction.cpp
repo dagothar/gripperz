@@ -71,13 +71,20 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 	 */
 	Gripper::Ptr gripper = NULL;
 	try {
+		
 		gripper = _builder->parametersToGripper(x);
+		_lastGripper = gripper;
+		
 	} catch (const std::exception& e) {
 		RW_THROW("Exception during gripper generation! " << e.what());
 	}
 	
 	try {
+		
 		GripperQuality::Ptr q = _manager->evaluateGripper(gripper);
+		
+		_lastQuality = q;
+		_lastGripper->setQuality(*q);
 		
 		/*
 		 * Extract results.

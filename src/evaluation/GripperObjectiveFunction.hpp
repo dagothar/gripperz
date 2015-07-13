@@ -50,10 +50,19 @@ public:
 	
 	evaluation::GripperEvaluationManager::Ptr getEvaluationManager() { return _manager; }
 	void setEvaluationManager(evaluation::GripperEvaluationManager::Ptr manager) { _manager = manager; }
+	
+	//! Returns last evaluated gripper.
+	models::Gripper::Ptr getLastGripper() const { return _lastGripper; }
+	
+	//! Returns last obtained gripper quality.
+	models::GripperQuality::Ptr getLastGripperQuality() const { return _lastQuality; }
 
 private:
 	models::GripperBuilder::Ptr _builder;
 	evaluation::GripperEvaluationManager::Ptr _manager;
+	
+	models::Gripper::Ptr _lastGripper;
+	models::GripperQuality::Ptr _lastQuality;
 };
 
 } /* evaluation */

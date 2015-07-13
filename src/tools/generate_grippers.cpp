@@ -32,6 +32,7 @@
 #include <simulation/GripperTaskSimulator.hpp>
 #include <simulation/InterferenceSimulator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/ConstrainedGripperEvaluator.hpp>
 #include <models/MapGripperBuilder.hpp>
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
@@ -185,9 +186,11 @@ int main(int argc, char* argv[]) {
 	GripperEvaluationManager::Configuration config;
 	config.nOfRobustnessTargets = nrobust;
 	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, cores, ssamples);
+	GripperEvaluator::Ptr evaluator = new ConstrainedGripperEvaluator(td);
+	manager->setEvaluator(evaluator);
 	
 	GripperBuilder::Ptr builder = new MapGripperBuilder(ownedPtr(new Gripper), params);
-	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
+	GripperObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 	
 	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
 	ObjectiveFunction::Ptr objective = new CombinedFunction(func, logMethod);
@@ -214,7 +217,7 @@ int main(int argc, char* argv[]) {
 		
 		stringstream sstr;
 		sstr << name << "_" << tries;
-		Gripper::Ptr grp = builder->parametersToGripper(vparams);
+		Gripper::Ptr grp = func->getLastGripper();
 		grp->setName(sstr.str());
 		
 		if (q > 0.0) {
