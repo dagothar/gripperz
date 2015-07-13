@@ -11,7 +11,17 @@ using namespace gripperz::models;
 using namespace std;
 
 
-GripperQuality::GripperQuality() {
+GripperQuality::GripperQuality() :
+	success(0),
+	robustness(0),
+	alignment(0),
+	coverage(0),
+	wrench(0),
+	topwrench(0),
+	stress(0),
+	volume(0),
+	quality(0)
+{
 }
 
 
