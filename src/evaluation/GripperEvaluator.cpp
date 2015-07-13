@@ -38,17 +38,28 @@ GripperEvaluator::~GripperEvaluator()
 {}
 
 
+bool GripperEvaluator::isSane(models::Gripper::Ptr gripper) {
+	if (!gripper->isSane()) return false;
+	
+	return true;
+}
+
+
 GripperQuality::Ptr GripperEvaluator::evaluateGripper(Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples, rwlibs::task::GraspTask::Ptr rtasks) {
-	GripperQuality::Ptr quality = ownedPtr(new GripperQuality());
+	GripperQuality::Ptr quality = ownedPtr(new GripperQuality);
+	
+	if (!isSane(gripper)) {
+		return quality;
+	}
 	
 	quality->success = calculateSuccess(gripper, tasks, samples);
 	quality->robustness = calculateRobustness(gripper, tasks, samples, rtasks);
 	quality->coverage = calculateCoverage(gripper, tasks, samples);
 	quality->alignment = calculateAlignment(gripper, tasks, samples);
-	quality->wrench = calculateWrench(gripper, tasks, samples);
-	quality->topwrench = calculateTopWrench(gripper, tasks, samples);
-	quality->stress = calculateStress(gripper, tasks, samples);
-	quality->volume = calculateVolume(gripper, tasks, samples);
+	quality->wrench = calculateWrench(gripper, tasks);
+	quality->topwrench = calculateTopWrench(gripper, tasks);
+	quality->stress = calculateStress(gripper);
+	quality->volume = calculateVolume(gripper);
 	
 	return quality;
 }
@@ -242,7 +253,7 @@ bool sortf(double a, double b) {
 }
 
 
-double GripperEvaluator::calculateWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
+double GripperEvaluator::calculateWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks) {
 	DEBUG << "CALCULATING WRENCH - " << endl;
 	
 	vector<double> wrenches; // used to find the top 10%
@@ -292,7 +303,7 @@ double GripperEvaluator::calculateWrench(models::Gripper::Ptr gripper, rwlibs::t
 }
 
 
-double GripperEvaluator::calculateTopWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
+double GripperEvaluator::calculateTopWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks) {
 	DEBUG << "CALCULATING TOPWRENCH - " << endl;
 	
 	vector<double> wrenches; // used to find the top 10%
@@ -342,7 +353,7 @@ double GripperEvaluator::calculateTopWrench(models::Gripper::Ptr gripper, rwlibs
 }
 
 
-double GripperEvaluator::calculateStress(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
+double GripperEvaluator::calculateStress(models::Gripper::Ptr gripper) {
 	DEBUG << "CALCULATING STRESS - " << endl;
 	double maxstress = gripper->getMaxStress();
 	DEBUG << "Gripper stress= " << maxstress << endl;
@@ -357,7 +368,7 @@ double GripperEvaluator::calculateStress(models::Gripper::Ptr gripper, rwlibs::t
 }
 
 
-double GripperEvaluator::calculateVolume(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
+double GripperEvaluator::calculateVolume(models::Gripper::Ptr gripper) {
 	DEBUG << "CALCULATING VOLUME - " << endl;
 	double gripperVolume = gripper->getVolume();
 	DEBUG << "Gripper volume= " << gripperVolume << endl;

@@ -164,7 +164,7 @@ bool Gripper::isSane() const {
 	double lwidth = _width;
 	double d = _length - _chfdepth * _width * tan(Deg2Rad * _chfangle);
 	double x = _length - _tcpoffset;
-	if (x < d) {
+	if (x > d) {
 		lwidth = _width - (x - d) * 1.0 / tan(Deg2Rad * _chfangle);
 	}
 	if (_cutdepth >= lwidth) return false;

@@ -46,7 +46,7 @@ GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripp
 	/*
 	 * First, check if gripper design is sane.
 	 */
-	if (!gripper->isSane()) {
+	if (!_evaluator->isSane(gripper)) {
 		RW_WARN("Gripper design is NOT sane!");
 		
 		return ownedPtr(new GripperQuality);

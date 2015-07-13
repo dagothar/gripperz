@@ -34,6 +34,11 @@ public:
 	void setContext(context::TaskDescription::Ptr context) { _context = context; }
 	
 	/**
+	 * @brief Tests sanity of the gripper design.
+	 */
+	virtual bool isSane(models::Gripper::Ptr gripper);
+	
+	/**
 	 * @brief Evaluates gripper quality.
 	 * Uses gripper parameters and statistics in task performance to calculate the gripper quality.
 	 */
@@ -53,14 +58,14 @@ protected:
 	virtual double calculateAlignment(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
 	
 	//! Calculates the wrench index of the gripper.
-	virtual double calculateWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
-	virtual double calculateTopWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
+	virtual double calculateWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
+	virtual double calculateTopWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
 	
 	//! Calculates the stress index of the gripper.
-	virtual double calculateStress(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
+	virtual double calculateStress(models::Gripper::Ptr gripper);
 	
 	//! Calculates the volume index of the gripper.
-	virtual double calculateVolume(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
+	virtual double calculateVolume(models::Gripper::Ptr gripper);
 
 private:
 	context::TaskDescription::Ptr _context;

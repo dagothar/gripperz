@@ -640,6 +640,8 @@ void GraspPlugin::test() {
 	}*/
 	
 	log().info() << "Volume: " << _gripper->getVolume() << endl;
+	
+	log().info() << "Sane: " << _gripper->isSane() << endl;
 }
 
 Q_EXPORT_PLUGIN (GraspPlugin);
