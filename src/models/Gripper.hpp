@@ -5,21 +5,10 @@
 
 #pragma once
 
-#include <iostream>
 #include <rw/common/Ptr.hpp>
-#include <rw/math/Q.hpp>
-#include <rw/math/Transform3D.hpp>
-#include <rw/models/WorkCell.hpp>
-#include <rw/models/TreeDevice.hpp>
-#include <rw/graphics/WorkCellScene.hpp>
-#include <rw/proximity/CollisionDetector.hpp>
-#include <rwsim/rwsim.hpp>
-#include <rwlibs/task.hpp>
-#include <rwsim/rwsim.hpp>
-#include <rwsim/simulator/GraspTaskSimulator.hpp>
-
 #include <geometry/JawPrimitive.hpp>
 #include <context/TaskDescription.hpp>
+#include "GripperQuality.hpp"
 
 namespace rw {
 namespace kinematics {
@@ -35,54 +24,6 @@ class GripperXMLLoader;
 } /* loaders */
 
 namespace models {
-
-/**
- * Contains detailed evaluation of specific gripper design.
- * 
- * @todo ...
- */
-struct GripperQuality {
-	typedef rw::common::Ptr<GripperQuality> Ptr;
-
-	GripperQuality() :
-			nOfExperiments(0), nOfSuccesses(0), nOfSamples(0),
-			//shape(0.0),
-			coverage(0.0), success(0.0), wrench(0.0), topwrench(0.0), robustness(
-					0.0), maxstress(0.0), volume(0.0), alignment(0.0), quality(0.0) {
-	}
-
-	friend std::ostream& operator<<(std::ostream& stream,
-			const GripperQuality& q) {
-		stream << "GripperQuality:\n" << "- experiments= " << q.nOfExperiments
-				<< '\n' << "- successes= " << q.nOfSuccesses << '\n'
-				<< "- samples= " << q.nOfSamples << '\n'
-				<< "- coverage= " << q.coverage << '\n' << "- success= "
-				<< q.success << '\n' << "- wrench= " << q.wrench << '\n'
-				<< "- topwrench= " << q.topwrench << '\n' << "- robustness= "
-				<< q.robustness << '\n' << "- maxstress= " << q.maxstress
-				<< '\n' << "- alignment= " << q.alignment << '\n'
-				<< "- volume= " << q.volume << '\n' << "- quality= "
-				<< q.quality << std::endl;
-
-		return stream;
-	}
-
-	// data	
-	int nOfExperiments; // Number of performed experiments.
-
-	int nOfSuccesses; // Number of succesful grasps (filtered).
-	int nOfSamples; // Number of generated samples (filtered).
-
-	double coverage; // Ratio of filtered succesful grasps to filtered all samples.
-	double success; // Ratio of succesful grasps to all generated grasps.
-	double wrench; // Average wrench of succesful grasps.
-	double topwrench; // Average quality of top 20% of grasps.
-	double robustness; // Robustness of succesful grasps.
-	double maxstress; // Max. stress a gripper takes.
-	double volume; // The volume of the gripper's jaw.
-	double alignment; // Aligning property of the gripper.
-	double quality; // Ultimate measurement of gripper quality.
-};
 
 /**
  * @class Gripper

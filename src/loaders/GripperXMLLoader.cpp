@@ -71,45 +71,16 @@ void readResult(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
 	
 	GripperQuality& result = gripper->getQuality();
 
-	result.coverage = XMLHelpers::readDouble(tree.get_child("coverage"));
+	
 	result.success = XMLHelpers::readDouble(tree.get_child("success"));
+	result.robustness = XMLHelpers::readDouble(tree.get_child("robustness"));
+	result.alignment = XMLHelpers::readDouble(tree.get_child("alignment"));
+	result.coverage = XMLHelpers::readDouble(tree.get_child("coverage"));
 	result.wrench = XMLHelpers::readDouble(tree.get_child("wrench"));
 	result.topwrench = XMLHelpers::readDouble(tree.get_child("topwrench"));
+	result.stress = XMLHelpers::readDouble(tree.get_child("stress"));
+	result.volume = XMLHelpers::readDouble(tree.get_child("volume"));
 	result.quality = XMLHelpers::readDouble(tree.get_child("quality"));
-
-	// robustness is optional, because it was introduced recently,
-	// and we want to maintain compatibility
-	boost::optional<PTree&> robustnessNode = tree.get_child_optional("robustness");
-	if (robustnessNode) {
-		result.robustness = XMLHelpers::readDouble(robustnessNode.get());
-	} else {
-		result.robustness = 0.0;
-	}
-
-	// maxstress is optional, because it was introduced recently,
-	// and we want to maintain compatibility
-	boost::optional<PTree&> stressNode = tree.get_child_optional("stress");
-	if (stressNode) {
-		result.maxstress = XMLHelpers::readDouble(stressNode.get());
-	} else {
-		result.maxstress = 0.0;
-	}
-
-	// volume is optional
-	boost::optional<PTree&> volumeNode = tree.get_child_optional("volume");
-	if (volumeNode) {
-		result.volume = XMLHelpers::readDouble(volumeNode.get());
-	} else {
-		result.volume = 0.0;
-	}
-
-	// alignment is optional
-	boost::optional<PTree&> alignNode = tree.get_child_optional("alignment");
-	if (alignNode) {
-		result.alignment = XMLHelpers::readDouble(alignNode.get());
-	} else {
-		result.alignment = 0.0;
-	}
 
 	DEBUG << "Read gripper quality:" << endl;
 	DEBUG << result << endl;
@@ -179,7 +150,7 @@ void GripperXMLLoader::save(Gripper::Ptr gripper, const std::string& filename) {
 	tree.put("gripper.qualities.coverage", q.coverage);
 	tree.put("gripper.qualities.wrench", q.wrench);
 	tree.put("gripper.qualities.topwrench", q.topwrench);
-	tree.put("gripper.qualities.stress", q.maxstress);
+	tree.put("gripper.qualities.stress", q.stress);
 	tree.put("gripper.qualities.volume", q.volume);
 	tree.put("gripper.qualities.quality", q.quality);
 

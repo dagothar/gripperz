@@ -87,7 +87,7 @@ std::vector<double> GripperObjectiveFunction::operator()(const std::vector<doubl
 		results[2] = q->alignment;
 		results[3] = q->coverage;
 		results[4] = q->wrench;
-		results[5] = q->maxstress;
+		results[5] = q->stress;
 		results[6] = q->volume;
 	} catch (const std::exception& e) {
 		RW_THROW ("Exception during gripper evaluation! " << e.what());

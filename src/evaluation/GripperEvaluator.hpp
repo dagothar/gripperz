@@ -54,6 +54,7 @@ protected:
 	
 	//! Calculates the wrench index of the gripper.
 	virtual double calculateWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
+	virtual double calculateTopWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
 	
 	//! Calculates the stress index of the gripper.
 	virtual double calculateStress(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);

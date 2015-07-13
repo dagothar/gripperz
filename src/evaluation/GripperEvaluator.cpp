@@ -46,7 +46,8 @@ GripperQuality::Ptr GripperEvaluator::evaluateGripper(Gripper::Ptr gripper, rwli
 	quality->coverage = calculateCoverage(gripper, tasks, samples);
 	quality->alignment = calculateAlignment(gripper, tasks, samples);
 	quality->wrench = calculateWrench(gripper, tasks, samples);
-	quality->maxstress = calculateStress(gripper, tasks, samples);
+	quality->topwrench = calculateTopWrench(gripper, tasks, samples);
+	quality->stress = calculateStress(gripper, tasks, samples);
 	quality->volume = calculateVolume(gripper, tasks, samples);
 	
 	return quality;
@@ -288,6 +289,56 @@ double GripperEvaluator::calculateWrench(models::Gripper::Ptr gripper, rwlibs::t
 	wrench(2) /= num;
 
 	return wrench(1);
+}
+
+
+double GripperEvaluator::calculateTopWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
+	DEBUG << "CALCULATING TOPWRENCH - " << endl;
+	
+	vector<double> wrenches; // used to find the top 10%
+	Q wrench(3, 0, 0, 0);
+
+	int successes = 0;
+	typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
+
+	BOOST_FOREACH (TaskTarget p, tasks->getAllTargets()) {
+
+		if (
+			p.second->getResult()->testStatus == GraspResult::Success
+			|| p.second->getResult()->testStatus == GraspResult::ObjectSlipped
+		) {
+			successes++;
+
+			Q result = p.second->getResult()->qualityAfterLifting;
+
+			wrench(0) += result(0);
+			wrench(1) += result(1);
+
+			wrenches.push_back(result(1));
+		}
+	}
+
+	// find top 20%
+	sort(wrenches.begin(), wrenches.end(), sortf);
+
+	int num = 0.2 * successes < 1 ? 1 : 0.2 * successes;
+
+	if (wrenches.size() > 0) {
+		for (int i = 0; i < num; ++i) {
+			wrench(2) += wrenches[i];
+		}
+	}
+
+	// calculate averages
+	if (successes == 0) {
+		successes = 1;
+	}
+	
+	wrench(0) /= successes;
+	wrench(1) /= successes;
+	wrench(2) /= num;
+
+	return wrench(2);
 }
 
 

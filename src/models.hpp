@@ -5,6 +5,7 @@
  */
 
 #include "models/Gripper.hpp"
+#include "models/GripperQuality.hpp"
 #include "models/GripperBuilder.hpp"
 #include "models/MapGripperBuilder.hpp"
 

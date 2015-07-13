@@ -106,7 +106,7 @@ void DesignDialog::_updateGripper() {
 		_gripper->getQuality().coverage = ui.coverageEdit->text().toDouble();
 		_gripper->getQuality().wrench = ui.wrenchEdit->text().toDouble();
 		_gripper->getQuality().topwrench = ui.topWrenchEdit->text().toDouble();
-		_gripper->getQuality().maxstress = ui.stressEdit->text().toDouble();
+		_gripper->getQuality().stress = ui.stressEdit->text().toDouble();
 		_gripper->getQuality().volume = ui.volumeEdit->text().toDouble();
 		_gripper->getQuality().quality = ui.qualityEdit->text().toDouble();
 	}
@@ -139,7 +139,7 @@ void DesignDialog::_updateGUI() {
 		ui.alignmentEdit->setText(QString::number(_gripper->getQuality().alignment));
 		ui.wrenchEdit->setText(QString::number(_gripper->getQuality().wrench));
 		ui.topWrenchEdit->setText(QString::number(_gripper->getQuality().topwrench));
-		ui.stressEdit->setText(QString::number(_gripper->getQuality().maxstress));
+		ui.stressEdit->setText(QString::number(_gripper->getQuality().stress));
 		ui.volumeEdit->setText(QString::number(_gripper->getQuality().volume));
 		ui.qualityEdit->setText(QString::number(_gripper->getQuality().quality));
 	}
