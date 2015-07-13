@@ -39,7 +39,7 @@ Gripper::Gripper(const std::string& name) :
 }
 
 
-rw::geometry::Geometry::Ptr Gripper::getFingerGeometry() {
+rw::geometry::Geometry::Ptr Gripper::getFingerGeometry() const {
 	Q q(11);
 	
 	q(0) = 0;
@@ -60,7 +60,7 @@ rw::geometry::Geometry::Ptr Gripper::getFingerGeometry() {
 }
 
 
-rw::geometry::Geometry::Ptr Gripper::getBaseGeometry() {
+rw::geometry::Geometry::Ptr Gripper::getBaseGeometry() const {
 	Q q(3, _basex, _basey, _basez);
 	
 	Geometry::Ptr baseGeo = ownedPtr(new Geometry(new Box(q), std::string("BaseGeo")));
@@ -205,5 +205,7 @@ double Gripper::getMaxStress() const {
 
 
 double Gripper::getVolume() const {
-	return 1e6 * _length * _width * _depth;
+	double volume = 1e6 * GeometryUtil::estimateVolume(*getFingerGeometry()->getGeometryData()->getTriMesh());
+	
+	return volume;
 }

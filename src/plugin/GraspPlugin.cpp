@@ -634,11 +634,12 @@ void GraspPlugin::test() {
 	
 	log().info() << "Stress: " << _gripper->getMaxStress() << endl;
 	
-	log().info() << "Heights: " << endl;
+	/*log().info() << "Heights: " << endl;
 	for (double x = 0.0; x <= _gripper->getLength(); x += 0.01) {
 		log().info() << "x= " << x << " y= " << _gripper->getCrossHeight(x) << endl;
-	}
-
+	}*/
+	
+	log().info() << "Volume: " << _gripper->getVolume() << endl;
 }
 
 Q_EXPORT_PLUGIN (GraspPlugin);

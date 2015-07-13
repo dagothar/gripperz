@@ -105,12 +105,12 @@ public:
 	/**
 	 * @brief Creates finger geometry
 	 */
-	rw::geometry::Geometry::Ptr getFingerGeometry();
+	rw::geometry::Geometry::Ptr getFingerGeometry() const;
 
 	/**
 	 * @brief Creates base geometry.
 	 */
-	rw::geometry::Geometry::Ptr getBaseGeometry();
+	rw::geometry::Geometry::Ptr getBaseGeometry() const;
 
 	/**
 	 * @brief Updates selected gripper device in the workcell according to data in this class.
