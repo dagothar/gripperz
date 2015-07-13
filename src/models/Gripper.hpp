@@ -140,6 +140,11 @@ public:
 
 	GripperQuality& getQuality() { return _quality; }
 	void setQuality(const GripperQuality& quality) { _quality = quality; }
+	
+	/**
+	 * @brief Evaluates if the parameters are sane.
+	 */
+	bool isSane() const;
 
 	/**
 	 * @brief Calculates parametrized gripper's crossection breadth at the point along its length.

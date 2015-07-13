@@ -20,6 +20,7 @@ using namespace gripperz::models;
 using namespace rwlibs::task;
 using namespace rw::kinematics;
 using namespace rw::math;
+using namespace rw::common;
 
 
 GripperEvaluationManager::GripperEvaluationManager(
@@ -42,8 +43,16 @@ GripperEvaluationManager::~GripperEvaluationManager() {
 
 
 GripperQuality::Ptr GripperEvaluationManager::evaluateGripper(Gripper::Ptr gripper) {
-	State state = _context->getInitState();
+	/*
+	 * First, check if gripper design is sane.
+	 */
+	if (!gripper->isSane()) {
+		RW_WARN("Gripper design is NOT sane!");
+		
+		return ownedPtr(new GripperQuality);
+	}
 	
+	State state = _context->getInitState();
 	applyGripperParametrization(gripper, state);
 	
 	/*

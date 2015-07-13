@@ -150,6 +150,29 @@ void Gripper::updateGripper(
 }
 
 
+bool Gripper::isSane() const {
+	/* are general dimensions > 0?*/
+	if (_length == 0.0 || _width == 0.0 || _depth == 0.0) return false;
+	
+	/* is TCP < length? */
+	if (_tcpoffset > _length) return false;
+	
+	/* is cut depth < depth? */
+	if (_cutdepth >= _width) return false;
+	
+	/* same, but considering chamfer */
+	double lwidth = _width;
+	double d = _length - _chfdepth * _width * tan(Deg2Rad * _chfangle);
+	double x = _length - _tcpoffset;
+	if (x < d) {
+		lwidth = _width - (x - d) * 1.0 / tan(Deg2Rad * _chfangle);
+	}
+	if (_cutdepth >= lwidth) return false;
+	
+	return true;
+}
+
+
 double Gripper::getCrossHeight(double x) const {
 
 	if (x > _length)
