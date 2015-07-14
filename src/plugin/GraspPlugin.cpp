@@ -390,9 +390,7 @@ void GraspPlugin::updateSim() {
 		GripperQuality::Ptr quality = evaluator->evaluateGripper(_gripper, _tasks, _samples);
 		_gripper->setQuality(*quality);
 		
-		cout << _gripper->getQuality() << endl;
-
-		log().info() << "Simulation is finished." << endl;
+		log().info() << _gripper->getQuality() << endl;
 	}
 }
 
