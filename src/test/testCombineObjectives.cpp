@@ -7,11 +7,11 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include <optimization/CombineObjectivesFactory.hpp>
+#include <math/CombineObjectivesFactory.hpp>
 
 
 using namespace std;
-using namespace gripperz::optimization;
+using namespace gripperz::math;
 
 
 vector<double> readVector(istream& stream) {

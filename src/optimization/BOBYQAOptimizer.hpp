@@ -53,7 +53,7 @@ public:
 	/**
 	 * @brief Minimizes the objective function starting from the initial guess using BOBYQA method from dlib.
 	 */
-	virtual std::vector<double> minimize(ObjectiveFunction::Ptr function, const std::vector<double>& initialGuess);
+	virtual std::vector<double> minimize(math::ObjectiveFunction::Ptr function, const std::vector<double>& initialGuess);
 
 private:
 	Configuration _config;

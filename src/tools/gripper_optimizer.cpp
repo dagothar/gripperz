@@ -34,10 +34,10 @@
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <evaluation/GripperEvaluationManagerFactory.hpp>
-#include <optimization/CombineObjectivesFactory.hpp>
-#include <optimization/RevertedFunction.hpp>
-#include <optimization/CombinedFunction.hpp>
-#include <optimization/MappedFunction.hpp>
+#include <math/CombineObjectivesFactory.hpp>
+#include <math/RevertedFunction.hpp>
+#include <math/CombinedFunction.hpp>
+#include <math/MappedFunction.hpp>
 #include <optimization/BOBYQAOptimizer.hpp>
 
 
@@ -61,6 +61,7 @@ namespace po = boost::program_options;
 using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::simulation;
+using namespace gripperz::math;
 using namespace gripperz::optimization;
 using namespace gripperz::evaluation;
 using namespace gripperz::grasps;
@@ -187,6 +188,7 @@ int main(int argc, char* argv[]) {
 	BOBYQAOptimizer::ConstraintList constr;
 	BOOST_FOREACH (int p, parameters) {
 		constr.push_back({-1.0, 1.0});
+		p++;
 	}
 	BOBYQAOptimizer::Configuration opt_config;
 	opt_config.initialTrustRegionRadius = 0.01;

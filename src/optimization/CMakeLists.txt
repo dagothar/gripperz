@@ -1,21 +1,6 @@
 SET(SRC_FILES
 	${SRC_FILES}
-	${CMAKE_CURRENT_SOURCE_DIR}/ObjectiveFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ObjectiveFunctionDecorator.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/RevertedFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MappedFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MultiObjectiveFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CombinedFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CombineObjectives.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CombineObjectivesFactory.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CombineSum.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CombineProduct.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CombineLog.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ParameterMapping.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Optimizer.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/DlibFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/DlibWrapper.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/DlibUtil.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BOBYQAOptimizer.cpp
 	CACHE INTERNAL ""
 )

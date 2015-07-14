@@ -8,7 +8,7 @@
 
 
 using namespace gripperz::util;
-using namespace gripperz::optimization;
+using namespace gripperz::math;
 
 
 Rosenbrock::Rosenbrock(double a, double b) :

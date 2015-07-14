@@ -21,10 +21,10 @@ if (BUILD_TESTS)
 	add_dependencies(test_bobyqa gripperz)
 	target_link_libraries(test_bobyqa gripperz)
 	
-	# Target: test-optimization
-	add_executable(test-optimization testOptimization.cpp)
-	target_link_libraries(test-optimization gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-	add_dependencies(test-optimization gripperz)
+	# Target: test-math
+	add_executable(test-math testMath.cpp)
+	target_link_libraries(test-math gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+	add_dependencies(test-math gripperz)
 	
 	# Target: test-gripper-objective
 	add_executable(test-gripper-objective testGripperObjective.cpp)

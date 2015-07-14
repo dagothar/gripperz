@@ -13,13 +13,13 @@
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <loaders/GripperXMLLoader.hpp>
 #include <simulation/InterferenceSimulator.hpp>
-#include <optimization/CombineObjectivesFactory.hpp>
+#include <math/CombineObjectivesFactory.hpp>
 #include <models/MapGripperBuilder.hpp>
 
 
 using namespace std;
 using namespace gripperz::evaluation;
-using namespace gripperz::optimization;
+using namespace gripperz::math;
 using namespace gripperz::context;
 using namespace gripperz::simulation;
 using namespace gripperz::grasps;

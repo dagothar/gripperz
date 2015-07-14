@@ -9,7 +9,7 @@
 #include <models/Gripper.hpp>
 #include <models/GripperBuilder.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
-#include <optimization/MultiObjectiveFunction.hpp>
+#include <math/MultiObjectiveFunction.hpp>
 #include <boost/function.hpp>
 
 namespace gripperz {
@@ -19,7 +19,7 @@ namespace evaluation {
  * @class GripperObjectiveFunction
  * @brief
  */
-class GripperObjectiveFunction : public optimization::MultiObjectiveFunction {
+class GripperObjectiveFunction : public math::MultiObjectiveFunction {
 public:
 	//! Smart pointer.
 	typedef rw::common::Ptr<GripperObjectiveFunction> Ptr;

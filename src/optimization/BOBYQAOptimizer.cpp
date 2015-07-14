@@ -5,8 +5,8 @@
  */
 
 #include "BOBYQAOptimizer.hpp"
-#include "DlibWrapper.hpp"
-#include "DlibUtil.hpp"
+#include <math/DlibWrapper.hpp>
+#include <util/DlibUtil.hpp>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -14,6 +14,8 @@
 
 
 using namespace gripperz::optimization;
+using namespace gripperz::math;
+using namespace gripperz::util;
 using namespace rw::common;
 using namespace std;
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <optimization/ObjectiveFunction.hpp>
+#include <math/ObjectiveFunction.hpp>
 
 namespace gripperz {
 namespace util {
@@ -15,7 +15,7 @@ namespace util {
  * @class Rosenbrock
  * @brief Rosenbrock objective function
  */
-class Rosenbrock : public optimization::ObjectiveFunction {
+class Rosenbrock : public math::ObjectiveFunction {
 public:
 	//! Smart pointer.
 	typedef rw::common::Ptr<Rosenbrock> Ptr;

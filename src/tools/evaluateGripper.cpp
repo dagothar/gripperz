@@ -21,7 +21,7 @@
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <evaluation/GripperEvaluationManagerFactory.hpp>
 #include <evaluation/GripperObjectiveFunction.hpp>
-#include <optimization/CombineObjectivesFactory.hpp>
+#include <math/CombineObjectivesFactory.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -44,7 +44,7 @@ using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::simulation;
 using namespace gripperz::evaluation;
-using namespace gripperz::optimization;
+using namespace gripperz::math;
 using namespace gripperz::grasps;
 using namespace gripperz::loaders;
 

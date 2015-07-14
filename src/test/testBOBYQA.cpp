@@ -11,6 +11,7 @@
 
 using namespace std;
 using namespace gripperz::util;
+using namespace gripperz::math;
 using namespace gripperz::optimization;
 
 

@@ -37,8 +37,8 @@
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <evaluation/GripperEvaluationManagerFactory.hpp>
-#include <optimization/CombineObjectivesFactory.hpp>
-#include <optimization/CombinedFunction.hpp>
+#include <math/CombineObjectivesFactory.hpp>
+#include <math/CombinedFunction.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -61,7 +61,7 @@ namespace po = boost::program_options;
 using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::simulation;
-using namespace gripperz::optimization;
+using namespace gripperz::math;
 using namespace gripperz::evaluation;
 using namespace gripperz::grasps;
 using namespace gripperz::loaders;
