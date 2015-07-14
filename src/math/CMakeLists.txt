@@ -5,6 +5,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/RevertedFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MappedFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ConstrainedFunction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CallbackFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MultiObjectiveFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CombinedFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CombineObjectives.cpp

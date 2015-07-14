@@ -10,6 +10,7 @@
 #include <iostream>
 #include <boost/test/unit_test.hpp>
 #include <boost/test/test_tools.hpp>
+#include <boost/bind.hpp>
 #include <math.hpp>
 
 
@@ -99,4 +100,32 @@ BOOST_AUTO_TEST_CASE (ConstrainedFunctionTest) {
 	
 	Scalar x3 = f->evaluate({2, 0});
 	BOOST_CHECK (x3 == 0.0);
+}
+
+
+BOOST_AUTO_TEST_CASE (CallbackFunctionTest) {
+	class TestFunction : public ObjectiveFunction {
+	public:
+		virtual Scalar evaluate(const Vector& x) {
+			return x[0] + x[1];
+		}
+	} func;
+	
+	struct Test {
+		Test() : args(Vector()), res(0.0) {}
+		
+		Vector args;
+		Scalar res;
+		
+		void foo(const Vector& a, Scalar r) { args = a; res = r; }
+	} test;
+	
+	boost::function<void(const Vector&, Scalar)> cb = boost::bind(&Test::foo, &test, _1, _2);
+	
+	ObjectiveFunction::Ptr f = new CallbackFunction(&func, cb);
+	f->evaluate({1, 2});
+	
+	BOOST_CHECK (test.args[0] == 1.0);
+	BOOST_CHECK (test.args[1] == 2.0);
+	BOOST_CHECK (test.res == 3.0);
 }
