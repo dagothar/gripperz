@@ -24,7 +24,7 @@ public:
 	Rosenbrock(double a, double b);
 	virtual ~Rosenbrock() {};
 	
-	virtual double operator()(const std::vector<double>& x);
+	virtual double evaluate(const std::vector<double>& x);
 
 private:
 	double _a, _b;

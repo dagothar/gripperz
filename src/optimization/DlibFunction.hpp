@@ -22,7 +22,7 @@ public:
 	
 public:
 	//! Returns evaluation of provided vector x.
-	virtual double operator()(const dlib::matrix<double, 0, 1>& x) = 0;
+	virtual double evaluate(const dlib::matrix<double, 0, 1>& x) = 0;
 };
 
 } /* optimization */

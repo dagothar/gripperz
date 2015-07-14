@@ -20,10 +20,10 @@ DlibWrapper::DlibWrapper(ObjectiveFunction::Ptr func) :
 DlibWrapper::~DlibWrapper() {}
 
 
-double DlibWrapper::operator()(const dlib::matrix<double, 0, 1>& x) {
+double DlibWrapper::evaluate(const dlib::matrix<double, 0, 1>& x) {
 	vector<double> params = DlibUtil::dlibToVector(x);
 	
-	double y = _objFunc->operator()(params);
+	double y = _objFunc->evaluate(params);
 	
 	return y;
 }

@@ -17,7 +17,7 @@ Rosenbrock::Rosenbrock(double a, double b) :
 {}
 
 
-double Rosenbrock::operator()(const std::vector<double>& p) {
+double Rosenbrock::evaluate(const std::vector<double>& p) {
 	double x = p[0];
 	double y = p[1];
 	

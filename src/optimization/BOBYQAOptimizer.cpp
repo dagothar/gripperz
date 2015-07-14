@@ -32,7 +32,7 @@ BOBYQAOptimizer::~BOBYQAOptimizer() {
 std::vector<double> BOBYQAOptimizer::minimize(ObjectiveFunction::Ptr function, const std::vector<double>& initialGuess) {
 	/* create dlib function to optimize */
 	DlibFunction::Ptr dlibFunc = ownedPtr(new DlibWrapper(function));
-	boost::function<double(const dlib::matrix<double, 0, 1>&)> func = boost::bind(&DlibFunction::operator(), dlibFunc.get(), _1);
+	boost::function<double(const dlib::matrix<double, 0, 1>&)> func = boost::bind(&DlibFunction::evaluate, dlibFunc.get(), _1);
 	
 	/* translate initial guess */
 	dlib::matrix<double, 0, 1> init = DlibUtil::vectorToDlib(initialGuess);

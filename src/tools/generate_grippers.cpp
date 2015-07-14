@@ -209,7 +209,7 @@ int main(int argc, char* argv[]) {
 		/* test gripper */
 		double q = 0;
 		try {
-			q = (*objective)(vparams);
+			q = objective->evaluate(vparams);
 			cout << "Gripper quality= " << q << endl;
 		} catch (exception& e) {
 			RW_WARN ("Exception during gripper evaluation: " << e.what());

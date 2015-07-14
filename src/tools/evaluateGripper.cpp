@@ -139,7 +139,7 @@ int main(int argc, char* argv[]) {
 	
 	
 	/* evaluate gripper */
-	vector<double> results = (*objective)(vector<double>());
+	vector<double> results = objective->evaluate(vector<double>());
 	GripperQuality::Ptr quality = objective->getLastGripperQuality();
 	quality->quality = logMethod->combine(results);
 	gripper->setQuality(*quality);

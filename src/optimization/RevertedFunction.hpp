@@ -25,7 +25,7 @@ public:
 	virtual ~RevertedFunction();
 	
 	//! Returns -evaluation of provided vector x.
-	virtual double operator()(const std::vector<double>& x);
+	virtual double evaluate(const std::vector<double>& x);
 };
 
 } /* optimization */

@@ -24,7 +24,7 @@ public:
 	virtual ~ObjectiveFunctionDecorator();
 	
 	//! Returns evaluation of provided vector x.
-	virtual double operator()(const std::vector<double>& x);
+	virtual double evaluate(const std::vector<double>& x);
 
 	ObjectiveFunction::Ptr getObjectiveFunction() const { return _f; }
 	void setObjectiveFunction(ObjectiveFunction::Ptr f) { _f = f; }

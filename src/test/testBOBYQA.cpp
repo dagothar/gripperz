@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 	vector<double> result = optimizer->minimize(objFun, initialGuess);
 	
 	/* print results */
-	cout << "x=" << result[0] << " y=" << result[1] << " f(x, y)=" << (*objFun)(result) << endl;
+	cout << "x=" << result[0] << " y=" << result[1] << " f(x, y)=" << objFun->evaluate(result) << endl;
 	
 	return 0;
 }

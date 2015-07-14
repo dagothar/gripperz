@@ -44,7 +44,7 @@ public:
 	 * Returns following objectives (7):
 	 * success, robustness, alignment, coverage, wrench, stress, volume
 	 */
-	virtual std::vector<double> operator()(const std::vector<double>& x);
+	virtual std::vector<double> evaluate(const std::vector<double>& x);
 	
 	models::GripperBuilder::Ptr getBuilder() { return _builder; }
 	void setBuilder(models::GripperBuilder::Ptr builder) { _builder = builder; }

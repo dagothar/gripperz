@@ -19,6 +19,6 @@ ObjectiveFunctionDecorator::~ObjectiveFunctionDecorator() {
 }
 
 
-double ObjectiveFunctionDecorator::operator()(const std::vector<double>& x) {
-	return _f->operator()(x);
+double ObjectiveFunctionDecorator::evaluate(const std::vector<double>& x) {
+	return _f->evaluate(x);
 }

@@ -7,6 +7,7 @@
 #include "CombinedFunction.hpp"
 
 using namespace gripperz::optimization;
+using namespace std;
 
 
 CombinedFunction::CombinedFunction(MultiObjectiveFunction::Ptr multiObjFunc, CombineObjectives::Ptr combineMethod) :
@@ -20,6 +21,10 @@ CombinedFunction::~CombinedFunction() {
 }
 
 
-double CombinedFunction::operator()(const std::vector<double>& x) {
-	return _method->combine(_multiObjFunc->operator()(x));
+double CombinedFunction::evaluate(const std::vector<double>& x) {
+	vector<double> objectives = _multiObjFunc->evaluate(x);
+	
+	double result = _method->combine(objectives);
+	
+	return result;
 }

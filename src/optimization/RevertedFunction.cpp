@@ -18,6 +18,6 @@ RevertedFunction::~RevertedFunction() {
 }
 
 
-double RevertedFunction::operator()(const std::vector<double>& x) {
-	return -ObjectiveFunctionDecorator::operator()(x);
+double RevertedFunction::evaluate(const std::vector<double>& x) {
+	return -ObjectiveFunctionDecorator::evaluate(x);
 }

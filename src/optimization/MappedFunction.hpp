@@ -28,7 +28,7 @@ public:
 	void setParameterMapping(ParameterMapping::Ptr mapping) { _mapping = mapping; }
 	
 	//! Returns evaluation of provided vector x after un-packing normalized parameters first.
-	virtual double operator()(const std::vector<double>& x);
+	virtual double evaluate(const std::vector<double>& x);
 
 private:
 	ParameterMapping::Ptr _mapping;

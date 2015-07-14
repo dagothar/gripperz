@@ -63,7 +63,7 @@ bool areParametersOk(const std::vector<double>& p) {
 }
 
 
-std::vector<double> GripperObjectiveFunction::operator()(const std::vector<double>& x) {
+std::vector<double> GripperObjectiveFunction::evaluate(const std::vector<double>& x) {
 	vector<double> results(NObjectives, 0.0);
 	
 	/*

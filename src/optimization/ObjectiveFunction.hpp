@@ -22,7 +22,7 @@ public:
 	
 public:
 	//! Returns evaluation of provided vector x.
-	virtual double operator()(const std::vector<double>& x) = 0;
+	virtual double evaluate(const std::vector<double>& x) = 0;
 };
 
 } /* optimization */

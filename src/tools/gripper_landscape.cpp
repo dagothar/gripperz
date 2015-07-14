@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
 		for (double x = bounds[name].first; x < bounds[name].second + step; x+= step) {
 			cout << "# Evaluating " << paramName << "= " << x << endl;
 			vector<double> param{x};
-			vector<double> result = (*func)(param);
+			vector<double> result = func->evaluate(param);
 			double q_sum = sumMethod->combine(result);
 			double q_log = logMethod->combine(result);
 			

@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
 		
 		/* evaluate */
 		vector<double> param{x};
-		vector<double> result = (*func)(param);
+		vector<double> result = func->evaluate(param);
 		
 		cout << "Objectives (success, robustness, alignment, coverage, wrench, stress, volume): " << vectorToString(result) << endl;
 		
