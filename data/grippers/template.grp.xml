@@ -18,14 +18,14 @@
 		<basez>0.05</basez>
 	</parameters>
 	<qualities>
-		<success>0</success>
-		<robustness>0</robustness>
-		<alignment>0</alignment>
-		<coverage>0</coverage>
-		<wrench>0</wrench>
-		<topwrench>0</topwrench>
-		<stress>0</stress>
-		<volume>0</volume>
-		<quality>0</quality>
+		<success>0.7472527472527473</success>
+		<robustness>0.8709677419354839</robustness>
+		<alignment>0.06931975810209012</alignment>
+		<coverage>0.33203125</coverage>
+		<wrench>0.08959746736358544</wrench>
+		<topwrench>0.1614948024432869</topwrench>
+		<stress>0.90496</stress>
+		<volume>0.5356249992411066</volume>
+		<quality>0.3505548136923105</quality>
 	</qualities>
 </gripper>

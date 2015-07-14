@@ -8,27 +8,20 @@
 #include <rw/rw.hpp>
 #include <rw/RobWork.hpp>
 #include <rw/common/Log.hpp>
-#include <rw/common/ExtensionRegistry.hpp>
 #include <rwsim/rwsim.hpp>
 #include <rwsim/loaders/DynamicWorkCellLoader.hpp>
-#include <rw/loaders/model3d/STLFile.hpp>
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/option.hpp>
 #include <boost/program_options/parsers.hpp>
-#include <rwlibs/proximitystrategies/ProximityStrategyFactory.hpp>
-#include <rwsimlibs/ode/ODEPlugin.hpp>
-
-#include <context/TaskDescription.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <models/Gripper.hpp>
+#include <models/MapGripperBuilder.hpp>
 #include <loaders/GripperXMLLoader.hpp>
-#include <grasps/TaskGenerator.hpp>
-#include <simulation/GripperTaskSimulator.hpp>
-#include <simulation/InterferenceSimulator.hpp>
-#include <evaluation/GripperEvaluator.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <evaluation/GripperEvaluationManagerFactory.hpp>
+#include <evaluation/GripperObjectiveFunction.hpp>
+#include <optimization/CombineObjectivesFactory.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -38,20 +31,20 @@
 using namespace std;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
+USE_ROBWORKSIM_NAMESPACE
+using namespace robworksim;
 using namespace rw::models;
 using namespace rw::common;
 using namespace rw::loaders;
 using namespace rwlibs::task;
 using namespace rwsim;
-using namespace rwsim::dynamics;
-using namespace rwsim::loaders;
-using namespace rwsim::simulation;
 using namespace boost::program_options;
 namespace po = boost::program_options;
 using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::simulation;
 using namespace gripperz::evaluation;
+using namespace gripperz::optimization;
 using namespace gripperz::grasps;
 using namespace gripperz::loaders;
 
@@ -62,17 +55,19 @@ int main(int argc, char* argv[]) {
 	RobWork::getInstance()->initialize();
 	Log::log().setLevel(Log::Info);
 
-	// options
+
+	/* configuration */
 	int cores, ntargets, nsamples, rtargets;
 	string dwcFilename;
 	string tdFilename;
 	string gripperFilename;
 	string outFilename;
 	string samplesFilename;
-
 	double sigma_a, sigma_p;
+	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
 
-	// program options
+
+	/* CLI */
 	string usage =
 			"This is a script used to generate tasks for a single gripper, simulate them and"
 					" evaluate gripper's performance.\n\n"
@@ -87,6 +82,7 @@ int main(int argc, char* argv[]) {
 		("dwc", value<string>(&dwcFilename)->required(), "dynamic workcell file")
 		("td", value<string>(&tdFilename)->required(), "task description file")
 		("gripper,g", value<string>(&gripperFilename)->required(), "gripper file")
+		("weights,w", value<vector<double> >(&weights)->multitoken(), "7 weights for objectives (0-6)")
 		("ssamples", value<string>(), "surface samples file")
 		//("out,o", value<string>(), "task file")
 		("nrobust,r", value<int>(&rtargets)->default_value(100), "test robustnesss with s number of targets")
@@ -108,6 +104,7 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+
 	/* load data */
 	INFO << "* Loading dwc... ";
 	DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load(dwcFilename);
@@ -122,10 +119,9 @@ int main(int argc, char* argv[]) {
 	vector<SurfaceSample> ssamples;
 	if (vm.count("samples")) {
 		samplesFilename = vm["ssamples"].as<string>();
-
-		// load samples
 		ssamples = SurfaceSample::loadFromXML(samplesFilename);
 	}
+	
 	
 	/* construct evaluation manager */
 	GripperEvaluationManager::Configuration config;
@@ -135,18 +131,27 @@ int main(int argc, char* argv[]) {
 	config.sigma_p = sigma_p;
 	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, cores, ssamples);
 	
+	
+	/* objective function */
+	GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, vector<MapGripperBuilder::ParameterName>());
+	GripperObjectiveFunction::Ptr objective = new GripperObjectiveFunction(builder, manager);
+	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
+	
+	
 	/* evaluate gripper */
-	GripperQuality::Ptr quality = manager->evaluateGripper(gripper);
-
+	vector<double> results = (*objective)(vector<double>());
+	GripperQuality::Ptr quality = objective->getLastGripperQuality();
+	quality->quality = logMethod->combine(results);
 	gripper->setQuality(*quality);
+
 
 	/* display results */
 	INFO << "\nRESULTS" << endl;
 	INFO << gripper->getQuality() << endl;
 
+
 	/* save results */
 	GripperXMLLoader::save(gripper, gripperFilename);
-	//GraspTask::saveRWTask(tasks, outFilename);
 
 	return 0;
 }
