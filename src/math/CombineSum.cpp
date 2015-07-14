@@ -13,7 +13,7 @@ using namespace std;
 using namespace gripperz::math;
 
 
-CombineSum::CombineSum(const std::vector<double> weights) :
+CombineSum::CombineSum(const Vector& weights) :
 	CombineObjectives(weights)
 {}
 
@@ -21,12 +21,12 @@ CombineSum::CombineSum(const std::vector<double> weights) :
 CombineSum::~CombineSum() {}
 	
 
-double CombineSum::_do_combine(const std::vector<double>& objectives) {
-	double q = 0.0;
-	double sum_w = 0.0;
+Scalar CombineSum::_do_combine(const Vector& objectives) {
+	Scalar q = 0.0;
+	Scalar sum_w = 0.0;
 	
 	for (unsigned i = 0; i < objectives.size(); ++i) {
-		double w = getWeights()[i];
+		Scalar w = getWeights()[i];
 		q += w * objectives[i];
 		sum_w += w;
 	}

@@ -21,10 +21,10 @@ CombinedFunction::~CombinedFunction() {
 }
 
 
-double CombinedFunction::evaluate(const std::vector<double>& x) {
-	vector<double> objectives = _multiObjFunc->evaluate(x);
+Scalar CombinedFunction::evaluate(const Vector& x) {
+	Vector objectives = _multiObjFunc->evaluate(x);
 	
-	double result = _method->combine(objectives);
+	Scalar result = _method->combine(objectives);
 	
 	return result;
 }

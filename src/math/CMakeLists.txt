@@ -15,5 +15,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/ParameterMapping.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/DlibFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/DlibWrapper.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Constraint.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/BoxConstraint.cpp
 	CACHE INTERNAL ""
 )

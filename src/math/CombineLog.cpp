@@ -13,7 +13,7 @@ using namespace std;
 using namespace gripperz::math;
 
 
-CombineLog::CombineLog(const std::vector<double> weights) :
+CombineLog::CombineLog(const Vector& weights) :
 	CombineObjectives(weights)
 {}
 
@@ -21,12 +21,12 @@ CombineLog::CombineLog(const std::vector<double> weights) :
 CombineLog::~CombineLog() {}
 	
 
-double CombineLog::_do_combine(const std::vector<double>& objectives) {
-	double q = 0.0;
-	double sum_w = 0.0;
+Scalar CombineLog::_do_combine(const Vector& objectives) {
+	Scalar q = 0.0;
+	Scalar sum_w = 0.0;
 	
 	for (unsigned i = 0; i < objectives.size(); ++i) {
-		double w = getWeights()[i];
+		Scalar w = getWeights()[i];
 		q += w * log2(objectives[i]);
 		sum_w += w;
 	}

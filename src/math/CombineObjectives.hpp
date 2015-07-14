@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <vector>
+#include "Types.hpp"
 #include <rw/common/Ptr.hpp>
 
 namespace gripperz {
@@ -22,24 +22,24 @@ public:
 	typedef rw::common::Ptr<CombineObjectives> Ptr;
 	
 public:
-	CombineObjectives(const std::vector<double> weights = std::vector<double>());
+	CombineObjectives(const Vector& weights = Vector());
 	virtual ~CombineObjectives();
 	
-	const std::vector<double>& getWeights() const;
-	void setWeights(const std::vector<double>& weights);
+	const Vector& getWeights() const;
+	void setWeights(const Vector& weights);
 	
 	/**
 	 * @brief Combines objectives.
 	 * @param objectives [in] a vector of individual objectives
 	 * @return combined quality
 	 */
-	double combine(const std::vector<double>& objectives);
+	Scalar combine(const Vector& objectives);
 
 protected:
-	virtual double _do_combine(const std::vector<double>& objectives) = 0;
+	virtual Scalar _do_combine(const Vector& objectives) = 0;
 	
 private:
-	std::vector<double> _weights;
+	Vector _weights;
 };
 
 } /* math */

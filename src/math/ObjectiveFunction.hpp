@@ -7,7 +7,7 @@
 #pragma once
 
 #include <rw/common/Ptr.hpp>
-#include <vector>
+#include "Types.hpp"
 
 namespace gripperz {
 namespace math {
@@ -22,7 +22,7 @@ public:
 	
 public:
 	//! Returns evaluation of provided vector x.
-	virtual double evaluate(const std::vector<double>& x) = 0;
+	virtual Scalar evaluate(const Vector& x) = 0;
 };
 
 } /* math */

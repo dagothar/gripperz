@@ -21,7 +21,7 @@ ParameterMapping::~ParameterMapping() {
 }
 
 
-double mapParameter(double p, const ParameterMapping::Range& before, const ParameterMapping::Range& after) {
+double mapParameter(double p, const Range& before, const Range& after) {
 	/* what is the position of p value now? */
 	double p0 = (p - before.first) / (before.second - before.first);
 	
@@ -32,12 +32,12 @@ double mapParameter(double p, const ParameterMapping::Range& before, const Param
 }
 
 
-std::vector<double> ParameterMapping::map(const std::vector<double> params) const {
+Vector ParameterMapping::map(const Vector& params) const {
 	if (params.size() != _map.size()) {
 		RW_THROW("Map and parameters size mismatch!");
 	}
 	
-	std::vector<double> m(params.size());
+	Vector m(params.size());
 	for (unsigned i = 0; i < m.size(); ++i) {
 		m[i] = mapParameter(params[i], _map[i].first, _map[i].second);
 	}
@@ -46,12 +46,12 @@ std::vector<double> ParameterMapping::map(const std::vector<double> params) cons
 }
 
 	
-std::vector<double> ParameterMapping::unmap(const std::vector<double> params) const {
+Vector ParameterMapping::unmap(const Vector& params) const {
 	if (params.size() != _map.size()) {
 		RW_THROW("Map and parameters size mismatch!");
 	}
 	
-	std::vector<double> m(params.size());
+	Vector m(params.size());
 	for (unsigned i = 0; i < m.size(); ++i) {
 		m[i] = mapParameter(params[i], _map[i].second, _map[i].first);
 	}

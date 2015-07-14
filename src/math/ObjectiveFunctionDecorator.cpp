@@ -19,6 +19,6 @@ ObjectiveFunctionDecorator::~ObjectiveFunctionDecorator() {
 }
 
 
-double ObjectiveFunctionDecorator::evaluate(const std::vector<double>& x) {
+Scalar ObjectiveFunctionDecorator::evaluate(const Vector& x) {
 	return _f->evaluate(x);
 }

@@ -21,11 +21,11 @@ public:
 	typedef rw::common::Ptr<CombineLog> Ptr;
 	
 public:
-	CombineLog(const std::vector<double> weights = std::vector<double>());
+	CombineLog(const Vector& weights = Vector());
 	virtual ~CombineLog();
 	
 protected:
-	virtual double _do_combine(const std::vector<double>& objectives);
+	virtual Scalar _do_combine(const Vector& objectives);
 };
 
 } /* math */

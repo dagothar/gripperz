@@ -24,7 +24,7 @@ public:
 	/**
 	 * @brief Minimizes the objective function starting from the initial guess.
 	 */
-	virtual std::vector<double> minimize(math::ObjectiveFunction::Ptr function, const std::vector<double>& initialGuess) = 0;
+	virtual std::vector<double> minimize(math::ObjectiveFunction::Ptr function, const math::Vector& initialGuess) = 0;
 };
 
 } /* optimization */

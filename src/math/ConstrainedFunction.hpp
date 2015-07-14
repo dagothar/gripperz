@@ -24,7 +24,7 @@ public:
 	virtual ~ConstrainedFunction();
 	
 	//! Returns evaluation of provided vector x.
-	virtual double evaluate(const std::vector<double>& x);
+	virtual Scalar evaluate(const Vector& x);
 
 private:
 };

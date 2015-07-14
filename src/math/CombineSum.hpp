@@ -21,11 +21,11 @@ public:
 	typedef rw::common::Ptr<CombineSum> Ptr;
 	
 public:
-	CombineSum(const std::vector<double> weights = std::vector<double>());
+	CombineSum(const Vector& weights=Vector());
 	virtual ~CombineSum();
 
 protected:
-	virtual double _do_combine(const std::vector<double>& objectives);
+	virtual Scalar _do_combine(const Vector& objectives);
 };
 
 } /* math */

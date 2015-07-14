@@ -8,6 +8,7 @@
 
 #include <rw/common/Ptr.hpp>
 #include <dlib/optimization.h>
+#include "Types.hpp"
 
 namespace gripperz {
 namespace math {
@@ -22,7 +23,7 @@ public:
 	
 public:
 	//! Returns evaluation of provided vector x.
-	virtual double evaluate(const dlib::matrix<double, 0, 1>& x) = 0;
+	virtual Scalar evaluate(const dlib::matrix<double, 0, 1>& x) = 0;
 };
 
 } /* math */

@@ -21,10 +21,10 @@ DlibWrapper::DlibWrapper(ObjectiveFunction::Ptr func) :
 DlibWrapper::~DlibWrapper() {}
 
 
-double DlibWrapper::evaluate(const dlib::matrix<double, 0, 1>& x) {
-	vector<double> params = DlibUtil::dlibToVector(x);
+Scalar DlibWrapper::evaluate(const dlib::matrix<double, 0, 1>& x) {
+	Vector params = DlibUtil::dlibToVector(x);
 	
-	double y = _objFunc->evaluate(params);
+	Scalar y = _objFunc->evaluate(params);
 	
 	return y;
 }

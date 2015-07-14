@@ -19,8 +19,8 @@ MappedFunction::~MappedFunction() {
 }
 
 
-double MappedFunction::evaluate(const std::vector<double>& x) {
-	std::vector<double> unpacked = _mapping->map(x);
+Scalar MappedFunction::evaluate(const Vector& x) {
+	Vector unpacked = _mapping->map(x);
 	
 	return ObjectiveFunctionDecorator::evaluate(unpacked);
 }

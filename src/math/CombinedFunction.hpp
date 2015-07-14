@@ -31,7 +31,7 @@ public:
 	/**
 	 * @brief Returns evaluation of multi-objective function combined using the combining method.
 	 */
-	virtual double evaluate(const std::vector<double>& x);
+	virtual Scalar evaluate(const Vector& x);
 
 private:
 	MultiObjectiveFunction::Ptr _multiObjFunc;

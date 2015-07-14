@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <vector>
+#include "Types.hpp"
 #include <rw/common/Ptr.hpp>
 
 namespace gripperz {
@@ -20,9 +20,6 @@ class ParameterMapping {
 public:
 	//! Smart pointer.
 	typedef rw::common::Ptr<ParameterMapping> Ptr;
-	
-	//! Defines range on a single parameter (lower : upper).
-	typedef std::pair<double, double> Range;
 	
 	//! Defines a mapping on a single parameter (from : to)
 	typedef std::pair<Range, Range> Transform;
@@ -40,12 +37,12 @@ public:
 	/**
 	 * @brief Maps the parameter vector.
 	 */
-	virtual std::vector<double> map(const std::vector<double> params) const;
+	virtual Vector map(const Vector& params) const;
 	
 	/**
 	 * @brief Un-maps normalized parameters.
 	 */
-	virtual std::vector<double> unmap(const std::vector<double> params) const;
+	virtual Vector unmap(const Vector& params) const;
 	
 private:
 	Map _map;

@@ -13,7 +13,7 @@ using namespace std;
 using namespace gripperz::math;
 
 
-CombineObjectives::CombineObjectives(const std::vector<double> weights) :
+CombineObjectives::CombineObjectives(const Vector& weights) :
 	_weights(weights)
 {}
 
@@ -21,17 +21,17 @@ CombineObjectives::CombineObjectives(const std::vector<double> weights) :
 CombineObjectives::~CombineObjectives() {}
 	
 
-const std::vector<double>& CombineObjectives::getWeights() const {
+const Vector& CombineObjectives::getWeights() const {
 	return _weights;
 }
 
 
-void CombineObjectives::setWeights(const std::vector<double>& weights) {
+void CombineObjectives::setWeights(const Vector& weights) {
 	_weights = weights;
 }
 
 
-double CombineObjectives::combine(const std::vector<double>& objectives) {
+Scalar CombineObjectives::combine(const Vector& objectives) {
 	if (objectives.size() != _weights.size()) {
 		RW_THROW("Weights and objectives size mismatch!");
 	}

@@ -18,8 +18,8 @@ using namespace gripperz::math;
 
 
 BOOST_AUTO_TEST_CASE (ParameterMappingTest) {
-	ParameterMapping::Range before{-10.0, 10.0};
-	ParameterMapping::Range after{0.0, 1.0};
+	Range before{-10.0, 10.0};
+	Range after{0.0, 1.0};
 	
 	ParameterMapping::Map map(3, {before, after});
 	
@@ -68,8 +68,8 @@ BOOST_AUTO_TEST_CASE (ObjectiveFunctionsTest) {
 	BOOST_CHECK (y2 == -2.5);
 	
 	/* test function mapping */
-	ParameterMapping::Range before{0.0, 2.0};
-	ParameterMapping::Range after{0.0, 1.0};
+	Range before{0.0, 2.0};
+	Range after{0.0, 1.0};
 	ParameterMapping::Map map(2, {before, after});
 	ParameterMapping mapping(map);
 	ObjectiveFunction::Ptr mapped = new MappedFunction(comb, &mapping);

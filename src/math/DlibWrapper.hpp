@@ -33,7 +33,7 @@ public:
 	void setObjectiveFunction(ObjectiveFunction::Ptr func) { _objFunc = func; }
 	
 	//! Returns evaluation of provided vector x.
-	virtual double evaluate(const dlib::matrix<double, 0, 1>& x);
+	virtual Scalar evaluate(const dlib::matrix<double, 0, 1>& x);
 
 private:
 	ObjectiveFunction::Ptr _objFunc;

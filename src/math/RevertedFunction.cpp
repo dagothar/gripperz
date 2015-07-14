@@ -18,6 +18,6 @@ RevertedFunction::~RevertedFunction() {
 }
 
 
-double RevertedFunction::evaluate(const std::vector<double>& x) {
+Scalar RevertedFunction::evaluate(const Vector& x) {
 	return -ObjectiveFunctionDecorator::evaluate(x);
 }

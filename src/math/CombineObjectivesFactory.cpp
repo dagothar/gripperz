@@ -16,7 +16,7 @@ using namespace gripperz::math;
 using namespace rw::common;
 
 
-CombineObjectives::Ptr CombineObjectivesFactory::make(const std::string& method, const std::vector<double>& weights) {
+CombineObjectives::Ptr CombineObjectivesFactory::make(const std::string& method, const Vector& weights) {
 	if (method == "sum") {
 		return ownedPtr(new CombineSum(weights));
 	}

@@ -23,7 +23,7 @@ public:
 	 * @param weights [in] weights
 	 * @return objective combining method
 	 */
-	static CombineObjectives::Ptr make(const std::string& method, const std::vector<double>& weights = std::vector<double>());
+	static CombineObjectives::Ptr make(const std::string& method, const Vector& weights=Vector());
 };
 
 } /* math */

@@ -13,7 +13,7 @@ using namespace std;
 using namespace gripperz::math;
 
 
-CombineProduct::CombineProduct(const std::vector<double> weights) :
+CombineProduct::CombineProduct(const Vector& weights) :
 	CombineObjectives(weights)
 {}
 
@@ -21,12 +21,12 @@ CombineProduct::CombineProduct(const std::vector<double> weights) :
 CombineProduct::~CombineProduct() {}
 	
 
-double CombineProduct::_do_combine(const std::vector<double>& objectives) {
-	double q = 1.0;
-	double sum_w = 0.0;
+Scalar CombineProduct::_do_combine(const Vector& objectives) {
+	Scalar q = 1.0;
+	Scalar sum_w = 0.0;
 	
 	for (unsigned i = 0; i < objectives.size(); ++i) {
-		double w = getWeights()[i];
+		Scalar w = getWeights()[i];
 		q *= pow(objectives[i], w);
 		sum_w += w;
 	}
