@@ -447,7 +447,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
     int nsamples = _samples->getAllTargets().size();
     
     // preliminary filtering
-    /*DEBUG << "Preliminary filtering" << endl;
+    DEBUG << "Preliminary filtering" << endl;
     Q preDist = _td->getPrefilteringDistance();
 	double R = 2.0 * sin(0.25 * preDist(1));
 	Q diff(7, preDist(0), preDist(0), preDist(0), R, R, R, preDist(2));
@@ -460,7 +460,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
     DEBUG << " - filtering samples... ";
     _samples = filterTasks(_samples, diff);
     int nfsamples = countTasks(_samples, GraspResult::UnInitialized);
-    DEBUG << nfsamples << " out of " << nsamples << endl;*/
+    DEBUG << nfsamples << " out of " << nsamples << endl;
     
     DEBUG << "Generated " << ntargets << " tasks & "	<< nsamples << " samples." << endl;
     
