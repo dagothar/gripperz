@@ -21,14 +21,20 @@ public:
 	typedef rw::common::Ptr<BoxConstraint> Ptr;
 
 public:
-	BoxConstraint();
+	BoxConstraint(const RangeList& ranges);
 	
 	virtual ~BoxConstraint();
+	
+	RangeList getRanges() const { return _ranges; }
+	void setRanges(const RangeList& ranges) { _ranges = ranges; }
 	
 	/**
 	 * @brief Tests whether a vector of parameters matches this constraint.
 	 */
 	virtual bool isMetBy(const Vector& params);
+
+private:
+	RangeList _ranges;
 };
 
 } /* math */

@@ -9,6 +9,7 @@
 #include "math/ObjectiveFunctionDecorator.hpp"
 #include "math/RevertedFunction.hpp"
 #include "math/MappedFunction.hpp"
+#include "math/ConstrainedFunction.hpp"
 #include "math/CombinedFunction.hpp"
 #include "math/MultiObjectiveFunction.hpp"
 #include "math/CombineObjectives.hpp"

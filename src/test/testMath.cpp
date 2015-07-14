@@ -43,28 +43,28 @@ BOOST_AUTO_TEST_CASE (ParameterMappingTest) {
 BOOST_AUTO_TEST_CASE (ObjectiveFunctionsTest) {
 	class TestFunction : public MultiObjectiveFunction {
 	public:
-		virtual vector<double> evaluate(const vector<double>& x) {
-			vector<double> res{x[0] + x[1], x[0] * x[1]};
+		virtual Vector evaluate(const Vector& x) {
+			Vector res{x[0] + x[1], x[0] * x[1]};
 			return res;
 		}
 	} func;
 	
 	/* test multi obj function */
-	vector<double> x0{1, 2};
-	vector<double> e0{3, 2};
-	vector<double> y0 = func.evaluate(x0);
+	Vector x0{1, 2};
+	Vector e0{3, 2};
+	Vector y0 = func.evaluate(x0);
 	BOOST_CHECK_EQUAL_COLLECTIONS (y0.begin(), y0.end(), e0.begin(), e0.end());
 	
 	/* test function combining */
-	vector<double> weights{1, 1};
+	Vector weights{1, 1};
 	CombineObjectives::Ptr method = CombineObjectivesFactory::make("sum", weights);
 	ObjectiveFunction::Ptr comb = new CombinedFunction(&func, method);
-	double y1 = comb->evaluate(x0);
+	Scalar y1 = comb->evaluate(x0);
 	BOOST_CHECK (y1 == 2.5);
 	
 	/* test function reverting */
 	ObjectiveFunction::Ptr rev = new RevertedFunction(comb);
-	double y2 = rev->evaluate(x0);
+	Scalar y2 = rev->evaluate(x0);
 	BOOST_CHECK (y2 == -2.5);
 	
 	/* test function mapping */
@@ -73,7 +73,30 @@ BOOST_AUTO_TEST_CASE (ObjectiveFunctionsTest) {
 	ParameterMapping::Map map(2, {before, after});
 	ParameterMapping mapping(map);
 	ObjectiveFunction::Ptr mapped = new MappedFunction(comb, &mapping);
-	double y3 = mapped->evaluate(x0);
+	Scalar y3 = mapped->evaluate(x0);
 	BOOST_CHECK (y3 == 1);
 	//cout << y3;
+}
+
+
+BOOST_AUTO_TEST_CASE (ConstrainedFunctionTest) {
+	class TestFunction : public ObjectiveFunction {
+	public:
+		virtual Scalar evaluate(const Vector& x) {
+			return x[0] + x[1];
+		}
+	} func;
+	
+	RangeList ranges{{0, 1}, {0, 1}};
+	Constraint::Ptr constr = new BoxConstraint(ranges);
+	ObjectiveFunction::Ptr f = new ConstrainedFunction(&func, constr);
+	
+	Scalar x1 = f->evaluate({0, 0});
+	BOOST_CHECK (x1 == 0.0);
+	
+	Scalar x2 = f->evaluate({1, 1});
+	BOOST_CHECK (x2 == 2.0);
+	
+	Scalar x3 = f->evaluate({2, 0});
+	BOOST_CHECK (x3 == 0.0);
 }

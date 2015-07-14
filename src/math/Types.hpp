@@ -17,6 +17,9 @@ typedef std::vector<Scalar> Vector;
 
 //! A type for range.
 typedef std::pair<Scalar, Scalar> Range;
+
+//! A list of ranges.
+typedef std::vector<Range> RangeList;
 	
 } /* math */
 } /* gripperz */
