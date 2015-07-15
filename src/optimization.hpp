@@ -5,4 +5,6 @@
  */
 
 #include "optimization/Optimizer.hpp"
+#include "optimization/OptimizerFactory.hpp"
 #include "optimization/BOBYQAOptimizer.hpp"
+#include "optimization/GripperOptimizationManager.hpp"
