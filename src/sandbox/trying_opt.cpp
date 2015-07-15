@@ -8,6 +8,7 @@
 #include <math.hpp>
 #include <optimization.hpp>
 #include <util.hpp>
+#include <boost/foreach.hpp>
 
 
 using namespace std;
@@ -16,45 +17,25 @@ using namespace gripperz::optimization;
 using namespace gripperz::util;
 
 
-class TestFunction: public ObjectiveFunction {
-public:
-	typedef rw::common::Ptr<TestFunction> Ptr;
-	
-	Scalar evaluate(const Vector& args) {
-		return args[0] * args[0] + args[1] * args[1];
-	}
-};
-
-
-int fev = 0;
-
-
-void callback(const Vector& args, Scalar result) {
-	++fev;
-	cout << "f(" << args[0] << ", " << args[1] << ") = " << result << endl;
-}
-
-
 int main(int argc, char* argv[]) {
 	/* create objective function */
-	ObjectiveFunction::Ptr objective = new Rosenbrock(100, 1);
-	objective = new CallbackFunction(objective, callback);
+	ObjectiveFunction::Ptr objective = new Rosenbrock(1, 100);
 	
 	/* create optimizer */
-	BOBYQAOptimizer::ConstraintList constr({{0, 5}, {0, 5}});
-	BOBYQAOptimizer::Configuration opt_config;
-	opt_config.initialTrustRegionRadius = 0.01;
-	opt_config.finalTrustRegionRadius = 0.00001;
-	Optimizer::Ptr optimizer = new BOBYQAOptimizer(opt_config, constr);
+	Optimizer::Ptr optimizer = OptimizerFactory::makeBOBYQAOptimizer(2, 0.1, 1e-5);
+	OptimizationManager opt_manager(optimizer, {{0, 3}, {0, 3}});
 	
 	/* optimize */
 	Vector initialGuess({0.05, 0.5});
-	Vector result = optimizer->minimize(objective, initialGuess);
+	Vector result = opt_manager.optimize(objective, initialGuess, "minimize");
 	
 	/* print results */
+	BOOST_FOREACH (OptimizationManager::LogEntry& entry, opt_manager.getLog()) {
+		cout << entry.first << ", " << entry.second << endl;
+	}
+	
 	cout << "Finished.\n" << "Minimum of " << objective->evaluate(result) << " at (";
 	cout << result[0] << ", " << result[1] << ")." << endl;
-	cout << "fev = " << fev << endl;
 	
 	return 0;
 }
