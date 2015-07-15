@@ -1,5 +1,6 @@
 SET(SRC_FILES
 	${SRC_FILES}
+	${CMAKE_CURRENT_SOURCE_DIR}/Types.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ObjectiveFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ObjectiveFunctionDecorator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RevertedFunction.cpp

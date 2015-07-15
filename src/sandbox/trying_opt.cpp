@@ -7,11 +7,13 @@
 #include <iostream>
 #include <math.hpp>
 #include <optimization.hpp>
+#include <util.hpp>
 
 
 using namespace std;
 using namespace gripperz::math;
 using namespace gripperz::optimization;
+using namespace gripperz::util;
 
 
 class TestFunction: public ObjectiveFunction {
@@ -35,14 +37,14 @@ void callback(const Vector& args, Scalar result) {
 
 int main(int argc, char* argv[]) {
 	/* create objective function */
-	ObjectiveFunction::Ptr objective = new TestFunction;
+	ObjectiveFunction::Ptr objective = new Rosenbrock(100, 1);
 	objective = new CallbackFunction(objective, callback);
 	
 	/* create optimizer */
-	BOBYQAOptimizer::ConstraintList constr({{0.01, 0.1}, {0, 1}});
+	BOBYQAOptimizer::ConstraintList constr({{0, 5}, {0, 5}});
 	BOBYQAOptimizer::Configuration opt_config;
 	opt_config.initialTrustRegionRadius = 0.01;
-	opt_config.finalTrustRegionRadius = 0.001;
+	opt_config.finalTrustRegionRadius = 0.00001;
 	Optimizer::Ptr optimizer = new BOBYQAOptimizer(opt_config, constr);
 	
 	/* optimize */

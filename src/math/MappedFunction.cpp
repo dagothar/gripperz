@@ -20,7 +20,7 @@ MappedFunction::~MappedFunction() {
 
 
 Scalar MappedFunction::evaluate(const Vector& x) {
-	Vector unpacked = _mapping->map(x);
+	Vector mapped = _mapping->map(x);
 	
-	return ObjectiveFunctionDecorator::evaluate(unpacked);
+	return ObjectiveFunctionDecorator::evaluate(mapped);
 }

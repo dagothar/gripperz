@@ -5,6 +5,8 @@
  */
 
 #include <vector>
+#include <iostream>
+#include <string>
 
 namespace gripperz {
 namespace math {
@@ -20,6 +22,16 @@ typedef std::pair<Scalar, Scalar> Range;
 
 //! A list of ranges.
 typedef std::vector<Range> RangeList;
+
+/**
+ * @brief Converts Vector type to a string.
+ */
+std::string toString(const Vector& vec);
+
+/**
+ * @brief Writes Vector to a stream.
+ */
+std::ostream& operator<<(std::ostream& stream, const Vector& vector);
 	
 } /* math */
 } /* gripperz */

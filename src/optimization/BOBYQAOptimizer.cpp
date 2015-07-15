@@ -6,7 +6,6 @@
 
 #include "BOBYQAOptimizer.hpp"
 #include <math/DlibWrapper.hpp>
-#include <math/MappedFunction.hpp>
 #include <util/DlibUtil.hpp>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
@@ -25,7 +24,6 @@ BOBYQAOptimizer::BOBYQAOptimizer(Configuration config, const ConstraintList& con
 	_config(config),
 	_constraints(constr)
 {
-	_mapping = makeMapping(constr);
 }
 
 
@@ -33,33 +31,13 @@ BOBYQAOptimizer::~BOBYQAOptimizer() {
 }
 
 
-void BOBYQAOptimizer::setConstraints(const ConstraintList& constr) {
-	_constraints = constr;
-	_mapping = makeMapping(_constraints);
-}
-
-
-ParameterMapping::Ptr BOBYQAOptimizer::makeMapping(const ConstraintList& constr) {
-	ParameterMapping::Map map;
-	
-	for (unsigned i = 0; i < constr.size(); ++i) {
-		map.push_back({{0, 1}, constr[i]});
-	}
-	
-	return ownedPtr(new ParameterMapping(map));
-}
-
-
 Vector BOBYQAOptimizer::minimize(ObjectiveFunction::Ptr function, const Vector& initialGuess) {
-	/* create mapped function */
-	ObjectiveFunction::Ptr mapped = new MappedFunction(function, _mapping);
-	
 	/* create dlib function to optimize */
 	DlibFunction::Ptr dlibFunc = ownedPtr(new DlibWrapper(function));
 	boost::function<double(const dlib::matrix<double, 0, 1>&)> func = boost::bind(&DlibFunction::evaluate, dlibFunc.get(), _1);
 	
 	/* translate initial guess */
-	dlib::matrix<double, 0, 1> init = DlibUtil::vectorToDlib(_mapping->unmap(initialGuess));
+	dlib::matrix<double, 0, 1> init = DlibUtil::vectorToDlib(initialGuess);
 	
 	/* translate constraints */
 	Vector lower(initialGuess.size(), 0);
@@ -85,6 +63,6 @@ Vector BOBYQAOptimizer::minimize(ObjectiveFunction::Ptr function, const Vector& 
 		RW_THROW ("Exception during dlib optimization: " << e.what());
 	}
 	
-	Vector result = _mapping->map(DlibUtil::dlibToVector(init));
+	Vector result = DlibUtil::dlibToVector(init);
 	return result;
 }

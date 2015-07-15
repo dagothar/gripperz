@@ -7,4 +7,6 @@
 #include "optimization/Optimizer.hpp"
 #include "optimization/OptimizerFactory.hpp"
 #include "optimization/BOBYQAOptimizer.hpp"
+#include "optimization/SimplexOptimizer.hpp"
+#include "optimization/OptimizationManager.hpp"
 #include "optimization/GripperOptimizationManager.hpp"

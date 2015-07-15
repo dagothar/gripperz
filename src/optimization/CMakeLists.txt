@@ -3,6 +3,8 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/Optimizer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OptimizerFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BOBYQAOptimizer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SimplexOptimizer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OptimizationManager.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperOptimizationManager.cpp
 	CACHE INTERNAL ""
 )
