@@ -234,7 +234,7 @@ void GraspTaskSimulator::startSimulation(const rw::kinematics::State& initState)
 		ThreadSimulator::StepCallback cb(boost::bind(&GraspTaskSimulator::stepCB, this, _1, _2));
 		tsim->setStepCallBack(cb);
 		tsim->setRealTimeScale(0);
-		tsim->setTimeStep(0.01);
+		tsim->setTimeStep(0.005);
 		_simulators.push_back(tsim);
 		
 		_simStates[tsim] = sstate;
