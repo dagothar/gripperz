@@ -17,6 +17,10 @@ Optimizer::Ptr OptimizerFactory::makeOptimizer(const std::string& id, unsigned d
 		return makeBOBYQAOptimizer(dim);
 	}
 	
+	else if (id == "simplex") {
+		return makeSimplexOptimizer();
+	}
+	
 	RW_THROW ("Optimizer with id " << id << "is not available");
 	return NULL;
 }
@@ -31,6 +35,18 @@ BOBYQAOptimizer::Ptr OptimizerFactory::makeBOBYQAOptimizer(unsigned dim, double 
 	opt_config.maxNOfEvaluations = max_fev;
 	
 	BOBYQAOptimizer::Ptr optimizer = ownedPtr(new BOBYQAOptimizer(opt_config, constr));
+	
+	return optimizer;
+}
+
+
+SimplexOptimizer::Ptr OptimizerFactory::makeSimplexOptimizer(double rho_init, double rho_stop, unsigned max_fev) {
+	SimplexOptimizer::Configuration opt_config;
+	opt_config.initialSize = rho_init;
+	opt_config.finalSize = rho_stop;
+	opt_config.maxNOfEvaluations = max_fev;
+	
+	SimplexOptimizer::Ptr optimizer = ownedPtr(new SimplexOptimizer(opt_config));
 	
 	return optimizer;
 }

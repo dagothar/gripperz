@@ -9,6 +9,7 @@
 #include <rw/common/Ptr.hpp>
 #include "Optimizer.hpp"
 #include "BOBYQAOptimizer.hpp"
+#include "SimplexOptimizer.hpp"
 
 namespace gripperz {
 namespace optimization {
@@ -26,6 +27,9 @@ public:
 	
 	//! Creates BOBYQA optimizer.
 	static BOBYQAOptimizer::Ptr makeBOBYQAOptimizer(unsigned dim, double rho_init=1e-1, double rho_stop=1e-3, unsigned max_fev=1e3);
+	
+	//! Creates Simplex optimizer.
+	static SimplexOptimizer::Ptr makeSimplexOptimizer(double rho_init=1e-1, double rho_stop=1e-3, unsigned max_fev=1e3);
 };
 
 } /* optimization */
