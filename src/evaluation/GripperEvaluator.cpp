@@ -221,8 +221,11 @@ double GripperEvaluator::calculateAlignment(models::Gripper::Ptr gripper, rwlibs
 	typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
 	BOOST_FOREACH (TaskTarget p, tasks->getAllTargets()) {
 
-		// we only take succesful grasps
-		if (p.second->getResult()->testStatus == GraspResult::Success) {
+		/* we take grasps with either success or interference */
+		if (
+			p.second->getResult()->testStatus == GraspResult::Success
+			|| p.second->getResult()->testStatus == GraspResult::Interference
+		) {
 			rw::math::Transform3D<> poseApproach = inverse(p.second->getResult()->objectTtcpApproach);
 			rw::math::Transform3D<> poseLift = inverse(p.second->getResult()->objectTtcpLift);
 
