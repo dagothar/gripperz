@@ -13,6 +13,7 @@
 #include <rwlibs/task/GraspTarget.hpp>
 #include <rwlibs/algorithms/StablePose1DModel.hpp>
 #include <rwlibs/algorithms/StablePose0DModel.hpp>
+#include <rwlibs/algorithms/LineModel.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -176,8 +177,8 @@ double getPoseAlignment(
 		return 0.0;
 	}
 	
-	/* sort models from best quality to worst */
-	sort(models.begin(), models.end(), modelComp<T>);
+	// sort models from best quality to worst
+	sort(models.begin(), models.end()); //, modelComp<T>);
 	reverse(models.begin(), models.end());
 
 	int total_inliers = 0;
@@ -196,10 +197,10 @@ double getPoseAlignment(
 			return 0.0;
 		}
 
-		/* calculate model mean and variance */
+		// calculate model mean and variance
 		vector<size_t> indices = m.getInlierIndices();
 		
-		/* mean */
+		// mean
 		vector<double> diffs;
 		double avg_diff = 0.0;
 		BOOST_FOREACH (size_t idx, indices) {
@@ -211,7 +212,7 @@ double getPoseAlignment(
 		avg_diff /= n_inliers;
 		INFO << "Average difference= " << avg_diff << endl;
 
-		/* variance */
+		// variance
 		double variance = 0.0;
 		BOOST_FOREACH (double diff, diffs) {
 			double dvar = diff - avg_diff;
@@ -233,7 +234,7 @@ double getPoseAlignment(
 }
 
 
-double GripperEvaluator::calculateAlignment(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
+/*double GripperEvaluator::calculateAlignment(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
 	INFO << "CALCULATING ALIGNMENT - " << endl;
 	double alignment = 0.0;
 
@@ -243,7 +244,7 @@ double GripperEvaluator::calculateAlignment(models::Gripper::Ptr gripper, rwlibs
 	typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
 	BOOST_FOREACH (TaskTarget p, tasks->getAllTargets()) {
 
-		/* we take grasps with either success or interference */
+		// we take grasps with either success or interference
 		if (
 			p.second->getResult()->testStatus == GraspResult::Success
 			|| p.second->getResult()->testStatus == GraspResult::Interference
@@ -272,6 +273,54 @@ double GripperEvaluator::calculateAlignment(models::Gripper::Ptr gripper, rwlibs
 	INFO << "Alignment index= " << alignment << endl;
 
 	return alignment; // scaling factor
+}*/
+
+
+double GripperEvaluator::calculateAlignment(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples) {
+	INFO << "CALCULATING ALIGNMENT - " << endl;
+	double alignment = 0.0;
+	
+	// calulate pose distances before and after
+	Rotation3DAngleMetric<double> metric;
+	vector<double> t_diffs;
+	typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
+	BOOST_FOREACH (TaskTarget p, tasks->getAllTargets()) {
+
+		// we take grasps with either success or interference
+		if (
+			p.second->getResult()->testStatus == GraspResult::Success
+			|| p.second->getResult()->testStatus == GraspResult::Interference
+		) {
+			rw::math::Transform3D<> poseApproach = inverse(p.second->getResult()->objectTtcpApproach);
+			rw::math::Transform3D<> poseLift = inverse(p.second->getResult()->objectTtcpLift);
+
+			double diff = metric.distance(poseApproach.R(), poseLift.R());
+			t_diffs.push_back(diff);
+		}
+	}
+	
+	// calculate mean pose difference
+	double avg_diff = 0.0;
+	BOOST_FOREACH (double diff, t_diffs) {
+		avg_diff += diff;
+	}
+	avg_diff /= t_diffs.size();
+	
+	INFO << " - Average diff: " << avg_diff << endl;
+	
+	// calculate variance
+	double var_diff = 0.0;
+	BOOST_FOREACH (double diff, t_diffs) {
+		double var = diff - avg_diff;
+		var_diff += var * var;
+	}
+	var_diff = sqrt(var_diff) / t_diffs.size();
+	
+	INFO << " - Variance: " << var_diff << endl;
+	
+	alignment = avg_diff;
+	
+	return alignment;
 }
 
 

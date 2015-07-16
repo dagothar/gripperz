@@ -243,6 +243,8 @@ int main(int argc, char* argv[]) {
 	if (findLines) {
 		cout << "--- EXTRACTING LINE MODELS ---" << endl;
 		vector<LineModel> models = LineModel::findModels(pos, (int)linesParams[0], (int)linesParams[1], linesParams[2], linesParams[3]);
+		sort(models.begin(), models.end());
+		reverse(models.begin(), models.end());
 		
 		cout << "Models found (" << models.size() << "):" << endl;
 		BOOST_FOREACH (const LineModel& m, models) {
