@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
 	bounds[MapGripperBuilder::TcpOffset] = make_pair(0.0, 0.2);
 	bounds[MapGripperBuilder::Jawdist] = make_pair(0.0, 0.05);
 	bounds[MapGripperBuilder::Stroke] = make_pair(0.0, 0.05);
-	bounds[MapGripperBuilder::Force] = make_pair(0.0, 20.0);
+	bounds[MapGripperBuilder::Force] = make_pair(0.0, 50.0);
 
 	/* options */
 	int cores, ntargets, nrobust, resolution;

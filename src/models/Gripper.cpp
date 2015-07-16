@@ -31,7 +31,7 @@ Gripper::Gripper(const std::string& name) :
 	_tcpoffset(0.025),
 	_jawdist(0),
 	_stroke(0.05),
-	_force(10),
+	_force(25),
 	_basex(0.15),
 	_basey(0.1),
 	_basez(0.05)

@@ -12,7 +12,7 @@ ptsize = 14
 ymax = 1
 
 # read data
-data = read.csv(data_file, skip=1)
+data = read.csv(data_file, skip=0)
 
 val = as.numeric(unlist(data[1]))
 suc = as.numeric(unlist(data[2]))

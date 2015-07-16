@@ -13,4 +13,14 @@ if (BUILD_SANDBOX)
 	add_executable(trying_opt trying_opt.cpp)
 	add_dependencies(trying_opt gripperz)
 	target_link_libraries(trying_opt gripperz)
+	
+	# Target: extract_constraints
+	add_executable(extract_constraints extract_constraints.cpp)
+	add_dependencies(extract_constraints gripperz)
+	target_link_libraries(extract_constraints gripperz)
+	
+	# Target: extract_poses
+	add_executable(extract_poses extract_poses.cpp)
+	add_dependencies(extract_poses gripperz)
+	target_link_libraries(extract_poses gripperz)
 endif ()
