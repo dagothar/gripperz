@@ -32,6 +32,19 @@ string toString(const Transform3D<>& t) {
 }
 
 
+string toStringEAA(const Transform3D<>& t) {
+	stringstream sstr;
+	
+	Vector3D<> pos = t.P();
+	Rotation3D<> rot = t.R();
+	EAA<> eaa(rot);
+	
+	sstr << pos[0] << ", " << pos[1] << ", " << pos[2] << ", " << eaa.axis()(0) << ", " << eaa.axis()(1) << ", " << eaa.axis()(2) << ", " << eaa.angle();
+	
+	return sstr.str();
+}
+
+
 int main(int argc, char* argv[]) {
 	Math::seed();
 	RobWork::getInstance()->initialize();
@@ -56,6 +69,8 @@ int main(int argc, char* argv[]) {
 	 */
 	ofstream before("before.csv");
 	ofstream after("after.csv");
+	ofstream eaabefore("eaa_before.csv");
+	ofstream eaaafter("eaa_after.csv");
 	typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
 	BOOST_FOREACH (TaskTarget p, tasks->getAllTargets()) {
 
@@ -67,15 +82,19 @@ int main(int argc, char* argv[]) {
 			rw::math::Transform3D<> poseApproach = inverse(p.second->getResult()->objectTtcpApproach);
 			rw::math::Transform3D<> poseLift = inverse(p.second->getResult()->objectTtcpLift);
 
-			cout << "BEFORE: " << toString(poseApproach) << endl;
+			cout << "BEFORE: " << toString(poseApproach) << " EAA: " << toStringEAA(poseApproach) << endl;
 			before << toString(poseApproach) << endl;
+			eaabefore << toStringEAA(poseApproach) << endl;
 			
-			cout << "AFTER: " << toString(poseLift) << endl;
+			cout << "AFTER: " << toString(poseLift) << " EAA: " << toStringEAA(poseLift) << endl;
 			after << toString(poseLift) << endl;
+			eaaafter << toStringEAA(poseLift) << endl;
 		}
 	}
 	before.close();
 	after.close();
+	eaabefore.close();
+	eaaafter.close();
 	
 	return 0;
 }

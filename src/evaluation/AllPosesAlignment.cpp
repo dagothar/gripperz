@@ -67,7 +67,7 @@ double AllPosesAlignment::calculateAlignment(rwlibs::task::GraspTask::Ptr tasks)
 	
 	DEBUG << " - Variance: " << var_diff << endl;
 	
-	alignment = avg_diff;
+	alignment = var_diff;
 	
 	return alignment;
 }

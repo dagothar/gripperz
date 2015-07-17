@@ -42,11 +42,14 @@ InterferenceSimulator::~InterferenceSimulator() {
 void InterferenceSimulator::evaluateGrasp(SimState& sstate) {
 	BasicSimulator::evaluateGrasp(sstate);
 	
-	double interference = calculateSceneInterference(getInitState(), sstate._state);
-	
-	if (interference > _interferenceLimit) {
-		DEBUG << "Grasp above interference limit." << endl;
-		sstate._target->getResult()->testStatus = GraspResult::Interference;
+	/* if the grasp is success, it may still cause too much interference */
+	if (sstate._target->getResult()->testStatus == GraspResult::Success) {
+		double interference = calculateSceneInterference(getInitState(), sstate._state);
+		
+		if (interference > _interferenceLimit) {
+			DEBUG << "Grasp above interference limit." << endl;
+			sstate._target->getResult()->testStatus = GraspResult::Interference;
+		}
 	}
 }
 
