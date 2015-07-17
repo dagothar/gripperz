@@ -91,7 +91,7 @@ double getModelAlignment(
 			double dvar = diff - avg_diff;
 			variance += dvar * dvar;
 		}
-		variance = sqrt(variance) / n_inliers;
+		variance = sqrt(variance);
 		DEBUG << "Variance= " << variance << endl;
 
 		alignment += variance * n_inliers;
