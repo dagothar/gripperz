@@ -16,7 +16,7 @@ namespace evaluation {
  * @class StablePoseAlignment
  * @brief Calculates alignment based on stable poses found by RANSAC
  */
-class StablePoseAlignment: public AlignmentCalculator {
+class StablePoseAlignment: public virtual AlignmentCalculator {
 public:
 	//! Smart pointer.
 	typedef rw::common::Ptr<StablePoseAlignment> Ptr;

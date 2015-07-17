@@ -109,7 +109,6 @@ double getModelAlignment(
 
 
 double StablePoseAlignment::calculateAlignment(rwlibs::task::GraspTask::Ptr tasks) {
-	DEBUG << "CALCULATING ALIGNMENT - " << endl;
 	double alignment = 0.0;
 
 	// store rotations

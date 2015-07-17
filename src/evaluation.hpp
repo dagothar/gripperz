@@ -12,3 +12,4 @@
 #include "evaluation/GripperEvaluationManagerBuilder.hpp"
 #include "evaluation/AlignmentCalculator.hpp"
 #include "evaluation/StablePoseAlignment.hpp"
+#include "evaluation/AllPosesAlignment.hpp"
