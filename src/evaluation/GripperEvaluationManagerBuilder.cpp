@@ -21,7 +21,7 @@ GripperEvaluationManagerBuilder::GripperEvaluationManagerBuilder(context::TaskDe
 	_td(td),
 	_generator(ownedPtr(new TaskGenerator(td, ssamples))),
 	_simulator(ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads))),
-	_evaluator(ownedPtr(new GripperEvaluator(td)))
+	_evaluator(ownedPtr(new GripperEvaluator(td, td->getAlignmentCalculator())))
 {
 }
 

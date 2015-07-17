@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 	
 	/* create evaluation objects */
 	GripperSimulator::Ptr simulator = new InterferenceSimulator(dwc, td->getInterferenceLimit(), td->getInterferenceObjects());
-	GripperEvaluator::Ptr evaluator = new GripperEvaluator(td);
+	GripperEvaluator::Ptr evaluator = new GripperEvaluator(td, td->getAlignmentCalculator());
 	
 	/* generate tasks */
 	TaskGenerator::Ptr generator = new TaskGenerator(td);

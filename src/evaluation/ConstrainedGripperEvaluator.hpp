@@ -24,7 +24,7 @@ public:
 	 * @brief Constructor.
 	 * @param context [in] task description
 	 */
-	ConstrainedGripperEvaluator(context::TaskDescription::Ptr context);
+	ConstrainedGripperEvaluator(context::TaskDescription::Ptr context, AlignmentCalculator::Ptr alignmentCalculator);
 	
 	virtual ~ConstrainedGripperEvaluator();
 

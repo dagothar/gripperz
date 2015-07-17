@@ -16,8 +16,8 @@ using namespace gripperz::models;
 using namespace gripperz::context;
 
 
-ConstrainedGripperEvaluator::ConstrainedGripperEvaluator(TaskDescription::Ptr context) :
-	GripperEvaluator(context)
+ConstrainedGripperEvaluator::ConstrainedGripperEvaluator(TaskDescription::Ptr context, AlignmentCalculator::Ptr alignmentCalculator) :
+	GripperEvaluator(context, alignmentCalculator)
 {}
 
 

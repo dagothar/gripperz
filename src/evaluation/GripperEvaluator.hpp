@@ -10,7 +10,6 @@
 #include <context/TaskDescription.hpp>
 #include <rwlibs/task/GraspTask.hpp>
 #include "AlignmentCalculator.hpp"
-#include "StablePoseAlignment.hpp"
 
 namespace gripperz {
 namespace evaluation {
@@ -28,7 +27,7 @@ public:
 	 * @brief Constructor.
 	 * @param context [in] task description
 	 */
-	GripperEvaluator(context::TaskDescription::Ptr context, AlignmentCalculator::Ptr alignmentCalculator=rw::common::ownedPtr(new StablePoseAlignment()));
+	GripperEvaluator(context::TaskDescription::Ptr context, AlignmentCalculator::Ptr alignmentCalculator);
 	
 	virtual ~GripperEvaluator();
 	

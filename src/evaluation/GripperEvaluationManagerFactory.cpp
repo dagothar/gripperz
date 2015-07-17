@@ -28,7 +28,7 @@ GripperEvaluationManager::Ptr GripperEvaluationManagerFactory::getEvaluationMana
 	GripperEvaluationManager::Ptr manager = builder
 		.generator(ownedPtr(new TaskGenerator(td, ssamples)))
 		.simulator(ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads)))
-		.evaluator(ownedPtr(new GripperEvaluator(td)))
+		.evaluator(ownedPtr(new GripperEvaluator(td, td->getAlignmentCalculator())))
 		.configuration(config)
 		.build();
 	

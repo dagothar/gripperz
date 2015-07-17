@@ -186,7 +186,7 @@ int main(int argc, char* argv[]) {
 	GripperEvaluationManager::Configuration config;
 	config.nOfRobustnessTargets = nrobust;
 	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, cores, ssamples);
-	GripperEvaluator::Ptr evaluator = new ConstrainedGripperEvaluator(td);
+	GripperEvaluator::Ptr evaluator = new ConstrainedGripperEvaluator(td, td->getAlignmentCalculator());
 	manager->setEvaluator(evaluator);
 	
 	GripperBuilder::Ptr builder = new MapGripperBuilder(ownedPtr(new Gripper), params);

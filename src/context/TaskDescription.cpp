@@ -1,4 +1,5 @@
 #include "TaskDescription.hpp"
+#include <evaluation/StablePoseAlignment.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -39,4 +40,24 @@ TaskDescription::~TaskDescription()
 
 
 AlignmentCalculator::Ptr TaskDescription::getAlignmentCalculator() {
+	
+	StablePoseAlignment::Configuration conf0;
+	conf0.iterations = _stablePose0DParameters.iterations;
+	conf0.minInliers = _stablePose0DParameters.minInliers;
+	conf0.dataThreshold = _stablePose0DParameters.dataThreshold;
+	conf0.modelThreshold = _stablePose0DParameters.modelThreshold;
+	conf0.weight = _stablePose0DParameters.weight;
+	
+	StablePoseAlignment::Configuration conf1;
+	conf1.iterations = _stablePose1DParameters.iterations;
+	conf1.minInliers = _stablePose1DParameters.minInliers;
+	conf1.dataThreshold = _stablePose1DParameters.dataThreshold;
+	conf1.modelThreshold = _stablePose1DParameters.modelThreshold;
+	conf1.weight = _stablePose1DParameters.weight;
+	
+	AlignmentCalculator::Ptr calc = ownedPtr(
+		new StablePoseAlignment(conf0, conf1)
+	);
+	
+	return calc;
 }
