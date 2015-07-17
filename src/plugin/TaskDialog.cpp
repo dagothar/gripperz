@@ -93,11 +93,6 @@ void TaskDialog::updateGUI() {
 	// update the limits section
 	ui.intLimitEdit->setText(QString::number(_td->getInterferenceLimit()));
 	ui.wreLimitEdit->setText(QString::number(_td->getWrenchLimit()));
-
-	// update the result section
-	ui.weightCoverageEdit->setText(QString::number(_td->getWeights().coverage));
-	ui.weightSuccessEdit->setText(QString::number(_td->getWeights().success));
-	ui.weightWrenchEdit->setText(QString::number(_td->getWeights().wrench));
 }
 
 void TaskDialog::updateTaskDescription() {
@@ -131,10 +126,4 @@ void TaskDialog::updateTaskDescription() {
 	// update limits
 	_td->setInterferenceLimit(ui.intLimitEdit->text().toDouble());
 	_td->setWrenchLimit(ui.wreLimitEdit->text().toDouble());
-
-	TaskDescription::Qualities& w = _td->getWeights();
-	//w.shape = _weightShapeEdit->text().toDouble();
-	w.coverage = ui.weightCoverageEdit->text().toDouble();
-	w.success = ui.weightSuccessEdit->text().toDouble();
-	w.wrench = ui.weightWrenchEdit->text().toDouble();
 }

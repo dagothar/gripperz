@@ -228,10 +228,6 @@ public:
 	void setControllerID(const std::string& id) {
 		_controllerID = id;
 	}
-	
-	Qualities& getWeights() {
-		return _weights;
-	}
 
 	/**
 	 * @brief Returns RANSAC parameters for finding stable pose model
@@ -271,7 +267,6 @@ protected:
 	rw::kinematics::MovableFrame* _gripperMovable;
 	std::string _controllerID;
 	rwsim::dynamics::RigidDevice::Ptr _gripperDynamicDevice;
-	Qualities _weights;
 	std::vector<rw::math::Transform3D<> > _hints;
 
 	// ransac parameters for finding stable pose

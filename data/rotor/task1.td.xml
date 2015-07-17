@@ -4,31 +4,26 @@
 -->
 <TaskDescription>
 	<Target>object</Target>
+	
 	<Gripper>
 		<Name>gripper</Name>
 		<TCP>TCPgripper</TCP>
 		<Movable>gripper.Base</Movable>
 		<Controller>graspController</Controller>
 	</Gripper>
+	
 	<InterferenceObjects>
 		<Object>ob1</Object>
 		<Object>ob2</Object>
 	</InterferenceObjects>
+	
 	<Limits>
 		<Interference>1</Interference>
 		<Wrench>0</Wrench>
 		<Stress>5</Stress>
 		<Volume>100</Volume>
 	</Limits>
-	<Weights>
-		<Shape>0</Shape>
-		<SuccessRatio>0.33</SuccessRatio>
-		<Coverage>1.0</Coverage>
-		<Wrench>3.0</Wrench>
-		<Stress>1.0</Stress>
-		<Volume>1.0</Volume>
-		<Alignment>2.5</Alignment>
-	</Weights>
+	
 	<TeachDistance> 10 10 10 45 360</TeachDistance>
 	<PrefilteringDistance> 0.001 15 15 </PrefilteringDistance>
 	<CoverageDistance> 0.001 15 15 </CoverageDistance>
@@ -49,4 +44,5 @@
 			<Weight>0.5</Weight>
 		</StablePose1D>
 	</Alignment>
+	
 </TaskDescription>

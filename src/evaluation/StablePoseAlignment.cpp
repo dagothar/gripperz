@@ -36,7 +36,6 @@ template<class T>
 double getModelAlignment(
 	vector<Rotation3D<> >& rot_before,
 	vector<Rotation3D<> >& rot_after,
-	int successes,
 	const StablePoseAlignment::Configuration& config
 ) {
 	double alignment = 0.0;
@@ -95,7 +94,7 @@ double getModelAlignment(
 		variance = sqrt(variance) / n_inliers;
 		DEBUG << "Variance= " << variance << endl;
 
-		alignment += variance * n_inliers / successes;
+		alignment += variance * n_inliers;
 		DEBUG << "Alignment so far= " << alignment << endl;
 	}
 	
@@ -134,9 +133,9 @@ double StablePoseAlignment::calculateAlignment(rwlibs::task::GraspTask::Ptr task
 
 	// use RANSAC to find the most likely stable pose
 	DEBUG << "Trying to find 0D stable poses..." << endl;
-	double alignment0 = getModelAlignment<StablePose0DModel>(rot_before, rot_after, successes, _config1);
+	double alignment0 = getModelAlignment<StablePose0DModel>(rot_before, rot_after, _config1);
 	DEBUG << "Trying to find 1D stable poses..." << endl;
-	double alignment1 = getModelAlignment<StablePose1DModel>(rot_before, rot_after, successes, _config1);
+	double alignment1 = getModelAlignment<StablePose1DModel>(rot_before, rot_after, _config1);
 
 	alignment =
 		_config0.weight * alignment0

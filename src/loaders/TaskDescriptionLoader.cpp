@@ -44,9 +44,6 @@ TaskDescription::Ptr TaskDescriptionLoader::readTaskDescription(PTree& tree, rws
 	readInterferenceObjects(tree.get_child("InterferenceObjects"), task);
 	readLimits(tree.get_child("Limits"), task);
 	
-	DEBUG << "- weights" << endl;
-	readQualities(tree.get_child("Weights"), task->getWeights());
-	
 	DEBUG << "- prefiltering distance: ";
 	PTree& node1 = tree.get_child("PrefilteringDistance");
 	Q prefDist = XMLHelpers::readQ(node1);
@@ -221,55 +218,6 @@ void TaskDescriptionLoader::readLimits(PTree& tree, TaskDescription::Ptr task)
 }
 
 
-
-void TaskDescriptionLoader::readQualities(PTree& tree, TaskDescription::Qualities& q)
-{	
-	DEBUG << "\tCoverage: ";
-	PTree& node2 = tree.get_child("Coverage");
-	q.coverage = XMLHelpers::readDouble(node2);
-	DEBUG << q.coverage << endl;
-	
-	DEBUG << "\tSuccess ratio: ";
-	PTree& node3 = tree.get_child("SuccessRatio");
-	q.success = XMLHelpers::readDouble(node3);
-	DEBUG << q.success << endl;
-	
-	DEBUG << "\tWrench: ";
-	PTree& node4 = tree.get_child("Wrench");
-	q.wrench = XMLHelpers::readDouble(node4);
-	DEBUG << q.wrench << endl;
-	
-	// read optional stress & volume weights
-	boost::optional<PTree&> stressNode = tree.get_child_optional("Stress");
-	if (stressNode) {
-		DEBUG << "\tStress: ";
-		q.stress = XMLHelpers::readDouble(stressNode.get());
-		DEBUG << q.stress << endl;
-	} else {
-		q.stress = 1.0;
-	}
-	
-	boost::optional<PTree&> volumeNode = tree.get_child_optional("Volume");
-	if (volumeNode) {
-		DEBUG << "\tVolume: ";
-		q.volume = XMLHelpers::readDouble(volumeNode.get());
-		DEBUG << q.volume << endl;
-	} else {
-		q.volume = 0.0;
-	}
-	
-	boost::optional<PTree&> alignmentNode = tree.get_child_optional("Alignment");
-	if (alignmentNode) {
-		DEBUG << "\tAlignment: ";
-		q.alignment = XMLHelpers::readDouble(alignmentNode.get());
-		DEBUG << q.alignment << endl;
-	} else {
-		q.alignment = 0.0;
-	}
-}
-
-
-
 TaskDescription::Ptr TaskDescriptionLoader::load(const std::string& filename, rwsim::dynamics::DynamicWorkCell::Ptr dwc)
 {
 	TaskDescription::Ptr task;
@@ -365,13 +313,6 @@ void TaskDescriptionLoader::save(const TaskDescription::Ptr td, const std::strin
 	tree.put("TaskDescription.Limits.Wrench", td->getWrenchLimit());
 	tree.put("TaskDescription.Limits.Stress", td->getStressLimit());
 	tree.put("TaskDescription.Limits.Volume", td->getVolumeLimit());
-	
-	// save weights
-	tree.put("TaskDescription.Weights.Coverage", td->getWeights().coverage);
-	tree.put("TaskDescription.Weights.SuccessRatio", td->getWeights().success);
-	tree.put("TaskDescription.Weights.Wrench", td->getWeights().wrench);
-	tree.put("TaskDescription.Weights.Stress", td->getWeights().stress);
-	tree.put("TaskDescription.Weights.Volume", td->getWeights().volume);
 	
 	// save teach & coverage distance
 	Q teachDist = td->getTeachDistance();

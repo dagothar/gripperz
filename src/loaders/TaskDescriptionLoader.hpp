@@ -32,7 +32,6 @@ protected:
 	static void readGripper(gripperz::util::PTree& tree, context::TaskDescription::Ptr task);
 	static void readInterferenceObjects(gripperz::util::PTree& tree, context::TaskDescription::Ptr task);
 	static void readLimits(gripperz::util::PTree& tree, context::TaskDescription::Ptr task);
-	static void readQualities(gripperz::util::PTree& tree, context::TaskDescription::Qualities& q);
 	static void readHints(gripperz::util::PTree& tree, context::TaskDescription::Ptr task);
 	static void readGrasp(gripperz::util::PTree& tree, context::TaskDescription::Ptr task);
 	static void readAlignment(gripperz::util::PTree& tree, context::TaskDescription::Ptr task);
