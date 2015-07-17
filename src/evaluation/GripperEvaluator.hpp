@@ -9,6 +9,8 @@
 #include <models/Gripper.hpp>
 #include <context/TaskDescription.hpp>
 #include <rwlibs/task/GraspTask.hpp>
+#include "AlignmentCalculator.hpp"
+#include "StablePoseAlignment.hpp"
 
 namespace gripperz {
 namespace evaluation {
@@ -26,12 +28,15 @@ public:
 	 * @brief Constructor.
 	 * @param context [in] task description
 	 */
-	GripperEvaluator(context::TaskDescription::Ptr context);
+	GripperEvaluator(context::TaskDescription::Ptr context, AlignmentCalculator::Ptr alignmentCalculator=rw::common::ownedPtr(new StablePoseAlignment()));
 	
 	virtual ~GripperEvaluator();
 	
 	context::TaskDescription::Ptr getContext() { return _context; }
 	void setContext(context::TaskDescription::Ptr context) { _context = context; }
+	
+	AlignmentCalculator::Ptr getAlignmentCalculator() { return _alignmentCalculator; }
+	void setAlignmentCalculator(AlignmentCalculator::Ptr calc) { _alignmentCalculator = calc; }
 	
 	/**
 	 * @brief Tests sanity of the gripper design.
@@ -55,7 +60,7 @@ protected:
 	virtual double calculateCoverage(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
 	
 	//! Calculates the alignment index of the gripper.
-	virtual double calculateAlignment(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
+	virtual double calculateAlignment(rwlibs::task::GraspTask::Ptr tasks);
 	
 	//! Calculates the wrench index of the gripper.
 	virtual double calculateWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
@@ -69,6 +74,7 @@ protected:
 
 private:
 	context::TaskDescription::Ptr _context;
+	AlignmentCalculator::Ptr _alignmentCalculator;
 };
 
 } /* evaluation */

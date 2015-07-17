@@ -23,4 +23,9 @@ if (BUILD_SANDBOX)
 	add_executable(extract_poses extract_poses.cpp)
 	add_dependencies(extract_poses gripperz)
 	target_link_libraries(extract_poses gripperz)
+	
+	# Target: alignment_test
+	add_executable(alignment_test alignment_test.cpp)
+	add_dependencies(alignment_test gripperz)
+	target_link_libraries(alignment_test gripperz)
 endif ()

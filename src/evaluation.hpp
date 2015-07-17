@@ -10,3 +10,5 @@
 #include "evaluation/GripperEvaluationManager.hpp"
 #include "evaluation/GripperEvaluationManagerFactory.hpp"
 #include "evaluation/GripperEvaluationManagerBuilder.hpp"
+#include "evaluation/AlignmentCalculator.hpp"
+#include "evaluation/StablePoseAlignment.hpp"

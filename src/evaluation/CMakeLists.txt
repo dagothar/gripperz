@@ -6,5 +6,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperEvaluationManager.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperEvaluationManagerFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperEvaluationManagerBuilder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AlignmentCalculator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/StablePoseAlignment.cpp
 	CACHE INTERNAL ""
 )
