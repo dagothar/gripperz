@@ -17,6 +17,7 @@
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <util/XMLHelpers.hpp>
+#include <evaluation/AlignmentCalculator.hpp>
 
 namespace gripperz {
 namespace context {
@@ -245,6 +246,12 @@ public:
 			
 		return _stablePose0DParameters;
 	}
+	
+	const std::string& getAlignmentCalculatorID() const { return _alignmentCalculatorID; }
+	void setAlignmentCalculatorID(const std::string& id) { _alignmentCalculatorID = id; }
+	
+	//! Creates alignment calculator based on the configuration.
+	evaluation::AlignmentCalculator::Ptr getAlignmentCalculator();
 
 protected:
 	// data
@@ -270,6 +277,7 @@ protected:
 	std::vector<rw::math::Transform3D<> > _hints;
 
 	// ransac parameters for finding stable pose
+	std::string _alignmentCalculatorID;
 	AlignmentModelParameters _stablePose0DParameters;
 	AlignmentModelParameters _stablePose1DParameters;
 };

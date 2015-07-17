@@ -82,11 +82,11 @@ int main(int argc, char* argv[]) {
 			rw::math::Transform3D<> poseApproach = inverse(p.second->getResult()->objectTtcpApproach);
 			rw::math::Transform3D<> poseLift = inverse(p.second->getResult()->objectTtcpLift);
 
-			cout << "BEFORE: " << toString(poseApproach) << " EAA: " << toStringEAA(poseApproach) << endl;
+			//cout << "BEFORE: " << toString(poseApproach) << " EAA: " << toStringEAA(poseApproach) << endl;
 			before << toString(poseApproach) << endl;
 			eaabefore << toStringEAA(poseApproach) << endl;
 			
-			cout << "AFTER: " << toString(poseLift) << " EAA: " << toStringEAA(poseLift) << endl;
+			//cout << "AFTER: " << toString(poseLift) << " EAA: " << toStringEAA(poseLift) << endl;
 			after << toString(poseLift) << endl;
 			eaaafter << toStringEAA(poseLift) << endl;
 		}

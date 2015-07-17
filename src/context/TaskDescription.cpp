@@ -12,6 +12,7 @@ using namespace rwsim;
 using namespace rwsim::dynamics;
 using namespace gripperz::util;
 using namespace gripperz::context;
+using namespace gripperz::evaluation;
 
 
 
@@ -34,4 +35,8 @@ TaskDescription::TaskDescription(rwsim::dynamics::DynamicWorkCell::Ptr dwc) :
 
 TaskDescription::~TaskDescription()
 {
+}
+
+
+AlignmentCalculator::Ptr TaskDescription::getAlignmentCalculator() {
 }

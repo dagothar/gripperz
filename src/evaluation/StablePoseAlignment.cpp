@@ -10,7 +10,7 @@
 #include <rwlibs/algorithms/StablePose0DModel.hpp>
 #include <rwlibs/algorithms/StablePose1DModel.hpp>
 
-#define DEBUG rw::common::Log::debugLog()
+#define DEBUG rw::common::Log::infoLog()
 #define INFO rw::common::Log::infoLog()
 
 
