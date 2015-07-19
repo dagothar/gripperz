@@ -51,21 +51,24 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 	DEBUG << "  Diffs: ";
 	BOOST_FOREACH (long unsigned idx, inliers) {
 		double diff = metric.distance(ts_before[idx].R(), ts_after[idx].R());
-		DEBUG << diff << ", ";
-		diffs.push_back(diff);
+		
+		if (diff < 1.0) { // to remove outliers
+			diffs.push_back(diff);
+			DEBUG << diff << ", ";
+		}
 	} DEBUG << endl;
+	
+	n = diffs.size();
 	
 	sort(diffs.begin(), diffs.end()); // sort so we can weight the median more
 	total_w = 0.0;
 	for (unsigned i = 0; i < n; ++i) {
-		double w = 1.0 + ((i < n - i) ? i : n - i); // triangle weight distribution
+		double w = 1; //+ ((i < n - i - 1) ? i : n - i - 1); // triangle weight distribution
 		total_w += w;
 		
 		double diff = diffs[i];
 		mean += diff * w;
-		
-		DEBUG << diff << ", ";
-	} DEBUG << endl;
+	}
 	mean /= total_w;
 	
 	DEBUG << "Model mean = " << mean << endl;
@@ -82,8 +85,10 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 	sort(vars.begin(), vars.end()); // sort so we can weight the median more
 	total_w = 0.0;
 	for (unsigned i = 0; i < n; ++i) {
-		double w = 1.0 + ((i < n - i) ? i : n - i); // triangle weight distribution
+		double w = 1; // + ((i < n - i - 1) ? i : n - i - 1); // triangle weight distribution
 		total_w += w;
+		
+		DEBUG << "W " << w << " ";
 		
 		double var = vars[i];
 		variance += var * w;
