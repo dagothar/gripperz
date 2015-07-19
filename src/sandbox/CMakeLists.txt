@@ -33,4 +33,9 @@ if (BUILD_SANDBOX)
 	add_executable(extract_versors extract_versors.cpp)
 	add_dependencies(extract_versors gripperz)
 	target_link_libraries(extract_versors gripperz)
+	
+	# Target: versor_test
+	add_executable(versor_test versor_test.cpp)
+	add_dependencies(versor_test gripperz)
+	target_link_libraries(versor_test gripperz)
 endif ()

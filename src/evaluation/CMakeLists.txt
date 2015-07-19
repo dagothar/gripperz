@@ -9,5 +9,6 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/AlignmentCalculator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/StablePoseAlignment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/AllPosesAlignment.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/VersorAlignment.cpp
 	CACHE INTERNAL ""
 )

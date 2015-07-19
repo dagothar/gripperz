@@ -13,3 +13,4 @@
 #include "evaluation/AlignmentCalculator.hpp"
 #include "evaluation/StablePoseAlignment.hpp"
 #include "evaluation/AllPosesAlignment.hpp"
+#include "evaluation/VersorAlignment.hpp"
