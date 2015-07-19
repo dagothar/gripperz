@@ -30,7 +30,7 @@ namespace po = boost::program_options;
 int main(int argc, char* argv[]) {
 	Math::seed();
 	RobWork::getInstance()->initialize();
-	Log::log().setLevel(Log::Debug);
+	Log::log().setLevel(Log::Info);
 	
 	string inFileName;
 	vector<double> params;
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 	/*
 	 * Load tasks.
 	 */
-	cout << "Loading tasks from: " << inFileName << endl;
+	//cout << "Loading tasks from: " << inFileName << endl;
 	GraspTask::Ptr tasks = GraspTask::load(inFileName);
 	
 	/*

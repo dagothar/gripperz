@@ -8,7 +8,7 @@
 #include <rwlibs/algorithms/PointModel.hpp>
 #include <rw/math.hpp>
 
-#define DEBUG rw::common::Log::infoLog()
+#define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
 
 
@@ -30,8 +30,12 @@ VersorAlignment::~VersorAlignment() {
 
 
 double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform3D<> >& ts_after, const vector<long unsigned>& inliers) {
-	if (ts_before.size() != ts_after.size() || ts_before.size() != inliers.size()) {
+	if (ts_before.size() != ts_after.size()) {
 		RW_THROW ("Poses vectors size mismatch!");
+	}
+	
+	if (inliers.size() > ts_after.size()) {
+		RW_THROW ("Inliers size bigger than pose vector size!");
 	}
 	
 	double mean = 0.0;
@@ -51,13 +55,15 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 	DEBUG << "Model mean = " << mean << endl;
 	
 	/* calculate variance */
-	BOOST_FOREACH (long unsigned idx, inliers) {
-		double var = diffs[idx] - mean;
+	BOOST_FOREACH (double diff, diffs) {
+		double var = diff - mean;
 		variance += var * var;
 	}
+	double deviation = sqrt(variance) / inliers.size();
 	variance /= inliers.size();
 	
 	DEBUG << "Model variance = " << variance << endl;
+	DEBUG << "Model deviation = " << deviation << endl;
 	
 	return variance;
 }
@@ -67,6 +73,8 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 	/* extract pose data before & after*/
 	vector<Transform3D<> > ts_before, ts_after;
 	typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
+	
+	int n = 0;
 	BOOST_FOREACH (TaskTarget p, tasks->getAllTargets()) {
 
 		// we take grasps with either success or interference
@@ -79,6 +87,8 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 			
 			ts_before.push_back(poseBefore);
 			ts_after.push_back(poseAfter);
+			
+			++n;
 		}
 	}
 	
@@ -104,7 +114,7 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 	models.insert(models.end(), ymodels.begin(), ymodels.end());
 	models.insert(models.end(), zmodels.begin(), zmodels.end());
 	
-	double alignment = 0.1; // offset so it's not always 0
+	double alignment = 0.01; // offset so it's not always 0
 	
 	if (models.size() > 0) {
 			
@@ -114,13 +124,19 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 		
 		PointModel& bestModel = models.front();
 		
-		cout << " BEST: " << bestModel << ", QUALITY: " << bestModel.getQuality() << ", INLIERS: " << bestModel.getNumberOfInliers() << endl;
+		DEBUG << " BEST: " << bestModel << ", QUALITY: " << bestModel.getQuality() << ", INLIERS: " << bestModel.getNumberOfInliers() << endl;
 		
+		int totalInliers = 0;
+		//BOOST_FOREACH (const PointModel& m, models)
 		{
 			PointModel& m = bestModel;
 			vector<long unsigned> inliers = m.getInlierIndices();
-			alignment += calculatePoseVariance(ts_before, ts_after, inliers);
+			int nInliers = inliers.size();
+			totalInliers += nInliers;
+			alignment += calculatePoseVariance(ts_before, ts_after, inliers) * nInliers;
 		}
+		
+		alignment /= totalInliers;
 	}
 	
 	DEBUG << "Alignment = " << alignment << endl;
