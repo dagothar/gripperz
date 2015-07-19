@@ -84,17 +84,25 @@ double getModelAlignment(
 		}
 		avg_diff /= n_inliers;
 		DEBUG << "Average difference= " << avg_diff << endl;
+		
+		sort(diffs.begin(), diffs.end()); // this is so we can weigh the median more
 
 		// variance
 		double variance = 0.0;
-		BOOST_FOREACH (double diff, diffs) {
-			double dvar = diff - avg_diff;
+		double total_w = 0.0;
+		for (unsigned i = 0; i < diffs.size(); ++i) {
+			double w = 1.0 + ((i < diffs.size() - i) ? i : diffs.size() - i);
+			total_w += w;
+			
+			double dvar = diffs[i] - avg_diff;
 			variance += dvar * dvar;
 		}
+		variance /= total_w;
+		
 		variance = sqrt(variance);
 		DEBUG << "Variance= " << variance << endl;
 
-		alignment += variance * n_inliers;;
+		alignment += variance * n_inliers;
 		DEBUG << "Alignment so far= " << alignment << endl;
 		
 		break;

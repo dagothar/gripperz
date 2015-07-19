@@ -38,32 +38,63 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 		RW_THROW ("Inliers size bigger than pose vector size!");
 	}
 	
+	unsigned n = inliers.size();
+	
 	double mean = 0.0;
 	double variance = 0.0;
+	double total_w = 0.0;
 	
 	Rotation3DAngleMetric<double> metric;
 	
 	/* calculate mean */
 	vector<double> diffs;
+	DEBUG << "  Diffs: ";
 	BOOST_FOREACH (long unsigned idx, inliers) {
 		double diff = metric.distance(ts_before[idx].R(), ts_after[idx].R());
+		DEBUG << diff << ", ";
 		diffs.push_back(diff);
-		mean += diff;
-	}
-	mean /= inliers.size();
+	} DEBUG << endl;
 	
-	//DEBUG << "Model mean = " << mean << endl;
+	sort(diffs.begin(), diffs.end()); // sort so we can weight the median more
+	total_w = 0.0;
+	for (unsigned i = 0; i < n; ++i) {
+		double w = 1.0 + ((i < n - i) ? i : n - i); // triangle weight distribution
+		total_w += w;
+		
+		double diff = diffs[i];
+		mean += diff * w;
+		
+		DEBUG << diff << ", ";
+	} DEBUG << endl;
+	mean /= total_w;
+	
+	DEBUG << "Model mean = " << mean << endl;
 	
 	/* calculate variance */
+	DEBUG << "  Variances: ";
+	vector<double> vars;
 	BOOST_FOREACH (double diff, diffs) {
 		double var = diff - mean;
-		variance += var * var;
-	}
-	double deviation = sqrt(variance) / inliers.size();
-	variance /= inliers.size();
+		vars.push_back(var * var);
+		DEBUG << var * var << ", ";
+	} DEBUG << endl;
 	
-	//DEBUG << "Model variance = " << variance << endl;
-	DEBUG << "Model deviation = " << deviation << endl;
+	sort(vars.begin(), vars.end()); // sort so we can weight the median more
+	total_w = 0.0;
+	for (unsigned i = 0; i < n; ++i) {
+		double w = 1.0 + ((i < n - i) ? i : n - i); // triangle weight distribution
+		total_w += w;
+		
+		double var = vars[i];
+		variance += var * w;
+	} 
+	variance /= total_w;
+	
+	//double deviation = sqrt(variance) / inliers.size();
+	//variance /= inliers.size();
+	
+	DEBUG << "Model variance = " << variance << endl;
+	//DEBUG << "Model deviation = " << deviation << endl;
 	
 	return variance;
 }
