@@ -8,7 +8,7 @@
 #include <rwlibs/algorithms/PointModel.hpp>
 #include <rw/math.hpp>
 
-#define DEBUG rw::common::Log::debugLog()
+#define DEBUG rw::common::Log::infoLog()
 #define INFO rw::common::Log::infoLog()
 
 
@@ -52,7 +52,7 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 	}
 	mean /= inliers.size();
 	
-	DEBUG << "Model mean = " << mean << endl;
+	//DEBUG << "Model mean = " << mean << endl;
 	
 	/* calculate variance */
 	BOOST_FOREACH (double diff, diffs) {
@@ -62,7 +62,7 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 	double deviation = sqrt(variance) / inliers.size();
 	variance /= inliers.size();
 	
-	DEBUG << "Model variance = " << variance << endl;
+	//DEBUG << "Model variance = " << variance << endl;
 	DEBUG << "Model deviation = " << deviation << endl;
 	
 	return variance;
@@ -122,21 +122,27 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 		sort(models.begin(), models.end());
 		reverse(models.begin(), models.end());
 		
-		PointModel& bestModel = models.front();
-		
-		DEBUG << " BEST: " << bestModel << ", QUALITY: " << bestModel.getQuality() << ", INLIERS: " << bestModel.getNumberOfInliers() << endl;
+		//PointModel& bestModel = models.front();
 		
 		int totalInliers = 0;
+		double totalQuality = 0.0;
 		BOOST_FOREACH (const PointModel& m, models)
 		{
 			//PointModel& m = bestModel;
+			DEBUG << " MODEL: " << m << ", QUALITY: " << m.getQuality() << ", INLIERS: " << m.getNumberOfInliers() << endl;
+			
 			vector<long unsigned> inliers = m.getInlierIndices();
+			
 			int nInliers = inliers.size();
+			double quality = m.getQuality();
+			
 			totalInliers += nInliers;
-			alignment += calculatePoseVariance(ts_before, ts_after, inliers) * nInliers;
+			totalQuality += quality;
+			
+			alignment += calculatePoseVariance(ts_before, ts_after, inliers) * nInliers / quality;
 		}
 		
-		alignment /= totalInliers;
+		alignment = alignment * totalQuality / totalInliers;
 	}
 	
 	DEBUG << "Alignment = " << alignment << endl;

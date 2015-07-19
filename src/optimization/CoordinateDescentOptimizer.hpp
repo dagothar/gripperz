@@ -24,6 +24,9 @@ public:
 	CoordinateDescentOptimizer();
 	
 	virtual ~CoordinateDescentOptimizer();
+	
+	//! @copydoc Optimizer::minimize
+	std::vector<double> minimize(math::ObjectiveFunction::Ptr function, const math::Vector& initialGuess);
 };
 
 } /* optimization */
