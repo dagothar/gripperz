@@ -105,6 +105,12 @@ void savePoses(ostream& stream, const vector<PlaneModel>& models) {
 }
 
 
+bool sortf(const PointModel& m1, const PointModel& m2) {
+	//return m1.getQuality() > m2.getQuality();
+	return m1.getNumberOfInliers() < m2.getNumberOfInliers();
+}
+
+
 
 int main(int argc, char* argv[]) {
 	/* initialization */
@@ -182,24 +188,38 @@ int main(int argc, char* argv[]) {
 	vector<PointModel> ymodels = PointModel::findModels(ys, (int)pointsParams[0], (int)pointsParams[1], pointsParams[2], pointsParams[3]);
 	vector<PointModel> zmodels = PointModel::findModels(zs, (int)pointsParams[0], (int)pointsParams[1], pointsParams[2], pointsParams[3]);
 		
-	sort(xmodels.begin(), xmodels.end());
+	sort(xmodels.begin(), xmodels.end(), sortf);
 	reverse(xmodels.begin(), xmodels.end());
-	sort(ymodels.begin(), ymodels.end());
+	sort(ymodels.begin(), ymodels.end(), sortf);
 	reverse(ymodels.begin(), ymodels.end());
-	sort(zmodels.begin(), zmodels.end());
+	sort(zmodels.begin(), zmodels.end(), sortf);
 	reverse(zmodels.begin(), zmodels.end());
 	
-	PointModel& xm = xmodels[0];
-	PointModel& ym = ymodels[0];
-	PointModel& zm = zmodels[0];
-
-	cout << " X: " << xm << ", QUALITY: " << xm.getQuality() << ", INLIERS: " << xm.getNumberOfInliers() << endl;
-	cout << " Y: " << ym << ", QUALITY: " << ym.getQuality() << ", INLIERS: " << ym.getNumberOfInliers() << endl;
-	cout << " Y: " << zm << ", QUALITY: " << zm.getQuality() << ", INLIERS: " << zm.getNumberOfInliers() << endl;
+	cout << "Found " << xmodels.size() << " X models." << endl;
+	cout << "Found " << ymodels.size() << " Y models." << endl;
+	cout << "Found " << zmodels.size() << " Z models." << endl;
 	
-	//ofstream f("points.csv");
-	//savePoints(f, models);
-	//f.close();
+	BOOST_FOREACH (const PointModel& m, xmodels) {
+		cout << " X: " << m << ", QUALITY: " << m.getQuality() << ", INLIERS: " << m.getNumberOfInliers() << endl;
+	}
+	
+	BOOST_FOREACH (const PointModel& m, ymodels) {
+		cout << " Y: " << m << ", QUALITY: " << m.getQuality() << ", INLIERS: " << m.getNumberOfInliers() << endl;
+	}
+	
+	BOOST_FOREACH (const PointModel& m, zmodels) {
+		cout << " Z: " << m << ", QUALITY: " << m.getQuality() << ", INLIERS: " << m.getNumberOfInliers() << endl;
+	}
+	
+	ofstream fx("xpoints.csv");
+	ofstream fy("ypoints.csv");
+	ofstream fz("zpoints.csv");
+	savePoints(fx, xmodels);
+	savePoints(fy, ymodels);
+	savePoints(fz, zmodels);
+	fx.close();
+	fy.close();
+	fz.close();
 	
 	cout << endl;
 	

@@ -28,4 +28,9 @@ if (BUILD_SANDBOX)
 	add_executable(alignment_test alignment_test.cpp)
 	add_dependencies(alignment_test gripperz)
 	target_link_libraries(alignment_test gripperz)
+	
+	# Target: extract_versors
+	add_executable(extract_versors extract_versors.cpp)
+	add_dependencies(extract_versors gripperz)
+	target_link_libraries(extract_versors gripperz)
 endif ()
