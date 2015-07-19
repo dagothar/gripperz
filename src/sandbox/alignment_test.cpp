@@ -1,127 +1,208 @@
-/**
- * @file extract_poses.cpp
- * @author Adam Wolniakowski
- * @date 2015-07-16
- */
-
 #include <iostream>
-#include <sstream>
-#include <fstream>
 #include <string>
-#include <vector>
+#include <fstream>
 #include <rw/rw.hpp>
 #include <rw/RobWork.hpp>
-#include <rwlibs/task/GraspTask.hpp>
-#include <rwlibs/algorithms/kdtree/KDTreeQ.hpp>
+#include <boost/program_options/options_description.hpp>
+#include <boost/program_options/variables_map.hpp>
+#include <boost/program_options/option.hpp>
+#include <boost/program_options/parsers.hpp>
+#include <rwlibs/algorithms/PointModel.hpp>
+#include <rwlibs/algorithms/LineModel.hpp>
+#include <rwlibs/algorithms/StructuredLineModel.hpp>
+#include <rwlibs/algorithms/PlaneModel.hpp>
+#include <rwlibs/algorithms/StablePose1DModel.hpp>
+#include <rwlibs/algorithms/StablePose0DModel.hpp>
+
 
 
 using namespace std;
-USE_ROBWORK_NAMESPACE
+USE_ROBWORK_NAMESPACE;
+using namespace rw;
 using namespace robwork;
-using namespace rwlibs::task;
+using namespace rwlibs::algorithms;
+using namespace boost::program_options;
+namespace po = boost::program_options;
 
 
-string toString(const Transform3D<>& t) {
-	stringstream sstr;
+
+vector<Transform3D<> > readData(istream& stream) {
+	string line;
+	vector<Transform3D<> > data;
 	
-	Vector3D<> pos = t.P();
-	Rotation3D<> rot = t.R();
-	RPY<> rpy(rot);
+	while (getline(stream, line)) {
+		replace(line.begin(), line.end(), ',', ' ');
+		stringstream sstr(line);
+		
+		// read position
+		double* m = new double[3];
+		sstr >> m[0] >> m[1] >> m[2];
+		Vector3D<> pos(m[0], m[1], m[2]);
+		
+		// read rpy
+		sstr >> m[0] >> m[1] >> m[2];
+		RPY<> rpy(m[0], m[1], m[2]);
+		
+		Transform3D<> t(pos, rpy.toRotation3D());
+		data.push_back(t);
+	}
 	
-	sstr << pos[0] << ", " << pos[1] << ", " << pos[2] << ", " << rpy[0] << ", " << rpy[1] << ", " << rpy[2];
-	
-	return sstr.str();
+	return data;
 }
 
 
+
+void savePoints(ostream& stream, const vector<PointModel>& models) {
+	BOOST_FOREACH (const PointModel& m, models) {
+		Vector3D<> p = m.p();
+		stream << p[0] << ", " << p[1] << ", " << p[2] << ", "
+			<< m.getQuality() << ", " << m.getNumberOfInliers() << endl;
+	}
+}
+
+
+
+void saveLines(ostream& stream, const vector<LineModel>& models) {
+	BOOST_FOREACH (const LineModel& m, models) {
+		Line line = m.line();
+		stream << line.p1()[0] << ", " << line.p1()[1] << ", " << line.p1()[2] << ", "
+			<< line.p2()[0] << ", " << line.p2()[1] << ", " << line.p2()[2] << ", "
+			<< m.getQuality() << ", " << m.getNumberOfInliers() << endl;
+	}
+}
+
+
+
+void saveSLines(ostream& stream, const vector<StructuredLineModel>& models) {
+	BOOST_FOREACH (const StructuredLineModel& m, models) {
+		Line line = m.line();
+		stream << line.p1()[0] << ", " << line.p1()[1] << ", " << line.p1()[2] << ", "
+			<< line.p2()[0] << ", " << line.p2()[1] << ", " << line.p2()[2] << ", "
+			<< m.start()[0] << ", " << m.start()[1] << ", " << m.start()[2] << ", "
+			<< m.getInterval() << ", "
+			<< m.getQuality() << ", " << m.getNumberOfInliers() << endl;
+	}
+}
+
+
+
+void savePlanes(ostream& stream, const vector<PlaneModel>& models) {
+	BOOST_FOREACH (const PlaneModel& m, models) {
+		stream << m.normal()[0] << ", " << m.normal()[1] << ", " << m.normal()[2] << ", "
+			<< m.d() << ", " 
+			<< m.getQuality() << ", " << m.getNumberOfInliers() << endl;
+	}
+}
+
+
+
+void savePoses(ostream& stream, const vector<PlaneModel>& models) {
+	BOOST_FOREACH (const PlaneModel& m, models) {
+		stream << m.normal()[0] << ", " << m.normal()[1] << ", " << m.normal()[2] << ", "
+			<< m.d() << ", " 
+			<< m.getQuality() << ", " << m.getNumberOfInliers() << endl;
+	}
+}
+
+
+
 int main(int argc, char* argv[]) {
+	/* initialization */
 	Math::seed();
 	RobWork::getInstance()->initialize();
-	Log::log().setLevel(Log::Debug);
 	
-	/*
-	 * Read CLI.
-	 */
-	if (argc < 2) {
-		cout << "Please provide task filename" << endl;
+	string inFileName;
+	string outFileName;
+	
+	bool findPoints = false;
+
+	vector<double> pointsParams;
+
+	/* parse command line */
+	string usage = "This is a script used for constraints code testing.";
+	
+	// switch options
+	options_description opt("Options");
+	opt.add_options()
+		("help,h", "help message")
+		("infile,", value<string>(&inFileName)->required(), "CSV file with Transform3Ds")
+		("points,", value<vector<double> >()->multitoken(), "find models for points; iterations, mindata, datathr and modelthr should follow")
+	;
+	
+	// positional parameters
+	positional_options_description pos_opt;
+	pos_opt.add("infile", 1);
+	//pos_opt.add("outfile", 1);
+	
+	variables_map vm;
+	store(command_line_parser(argc, argv).options(opt).positional(pos_opt).run(), vm);
+	notify(vm);
+		
+	if (vm.count("help")) {
+		cout << usage << endl;
+		cout << opt << endl;
+		return 0;
 	}
-	string filename = argv[1];
-	
-	/*
-	 * Load tasks.
-	 */
-	cout << "Loading tasks from: " << filename << endl;
-	GraspTask::Ptr tasks = GraspTask::load(filename);
-	
-	/*
-	 * For all succesful targets, extract poses
-	 */
-	ofstream before("before.csv");
-	ofstream after("after.csv");
-	vector<Rotation3D<>> rot_before, rot_after;
-	typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
-	BOOST_FOREACH (TaskTarget p, tasks->getAllTargets()) {
-
-		/* we take grasps with either success or interference */
-		if (
-			p.second->getResult()->testStatus == GraspResult::Success
-			|| p.second->getResult()->testStatus == GraspResult::Interference
-		) {
-			rw::math::Transform3D<> poseApproach = inverse(p.second->getResult()->objectTtcpApproach);
-			rw::math::Transform3D<> poseLift = inverse(p.second->getResult()->objectTtcpLift);
-			
-			rot_before.push_back(poseApproach.R());
-			rot_after.push_back(poseLift.R());
-
-			cout << "BEFORE: " << toString(poseApproach) << endl;
-			before << toString(poseApproach) << endl;
-			
-			cout << "AFTER: " << toString(poseLift) << endl;
-			after << toString(poseLift) << endl;
-		}
-	}
-	before.close();
-	after.close();
-	
-	/* find pose with the highest number of neighbours */
-	typedef int ValueType; // index
-	typedef KDTreeQ<ValueType> NNSearch;
-	vector<NNSearch::KDNode> nodes;
-	
-	int idx = 0;
-	BOOST_FOREACH (Rotation3D<> p, rot_after) {
 		
-		Q key(4);
-
-		EAA<> eaa(p);
-		key[0] = eaa.axis()(0);
-		key[1] = eaa.axis()(1);
-		key[2] = eaa.axis()(2);
-		key[3] = eaa.angle();
-		
-		nodes.push_back(NNSearch::KDNode(key, idx));
-		
-		++idx;
+	if (vm.count("points")) {
+		findPoints = true;
+		pointsParams = vm["points"].as<vector<double> >();
+		if (pointsParams.size() < 4) RW_THROW("RANSAC parameters missing");
 	}
 	
-	NNSearch *nntree = NNSearch::buildTree(nodes);
-    std::list<const NNSearch::KDNode*> result;
-    
-    Q diff(4, 0.01, 0.01, 0.01, 0.1);
-    
-    int maxR = 0;
-    BOOST_FOREACH (NNSearch::KDNode& node, nodes) {
-
-		result.clear();
-		Q key = node.key;
-		nntree->nnSearchRect(key-diff, key+diff, result);
-
-		cout << "Pose " << node.value << ": " << result.size() << endl;
-		
-		if (result.size() > maxR) maxR = result.size();
+	
+	/* read data in */
+	ifstream inFile(inFileName.c_str());
+	vector<Transform3D<> > data = readData(inFile);
+	inFile.close();
+	
+	// extract positions
+	vector<Vector3D<> > pos;
+	BOOST_FOREACH (const Transform3D<>& t, data) {
+		pos.push_back(t.P());
 	}
 	
-	cout << "MAX= " << maxR << endl;
+	// extract rotations
+	vector<Rotation3D<> > rot;
+	BOOST_FOREACH (const Transform3D<>& t, data) {
+		rot.push_back(t.R());
+	}
+	
+	// extract versors
+	vector<Vector3D<> > xs, ys, zs;
+	BOOST_FOREACH (const Transform3D<>& t, data) {
+		xs.push_back(t.R() * Vector3D<>::x());
+		ys.push_back(t.R() * Vector3D<>::y());
+		zs.push_back(t.R() * Vector3D<>::z());
+	}
+	
+	/* find models */
+	cout << "--- EXTRACTING POINT MODELS ---" << endl;
+	vector<PointModel> xmodels = PointModel::findModels(xs, (int)pointsParams[0], (int)pointsParams[1], pointsParams[2], pointsParams[3]);
+	vector<PointModel> ymodels = PointModel::findModels(ys, (int)pointsParams[0], (int)pointsParams[1], pointsParams[2], pointsParams[3]);
+	vector<PointModel> zmodels = PointModel::findModels(zs, (int)pointsParams[0], (int)pointsParams[1], pointsParams[2], pointsParams[3]);
+		
+	sort(xmodels.begin(), xmodels.end());
+	reverse(xmodels.begin(), xmodels.end());
+	sort(ymodels.begin(), ymodels.end());
+	reverse(ymodels.begin(), ymodels.end());
+	sort(zmodels.begin(), zmodels.end());
+	reverse(zmodels.begin(), zmodels.end());
+	
+	PointModel& xm = xmodels[0];
+	PointModel& ym = ymodels[0];
+	PointModel& zm = zmodels[0];
+
+	cout << " X: " << xm << ", QUALITY: " << xm.getQuality() << ", INLIERS: " << xm.getNumberOfInliers() << endl;
+	cout << " Y: " << ym << ", QUALITY: " << ym.getQuality() << ", INLIERS: " << ym.getNumberOfInliers() << endl;
+	cout << " Y: " << zm << ", QUALITY: " << zm.getQuality() << ", INLIERS: " << zm.getNumberOfInliers() << endl;
+	
+	//ofstream f("points.csv");
+	//savePoints(f, models);
+	//f.close();
+	
+	cout << endl;
+	
 	
 	return 0;
 }

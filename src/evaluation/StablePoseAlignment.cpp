@@ -94,8 +94,10 @@ double getModelAlignment(
 		variance = sqrt(variance);
 		DEBUG << "Variance= " << variance << endl;
 
-		alignment += variance;
+		alignment += variance * n_inliers;;
 		DEBUG << "Alignment so far= " << alignment << endl;
+		
+		break;
 	}
 	
 	alignment = alignment / total_inliers;

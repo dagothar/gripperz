@@ -227,6 +227,9 @@ int main(int argc, char* argv[]) {
 		cout << "--- EXTRACTING POINT MODELS ---" << endl;
 		vector<PointModel> models = PointModel::findModels(pos, (int)pointsParams[0], (int)pointsParams[1], pointsParams[2], pointsParams[3]);
 		
+		sort(models.begin(), models.end());
+		reverse(models.begin(), models.end());
+		
 		cout << "Models found (" << models.size() << "):" << endl;
 		BOOST_FOREACH (const PointModel& m, models) {
 			cout << " - Point: " << m << ", QUALITY: " << m.getQuality() << ", INLIERS: " << m.getNumberOfInliers() << endl;
@@ -281,6 +284,9 @@ int main(int argc, char* argv[]) {
 	if (findPoses) {
 		cout << "--- EXTRACTING STABLE POSE MODELS (1 DOF) ---" << endl;
 		vector<StablePose1DModel> models = StablePose1DModel::findModels(rot, (int)posesParams[0], (int)posesParams[1], posesParams[2], posesParams[3]);
+		
+		sort(models.begin(), models.end());
+		reverse(models.begin(), models.end());
 		
 		cout << "Models found (" << models.size() << "):" << endl;
 		BOOST_FOREACH (const StablePose1DModel& m, models) {
