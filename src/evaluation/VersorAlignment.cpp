@@ -127,9 +127,9 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 		DEBUG << " BEST: " << bestModel << ", QUALITY: " << bestModel.getQuality() << ", INLIERS: " << bestModel.getNumberOfInliers() << endl;
 		
 		int totalInliers = 0;
-		//BOOST_FOREACH (const PointModel& m, models)
+		BOOST_FOREACH (const PointModel& m, models)
 		{
-			PointModel& m = bestModel;
+			//PointModel& m = bestModel;
 			vector<long unsigned> inliers = m.getInlierIndices();
 			int nInliers = inliers.size();
 			totalInliers += nInliers;

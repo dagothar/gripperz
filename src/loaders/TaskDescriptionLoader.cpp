@@ -266,21 +266,11 @@ void TaskDescriptionLoader::readAlignment(gripperz::util::PTree& tree, TaskDescr
 	
 	// read pose 0D parameters
 	TaskDescription::AlignmentModelParameters& pose0params = task->getAlignmentModelParameters(0);
-	PTree& pose0tag = tree.get_child("StablePose0D");
+	PTree& pose0tag = tree.get_child("Parameters");
 	pose0params.iterations = XMLHelpers::readInt(pose0tag.get_child("Iterations"));
 	pose0params.minInliers = XMLHelpers::readInt(pose0tag.get_child("MinInliers"));
 	pose0params.dataThreshold = XMLHelpers::readDouble(pose0tag.get_child("DataThreshold"));
 	pose0params.modelThreshold = XMLHelpers::readDouble(pose0tag.get_child("ModelThreshold"));
-	pose0params.weight = XMLHelpers::readDouble(pose0tag.get_child("Weight"));
-	
-	// read pose 0D parameters
-	TaskDescription::AlignmentModelParameters& pose1params = task->getAlignmentModelParameters(1);
-	PTree& pose1tag = tree.get_child("StablePose1D");
-	pose1params.iterations = XMLHelpers::readInt(pose1tag.get_child("Iterations"));
-	pose1params.minInliers = XMLHelpers::readInt(pose1tag.get_child("MinInliers"));
-	pose1params.dataThreshold = XMLHelpers::readDouble(pose1tag.get_child("DataThreshold"));
-	pose1params.modelThreshold = XMLHelpers::readDouble(pose1tag.get_child("ModelThreshold"));
-	pose1params.weight = XMLHelpers::readDouble(pose1tag.get_child("Weight"));
 }
 
 
@@ -347,18 +337,8 @@ void TaskDescriptionLoader::save(const TaskDescription::Ptr td, const std::strin
 		node0.put("MinInliers", boost::lexical_cast<string>(pose0Params.minInliers));
 		node0.put("DataThreshold", boost::lexical_cast<string>(pose0Params.dataThreshold));
 		node0.put("ModelThreshold", boost::lexical_cast<string>(pose0Params.modelThreshold));
-		node0.put("Weight", boost::lexical_cast<string>(pose0Params.weight));
 		
-		PTree node1;
-		TaskDescription::AlignmentModelParameters pose1Params = td->getAlignmentModelParameters(1);
-		node1.put("Iterations", boost::lexical_cast<string>(pose1Params.iterations));
-		node1.put("MinInliers", boost::lexical_cast<string>(pose1Params.minInliers));
-		node1.put("DataThreshold", boost::lexical_cast<string>(pose1Params.dataThreshold));
-		node1.put("ModelThreshold", boost::lexical_cast<string>(pose1Params.modelThreshold));
-		node1.put("Weight", boost::lexical_cast<string>(pose1Params.weight));
-		
-		tree.add_child("TaskDescription.Alignment.StablePose0D", node0);
-		tree.add_child("TaskDescription.Alignment.StablePose1D", node1);
+		tree.add_child("TaskDescription.Alignment.Parameters", node0);
 	}
 	
 	// save to XML

@@ -20,7 +20,7 @@
 	<Limits>
 		<Interference>1</Interference>
 		<Wrench>0</Wrench>
-		<Stress>5</Stress>
+		<Stress>25</Stress>
 		<Volume>100</Volume>
 	</Limits>
 	
@@ -29,20 +29,12 @@
 	<CoverageDistance> 0.001 15 15 </CoverageDistance>
 
 	<Alignment>
-		<StablePose0D>
-			<Iterations>100</Iterations>
-			<MinInliers>10</MinInliers>
-			<DataThreshold>0.5</DataThreshold>
-			<ModelThreshold>0.5</ModelThreshold>
-			<Weight>0.5</Weight>
-		</StablePose0D>
-		<StablePose1D>
-			<Iterations>100</Iterations>
-			<MinInliers>10</MinInliers>
-			<DataThreshold>0.5</DataThreshold>
-			<ModelThreshold>0.5</ModelThreshold>
-			<Weight>0.5</Weight>
-		</StablePose1D>
+		<Parameters>
+			<Iterations>1000</Iterations>
+			<MinInliers>5</MinInliers>
+			<DataThreshold>0.05</DataThreshold>
+			<ModelThreshold>0.1</ModelThreshold>
+		</Parameters>
 	</Alignment>
 	
 </TaskDescription>
