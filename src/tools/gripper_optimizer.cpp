@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <rw/rw.hpp>
 #include <rwsim/rwsim.hpp>
 #include <gripperz.hpp>
@@ -69,6 +70,8 @@ RangeList ranges{
 
 vector<vector<double> > opt_log;
 ofstream log_file;
+path outdir;
+
 void callback(Gripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperBuilder::Ptr builder) {
 	static unsigned step = 0;
 	
@@ -108,6 +111,11 @@ void callback(Gripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperBuil
 	}
 	cout << endl;
 	log_file << endl;
+	
+	stringstream sstr;
+	sstr << "step_" << step << ".grp.xml";
+	path gripper_file = outdir / path(sstr.str());
+	GripperXMLLoader::save(gripper,gripper_file.string());
 }
 
 
@@ -181,7 +189,7 @@ int main(int argc, char* argv[]) {
 		INFO << " Loaded." << endl;
 	}
 	
-	path outdir(Configuration.out_dir);
+	outdir = path(Configuration.out_dir);
 	if (!exists(outdir)) {
 		if (!create_directory(outdir)) {
 			RW_THROW ("Unable to create directory: " << Configuration.out_dir);
@@ -247,7 +255,7 @@ int main(int argc, char* argv[]) {
 	
 	/* save results */
 	path opt_gripper_file = outdir / path("result.grp.xml");
-	GripperXMLLoader::save(opt_gripper, opt_gripper_file.string() );
+	GripperXMLLoader::save(opt_gripper, opt_gripper_file.string());
 
 	log_file.close();
 	
