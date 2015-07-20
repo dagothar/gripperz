@@ -8,6 +8,9 @@
 #include <rw/math/Q.hpp>
 #include <rw/math/Math.hpp>
 
+#define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
+
 
 using namespace gripperz::optimization;
 using namespace std;
@@ -78,9 +81,13 @@ Vector CoordinateDescentOptimizer::minimize(math::ObjectiveFunction::Ptr functio
 			stepSizes(ix) *= _conf.kUnsuccesful;
 		}
 		
+		double rho = stepSizes.norm2();
+		
+		INFO << " rho=" << rho << " fev=" << fev << endl;
+		
 		/* check stopping condition */
 		if (
-			stepSizes.norm2() < _conf.kFinalStepSize
+			rho < _conf.kFinalStepSize
 			|| fev > _conf.maxNOfEvaluations
 		) {
 			stop = true;

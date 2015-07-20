@@ -5,6 +5,7 @@
  */
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <rw/rw.hpp>
 #include <rwsim/rwsim.hpp>
@@ -65,6 +66,7 @@ RangeList ranges{
 
 
 vector<vector<double> > opt_log;
+ofstream log_file;
 void callback(Gripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperBuilder::Ptr builder) {
 	static unsigned step = 0;
 	
@@ -94,14 +96,16 @@ void callback(Gripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperBuil
 	
 	++step;
 	
-	cout << "#step, length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
 	for (unsigned i = 0; i < entry.size(); ++i) {
 		cout << entry[i];
+		log_file << entry[i];
 		if (i < entry.size() - 1) {
 			cout << ", ";
+			log_file << ", ";
 		}
 	}
 	cout << endl;
+	log_file << endl;
 }
 
 
@@ -202,6 +206,7 @@ int main(int argc, char* argv[]) {
 	CombineObjectives::Ptr comb_method = CombineObjectivesFactory::make(Configuration.combiner, Configuration.weights);
 	ObjectiveFunction::Ptr objective = new CombinedFunction(multi_function, comb_method);
 	
+	log_file.open((outdir / path("log.csv")).string());
 	multi_function->setCallback(boost::bind<>(&callback, _1, comb_method, new MapGripperBuilder(gripper)));
 	
 	
@@ -211,6 +216,9 @@ int main(int argc, char* argv[]) {
 	
 	
 	/* perform optimization */
+	cout << "#step, length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
+	log_file << "#step, length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
+
 	Vector initialGuess = builder->gripperToParameters(gripper);
 	Vector result = opt_manager->optimize(objective, initialGuess, "maximize");
 	
@@ -219,18 +227,7 @@ int main(int argc, char* argv[]) {
 	/* save results */
 	path opt_gripper_file = outdir / path("result.grp.xml");
 	GripperXMLLoader::save(opt_gripper, opt_gripper_file.string() );
-	
-	ofstream log_file((outdir / path("log.csv")).string());
-	log_file << "#step, length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
-	BOOST_FOREACH (const vector<double>& entry, opt_log) {
-		for (unsigned i = 0; i < entry.size(); ++i) {
-			log_file << entry[i];
-			if (i < entry.size() - 1) {
-				log_file << ", ";
-			}
-		}
-		log_file << endl;
-	}
+
 	log_file.close();
 	
 	return 0;

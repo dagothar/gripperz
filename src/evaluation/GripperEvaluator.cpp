@@ -141,6 +141,9 @@ double GripperEvaluator::calculateCoverage(models::Gripper::Ptr gripper, rwlibs:
 	okTargets += TaskStatistics::countTasksWithResult(coverageTasks, GraspResult::Interference);
 
 	int allTargets = TaskStatistics::countTasksWithResult(TaskGenerator::filterTasks(samples, diff), GraspResult::UnInitialized);
+	if (allTargets == 0) {
+		return 0.0;
+	}
 
 	DEBUG << "Requested targets: " << tasks->getAllTargets().size() << " / Samples: " << samples->getAllTargets().size() << endl;
 	DEBUG << "Targets (S+I) after filtering: " << okTargets	<< " / Samples after filtering: " << allTargets << endl;

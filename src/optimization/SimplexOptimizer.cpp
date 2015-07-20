@@ -9,6 +9,9 @@
 #include <rw/math/Q.hpp>
 #include <rw/math/Math.hpp>
 
+#define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
+
 
 using namespace gripperz::optimization;
 using namespace gripperz::math;
@@ -154,6 +157,8 @@ Vector SimplexOptimizer::minimize(ObjectiveFunction::Ptr function, const Vector&
 		 * Error is calculated as the difference in values of best & worst points divided by their distance
 		 */
 		rho = (vertices.front().first - vertices.back().first).norm2();
+		
+		INFO << " rho=" << rho << " fev=" << fev << endl;
 		
 	} while (rho > _config.finalSize && fev < _config.maxNOfEvaluations);
 	
