@@ -225,16 +225,20 @@ int main(int argc, char* argv[]) {
 		optimizer = OptimizerFactory::makeCoordinateDescentOptimizer(Configuration.rho0, Configuration.rhof, Configuration.maxfev);
 	}
 	
+	if (Configuration.optimizer == "bobyqa") {
+		optimizer = OptimizerFactory::makeBOBYQAOptimizer(params.size(), Configuration.rho0, Configuration.rhof, Configuration.maxfev);
+	}
+	
 	if (!optimizer) {
 		RW_THROW ("Optimizer type not supported!");
 	}
 
-	OptimizationManager::Ptr opt_manager = new OptimizationManager(optimizer, opt_ranges);
+	OptimizationManager::Ptr opt_manager = new OptimizationManager(optimizer, opt_ranges, true);
 	
 	
 	/* perform optimization */
-	cout << "#step, length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
-	log_file << "#step, length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
+	cout << "#step, length, width, depth, chfdepth, chfangle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
+	log_file << "#step, length, width, depth, chfdepth, chfangle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
 
 	Vector initialGuess = builder->gripperToParameters(gripper);
 	Vector result = opt_manager->optimize(objective, initialGuess, "maximize");

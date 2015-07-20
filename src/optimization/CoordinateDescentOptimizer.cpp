@@ -8,7 +8,7 @@
 #include <rw/math/Q.hpp>
 #include <rw/math/Math.hpp>
 
-#define DEBUG rw::common::Log::debugLog()
+#define DEBUG rw::common::Log::infoLog()
 #define INFO rw::common::Log::infoLog()
 
 
@@ -67,12 +67,16 @@ Vector CoordinateDescentOptimizer::minimize(math::ObjectiveFunction::Ptr functio
 			fbest = f1;
 			m = qx1;
 			success = true;
+			DEBUG << "f1 < fbest" << endl;
 		}
 		if (f2 < fbest) {
 			fbest = f2;
 			m = qx2;
 			success = true;
+			DEBUG << "f2 < fbest" << endl;
 		}
+		
+		DEBUG << "m= " << m << endl;
 		
 		/* update step size */
 		if (success) {
@@ -83,7 +87,7 @@ Vector CoordinateDescentOptimizer::minimize(math::ObjectiveFunction::Ptr functio
 		
 		double rho = stepSizes.norm2();
 		
-		INFO << " rho=" << rho << " fev=" << fev << endl;
+		DEBUG << " rho=" << rho << " fev=" << fev << endl;
 		
 		/* check stopping condition */
 		if (

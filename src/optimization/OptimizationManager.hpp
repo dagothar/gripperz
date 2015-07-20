@@ -37,7 +37,7 @@ public:
 	 * @param optimizer [in] optimizer to use
 	 * @param ranges [in] list of parameter ranges, used for mapping function internally (optional)
 	 */
-	OptimizationManager(Optimizer::Ptr optimizer, const math::RangeList& ranges=math::RangeList());
+	OptimizationManager(Optimizer::Ptr optimizer, const math::RangeList& ranges=math::RangeList(), bool constrain=false);
 	
 	virtual ~OptimizationManager();
 	
@@ -69,6 +69,7 @@ protected:
 private:
 	Optimizer::Ptr _optimizer;
 	math::RangeList _ranges;
+	bool _constrained;
 	Log _log;
 	boost::function<void(const math::Vector& args, math::Scalar result)> _userCallback;
 };

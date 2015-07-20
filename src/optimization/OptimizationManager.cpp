@@ -8,6 +8,8 @@
 #include <math/RevertedFunction.hpp>
 #include <math/MappedFunction.hpp>
 #include <math/CallbackFunction.hpp>
+#include <math/ConstrainedFunction.hpp>
+#include <math/BoxConstraint.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
@@ -19,9 +21,10 @@ using namespace gripperz::optimization;
 using namespace gripperz::math;
 
 
-OptimizationManager::OptimizationManager(Optimizer::Ptr opt, const RangeList& ranges) :
+OptimizationManager::OptimizationManager(Optimizer::Ptr opt, const RangeList& ranges, bool constrain) :
 	_optimizer(opt),
-	_ranges(ranges)
+	_ranges(ranges),
+	_constrained(constrain)
 {
 }
 
@@ -42,6 +45,12 @@ Vector OptimizationManager::optimize(ObjectiveFunction::Ptr function, const Vect
 	/* take care of direction */
 	if (dir == "maximize") {
 		objective = new RevertedFunction(objective);
+	}
+	
+	/* is optimization constrained */
+	if (_constrained) {
+		Constraint::Ptr constraints = new BoxConstraint(_ranges);
+		objective = new ConstrainedFunction(objective, constraints);
 	}
 	
 	/* map function to normalized box */
