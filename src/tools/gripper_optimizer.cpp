@@ -65,21 +65,43 @@ RangeList ranges{
 
 
 vector<vector<double> > opt_log;
-void callback(Vector args, Vector res, CombineObjectives::Ptr combiner) {
+void callback(Gripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperBuilder::Ptr builder) {
 	static unsigned step = 0;
 	
-	vector<double> entry;
+	Vector entry;
 	entry.push_back(step);
+	
+	Vector args = builder->gripperToParameters(gripper);
+	
+	GripperQuality::Ptr q = &gripper->getQuality();
+	Vector res{
+		q->success,
+		q->robustness,
+		q->alignment,
+		q->coverage,
+		q->wrench,
+		q->stress,
+		q->volume
+	};
 	
 	entry.insert(entry.end(), args.begin(), args.end());
 	entry.insert(entry.end(), res.begin(), res.end());
 	
-	double q = combiner->combine(res);
-	entry.push_back(q);
+	double quality = combiner->combine(res);
+	entry.push_back(quality);
 	
 	opt_log.push_back(entry);
 	
 	++step;
+	
+	cout << "#step, length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
+	for (unsigned i = 0; i < entry.size(); ++i) {
+		cout << entry[i];
+		if (i < entry.size() - 1) {
+			cout << ", ";
+		}
+	}
+	cout << endl;
 }
 
 
@@ -151,8 +173,10 @@ int main(int argc, char* argv[]) {
 	}
 	
 	path outdir(Configuration.out_dir);
-	if (!create_directory(outdir)) {
-		RW_THROW ("Unable to create directory: " << Configuration.out_dir);
+	if (!exists(outdir)) {
+		if (!create_directory(outdir)) {
+			RW_THROW ("Unable to create directory: " << Configuration.out_dir);
+		}
 	}
 	
 	
@@ -178,7 +202,7 @@ int main(int argc, char* argv[]) {
 	CombineObjectives::Ptr comb_method = CombineObjectivesFactory::make(Configuration.combiner, Configuration.weights);
 	ObjectiveFunction::Ptr objective = new CombinedFunction(multi_function, comb_method);
 	
-	multi_function->setCallback(boost::bind<>(&callback, _1, _2, comb_method));
+	multi_function->setCallback(boost::bind<>(&callback, _1, comb_method, new MapGripperBuilder(gripper)));
 	
 	
 	/* construct optimization manager */

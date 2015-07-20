@@ -108,7 +108,7 @@ std::vector<double> GripperObjectiveFunction::evaluate(const std::vector<double>
 	 * Callback (if exists).
 	 */
 	if (_callback) {
-		_callback(x, results);
+		_callback(_lastGripper);
 	}
 	
 	return results;

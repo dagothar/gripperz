@@ -37,7 +37,23 @@ public:
 	} ParameterName;
 
 public:
-	MapGripperBuilder(Gripper::Ptr prototype, const std::vector<ParameterName>& parameters);
+	MapGripperBuilder(
+		Gripper::Ptr prototype,
+		const std::vector<ParameterName>& parameters=std::vector<ParameterName>{
+			Length,
+			Width,
+			Depth,
+			ChfDepth,
+			ChfAngle,
+			CutDepth,
+			CutAngle,
+			CutTilt,
+			TcpOffset,
+			Jawdist,
+			Stroke,
+			Force
+		}
+	);
 	
 	virtual ~MapGripperBuilder();
 	
