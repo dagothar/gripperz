@@ -252,6 +252,8 @@ int main(int argc, char* argv[]) {
 	Vector result = opt_manager->optimize(objective, initialGuess, "maximize");
 	
 	Gripper::Ptr opt_gripper = builder->parametersToGripper(result);
+	GripperQuality::Ptr opt_gripper_q = manager->evaluateGripper(opt_gripper);
+	gripper->setQuality(*opt_gripper_q);
 	
 	/* save results */
 	path opt_gripper_file = outdir / path("result.grp.xml");
