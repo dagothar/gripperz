@@ -50,3 +50,15 @@ SimplexOptimizer::Ptr OptimizerFactory::makeSimplexOptimizer(double rho_init, do
 	
 	return optimizer;
 }
+
+
+CoordinateDescentOptimizer::Ptr OptimizerFactory::makeCoordinateDescentOptimizer(double rho_init, double rho_stop, unsigned max_fev) {
+	CoordinateDescentOptimizer::Configuration config;
+	config.kInitialStepSize = rho_init;
+	config.kFinalStepSize = rho_stop;
+	config.maxNOfEvaluations = max_fev;
+	
+	CoordinateDescentOptimizer::Ptr optimizer = ownedPtr(new CoordinateDescentOptimizer(config));
+	
+	return optimizer;
+}

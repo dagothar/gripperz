@@ -23,7 +23,8 @@ int main(int argc, char* argv[]) {
 	
 	/* create optimizer */
 	//Optimizer::Ptr optimizer = OptimizerFactory::makeBOBYQAOptimizer(2, 0.1, 1e-4);
-	Optimizer::Ptr optimizer = OptimizerFactory::makeSimplexOptimizer(0.1, 1e-3);
+	//Optimizer::Ptr optimizer = OptimizerFactory::makeSimplexOptimizer(0.1, 1e-3);
+	Optimizer::Ptr optimizer = OptimizerFactory::makeCoordinateDescentOptimizer(0.1, 1e-5);
 	OptimizationManager opt_manager(optimizer, {{0, 3}, {0, 3}});
 	
 	/* optimize */

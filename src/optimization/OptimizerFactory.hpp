@@ -10,6 +10,7 @@
 #include "Optimizer.hpp"
 #include "BOBYQAOptimizer.hpp"
 #include "SimplexOptimizer.hpp"
+#include "CoordinateDescentOptimizer.hpp"
 
 namespace gripperz {
 namespace optimization {
@@ -30,6 +31,9 @@ public:
 	
 	//! Creates Simplex optimizer.
 	static SimplexOptimizer::Ptr makeSimplexOptimizer(double rho_init=1e-1, double rho_stop=1e-3, unsigned max_fev=1e3);
+	
+	//! Creates CD optimizer.
+	static CoordinateDescentOptimizer::Ptr makeCoordinateDescentOptimizer(double rho_init=1e-1, double rho_stop=1e-3, unsigned max_fev=1e3);
 };
 
 } /* optimization */
