@@ -265,12 +265,13 @@ void TaskDescriptionLoader::readAlignment(gripperz::util::PTree& tree, TaskDescr
 	DEBUG << "\tAlignment model: ";
 	
 	// read pose 0D parameters
-	TaskDescription::AlignmentModelParameters& pose0params = task->getAlignmentModelParameters(0);
-	PTree& pose0tag = tree.get_child("Parameters");
-	pose0params.iterations = XMLHelpers::readInt(pose0tag.get_child("Iterations"));
-	pose0params.minInliers = XMLHelpers::readInt(pose0tag.get_child("MinInliers"));
-	pose0params.dataThreshold = XMLHelpers::readDouble(pose0tag.get_child("DataThreshold"));
-	pose0params.modelThreshold = XMLHelpers::readDouble(pose0tag.get_child("ModelThreshold"));
+	TaskDescription::AlignmentModelParameters& params = task->getAlignmentParameters();
+	PTree& tag = tree.get_child("Parameters");
+	params.iterations = XMLHelpers::readInt(tag.get_child("Iterations"));
+	params.minInliers = XMLHelpers::readInt(tag.get_child("MinInliers"));
+	params.dataThreshold = XMLHelpers::readDouble(tag.get_child("DataThreshold"));
+	params.modelThreshold = XMLHelpers::readDouble(tag.get_child("ModelThreshold"));
+	params.maxModels = XMLHelpers::readInt(tag.get_child("MaxModels"));
 }
 
 
@@ -332,11 +333,12 @@ void TaskDescriptionLoader::save(const TaskDescription::Ptr td, const std::strin
 	// save alignment ransac parameters
 	{
 		PTree node0;
-		TaskDescription::AlignmentModelParameters pose0Params = td->getAlignmentModelParameters(0);
-		node0.put("Iterations", boost::lexical_cast<string>(pose0Params.iterations));
-		node0.put("MinInliers", boost::lexical_cast<string>(pose0Params.minInliers));
-		node0.put("DataThreshold", boost::lexical_cast<string>(pose0Params.dataThreshold));
-		node0.put("ModelThreshold", boost::lexical_cast<string>(pose0Params.modelThreshold));
+		TaskDescription::AlignmentModelParameters params = td->getAlignmentParameters();
+		node0.put("Iterations", boost::lexical_cast<string>(params.iterations));
+		node0.put("MinInliers", boost::lexical_cast<string>(params.minInliers));
+		node0.put("DataThreshold", boost::lexical_cast<string>(params.dataThreshold));
+		node0.put("ModelThreshold", boost::lexical_cast<string>(params.modelThreshold));
+		node0.put("MaxModels", boost::lexical_cast<string>(params.maxModels));
 		
 		tree.add_child("TaskDescription.Alignment.Parameters", node0);
 	}

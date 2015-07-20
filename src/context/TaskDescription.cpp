@@ -26,8 +26,7 @@ TaskDescription::TaskDescription(rwsim::dynamics::DynamicWorkCell::Ptr dwc) :
 	_wrenchLimit(0.0),
 	_stressLimit(10.0), // arbitrary
 	_targetObject(NULL),
-	_stablePose0DParameters(100, 10, 0.5, 0.5, 0.5),
-	_stablePose1DParameters(100, 10, 0.5, 0.5, 0.5)
+	_alignmentParameters(1000, 5, 0.05, 0.1, 5)
 {
 	if (_wc == NULL || _dwc == NULL) {
 		RW_THROW("NULL WC or DWC!");
@@ -41,31 +40,12 @@ TaskDescription::~TaskDescription()
 
 
 AlignmentCalculator::Ptr TaskDescription::getAlignmentCalculator() {
-	
-	//StablePoseAlignment::Configuration conf0;
-	//conf0.iterations = _stablePose0DParameters.iterations;
-	//conf0.minInliers = _stablePose0DParameters.minInliers;
-	//conf0.dataThreshold = _stablePose0DParameters.dataThreshold;
-	//conf0.modelThreshold = _stablePose0DParameters.modelThreshold;
-	//conf0.weight = _stablePose0DParameters.weight;
-	
-	//StablePoseAlignment::Configuration conf1;
-	//conf1.iterations = _stablePose1DParameters.iterations;
-	//conf1.minInliers = _stablePose1DParameters.minInliers;
-	//conf1.dataThreshold = _stablePose1DParameters.dataThreshold;
-	//conf1.modelThreshold = _stablePose1DParameters.modelThreshold;
-	//conf1.weight = _stablePose1DParameters.weight;
-	
-	//AlignmentCalculator::Ptr calc = ownedPtr(
-		//new StablePoseAlignment(conf0, conf1)
-	//);
-	
 	VersorAlignment::Configuration conf;
-	conf.iterations = _stablePose0DParameters.iterations;
-	conf.minInliers = _stablePose0DParameters.minInliers;
-	conf.dataThreshold = _stablePose0DParameters.dataThreshold;
-	conf.modelThreshold = _stablePose0DParameters.modelThreshold;
-	conf.weight = _stablePose0DParameters.weight;
+	conf.iterations = _alignmentParameters.iterations;
+	conf.minInliers = _alignmentParameters.minInliers;
+	conf.dataThreshold = _alignmentParameters.dataThreshold;
+	conf.modelThreshold = _alignmentParameters.modelThreshold;
+	conf.maxModels = _alignmentParameters.maxModels;
 	AlignmentCalculator::Ptr calc = ownedPtr(
 		new VersorAlignment(conf)
 	);

@@ -26,14 +26,14 @@ public:
 		int minInliers;
 		double dataThreshold;
 		double modelThreshold;
-		double weight;
+		int maxModels;
 		
 		Configuration() :
-			iterations(100),
+			iterations(1000),
 			minInliers(5),
 			dataThreshold(0.1),
-			modelThreshold(1.0),
-			weight(0.5)
+			modelThreshold(0.1),
+			maxModels(5)
 		{}
 	};
 

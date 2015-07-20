@@ -50,20 +50,20 @@ public:
 		int minInliers;
 		double dataThreshold;
 		double modelThreshold;
-		double weight; // used to average two models' results
+		double maxModels;
 
 		AlignmentModelParameters(
 			int iter,
 			int inliers,
 			double data,
 			double model,
-			double w
+			double nmodels
 		) :
 			iterations(iter),
 			minInliers(inliers),
 			dataThreshold(data),
 			modelThreshold(model),
-			weight(w)
+			maxModels(nmodels)
 		{}
 	};
 
@@ -233,18 +233,10 @@ public:
 	/**
 	 * @brief Returns RANSAC parameters for finding stable pose model
 	 *
-	 * @param model [in] 0 or 1
-	 *
-	 * @return structure with (iterations, minInliers, dataThreshold, modelThresholdm weight)
+	 * @return structure with (iterations, minInliers, dataThreshold, modelThreshold, maxModels)
 	 */
-	AlignmentModelParameters& getAlignmentModelParameters(size_t model) {
-		RW_ASSERT(model < 2);
-		if (model == 0)
-			return _stablePose0DParameters;
-		if (model == 1)
-			return _stablePose1DParameters;
-			
-		return _stablePose0DParameters;
+	AlignmentModelParameters& getAlignmentParameters() {
+		return _alignmentParameters;
 	}
 	
 	const std::string& getAlignmentCalculatorID() const { return _alignmentCalculatorID; }
@@ -278,8 +270,7 @@ protected:
 
 	// ransac parameters for finding stable pose
 	std::string _alignmentCalculatorID;
-	AlignmentModelParameters _stablePose0DParameters;
-	AlignmentModelParameters _stablePose1DParameters;
+	AlignmentModelParameters _alignmentParameters;
 };
 
 } /* context */

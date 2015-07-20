@@ -44,12 +44,14 @@
 			<RPY> 0 0 3.14159 </RPY>
 		</Grasp>
 	</HintGrasps>
+	
 	<Alignment>
 		<Parameters>
 			<Iterations>1000</Iterations>
 			<MinInliers>5</MinInliers>
-			<DataThreshold>0.05</DataThreshold>
+			<DataThreshold>0.1</DataThreshold>
 			<ModelThreshold>0.1</ModelThreshold>
+			<MaxModels>5</MaxModels>
 		</Parameters>
 	</Alignment>
 </TaskDescription>

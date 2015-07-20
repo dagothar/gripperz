@@ -85,7 +85,7 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 	sort(vars.begin(), vars.end()); // sort so we can weight the median more
 	total_w = 0.0;
 	for (unsigned i = 0; i < n; ++i) {
-		double w = 1; // + ((i < n - i - 1) ? i : n - i - 1); // triangle weight distribution
+		double w = n - i; // + ((i < n - i - 1) ? i : n - i - 1); // triangle weight distribution
 		total_w += w;
 		
 		DEBUG << "W " << w << " ";
@@ -162,9 +162,13 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 		
 		int totalInliers = 0;
 		double totalQuality = 0.0;
+		int nModels = 0;
 		BOOST_FOREACH (const PointModel& m, models)
 		{
-			//PointModel& m = bestModel;
+			if (nModels++ >= _conf.maxModels) {
+				break;
+			}
+			
 			DEBUG << " MODEL: " << m << ", QUALITY: " << m.getQuality() << ", INLIERS: " << m.getNumberOfInliers() << endl;
 			
 			vector<long unsigned> inliers = m.getInlierIndices();
