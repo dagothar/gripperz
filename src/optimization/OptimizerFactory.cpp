@@ -21,6 +21,10 @@ Optimizer::Ptr OptimizerFactory::makeOptimizer(const std::string& id, unsigned d
 		return makeSimplexOptimizer();
 	}
 	
+	else if (id == "coordinatedescent") {
+		return makeCoordinateDescentOptimizer();
+	}
+	
 	RW_THROW ("Optimizer with id " << id << "is not available");
 	return NULL;
 }

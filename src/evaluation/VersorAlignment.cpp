@@ -147,7 +147,7 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 	models.insert(models.end(), ymodels.begin(), ymodels.end());
 	models.insert(models.end(), zmodels.begin(), zmodels.end());
 	
-	double alignment = 0.01; // offset so it's not always 0
+	double alignment = 0.0;
 	
 	if (models.size() > 0) {
 			
@@ -184,5 +184,5 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 	
 	DEBUG << "Alignment = " << alignment << endl;
 	
-	return alignment;
+	return alignment + 0.01;  // offset so it's not always 0
 }

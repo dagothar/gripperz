@@ -25,7 +25,7 @@ if (BUILD_TOOLS)
 	target_link_libraries(generate_grippers gripperz)
 	
 	# Target: optimize_gripper
-	add_executable(optimize_gripper gripper_optimizer.cpp)
-	add_dependencies(optimize_gripper gripperz)
-	target_link_libraries(optimize_gripper gripperz)
+	add_executable(gripper_optimizer gripper_optimizer.cpp)
+	add_dependencies(gripper_optimizer gripperz)
+	target_link_libraries(gripper_optimizer gripperz)
 endif ()

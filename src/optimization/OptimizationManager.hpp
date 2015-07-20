@@ -9,6 +9,7 @@
 #include "Optimizer.hpp"
 #include <string>
 #include <math/ParameterMapping.hpp>
+#include <boost/function.hpp>
 
 namespace gripperz {
 namespace optimization {
@@ -48,6 +49,8 @@ public:
 	
 	Log& getLog() { return _log; }
 	
+	void setUserCallback(boost::function<void(const math::Vector& args, math::Scalar result)> cb) { _userCallback = cb; }
+	
 	/**
 	 * @brief Optimizes given objective function starting from the initialGuess.
 	 * @param function [in] a function to optimize
@@ -67,6 +70,7 @@ private:
 	Optimizer::Ptr _optimizer;
 	math::RangeList _ranges;
 	Log _log;
+	boost::function<void(const math::Vector& args, math::Scalar result)> _userCallback;
 };
 
 } /* optimization */

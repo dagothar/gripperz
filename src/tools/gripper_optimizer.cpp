@@ -1,45 +1,18 @@
 /**
- * @file gripper_opt.cpp
+ * @file gripper_optimizer.cpp
  * @author Adam Wolniakowski
- * @date 9-07-2015
+ * @date 20-07-2015
  */
 
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <map>
+#include <string>
 #include <rw/rw.hpp>
-#include <rw/RobWork.hpp>
-#include <rw/common/Log.hpp>
-#include <rw/common/ExtensionRegistry.hpp>
 #include <rwsim/rwsim.hpp>
-#include <rwsim/loaders/DynamicWorkCellLoader.hpp>
-#include <rw/loaders/model3d/STLFile.hpp>
+#include <gripperz.hpp>
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/option.hpp>
 #include <boost/program_options/parsers.hpp>
-#include <rwlibs/proximitystrategies/ProximityStrategyFactory.hpp>
-#include <rwsimlibs/ode/ODEPlugin.hpp>
-
-#include <context/TaskDescription.hpp>
-#include <loaders/TaskDescriptionLoader.hpp>
-#include <models/Gripper.hpp>
-#include <loaders/GripperXMLLoader.hpp>
-#include <grasps/TaskGenerator.hpp>
-#include <simulation/GripperTaskSimulator.hpp>
-#include <simulation/InterferenceSimulator.hpp>
-#include <evaluation/GripperEvaluator.hpp>
-#include <models/MapGripperBuilder.hpp>
-#include <evaluation/GripperObjectiveFunction.hpp>
-#include <evaluation/GripperEvaluationManager.hpp>
-#include <evaluation/GripperEvaluationManagerFactory.hpp>
-#include <math/CombineObjectivesFactory.hpp>
-#include <math/RevertedFunction.hpp>
-#include <math/CombinedFunction.hpp>
-#include <math/MappedFunction.hpp>
-#include <optimization/BOBYQAOptimizer.hpp>
-
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -48,80 +21,79 @@
 using namespace std;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
-using namespace rw::models;
-using namespace rw::common;
-using namespace rw::loaders;
-using namespace rwlibs::task;
-using namespace rwsim;
-using namespace rwsim::dynamics;
-using namespace rwsim::loaders;
-using namespace rwsim::simulation;
+USE_ROBWORKSIM_NAMESPACE
+using namespace robworksim;
+USE_GRIPPERZ_NAMESPACE
+using namespace gripperz;
 using namespace boost::program_options;
 namespace po = boost::program_options;
-using namespace gripperz::models;
-using namespace gripperz::context;
-using namespace gripperz::simulation;
-using namespace gripperz::math;
-using namespace gripperz::optimization;
-using namespace gripperz::evaluation;
-using namespace gripperz::grasps;
-using namespace gripperz::loaders;
 
 
-string vectorToString(const vector<double>& v) {
-	stringstream sstr;
-	
-	for (unsigned i = 0; i < v.size(); ++i) {
-		sstr << v[i] << ", ";
-	}
-	
-	return sstr.str();
-}
+struct {
+	int cores;
+	string dwc_filename;
+	string td_filename;
+	string ssamples_filename;
+	string gripper_filename;
+	string out_filename;
+	int n_targets;
+	int n_robust;
+	string combiner;
+	string optimizer;
+	vector<double> weights;
+	vector<int> parameters;
+	double sigma_a, sigma_p;
+} Configuration;
+
+
+RangeList ranges{
+	{0, 0.2},
+	{0, 0.05},
+	{0, 0.05},
+	{0, 1},
+	{0, 90},
+	{0, 0.05},
+	{0, 180},
+	{-90, 90},
+	{0, 0.2},
+	{0, 0.05},
+	{0, 0.05},
+	{0, 50}
+};
 
 
 int main(int argc, char* argv[]) {
+	
 	/* initialize robwork */
 	Math::seed();
 	RobWork::getInstance()->initialize();
 	Log::log().setLevel(Log::Info);
 
-	/* options */
-	int cores, ntargets, nrobust, maxfev;
-	string dwcFilename;
-	string tdFilename;
-	string gripperFilename;
-	string outDir;
-	string samplesFilename;
-	vector<int> parameters{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
-	
-	BOBYQAOptimizer::ConstraintList constraints{
-		{0, 0.2}, {0, 0.05}, {0, 0.05}, {0, 1}, {0, 45}, {0, 0.05}, {0, 180}, {-90, 90}, {0, 0.2}, {0, 0.05}, {0, 0.05}, {0, 20}
-	};
 
-	/* define CLI options */
+	/* options */
 	string usage =
-			"This is a script used to generate tasks for a single gripper, simulate them and"
-					" evaluate gripper's performance.\n\n"
-					"Usage:\n"
-					"evaluate-gripper";
+		"This is a script used optimize grippers.\n\n"
+		"Usage:\n"
+		"gripper_optimizer";
 	options_description desc("Allowed options");
 	desc.add_options()
 		("help,h", "help message")
-		("cores,c", value<int>(&cores)->default_value(1), "number of threads to use")
-		("ntargets,t", value<int>(&ntargets)->default_value(100), "number of tasks to generate")
-		("nrobust,r", value<int>(&nrobust)->default_value(100), "number of robustness tasks to generate")
-		("maxfev,m", value<int>(&maxfev)->default_value(1000), "max number of function evaluations")
-		("parameters,p", value<vector<int> >(&parameters)->multitoken(), "parameters to optimize")
-		("weights,w", value<vector<double> >(&weights)->multitoken(), "7 weights for objectives (0-6)")
-		("dwc", value<string>(&dwcFilename)->required(), "dynamic workcell file")
-		("td", value<string>(&tdFilename)->required(), "task description file")
-		("gripper,g", value<string>(&gripperFilename)->required(), "initial gripper design")
-		("ssamples,s", value<string>(&samplesFilename), "surface samples file")
-		("out,o", value<string>(&outDir)->required(), "output directory");
+		("cores,c", value<int>(&Configuration.cores)->default_value(1), "number of threads to use")
+		("ntargets,t", value<int>(&Configuration.n_targets)->default_value(100), "number of tasks to generate")
+		("nrobust,r", value<int>(&Configuration.n_robust)->default_value(100), "number of robustness tasks to generate")
+		("parameters,p", value<vector<int> >(&Configuration.parameters)->multitoken(), "12 parameters to optimize (0-11)")
+		("weights,w", value<vector<double> >(&Configuration.weights)->multitoken(), "7 weights for objectives (0-6)")
+		("dwc", value<string>(&Configuration.dwc_filename)->required(), "dynamic workcell file")
+		("td", value<string>(&Configuration.td_filename)->required(), "task description file")
+		("gripper,g", value<string>(&Configuration.gripper_filename)->required(), "gripper file")
+		("out,o", value<string>(&Configuration.out_filename)->required(), "optimal gripper file")
+		("ssamples,s", value<string>(&Configuration.ssamples_filename), "surface samples file")
+		("combiner", value<string>(&Configuration.combiner)->default_value("log"), "objective combining method")
+		("optimizer", value<string>(&Configuration.optimizer)->default_value("simplex"), "optimization method")
+		("sigma_a",	value<double>(&Configuration.sigma_a)->default_value(8), "standard deviation in of angle in degrees")
+		("sigma_p",	value<double>(&Configuration.sigma_p)->default_value(0.003), "standard deviation of position in meters");
 	variables_map vm;
 	
-	/* parse CLI */
 	try {
 		store(command_line_parser(argc, argv).options(desc).run(), vm);
 		notify(vm);
@@ -138,72 +110,65 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+
 	/* load data */
-	INFO << "* Loading dwc... ";
-	DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load(dwcFilename);
-	INFO << "Loaded." << endl;
-	INFO << "* Loading task description... " << tdFilename << " " << endl;
-	TaskDescription::Ptr td = TaskDescriptionLoader::load(tdFilename, dwc);
-	INFO << "Loaded." << endl;
-	INFO << "* Loading gripper... ";
-	Gripper::Ptr gripper = GripperXMLLoader::load(gripperFilename);
-	INFO << "Loaded." << endl;
+	INFO << "* Loading dwc... " << Configuration.dwc_filename;
+	DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load(Configuration.dwc_filename);
+	INFO << " Loaded." << endl;
+	INFO << "* Loading task description... " << Configuration.td_filename;
+	TaskDescription::Ptr td = TaskDescriptionLoader::load(Configuration.td_filename, dwc);
+	INFO << " Loaded." << endl;
+	INFO << "* Loading gripper... " << Configuration.gripper_filename;
+	Gripper::Ptr gripper = GripperXMLLoader::load(Configuration.gripper_filename);
+	INFO << " Loaded." << endl;
 
 	vector<SurfaceSample> ssamples;
 	if (vm.count("samples")) {
-		INFO << "* Loading samples... ";
-		ssamples = SurfaceSample::loadFromXML(samplesFilename);
-		INFO << "Loaded." << endl;
+		INFO << "* Loading samples... " << Configuration.ssamples_filename;
+		ssamples = SurfaceSample::loadFromXML(Configuration.ssamples_filename);
+		INFO << " Loaded." << endl;
 	}
 	
-	/* set up objective fuction */
+	
+	/* construct evaluation manager */
 	GripperEvaluationManager::Configuration config;
-	config.nOfGraspsPerEvaluation = ntargets;
-	config.nOfRobustnessTargets = nrobust;
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, cores, ssamples);
-
+	config.nOfGraspsPerEvaluation = Configuration.n_targets;
+	config.nOfRobustnessTargets = Configuration.n_robust;
+	config.sigma_a = Configuration.sigma_a;
+	config.sigma_p = Configuration.sigma_p;
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, Configuration.cores, ssamples);
+	
+	
+	/* construct objective function */
 	vector<MapGripperBuilder::ParameterName> params;
-	BOOST_FOREACH (int id, parameters) {
+	RangeList opt_ranges;
+	BOOST_FOREACH (int id, Configuration.parameters) {
 		params.push_back(static_cast<MapGripperBuilder::ParameterName>(id));
+		opt_ranges.push_back(ranges[id]);
 	}
 	GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, params);
-	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
+	MultiObjectiveFunction::Ptr multi_function = new GripperObjectiveFunction(builder, manager);
 	
-	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
+	CombineObjectives::Ptr comb_method = CombineObjectivesFactory::make(Configuration.combiner, Configuration.weights);
+	ObjectiveFunction::Ptr objective = new CombinedFunction(multi_function, comb_method);
 	
-	ParameterMapping::Map map;
-	BOOST_FOREACH (int id, parameters) {
-		map.push_back({{-1.0, 1.0}, constraints[id]});
-	}
-	ParameterMapping::Ptr mapping = new ParameterMapping(map);
 	
-	ObjectiveFunction::Ptr objective = new RevertedFunction(
-		new MappedFunction(
-			new CombinedFunction(func, logMethod),
-			mapping
-		)
-	);
+	/* construct optimization manager */
+	Optimizer::Ptr optimizer = OptimizerFactory::makeOptimizer(Configuration.optimizer, params.size());
+	OptimizationManager::Ptr opt_manager = new OptimizationManager(optimizer, opt_ranges);
+	
 	
 	/* perform optimization */
-	BOBYQAOptimizer::ConstraintList constr;
-	BOOST_FOREACH (int p, parameters) {
-		constr.push_back({-1.0, 1.0});
-		p++;
-	}
-	BOBYQAOptimizer::Configuration opt_config;
-	opt_config.initialTrustRegionRadius = 0.01;
-	opt_config.finalTrustRegionRadius = 0.001;
-
-	Optimizer::Ptr optimizer = new BOBYQAOptimizer(opt_config, constr);
+	Vector initialGuess = builder->gripperToParameters(gripper);
+	Vector result = opt_manager->optimize(objective, initialGuess, "maximize");
 	
-	/* perform optimization */
-	vector<double> initialGuess = mapping->unmap(builder->gripperToParameters(gripper));
-	vector<double> result = optimizer->minimize(objective, initialGuess);
+	Gripper::Ptr opt_gripper = builder->parametersToGripper(result);
+	//GripperQuality::Ptr quality = multi_function->getLastGripperQuality();
+	//quality->quality = comb_method->combine(results);
+	//gripper->setQuality(*quality);
 	
-	/* print result */
-	cout << "Result." << endl;
-	Gripper::Ptr opt_gripper = builder->parametersToGripper(mapping->map(result));
-	GripperXMLLoader::save(opt_gripper, "optGripper.grp.xml");
+	/* save results */
+	GripperXMLLoader::save(opt_gripper, Configuration.out_filename);
 	
 	return 0;
 }

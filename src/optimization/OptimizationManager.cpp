@@ -68,4 +68,8 @@ Vector OptimizationManager::optimize(ObjectiveFunction::Ptr function, const Vect
 
 void OptimizationManager::callback(const Vector& args, Scalar result) {
 	_log.push_back({args, result});
+	
+	if (_userCallback) {
+		_userCallback(args, result);
+	}
 }
