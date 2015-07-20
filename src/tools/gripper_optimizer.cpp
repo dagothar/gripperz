@@ -12,7 +12,8 @@
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/option.hpp>
-#include <boost/program_options/parsers.hpp>
+#include <boost/filesystem.hpp>
+
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -26,6 +27,7 @@ using namespace robworksim;
 USE_GRIPPERZ_NAMESPACE
 using namespace gripperz;
 using namespace boost::program_options;
+using namespace boost::filesystem;
 namespace po = boost::program_options;
 
 
@@ -35,7 +37,7 @@ struct {
 	string td_filename;
 	string ssamples_filename;
 	string gripper_filename;
-	string out_filename;
+	string out_dir;
 	int n_targets;
 	int n_robust;
 	string combiner;
@@ -62,6 +64,25 @@ RangeList ranges{
 };
 
 
+vector<vector<double> > opt_log;
+void callback(Vector args, Vector res, CombineObjectives::Ptr combiner) {
+	static unsigned step = 0;
+	
+	vector<double> entry;
+	entry.push_back(step);
+	
+	entry.insert(entry.end(), args.begin(), args.end());
+	entry.insert(entry.end(), res.begin(), res.end());
+	
+	double q = combiner->combine(res);
+	entry.push_back(q);
+	
+	opt_log.push_back(entry);
+	
+	++step;
+}
+
+
 int main(int argc, char* argv[]) {
 	
 	/* initialize robwork */
@@ -86,7 +107,7 @@ int main(int argc, char* argv[]) {
 		("dwc", value<string>(&Configuration.dwc_filename)->required(), "dynamic workcell file")
 		("td", value<string>(&Configuration.td_filename)->required(), "task description file")
 		("gripper,g", value<string>(&Configuration.gripper_filename)->required(), "gripper file")
-		("out,o", value<string>(&Configuration.out_filename)->required(), "optimal gripper file")
+		("out,o", value<string>(&Configuration.out_dir)->required(), "output directory")
 		("ssamples,s", value<string>(&Configuration.ssamples_filename), "surface samples file")
 		("combiner", value<string>(&Configuration.combiner)->default_value("log"), "objective combining method")
 		("optimizer", value<string>(&Configuration.optimizer)->default_value("simplex"), "optimization method")
@@ -129,6 +150,11 @@ int main(int argc, char* argv[]) {
 		INFO << " Loaded." << endl;
 	}
 	
+	path outdir(Configuration.out_dir);
+	if (!create_directory(outdir)) {
+		RW_THROW ("Unable to create directory: " << Configuration.out_dir);
+	}
+	
 	
 	/* construct evaluation manager */
 	GripperEvaluationManager::Configuration config;
@@ -147,10 +173,12 @@ int main(int argc, char* argv[]) {
 		opt_ranges.push_back(ranges[id]);
 	}
 	GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, params);
-	MultiObjectiveFunction::Ptr multi_function = new GripperObjectiveFunction(builder, manager);
+	GripperObjectiveFunction::Ptr multi_function = new GripperObjectiveFunction(builder, manager);
 	
 	CombineObjectives::Ptr comb_method = CombineObjectivesFactory::make(Configuration.combiner, Configuration.weights);
 	ObjectiveFunction::Ptr objective = new CombinedFunction(multi_function, comb_method);
+	
+	multi_function->setCallback(boost::bind<>(&callback, _1, _2, comb_method));
 	
 	
 	/* construct optimization manager */
@@ -163,12 +191,23 @@ int main(int argc, char* argv[]) {
 	Vector result = opt_manager->optimize(objective, initialGuess, "maximize");
 	
 	Gripper::Ptr opt_gripper = builder->parametersToGripper(result);
-	//GripperQuality::Ptr quality = multi_function->getLastGripperQuality();
-	//quality->quality = comb_method->combine(results);
-	//gripper->setQuality(*quality);
 	
 	/* save results */
-	GripperXMLLoader::save(opt_gripper, Configuration.out_filename);
+	path opt_gripper_file = outdir / path("result.grp.xml");
+	GripperXMLLoader::save(opt_gripper, opt_gripper_file.string() );
+	
+	ofstream log_file((outdir / path("log.csv")).string());
+	log_file << "#step, length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force, success, robustness, alignment, coverage, wrench, stress, volume, q" << endl;
+	BOOST_FOREACH (const vector<double>& entry, opt_log) {
+		for (unsigned i = 0; i < entry.size(); ++i) {
+			log_file << entry[i];
+			if (i < entry.size() - 1) {
+				log_file << ", ";
+			}
+		}
+		log_file << endl;
+	}
+	log_file.close();
 	
 	return 0;
 }
