@@ -46,6 +46,8 @@ struct {
 	vector<double> weights;
 	vector<int> parameters;
 	double sigma_a, sigma_p;
+	double rho0, rhof;
+	int maxfev;
 } Configuration;
 
 
@@ -135,10 +137,13 @@ int main(int argc, char* argv[]) {
 		("gripper,g", value<string>(&Configuration.gripper_filename)->required(), "gripper file")
 		("out,o", value<string>(&Configuration.out_dir)->required(), "output directory")
 		("ssamples,s", value<string>(&Configuration.ssamples_filename), "surface samples file")
-		("combiner", value<string>(&Configuration.combiner)->default_value("log"), "objective combining method")
+		("combiner", value<string>(&Configuration.combiner)->default_value("product"), "objective combining method")
 		("optimizer", value<string>(&Configuration.optimizer)->default_value("simplex"), "optimization method")
 		("sigma_a",	value<double>(&Configuration.sigma_a)->default_value(8), "standard deviation in of angle in degrees")
-		("sigma_p",	value<double>(&Configuration.sigma_p)->default_value(0.003), "standard deviation of position in meters");
+		("sigma_p",	value<double>(&Configuration.sigma_p)->default_value(0.003), "standard deviation of position in meters")
+		("rho0",	value<double>(&Configuration.rho0)->default_value(0.1), "initial step size")
+		("rhof",	value<double>(&Configuration.rhof)->default_value(0.001), "final step size")
+		("maxfev",	value<int>(&Configuration.maxfev)->default_value(1e3), "max number of function evaluations");
 	variables_map vm;
 	
 	try {
@@ -211,7 +216,19 @@ int main(int argc, char* argv[]) {
 	
 	
 	/* construct optimization manager */
-	Optimizer::Ptr optimizer = OptimizerFactory::makeOptimizer(Configuration.optimizer, params.size());
+	Optimizer::Ptr optimizer;
+	if (Configuration.optimizer == "simplex") {
+		optimizer = OptimizerFactory::makeSimplexOptimizer(Configuration.rho0, Configuration.rhof, Configuration.maxfev);
+	}
+	
+	if (Configuration.optimizer == "coordinatedescent") {
+		optimizer = OptimizerFactory::makeCoordinateDescentOptimizer(Configuration.rho0, Configuration.rhof, Configuration.maxfev);
+	}
+	
+	if (!optimizer) {
+		RW_THROW ("Optimizer type not supported!");
+	}
+
 	OptimizationManager::Ptr opt_manager = new OptimizationManager(optimizer, opt_ranges);
 	
 	
