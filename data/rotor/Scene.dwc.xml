@@ -6,7 +6,7 @@
 		<RestitutionModel>Newton</RestitutionModel>
 		<ContactModel>Guendel</ContactModel>
 		<AutoDisable>true</AutoDisable>
-		<Property name="StepMethod">WorldStep</Property>
+		<Property name="StepMethod">WorldQuickStep</Property>
 		<Property name="MaxCorrectingVelocity" type="float">0.5</Property>
 	</PhysicsEngine>
 

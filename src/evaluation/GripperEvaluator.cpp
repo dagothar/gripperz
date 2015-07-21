@@ -183,7 +183,7 @@ double GripperEvaluator::calculateWrench(models::Gripper::Ptr gripper, rwlibs::t
 
 		if (
 			p.second->getResult()->testStatus == GraspResult::Success
-			|| p.second->getResult()->testStatus == GraspResult::ObjectSlipped
+			|| p.second->getResult()->testStatus == GraspResult::Interference
 		) {
 			successes++;
 
