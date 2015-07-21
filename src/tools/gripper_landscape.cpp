@@ -164,6 +164,7 @@ int main(int argc, char* argv[]) {
 	
 	/* construct objective function */
 	GripperEvaluationManager::Configuration config;
+	config.nOfGraspsPerEvaluation = ntargets;
 	config.nOfRobustnessTargets = nrobust;
 	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, cores, ssamples);
 	
