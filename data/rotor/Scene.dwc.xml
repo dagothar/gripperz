@@ -6,8 +6,8 @@
 		<RestitutionModel>Newton</RestitutionModel>
 		<ContactModel>Guendel</ContactModel>
 		<AutoDisable>true</AutoDisable>
-		<Property name="StepMethod">WorldQuickStep</Property>
-		<Property name="MaxCorrectingVelocity" type="float">0.5</Property>
+		<Property name="StepMethod">WorldStep</Property>
+		<Property name="MaxCorrectingVelocity" type="float">0.1</Property>
 	</PhysicsEngine>
 
 	<!-- gravity -->
