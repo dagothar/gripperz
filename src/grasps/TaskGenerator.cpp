@@ -370,6 +370,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
 		if (ssamples && ssamples->size() > 0) {
 			ssample = ssamples->back();
 			ssamples->pop_back();
+
 		} else {
 			ssample = sample(state, sampler, object, ray, cstrategy);
 		}

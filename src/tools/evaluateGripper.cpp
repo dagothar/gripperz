@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
 	INFO << "Loaded." << endl;
 
 	vector<SurfaceSample> ssamples;
-	if (vm.count("samples")) {
+	if (vm.count("ssamples")) {
 		samplesFilename = vm["ssamples"].as<string>();
 		ssamples = SurfaceSample::loadFromXML(samplesFilename);
 	}
