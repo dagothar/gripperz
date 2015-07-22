@@ -410,7 +410,7 @@ void GraspTaskSimulator::stepCB(
 		graspFinished(sstate);
 	}
 	
-	INFO << "Force= " << _dhand->getBase()->getForceW(state).norm2() << endl;
+	//INFO << "Force= " << _dhand->getBase()->getForceW(state).norm2() << endl;
 
 	if (sstate._currentState != NEW_GRASP) {
 		if (getMaxObjectDistance(_objects, sstate._homeState, state) > _maxObjectGripperDistanceThreshold
