@@ -38,4 +38,9 @@ if (BUILD_SANDBOX)
 	add_executable(versor_test versor_test.cpp)
 	add_dependencies(versor_test gripperz)
 	target_link_libraries(versor_test gripperz)
+	
+	# Target: objective_example
+	add_executable(objective_example objective_example.cpp)
+	add_dependencies(objective_example gripperz)
+	target_link_libraries(objective_example gripperz)
 endif ()
