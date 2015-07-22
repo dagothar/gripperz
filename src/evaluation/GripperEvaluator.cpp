@@ -104,15 +104,15 @@ double GripperEvaluator::calculateRobustness(models::Gripper::Ptr gripper, rwlib
 	int nAllTargets = allTargets.size();
 	
 	int successes = TaskStatistics::countTasksWithResult(rtasks, GraspResult::Success);
-	int filtered = TaskStatistics::countTasksWithResult(rtasks, GraspResult::Filtered);
+	//int filtered = TaskStatistics::countTasksWithResult(rtasks, GraspResult::Filtered);
 	int failures = TaskStatistics::countTasksWithResult(rtasks, GraspResult::SimulationFailure);
 	
 	DEBUG << "alltargets= " << nAllTargets << endl;
 	DEBUG << "successes= " << successes << endl;
-	DEBUG << "filtered= " << filtered << endl;
+	//DEBUG << "filtered= " << filtered << endl;
 	DEBUG << "failures= " << failures << endl;
 	
-	double validTasks = nAllTargets - filtered - failures;
+	double validTasks = nAllTargets - failures;
 	if (validTasks == 0) {
 		RW_WARN("No valid tasks");
 		return 0.0;

@@ -603,16 +603,14 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 			}
 
 			if(!_forceSimulateAll){
-				if (sstate._target->getResult()->testStatus
-						!= GraspResult::UnInitialized
-						&& sstate._target->getResult()->testStatus
-								!= GraspResult::Success
-						&& sstate._target->getResult()->testStatus
-								!= GraspResult::Filtered) {
+				if (
+					sstate._target->getResult()->testStatus	!= GraspResult::UnInitialized
+				) {
 					// if test status is set then we allready processed this task.
-					if (sstate._target->getResult()->testStatus
-							< GraspResult::SizeOfStatusArray)
+					if (sstate._target->getResult()->testStatus	< GraspResult::SizeOfStatusArray) {
 						_stat[sstate._target->getResult()->testStatus]++;
+					}
+					
 					_skipped++;
 					_nrOfExperiments++;
 					colFreeSetup = false;
