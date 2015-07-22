@@ -9,7 +9,14 @@
 		<!-- base -->
 		<KinematicBase frame="Base">
 			<MaterialID>Plastic</MaterialID>
-		</KinematicBase> 
+		</KinematicBase>
+		
+		<!--RigidBase frame="Base">
+			<Mass>0.1</Mass>
+			<EstimateInertia/>
+			<MaterialID>Plastic</MaterialID>
+			<Integrator>Euler</Integrator>
+		</RigidBase--> 
 
 		<!-- fingers -->
 		<RigidJoint joint="LeftFinger">
