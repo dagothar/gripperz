@@ -104,15 +104,11 @@ double GripperEvaluator::calculateRobustness(models::Gripper::Ptr gripper, rwlib
 	int nAllTargets = allTargets.size();
 	
 	int successes = TaskStatistics::countTasksWithResult(rtasks, GraspResult::Success);
-	//int filtered = TaskStatistics::countTasksWithResult(rtasks, GraspResult::Filtered);
-	int failures = TaskStatistics::countTasksWithResult(rtasks, GraspResult::SimulationFailure);
 	
 	DEBUG << "alltargets= " << nAllTargets << endl;
 	DEBUG << "successes= " << successes << endl;
-	//DEBUG << "filtered= " << filtered << endl;
-	DEBUG << "failures= " << failures << endl;
 	
-	double validTasks = nAllTargets - failures;
+	double validTasks = nAllTargets;
 	if (validTasks == 0) {
 		RW_WARN("No valid tasks");
 		return 0.0;
@@ -233,7 +229,7 @@ double GripperEvaluator::calculateTopWrench(models::Gripper::Ptr gripper, rwlibs
 
 		if (
 			p.second->getResult()->testStatus == GraspResult::Success
-			|| p.second->getResult()->testStatus == GraspResult::ObjectSlipped
+			|| p.second->getResult()->testStatus == GraspResult::Interference
 		) {
 			successes++;
 

@@ -15,6 +15,7 @@
 	<InterferenceObjects>
 		<Object>ob1</Object>
 		<Object>ob2</Object>
+		<Object>table</Object>
 	</InterferenceObjects>
 	
 	<Limits>
