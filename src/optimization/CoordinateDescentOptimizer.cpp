@@ -87,7 +87,7 @@ Vector CoordinateDescentOptimizer::minimize(math::ObjectiveFunction::Ptr functio
 		
 		double rho = stepSizes.norm2();
 		
-		DEBUG << " rho=" << rho << " fev=" << fev << endl;
+		DEBUG << " rho=" << rho << " fev=" << fev << " fbest= " << fbest << endl;
 		
 		/* check stopping condition */
 		if (
