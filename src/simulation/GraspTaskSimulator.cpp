@@ -21,6 +21,10 @@
 #include <rwsim/dynamics/SuctionCup.hpp>
 #include <rwsim/control/PDController.hpp>
 
+#define DEBUG rw::common::Log::debugLog()
+#define INFO rw::common::Log::infoLog()
+
+
 using namespace rw::math;
 using namespace rw::common;
 using namespace rw::kinematics;
@@ -40,41 +44,68 @@ using rw::graspplanning::Grasp3D;
 using rwlibs::simulation::SimulatedController;
 using std::endl;
 
+
 const int NR_OF_QUALITY_MEASURES = 3;
 
+
 namespace {
-double getMaxObjectDistance(std::vector<RigidBody::Ptr> objects,
-		const State& s1, const State& s2) {
-	double max = 0;
-	BOOST_FOREACH(RigidBody::Ptr &object, objects) {
-		Transform3D<> t1 = object->getTransformW(s1);
-		Transform3D<> t2 = object->getTransformW(s2);
-		if (MetricUtil::dist2(t1.P(), t2.P()) > max)
-			max = MetricUtil::dist2(t1.P(), t2.P());
+	double getMaxObjectDistance(
+		std::vector<RigidBody::Ptr> objects,
+		const State& s1,
+		const State& s2
+	) {
+		double max = 0;
+		BOOST_FOREACH(RigidBody::Ptr &object, objects) {
+			
+			Transform3D<> t1 = object->getTransformW(s1);
+			Transform3D<> t2 = object->getTransformW(s2);
+			
+			if (MetricUtil::dist2(t1.P(), t2.P()) > max) {
+				max = MetricUtil::dist2(t1.P(), t2.P());
+			}
+		}
+		
+		return max;
 	}
-	return max;
-}
 }
 
 GraspTaskSimulator::GraspTaskSimulator(
-		rwsim::dynamics::DynamicWorkCell::Ptr dwc, int nrThreads) :
-		_dwc(dwc), _requestSimulationStop(false), _stepDelayMs(0), _autoSaveInterval(
-				40), _maxObjectGripperDistanceThreshold(50), _stat(
-				GraspResult::SizeOfStatusArray, 0), _initialized(false), _nrOfThreads(
-				1), _currentTargetIndex(0), _alwaysResting(false), _wallTimeLimit(
-				30.0), _simTimeLimit(30.0), _storeTimedStatePaths(false), _forceSimulateAll(false){
-	if (nrThreads > 0 && nrThreads < 20)
+	rwsim::dynamics::DynamicWorkCell::Ptr dwc,
+	int nrThreads
+) :
+	_dwc(dwc),
+	_requestSimulationStop(false),
+	_stepDelayMs(0),
+	_autoSaveInterval(40),
+	_maxObjectGripperDistanceThreshold(50),
+	_stat(GraspResult::SizeOfStatusArray, 0),
+	_initialized(false),
+	_nrOfThreads(1),
+	_currentTargetIndex(0),
+	_alwaysResting(false),
+	_wallTimeLimit(30.0),
+	_simTimeLimit(30.0),
+	_storeTimedStatePaths(false),
+	_forceSimulateAll(false)
+{
+	if (nrThreads > 0 && nrThreads < 20) {
 		_nrOfThreads = nrThreads;
-
+	}
 }
+
 
 GraspTaskSimulator::~GraspTaskSimulator() {
 
 }
 
-void GraspTaskSimulator::init(rwsim::dynamics::DynamicWorkCell::Ptr dwc,
-		const rw::kinematics::State& initState, std::string engineID) {
+
+void GraspTaskSimulator::init(
+	rwsim::dynamics::DynamicWorkCell::Ptr dwc,
+	const rw::kinematics::State& initState,
+	std::string engineID
+) {
 }
+
 
 void GraspTaskSimulator::load(const std::string& filename) {
 	Log::infoLog() << "Loading tasks: ";
@@ -88,6 +119,7 @@ void GraspTaskSimulator::load(const std::string& filename) {
 	}
 	load(task);
 }
+
 
 namespace {
 
@@ -112,6 +144,7 @@ std::stack<std::pair<GraspSubTask*, GraspTarget*> > generateTaskList(GraspTask::
 }
 
 }
+
 
 void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 
@@ -290,18 +323,19 @@ int GraspTaskSimulator::getNrTargetsDone() {
 	return _nrOfExperiments;
 }
 
-//void GraspTaskSimulator::initialize(){}
 
-void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
-		const rw::kinematics::State& state) {
+void GraspTaskSimulator::stepCB(
+	ThreadSimulator* sim,
+	const rw::kinematics::State& state
+) {
 	SimState &sstate = _simStates[sim];
-	
-	//std::cout << "SimState: " << &sstate << std::endl;
 
 	int delay = _stepDelayMs;
 
-	if (delay != 0)
+	if (delay != 0) {
 		TimerUtil::sleepMs(delay);
+	}
+	
 	if (_requestSimulationStop) {
 		return;
 	}
@@ -311,15 +345,15 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 	Q currentQ = _hand->getQ(state);
 
 	if (_storeTimedStatePaths) {
-		std::map<GraspTarget*, TimedStatePath> &targetPaths =
-				_timedStatePaths[sstate._task];
+		std::map<GraspTarget*, TimedStatePath> &targetPaths = _timedStatePaths[sstate._task];
 		TimedStatePath &targetPath = targetPaths[sstate._target];
 		TimedState timedState(sim->getTime(), state);
 		targetPath.push_back(timedState);
 	}
 
 	if (sstate._wallTimer.getTime() > _wallTimeLimit
-			&& sim->getTime() > _simTimeLimit) { //seconds
+		&& sim->getTime() > _simTimeLimit
+	) {
 		_timeout++;
 		sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
 		sstate._target->getResult()->testStatus = GraspResult::TimeOut;
@@ -329,7 +363,9 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 		graspFinished(sstate);
 	}
 
-	if (sim->getTime() > 5.0 && sstate._currentState != NEW_GRASP) {
+	if (sim->getTime() > 5.0
+		&& sstate._currentState != NEW_GRASP
+	) {
 		_timeout++;
 		sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
 		sstate._target->getResult()->testStatus = GraspResult::TimeOut;
@@ -339,12 +375,13 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 		graspFinished(sstate);
 	}
 
-	if (sim->isInError() && sstate._currentState != NEW_GRASP) {
+	if (sim->isInError()
+		&& sstate._currentState != NEW_GRASP
+	) {
 		// the simulator is in error, reinitialize or fix the error
 		_simfailed++;
 		sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
-		sstate._target->getResult()->testStatus =
-				GraspResult::SimulationFailure;
+		sstate._target->getResult()->testStatus = GraspResult::SimulationFailure;
 		_stat[GraspResult::SimulationFailure]++;
 		sim->reset(sstate._homeState);
 		sstate._currentState = NEW_GRASP;
@@ -353,8 +390,7 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 	}
 
 	if (sstate._currentState != NEW_GRASP) {
-		if (getMaxObjectDistance(_objects, sstate._homeState, state)
-				> _maxObjectGripperDistanceThreshold) {
+		if (getMaxObjectDistance(_objects, sstate._homeState, state) > _maxObjectGripperDistanceThreshold) {
 			_simfailed++;
 
 			sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
@@ -370,8 +406,7 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 
 	if (sstate._currentState == APPROACH) {
 		Transform3D<> ct3d = Kinematics::worldTframe(_mbase, state);
-		bool isApproachReached = MetricUtil::dist2(ct3d.P(),
-				sstate._wTmbase_approachTarget.P()) < 0.002;
+		bool isApproachReached = MetricUtil::dist2(ct3d.P(), sstate._wTmbase_approachTarget.P()) < 0.002;
 
 		if (isApproachReached) {
 			sstate._graspController->setTargetPos(sstate._closeQ);
@@ -379,14 +414,13 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 			sstate._approachedTime = sim->getTime();
 			sstate._restingTime = sstate._approachedTime;
 			sstate._restCount = 0;
-			Transform3D<> t3d = Kinematics::frameTframe(_tcp,
-					_objects[0]->getBodyFrame(), state);
+			Transform3D<> t3d = Kinematics::frameTframe(_tcp, _objects[0]->getBodyFrame(), state);
 			sstate._target->getResult()->objectTtcpApproach = inverse(t3d);
 		}
 	}
 
 	if (sstate._currentState == GRASPING) {
-		//std::cout << "grasping" << std::endl;
+		
 		if (sim->getTime() > sstate._approachedTime + 0.5) {
 
 			// test if the grasp is in rest
@@ -650,8 +684,12 @@ void GraspTaskSimulator::stepCB(ThreadSimulator* sim,
 			// set max force
 			if (_rhand) {
 				Q forceLim = sstate._task->tauMax;
-				if (forceLim.size() > 0)
+				
+				if (forceLim.size() > 0) {
 					_rhand->setMotorForceLimits(forceLim);
+					
+					
+				}
 			}
 
 			Transform3D<> t3d = Kinematics::frameTframe(_tcp,
