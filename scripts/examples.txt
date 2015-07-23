@@ -1,0 +1,4 @@
+Examples
+========
+
+./gripper_optimizer -r 0 -c 4 -w 1 0 1 0 0 0.001 0.001 --combiner product --optimizer coordinatedescent --dwc ~/grippers/scenes/rotor/Scene.dwc.xml --td ~/grippers/scenes/rotor/task3.td.xml -s  ~/grippers/scenes/rotor/samples3.xml -g ../data/grippers/template.grp.xml -o opt_suc_ali --rho0 0.25 --maxfev 1000 -t 250 2>log1.txt
