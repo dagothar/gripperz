@@ -159,6 +159,9 @@ void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 	_totalNrOfExperiments = nrOfTargets;
 
 	_objects = _dwc->findBodies<RigidBody>();
+	
+	std::vector<Body::Ptr> bodies = _dwc->getBodies();
+	
 	std::string handName = _gtask->getGripperID();
 	_dhand = _dwc->findDevice(handName);
 	if (_dhand == NULL) {
@@ -181,14 +184,6 @@ void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 	} else {
 		_mbase = _hbase->getMovableFrame();
 	}
-		
-	
-
-	//std::string controllerName = _gtask->getGraspControllerID(); // _roottask->getPropertyMap().get<std::string>("ControllerName", "GraspController");
-	//_simGraspController =
-	//		_dwc->findController(controllerName);
-	//if (_simGraspController == NULL)
-	//	RW_THROW("No controller exist with the name: " << controllerName);
 
 	std::string tcpName = _gtask->getTCPID();
 	_tcp = _dwc->getWorkcell()->findFrame(tcpName);
@@ -237,12 +232,12 @@ void GraspTaskSimulator::startSimulation(const rw::kinematics::State& initState)
 		/* configure SimState */
 		SimState sstate;
 		sstate._state = _homeState.clone();
-		_mbase->setTransform(Transform3D<>(Vector3D<>(100, 100, 100)), sstate._state);
+		_mbase->setTransform(Transform3D<>(Vector3D<>(0, 0, -1)), sstate._state);
 		
 		/* dynamic simulator */
-		Log::debugLog() << "Making simulator";
+		DEBUG << "Making simulator";
 		DynamicSimulator::Ptr sim = ownedPtr(new DynamicSimulator(_dwc, engine));
-		Log::debugLog() << "Initializing simulator";
+		DEBUG << "Initializing simulator";
 		try {
 			//State istate = sstate._state;
 			sim->init(sstate._state);
@@ -688,16 +683,19 @@ void GraspTaskSimulator::stepCB(
 			Transform3D<> wTretract = /*wTref * refToffset * */sstate._retract;
 			sstate._wTmbase_retractTarget = sstate._wTmbase_approachTarget;
 			sstate._wTmbase_retractTarget.P() += wTretract.P();
-
-			sim->getSimulator()->disableBodyControl();
-			_mbase->setTransform(inverse(wTmparent) * sstate._wTmbase_initTarget, nstate);
-
-			_hand->setQ(sstate._openQ, nstate);
+			
+			/* reset object placement */
 			for (size_t i = 0; i < _objects.size(); i++) {
 				
 				Transform3D<> tobj = _objects[i]->getMovableFrame()->getTransform(sstate._homeState);
 				_objects[i]->getMovableFrame()->setTransform(tobj, nstate);
 			}
+			
+			/* reset hand position and opening */
+			sim->getSimulator()->disableBodyControl();
+			_mbase->setTransform(inverse(wTmparent) * sstate._wTmbase_initTarget, nstate);
+			_hand->setQ(sstate._openQ, nstate);
+			
 			// set max force
 			if (_rhand) {
 				Q forceLim = sstate._task->tauMax;
@@ -761,7 +759,7 @@ void GraspTaskSimulator::stepCB(
 		sim->reset(nstate);
 		sim->setState(nstate);
 
-		//sim->getSimulator()->disableBodyControl();
+		sim->getSimulator()->disableBodyControl();
 		sim->getSimulator()->setTarget(_dhand->getBase(), sstate._wTmbase_approachTarget, nstate);
 		sstate._graspController->setTargetPos(sstate._openQ);
 		sstate._wallTimer.resetAndResume();
