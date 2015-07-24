@@ -78,6 +78,7 @@ GraspTaskSimulator::GraspTaskSimulator(
 	_stepDelayMs(0),
 	_autoSaveInterval(40),
 	_maxObjectGripperDistanceThreshold(50),
+	_maxForceThreshold(1000),
 	_stat(GraspResult::SizeOfStatusArray, 0),
 	_initialized(false),
 	_nrOfThreads(1),
@@ -159,6 +160,11 @@ void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 	_totalNrOfExperiments = nrOfTargets;
 
 	_objects = _dwc->findBodies<RigidBody>();
+	_fixedObjects = _dwc->findBodies<FixedBody>();
+	
+	BOOST_FOREACH (FixedBody::Ptr body, _fixedObjects) {
+		INFO << "Fixed: " << body->getName() << endl;
+	}
 	
 	std::vector<Body::Ptr> bodies = _dwc->getBodies();
 	
@@ -261,9 +267,15 @@ void GraspTaskSimulator::startSimulation(const rw::kinematics::State& initState)
 			);
 			sim->addSensor(sstate._bsensors.back(), sstate._state);
 		}
+		for (size_t j = 0; j < _fixedObjects.size(); j++) {
+			sstate._fsensors.push_back(
+				ownedPtr(new BodyContactSensor("SimTaskObjectSensorF", _fixedObjects[j]->getBodyFrame()))
+			);
+			sim->addSensor(sstate._fsensors.back(), sstate._state);
+		}
 		sstate._state.upgrade();
 		sstate._homeState = sstate._state;
-		//_homeState.upgrade();		
+		_homeState.upgrade();		
 		
 		/* thread simulator */
 		Log::debugLog() << "Creating Thread simulator";
@@ -404,13 +416,9 @@ void GraspTaskSimulator::stepCB(
 
 		graspFinished(sstate);
 	}
-	
-	//INFO << "Force= " << _dhand->getBase()->getForceW(state).norm2() << endl;
 
 	if (sstate._currentState != NEW_GRASP) {
-		if (getMaxObjectDistance(_objects, sstate._homeState, state) > _maxObjectGripperDistanceThreshold
-		|| _dhand->getBase()->getForceW(state).norm2() > 100.0 // force limit exceeded
-		) {
+		if (getMaxObjectDistance(_objects, sstate._homeState, state) > _maxObjectGripperDistanceThreshold) {
 			_simfailed++;
 
 			sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
@@ -422,6 +430,25 @@ void GraspTaskSimulator::stepCB(
 			graspFinished(sstate);
 		}
 	}
+	
+	/* test whether runtime collision occurs */
+	/*double maxForce = getMaxContactForce(state, sstate);
+	
+	if (sstate._currentState != NEW_GRASP) {
+		if (maxForce > _maxForceThreshold) {
+			_simfailed++;
+			
+			INFO << "COLLISION" << endl;
+
+			sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
+			sstate._target->getResult()->testStatus = GraspResult::CollisionDuringExecution;
+			_stat[GraspResult::SimulationFailure]++;
+
+			sstate._currentState = NEW_GRASP;
+
+			graspFinished(sstate);
+		}
+	}*/
 
 	if (sstate._currentState == APPROACH) {
 		Transform3D<> ct3d = Kinematics::worldTframe(_mbase, state);
@@ -818,6 +845,7 @@ std::vector<rw::sensor::Contact3D> GraspTaskSimulator::getObjectContacts(
 	return contactres;
 }
 
+
 GraspTaskSimulator::GraspedObject GraspTaskSimulator::getObjectContacts(
 		const rw::kinematics::State& state,
 		SimState &sstate
@@ -855,6 +883,26 @@ GraspTaskSimulator::GraspedObject GraspTaskSimulator::getObjectContacts(
 	return result[bestIdx];
 }
 
+
+double GraspTaskSimulator::getMaxContactForce(const rw::kinematics::State& state, SimState &sstate) {
+	double maxContactForce = 0.0;
+	
+	for (unsigned i = 0; i < _fixedObjects.size(); ++i) {
+		const std::vector<rw::sensor::Contact3D>& contacts = sstate._fsensors[i]->getContacts(state);
+		
+		for (unsigned j = 0; j < contacts.size(); ++j) {
+			double force = contacts[j].normalForce;
+			
+			if (force > maxContactForce) {
+				maxContactForce = force;
+			}
+		}
+	}
+	
+	return maxContactForce;
+}
+
+
 rw::math::Q GraspTaskSimulator::calcGraspQuality(const State& state,
 		SimState &sstate) {
 
@@ -883,6 +931,7 @@ rw::math::Q GraspTaskSimulator::calcGraspQuality(const State& state,
 
 	return qualities;
 }
+
 
 bool GraspTaskSimulator::getNextTarget(GraspTaskSimulator::SimState& sstate) {
 	boost::mutex::scoped_lock lock(_nextTargetLock);

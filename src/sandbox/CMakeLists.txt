@@ -43,4 +43,9 @@ if (BUILD_SANDBOX)
 	add_executable(objective_example objective_example.cpp)
 	add_dependencies(objective_example gripperz)
 	target_link_libraries(objective_example gripperz)
+	
+	# Target: gripper_space
+	add_executable(gripper_space gripper_space.cpp)
+	add_dependencies(gripper_space gripperz)
+	target_link_libraries(gripper_space gripperz)
 endif ()

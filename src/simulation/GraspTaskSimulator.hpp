@@ -18,6 +18,7 @@
 #include <rwsim/simulator/ThreadSimulator.hpp>
 #include <stack>
 #include <rwsim/dynamics/KinematicBody.hpp>
+#include <rwsim/dynamics/FixedBody.hpp>
 #include <rwsim/dynamics/RigidDevice.hpp>
 #include <rwlibs/task/GraspTask.hpp>
 
@@ -205,6 +206,7 @@ public:
         rw::kinematics::State _postLiftObjState;
 
         std::vector< rwsim::sensor::BodyContactSensor::Ptr > _bsensors;
+        std::vector< rwsim::sensor::BodyContactSensor::Ptr > _fsensors;
         int _restCount;
         // the explicit values from _task
         rw::kinematics::Frame* _taskRefFrame;
@@ -243,7 +245,8 @@ private:
 		rwsim::sensor::BodyContactSensor::Ptr sensor,
 		std::vector<rwsim::dynamics::Body::Ptr>& bodies
 	);
-
+	
+	double getMaxContactForce(const rw::kinematics::State& state, SimState &sstate);
 
     rw::math::Q calcGraspQuality(const rw::kinematics::State& state, SimState &sstate);
 
@@ -263,6 +266,7 @@ protected:
     int _autoSaveInterval;
     // if any object exceeds this threshold the simulation is considered faulty
     double _maxObjectGripperDistanceThreshold;
+    double _maxForceThreshold;
     std::vector<int> _stat;
     bool _initialized;
     int _nrOfThreads;
@@ -271,11 +275,11 @@ protected:
 
     int _gripperDim;
 
-	int _failed, _success, _slipped, _collision, _timeout, _simfailed, _skipped,
-	    _nrOfExperiments, _lastSaveTaskIndex;
+	int _failed, _success, _slipped, _collision, _timeout, _simfailed, _skipped, _nrOfExperiments, _lastSaveTaskIndex;
 	int _totalNrOfExperiments;
 
 	std::vector<rwsim::dynamics::RigidBody::Ptr> _objects;
+	std::vector<rwsim::dynamics::FixedBody::Ptr> _fixedObjects;
 	rwsim::dynamics::DynamicDevice::Ptr _dhand;
 	rwsim::dynamics::RigidDevice::Ptr _rhand;
     rw::models::Device::Ptr _hand;
