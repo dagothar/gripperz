@@ -193,37 +193,46 @@ int main(int argc, char* argv[]) {
 	
 	/* landscapes */
 	ofstream dataFile(outDir + "/space.csv");
+	dataFile << "# " << paramNames[0] << ", " << paramNames[1] << ", " << paramNames[2] << ", success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog" << endl;
 	
-	int n = 0;
+	int x = 0, y = 0, z = 0;
 	// 1st parameter
 	double range1 = bounds[params[0]].second - bounds[params[0]].first;
 	double step1 = range1 / resolution;
-	for (double i = bounds[params[0]].first; i < bounds[params[0]].second + step1; i += step1) {
+	for (double i = bounds[params[0]].first; i < bounds[params[0]].second + 0.001; i += step1) {
 		
 		// 2nd parameter
+		y = 0;
 		double range2 = bounds[params[1]].second - bounds[params[1]].first;
 		double step2 = range2 / resolution;
-		for (double j = bounds[params[1]].first; j < bounds[params[1]].second + step2; j += step2) {
+		for (double j = bounds[params[1]].first; j < bounds[params[1]].second + 0.001; j += step2) {
 			
 			// 3rd parameter
+			z = 0;
 			double range3 = bounds[params[2]].second - bounds[params[2]].first;
 			double step3 = range3 / resolution;
-			for (double k = bounds[params[2]].first; k < bounds[params[2]].second + step3; k += step3) {
+			for (double k = bounds[params[2]].first; k < bounds[params[2]].second + 0.001; k += step3) {
 				
-				vector<double> x{i, j, k};
-				vector<double> result = func->evaluate(x);
+				vector<double> p{i, j, k};
+				vector<double> result = func->evaluate(p);
 				double q_sum = sumMethod->combine(result);
 				double q_log = logMethod->combine(result);
 				
-				cout << vectorToString(x) << ", " << vectorToString(result) << q_sum << ", " << q_log << endl;
-				dataFile << vectorToString(x) << ", " << vectorToString(result) << q_sum << ", " << q_log << endl;
+				cout << vectorToString(p) << vectorToString(result) << q_sum << ", " << q_log << endl;
+				dataFile << vectorToString(p) << vectorToString(result) << q_sum << ", " << q_log << endl;
 				
 				Gripper::Ptr grp = func->getLastGripper();
 				stringstream sstr;
-				sstr << outDir << "/gripper_" << n++ << ".grp.xml";
+				sstr << outDir << "/gripper_" << x << "_" << y << "_" << z << ".grp.xml";
 				GripperXMLLoader::save(grp, sstr.str());
+				
+				++z;
 			}
+			
+			++y;
 		}
+		
+		++x;
 	}
 		
 	dataFile.close();
