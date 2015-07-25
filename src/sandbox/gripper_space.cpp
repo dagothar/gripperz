@@ -147,6 +147,7 @@ int main(int argc, char* argv[]) {
 	if (parameters.size() != 3) {
 		RW_THROW("You must supply 3 parameters!");
 	}
+	
 
 	/* load data */
 	INFO << "* Loading dwc... ";
