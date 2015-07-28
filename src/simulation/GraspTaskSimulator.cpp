@@ -267,12 +267,12 @@ void GraspTaskSimulator::startSimulation(const rw::kinematics::State& initState)
 			);
 			sim->addSensor(sstate._bsensors.back(), sstate._state);
 		}
-		for (size_t j = 0; j < _fixedObjects.size(); j++) {
+		/*for (size_t j = 0; j < _fixedObjects.size(); j++) {
 			sstate._fsensors.push_back(
 				ownedPtr(new BodyContactSensor("SimTaskObjectSensorF", _fixedObjects[j]->getBodyFrame()))
 			);
 			sim->addSensor(sstate._fsensors.back(), sstate._state);
-		}
+		}*/
 		sstate._state.upgrade();
 		sstate._homeState = sstate._state;
 		_homeState.upgrade();		
