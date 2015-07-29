@@ -1,8 +1,8 @@
 if (BUILD_TOOLS)
 	# Target: evaluate_gripper
-	add_executable(evaluate_gripper evaluateGripper.cpp)
-	add_dependencies(evaluate_gripper gripperz)
-	target_link_libraries(evaluate_gripper ode_plugin.rwplugin gripperz ${ROBWORK_LIBRARIES} ${ROBWORKSIM_LIBRARIES})
+	#add_executable(evaluate_gripper evaluateGripper.cpp)
+	#add_dependencies(evaluate_gripper gripperz)
+	#target_link_libraries(evaluate_gripper ode_plugin.rwplugin gripperz ${ROBWORK_LIBRARIES} ${ROBWORKSIM_LIBRARIES})
 
 	# Target: create-gripper-xml
 	#add_executable(create-gripper-xml createGripperXML.cpp)

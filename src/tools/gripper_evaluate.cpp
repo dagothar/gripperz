@@ -45,6 +45,7 @@ struct Configuration {
 	double sigma_p;
 	
 	Configuration() :
+		parameters({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}),
 		weights({1, 1, 1, 1, 1, 1, 1})
 	{}
 } configuration;
@@ -68,7 +69,10 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 	string usage =
 		"This script evaluates gripper constructed from parameter values.\n\n"
 		"Usage:\n"
-		"\tevaluate-gripper";
+		"\tevaluate-gripper\n\n"
+		"Example:\n"
+		"\t./gripper_evaluate -c 4 -g 100 -r 0 -v 0.1 0.025 0.02 1 45 0.01 120 0 0.025 0 0.05 25 --dwc ~/grippers/scenes/rotor/Scene.dwc.xml "
+		"--td ~/grippers/scenes/rotor/task1.td.xml --samples ~/grippers/scenes/rotor/samples1.xml\n";
 	options_description desc("Allowed options");
 	desc.add_options()
 		("help,h", "help message")
