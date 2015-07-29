@@ -50,6 +50,8 @@ def init():
 	parser.add_argument("-p", "--parameters", nargs='+', metavar='PARAMETERS', required=True, help="parameters to landscape")
 	parser.add_argument("-i", "--seed", nargs='+', metavar='INITIAL', default=[0.1, 0.025, 0.02, 0.5, 45, 0.01, 90, 0, 0.025, 0, 0.05, 25], help="initial gripper configuration (12 values)")
 	parser.add_argument("--res", metavar='RES', default=20, help="landscape resolution")
+	parser.add_argument("-n", "--targets", metavar='TARGETS', default=100, help="number of simulations per evaluation")
+	parser.add_argument("-r", "--robust", metavar='ROBUST', default=100, help="number of robustness simulations per evaluation")
 
 	args = parser.parse_args()
 	
@@ -59,6 +61,8 @@ def init():
 		'parameters': [int(p) for p in args.parameters],
 		'seed': [float(v) for v in args.seed],
 		'res': int(args.res)
+		'targets': int(args.targets)
+		'robust': int(args.robust)
 	}
 
 
@@ -82,7 +86,7 @@ def extract_quality(filename):
 	return [success, robustness, alignment, coverage, wrench, stress, volume, quality]
 
 
-def evaluate(values, scene, task, n=10):
+def evaluate(values, scene, task, targets, robust, n=10):
 	"""
 	Evaluates gripper design given by provided parameters.
 	Tries a number of times in case a segmentation fault occurs.
@@ -120,8 +124,6 @@ def evaluate(values, scene, task, n=10):
 
 def main():
 	args = init()
-	#quality = evaluate(args['initial'], args['scene'], args['task'])
-	#print quality
 	
 	for p in args['parameters']:
 		name = P_NAMES[p]
@@ -133,7 +135,7 @@ def main():
 		for v in numpy.linspace(bounds[0], bounds[1], args['res']+1, endpoint=True):
 			print "Evaluating " + name + "= " + str(v)
 			
-			quality = evaluate(args['seed'], args['scene'], args['task'])
+			quality = evaluate(args['seed'], args['scene'], args['task'], args['targets'], args['robust'])
 			data.write(str(v) + ", " + ", ".join(str(x) for x in quality) + "\n")
 		
 		data.close()
