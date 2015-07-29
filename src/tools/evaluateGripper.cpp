@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
 		("weights,w", value<vector<double> >(&weights)->multitoken(), "7 weights for objectives (0-6)")
 		("ssamples", value<string>(), "surface samples file")
 		//("out,o", value<string>(), "task file")
-		("nrobust,r", value<int>(&rtargets)->default_value(100), "test robustnesss with s number of targets")
+		("nrobust,r", value<int>(&rtargets)->default_value(100), "test robustnesss with a number of targets")
 		("sigma_a",	value<double>(&sigma_a)->default_value(8), "Standard deviation in of angle in degrees.")
 		("sigma_p",	value<double>(&sigma_p)->default_value(0.003), "Standard deviation of position in meters.");
 	variables_map vm;

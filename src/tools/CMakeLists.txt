@@ -24,8 +24,13 @@ if (BUILD_TOOLS)
 	add_dependencies(generate_grippers gripperz)
 	target_link_libraries(generate_grippers gripperz)
 	
-	# Target: optimize_gripper
+	# Target: gripper_optimizer
 	add_executable(gripper_optimizer gripper_optimizer.cpp)
 	add_dependencies(gripper_optimizer gripperz)
 	target_link_libraries(gripper_optimizer gripperz)
+	
+	# Target: gripper_evaluate
+	add_executable(gripper_evaluate gripper_evaluate.cpp)
+	add_dependencies(gripper_evaluate gripperz)
+	target_link_libraries(gripper_evaluate gripperz)
 endif ()
