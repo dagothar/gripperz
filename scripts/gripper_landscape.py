@@ -7,6 +7,7 @@ import subprocess
 import xml.etree.ElementTree as ET
 import numpy
 import signal
+import sys
 
 
 # CONFIGURATION
@@ -102,7 +103,12 @@ def evaluate(values, scene, task, n=10):
 	
 	tries = 0
 	while tries < n:
-		if (os.system(cmd) == 0):
+		ret = os.system(cmd)
+		
+		if (ret == 2): # ctrl - c
+			sys.exit(0)
+		
+		if (ret == 0):
 			quality = extract_quality(".gripper.grp.xml")
 			break
 		else:
