@@ -11,7 +11,7 @@ import sys
 
 
 # CONFIGURATION
-EVALUATION_COMMAND = "/home/dagothar/gripperz/bin/gripper_evaluate -c {cores} -g {simulations} -r {robustness} -v {values} --dwc {dwc} --td {td} --samples {samples} --name {name} 2>/dev/null"
+EVALUATION_COMMAND = "/home/dagothar/gripperz/bin/gripper_evaluate -c {cores} -g {simulations} -r {robustness} -v {values} --dwc {dwc} --td {td} --samples {samples} --name {name} 1>/dev/null 2>/dev/null"
 N_SIMULATIONS = 100
 N_ROBUSTNESS = 100
 N_CORES = 4
@@ -60,8 +60,8 @@ def init():
 		'task': args.task,
 		'parameters': [int(p) for p in args.parameters],
 		'seed': [float(v) for v in args.seed],
-		'res': int(args.res)
-		'targets': int(args.targets)
+		'res': int(args.res),
+		'targets': int(args.targets),
 		'robust': int(args.robust)
 	}
 
@@ -81,9 +81,11 @@ def extract_quality(filename):
 	wrench = float(root.iter('wrench').next().text)
 	stress = float(root.iter('stress').next().text)
 	volume = float(root.iter('volume').next().text)
-	quality = float(root.iter('quality').next().text)
+	qlog = float(root.iter('quality').next().text)
 	
-	return [success, robustness, alignment, coverage, wrench, stress, volume, quality]
+	qsum = (success + robustness + alignment + coverage + wrench + stress + volume) / 7.0
+	
+	return [success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog]
 
 
 def evaluate(values, scene, task, targets, robust, n=10):
@@ -136,7 +138,9 @@ def main():
 			print "Evaluating " + name + "= " + str(v)
 			
 			quality = evaluate(args['seed'], args['scene'], args['task'], args['targets'], args['robust'])
+			print str(v) + ", " + ", ".join(str(x) for x in quality)
 			data.write(str(v) + ", " + ", ".join(str(x) for x in quality) + "\n")
+			data.flush()
 		
 		data.close()
 		
