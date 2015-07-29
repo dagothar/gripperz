@@ -20,14 +20,16 @@ using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::simulation;
 using namespace gripperz::grasps;
+using namespace gripperz::math;
 using namespace rw::common;
 using namespace rw::math;
 using namespace rwlibs::task;
 
 
-GripperObjectiveFunction::GripperObjectiveFunction(GripperBuilder::Ptr builder, evaluation::GripperEvaluationManager::Ptr manager) :
+GripperObjectiveFunction::GripperObjectiveFunction(GripperBuilder::Ptr builder, evaluation::GripperEvaluationManager::Ptr manager, GripperQualityExtractor::Ptr extractor) :
 	_builder(builder),
-	_manager(manager)
+	_manager(manager),
+	_extractor(extractor)
 {
 }
 
@@ -64,7 +66,7 @@ bool areParametersOk(const std::vector<double>& p) {
 
 
 std::vector<double> GripperObjectiveFunction::evaluate(const std::vector<double>& x) {
-	vector<double> results(NObjectives, 0.0);
+	Vector results(NObjectives, 0.0);
 	
 	/*
 	 * Build gripper.
@@ -90,16 +92,7 @@ std::vector<double> GripperObjectiveFunction::evaluate(const std::vector<double>
 		_lastQuality = q;
 		_lastGripper->setQuality(*q);
 		
-		/*
-		 * Extract results.
-		 */
-		results[0] = q->success;
-		results[1] = q->robustness;
-		results[2] = q->alignment;
-		results[3] = q->coverage;
-		results[4] = q->wrench;
-		results[5] = q->stress;
-		results[6] = q->volume;
+		results = _extractor->extract(q);
 	} catch (const std::exception& e) {
 		RW_THROW ("Exception during gripper evaluation! " << e.what());
 	}

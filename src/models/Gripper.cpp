@@ -232,3 +232,26 @@ double Gripper::getVolume() const {
 	
 	return volume;
 }
+
+
+std::ostream& gripperz::models::operator<<(std::ostream& stream, const Gripper& g) {
+	stream <<
+		"Gripper:\n" <<
+		" - length = " << g._length << "\n" <<
+		" - width = " << g._width << "\n" <<
+		" - depth = " << g._depth << "\n" <<
+		" - chf. depth = " << g._chfdepth << "\n" <<
+		" - chf. angle = " << g._chfangle << "\n" <<
+		" - cut depth = " << g._cutdepth << "\n" <<
+		" - cut angle = " << g._cutangle << "\n" <<
+		" - cut tilt = " << g._cuttilt << "\n" <<
+		" - TCP offset = " << g._tcpoffset << "\n" <<
+		" - jaw dist. = " << g._jawdist << "\n" <<
+		" - stroke = " << g._stroke << "\n" <<
+		" - force = " << g._force << "\n" <<
+		" - base X = " << g._basex << "\n" <<
+		" - base Y = " << g._basey << "\n" <<
+		" - base Z = " << g._basez << "\n" << endl;
+
+	return stream;
+}

@@ -175,6 +175,8 @@ public:
 
 	// friends
 	friend class loaders::GripperXMLLoader;
+	
+	friend std::ostream& operator<<(std::ostream& stream, const Gripper& g);
 
 private:
 	std::string _name;
@@ -199,6 +201,8 @@ private:
 	/* quality */
 	GripperQuality _quality;
 };
+
+std::ostream& operator<<(std::ostream& stream, const Gripper& g);
 
 } /* models */
 } /* gripperz */

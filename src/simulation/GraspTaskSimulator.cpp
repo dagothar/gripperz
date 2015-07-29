@@ -162,9 +162,9 @@ void GraspTaskSimulator::load(GraspTask::Ptr graspTasks) {
 	_objects = _dwc->findBodies<RigidBody>();
 	_fixedObjects = _dwc->findBodies<FixedBody>();
 	
-	BOOST_FOREACH (FixedBody::Ptr body, _fixedObjects) {
-		INFO << "Fixed: " << body->getName() << endl;
-	}
+	//BOOST_FOREACH (FixedBody::Ptr body, _fixedObjects) {
+	//	INFO << "Fixed: " << body->getName() << endl;
+	//}
 	
 	std::vector<Body::Ptr> bodies = _dwc->getBodies();
 	

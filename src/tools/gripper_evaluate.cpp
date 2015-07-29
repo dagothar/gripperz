@@ -43,6 +43,10 @@ struct Configuration {
 	string name;
 	double sigma_a;
 	double sigma_p;
+	
+	Configuration() :
+		weights({1, 1, 1, 1, 1, 1, 1})
+	{}
 } configuration;
 
 
@@ -78,7 +82,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 		("dwc", value<string>(&conf.dwc)->required(), "dynamic workcell file")
 		("td", value<string>(&conf.td)->required(), "task description file")
 		("samples", value<string>(&conf.samples), "surface samples file")
-		("name", value<string>(&conf.name), "gripper name")
+		("name", value<string>(&conf.name)->default_value("gripper"), "gripper name")
 		("sigma_a",	value<double>(&conf.sigma_a)->default_value(8), "standard deviation in of angle in degrees")
 		("sigma_p",	value<double>(&conf.sigma_p)->default_value(0.003), "standard deviation of position in meters");
 	variables_map vm;
@@ -97,6 +101,10 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 		cout << usage << endl;
 		cout << desc << endl;
 		return false;
+	}
+	
+	if (conf.parameters.size() != conf.values.size()) {
+		RW_THROW ("Parameters and values size mismatch!");
 	}
 	
 	return true;
@@ -133,7 +141,7 @@ void load_data(const Configuration& config, Data& data) {
 	INFO << "* Loading dwc... ";
 	data.dwc = DynamicWorkCellLoader::load(config.dwc);
 	INFO << "Loaded." << endl;
-	INFO << "* Loading task description... " << config.td << " " << endl;
+	INFO << "* Loading task description... ";
 	data.td = TaskDescriptionLoader::load(config.td, data.dwc);
 	INFO << "Loaded." << endl;
 
@@ -162,13 +170,15 @@ int main(int argc, char* argv[]) {
 	GripperObjectiveFunction::Ptr objective = make_objective_function(configuration, data);
 	CombineObjectives::Ptr method = CombineObjectivesFactory::make(configuration.method, configuration.weights);
 	
+	INFO << "* Evaluating gripper:" << endl;
+	INFO << *objective->getBuilder()->parametersToGripper(configuration.values);
 	vector<double> results = objective->evaluate(configuration.values);
 	
 	Gripper::Ptr gripper = objective->getLastGripper();
 	GripperQuality& quality = gripper->getQuality();
 	quality.quality = method->combine(results);
 	
-	INFO << "RESULTS:" << endl;
+	INFO << "* Results:" << endl;
 	INFO << quality << endl;
 	
 	gripper->setName(configuration.name);

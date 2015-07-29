@@ -9,6 +9,7 @@
 #include <models/Gripper.hpp>
 #include <models/GripperBuilder.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
+#include <evaluation/GripperQualityExtractor.hpp>
 #include <math/MultiObjectiveFunction.hpp>
 #include <boost/function.hpp>
 
@@ -31,7 +32,7 @@ public:
 	static const unsigned NObjectives = 7;
 	
 public:
-	GripperObjectiveFunction(models::GripperBuilder::Ptr builder, evaluation::GripperEvaluationManager::Ptr manager);
+	GripperObjectiveFunction(models::GripperBuilder::Ptr builder, GripperEvaluationManager::Ptr manager, GripperQualityExtractor::Ptr extractor=rw::common::ownedPtr(new GripperQualityExtractor));
 	
 	virtual ~GripperObjectiveFunction();
 	
@@ -49,8 +50,11 @@ public:
 	models::GripperBuilder::Ptr getBuilder() { return _builder; }
 	void setBuilder(models::GripperBuilder::Ptr builder) { _builder = builder; }
 	
-	evaluation::GripperEvaluationManager::Ptr getEvaluationManager() { return _manager; }
-	void setEvaluationManager(evaluation::GripperEvaluationManager::Ptr manager) { _manager = manager; }
+	GripperEvaluationManager::Ptr getEvaluationManager() { return _manager; }
+	void setEvaluationManager(GripperEvaluationManager::Ptr manager) { _manager = manager; }
+	
+	GripperQualityExtractor::Ptr getQualityExtractor() { return _extractor; }
+	void setQualityExtractor(GripperQualityExtractor::Ptr extractor) { _extractor = extractor; }
 	
 	//! Returns last evaluated gripper.
 	models::Gripper::Ptr getLastGripper() const { return _lastGripper; }
@@ -63,7 +67,8 @@ public:
 
 private:
 	models::GripperBuilder::Ptr _builder;
-	evaluation::GripperEvaluationManager::Ptr _manager;
+	GripperEvaluationManager::Ptr _manager;
+	GripperQualityExtractor::Ptr _extractor;
 	
 	models::Gripper::Ptr _lastGripper;
 	models::GripperQuality::Ptr _lastQuality;
