@@ -69,7 +69,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 	string usage =
 		"This script evaluates gripper constructed from parameter values.\n\n"
 		"Usage:\n"
-		"\tevaluate-gripper\n\n"
+		"\tgripper_evaluate\n\n"
 		"Example:\n"
 		"\t./gripper_evaluate -c 4 -g 100 -r 0 -v 0.1 0.025 0.02 1 45 0.01 120 0 0.025 0 0.05 25 --dwc ~/grippers/scenes/rotor/Scene.dwc.xml "
 		"--td ~/grippers/scenes/rotor/task1.td.xml --samples ~/grippers/scenes/rotor/samples1.xml\n";
@@ -161,14 +161,14 @@ int main(int argc, char* argv[]) {
 	initialize();
 	
 	if (!parse_cli(argc, argv, configuration)) {
-		return 0;
+		return -1;
 	}
 	
 	try {
 		load_data(configuration, data);
 	} catch (exception& e) {
 		INFO << "Exception during loading data: " << e.what() << endl;
-		return 0;
+		return -1;
 	}
 	
 	GripperObjectiveFunction::Ptr objective = make_objective_function(configuration, data);
