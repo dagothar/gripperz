@@ -11,11 +11,7 @@ import sys
 
 
 # CONFIGURATION
-EVALUATION_COMMAND = "/home/dagothar/gripperz/bin/gripper_evaluate -c {cores} -g {simulations} -r {robustness} -v {values} --dwc {dwc} --td {td} --samples {samples} --name {name} 1>/dev/null 2>/dev/null"
-N_SIMULATIONS = 100
-N_ROBUSTNESS = 100
-N_CORES = 4
-
+EVALUATION_COMMAND = "${{GRIPPERZ_ROOT}}/bin/gripper_evaluate -c {cores} -g {simulations} -r {robustness} -v {values} --dwc {dwc} --td {td} --samples {samples} --name {name} 1>/dev/null 2>/dev/null"
 P_NAMES = ['length', 'width', 'depth', 'chfdepth', 'chfangle', 'cutdepth', 'cutangle', 'tilt', 'tcp', 'jawdist', 'stroke', 'force']
 P_RANGES = [
 	(0, 0.2),
@@ -52,6 +48,7 @@ def init():
 	parser.add_argument("--res", metavar='RES', default=20, help="landscape resolution")
 	parser.add_argument("-n", "--targets", metavar='TARGETS', default=100, help="number of simulations per evaluation")
 	parser.add_argument("-r", "--robust", metavar='ROBUST', default=100, help="number of robustness simulations per evaluation")
+	parser.add_argument("-c", "--cores", metavar='CORES', default=1, help="number of cores to use")
 
 	args = parser.parse_args()
 	
@@ -62,7 +59,8 @@ def init():
 		'seed': [float(v) for v in args.seed],
 		'res': int(args.res),
 		'targets': int(args.targets),
-		'robust': int(args.robust)
+		'robust': int(args.robust),
+		'cores': int(args.cores)
 	}
 
 
@@ -88,16 +86,16 @@ def extract_quality(filename):
 	return [success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog]
 
 
-def evaluate(values, scene, task, targets, robust, n=10):
+def evaluate(values, scene, task, targets, robust, cores, n=10):
 	"""
 	Evaluates gripper design given by provided parameters.
 	Tries a number of times in case a segmentation fault occurs.
 	"""
 	
 	cmd = EVALUATION_COMMAND.format(
-		cores = N_CORES,
-		simulations = N_SIMULATIONS,
-		robustness = N_ROBUSTNESS,
+		cores = cores,
+		simulations = targets,
+		robustness = robust,
 		values = " ".join(str(v) for v in values),
 		dwc = "${GRIPPERS_ROOT}/scenes/" + scene + "/Scene.dwc.xml",
 		td = "${GRIPPERS_ROOT}/scenes/" + scene + "/task" + task + ".td.xml",
@@ -132,12 +130,16 @@ def main():
 		print "* Evaluating landscape for " + name
 		
 		data = open(name + '.csv', 'w')
+		data.write("# " + name + ", success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog\n");
 		
 		bounds = P_RANGES[p]
 		for v in numpy.linspace(bounds[0], bounds[1], args['res']+1, endpoint=True):
 			print "Evaluating " + name + "= " + str(v)
 			
-			quality = evaluate(args['seed'], args['scene'], args['task'], args['targets'], args['robust'])
+			params = args['seed']
+			params[p] = v
+			
+			quality = evaluate(params, args['scene'], args['task'], args['targets'], args['robust'], args['cores'])
 			print str(v) + ", " + ", ".join(str(x) for x in quality)
 			data.write(str(v) + ", " + ", ".join(str(x) for x in quality) + "\n")
 			data.flush()
