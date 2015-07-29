@@ -155,11 +155,24 @@ int main(int argc, char* argv[]) {
 	try {
 		load_data(configuration, data);
 	} catch (exception& e) {
-		cout << "Exception during loading data: " << e.what() << endl;
+		INFO << "Exception during loading data: " << e.what() << endl;
 		return 0;
 	}
 	
 	GripperObjectiveFunction::Ptr objective = make_objective_function(configuration, data);
+	CombineObjectives::Ptr method = CombineObjectivesFactory::make(configuration.method, configuration.weights);
+	
+	vector<double> results = objective->evaluate(configuration.values);
+	
+	Gripper::Ptr gripper = objective->getLastGripper();
+	GripperQuality& quality = gripper->getQuality();
+	quality.quality = method->combine(results);
+	
+	INFO << "RESULTS:" << endl;
+	INFO << quality << endl;
+	
+	gripper->setName(configuration.name);
+	GripperXMLLoader::save(gripper, configuration.name + ".grp.xml");
 	
 	return 0;
 }
