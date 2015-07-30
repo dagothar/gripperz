@@ -153,15 +153,7 @@ int main(int argc, char* argv[]) {
 	/* load data */
 	INFO << "* Loading gripper... ";
 	Gripper::Ptr gripper = GripperXMLLoader::load(gripperFilename);
-	INFO << "Loaded." << endl;
-
-	vector<SurfaceSample> ssamples;
-	if (vm.count("ssamples")) {
-		INFO << "* Loading samples... ";
-		ssamples = SurfaceSample::loadFromXML(samplesFilename);
-		INFO << "Loaded." << endl;
-	}
-	
+	INFO << "Loaded." << endl;	
 	
 	/* construct evaluation manager */
 	GripperEvaluationManager::Configuration config;
