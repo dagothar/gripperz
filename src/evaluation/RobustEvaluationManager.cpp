@@ -77,9 +77,10 @@ GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(Gripper::Ptr grippe
 	sstr << " --td " << _tdPath;
 	if (!_samplesPath.empty()) sstr << " --samples " << _samplesPath;
 	sstr << " --name " << _tmpName;
+	sstr << " 1>/dev/null 2>/dev/null";
 	
 	string cmd = sstr.str();
-	INFO << cmd << endl;
+	DEBUG << cmd << endl;
 	
 	/* execute */
 	unsigned tries = 0;
@@ -91,6 +92,10 @@ GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(Gripper::Ptr grippe
 			break;
 		}
 	} while (tries++ < _ntries);
+	
+	if (returnCode == InterruptReturnCode) {
+		RW_THROW ("Evaluation interrupted (ctrl+c)");
+	}
 	
 	if (returnCode != SuccessReturnCode) {
 		RW_WARN ("Evaluation failed");
