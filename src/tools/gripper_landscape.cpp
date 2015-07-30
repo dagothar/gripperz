@@ -166,7 +166,7 @@ int main(int argc, char* argv[]) {
 	GripperEvaluationManager::Configuration config;
 	config.nOfGraspsPerEvaluation = ntargets;
 	config.nOfRobustnessTargets = nrobust;
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, cores, ssamples);
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, cores, ssamples);
 	
 	CombineObjectives::Ptr sumMethod = CombineObjectivesFactory::make("sum", weights);
 	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);

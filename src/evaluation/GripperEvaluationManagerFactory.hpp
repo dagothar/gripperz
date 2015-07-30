@@ -7,6 +7,7 @@
 #pragma once
 
 #include "GripperEvaluationManager.hpp"
+#include "StandardEvaluationManager.hpp"
 #include <grasps/SurfaceSample.hpp>
 
 namespace gripperz {
@@ -18,7 +19,7 @@ namespace evaluation {
  */
 class GripperEvaluationManagerFactory {
 public:
-	static GripperEvaluationManager::Ptr getEvaluationManager(
+	static StandardEvaluationManager::Ptr makeStandardEvaluationManager(
 		context::TaskDescription::Ptr td,
 		const GripperEvaluationManager::Configuration& config,
 		unsigned nThreads=1,

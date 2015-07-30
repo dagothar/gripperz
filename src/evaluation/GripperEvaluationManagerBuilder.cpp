@@ -8,6 +8,7 @@
 #include <simulation/InterferenceSimulator.hpp>
 #include <grasps/TaskGenerator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
+#include "StandardEvaluationManager.hpp"
 
 
 using namespace gripperz::evaluation;
@@ -30,8 +31,8 @@ GripperEvaluationManagerBuilder::~GripperEvaluationManagerBuilder() {
 }
 
 
-GripperEvaluationManager::Ptr GripperEvaluationManagerBuilder::build() {
-	return ownedPtr(new GripperEvaluationManager(_td, _generator, _simulator, _evaluator, _config));
+StandardEvaluationManager::Ptr GripperEvaluationManagerBuilder::build() {
+	return ownedPtr(new StandardEvaluationManager(_td, _generator, _simulator, _evaluator, _config));
 }
 
 	

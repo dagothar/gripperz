@@ -17,7 +17,7 @@ using namespace gripperz::simulation;
 using namespace rw::common;
 
 
-GripperEvaluationManager::Ptr GripperEvaluationManagerFactory::getEvaluationManager(
+StandardEvaluationManager::Ptr GripperEvaluationManagerFactory::makeStandardEvaluationManager(
 	context::TaskDescription::Ptr td,
 	const GripperEvaluationManager::Configuration& config,
 	unsigned nThreads,
@@ -25,7 +25,7 @@ GripperEvaluationManager::Ptr GripperEvaluationManagerFactory::getEvaluationMana
 ) {
 	GripperEvaluationManagerBuilder builder(td, nThreads, ssamples);
 	
-	GripperEvaluationManager::Ptr manager = builder
+	StandardEvaluationManager::Ptr manager = builder
 		.generator(ownedPtr(new TaskGenerator(td, ssamples)))
 		.simulator(ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads)))
 		.evaluator(ownedPtr(new GripperEvaluator(td, td->getAlignmentCalculator())))

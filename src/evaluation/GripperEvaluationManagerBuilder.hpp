@@ -7,6 +7,7 @@
 #pragma once
 
 #include "GripperEvaluationManager.hpp"
+#include "StandardEvaluationManager.hpp"
 #include <grasps/SurfaceSample.hpp>
 
 namespace gripperz {
@@ -26,7 +27,7 @@ public:
 	
 	virtual ~GripperEvaluationManagerBuilder();
 	
-	GripperEvaluationManager::Ptr build();
+	StandardEvaluationManager::Ptr build();
 	
 	GripperEvaluationManagerBuilder& generator(grasps::TaskGenerator::Ptr gen);
 	GripperEvaluationManagerBuilder& simulator(simulation::GripperSimulator::Ptr sim);

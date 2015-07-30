@@ -122,7 +122,7 @@ GripperObjectiveFunction::Ptr make_objective_function(const Configuration& confi
 	configuration.nOfRobustnessTargets = config.robustness;
 	configuration.sigma_a = config.sigma_a;
 	configuration.sigma_p = config.sigma_p;
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(data.td, configuration, config.cores, data.samples);
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(data.td, configuration, config.cores, data.samples);
 	
 	/* gripper builder */
 	vector<MapGripperBuilder::ParameterName> parameters;

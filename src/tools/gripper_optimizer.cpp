@@ -203,7 +203,7 @@ int main(int argc, char* argv[]) {
 	config.nOfRobustnessTargets = Configuration.n_robust;
 	config.sigma_a = Configuration.sigma_a;
 	config.sigma_p = Configuration.sigma_p;
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(td, config, Configuration.cores, ssamples);
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, Configuration.cores, ssamples);
 	
 	
 	/* construct objective function */

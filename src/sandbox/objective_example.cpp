@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
 	config.nOfGraspsPerEvaluation = 100;		// number of simulations per gripper evaluation
 	config.nOfRobustnessTargets = 0;			// robustness targets
 	
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::getEvaluationManager(
+	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(
 		td,			// task description
 		config,		// configuration
 		4,			// number of threads to use
