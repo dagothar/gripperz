@@ -33,6 +33,7 @@
 #include <models/MapGripperBuilder.hpp>
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
+#include <evaluation/RobustEvaluationManager.hpp>
 #include <evaluation/GripperEvaluationManagerFactory.hpp>
 #include <math/CombineObjectivesFactory.hpp>
 
@@ -123,7 +124,7 @@ int main(int argc, char* argv[]) {
 		("dwc", value<string>(&dwcFilename)->required(), "dynamic workcell file")
 		("td", value<string>(&tdFilename)->required(), "task description file")
 		("gripper,g", value<string>(&gripperFilename)->required(), "gripper file")
-		("ssamples,s", value<string>(&samplesFilename), "surface samples file")
+		("ssamples,s", value<string>(&samplesFilename)->default_value(""), "surface samples file")
 		("out,o", value<string>(&outDir)->required(), "output directory");
 	variables_map vm;
 	
@@ -145,28 +146,21 @@ int main(int argc, char* argv[]) {
 	}
 
 	/* load data */
-	INFO << "* Loading dwc... ";
-	DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load(dwcFilename);
-	INFO << "Loaded." << endl;
-	INFO << "* Loading task description... " << tdFilename << " " << endl;
-	TaskDescription::Ptr td = TaskDescriptionLoader::load(tdFilename, dwc);
-	INFO << "Loaded." << endl;
 	INFO << "* Loading gripper... ";
 	Gripper::Ptr gripper = GripperXMLLoader::load(gripperFilename);
 	INFO << "Loaded." << endl;
-
-	vector<SurfaceSample> ssamples;
-	if (vm.count("ssamples")) {
-		INFO << "* Loading samples... ";
-		ssamples = SurfaceSample::loadFromXML(samplesFilename);
-		INFO << "Loaded." << endl;
-	}
 	
 	/* construct objective function */
 	GripperEvaluationManager::Configuration config;
 	config.nOfGraspsPerEvaluation = ntargets;
 	config.nOfRobustnessTargets = nrobust;
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, cores, ssamples);
+	GripperEvaluationManager::Ptr manager = new RobustEvaluationManager(
+		dwcFilename,
+		tdFilename,
+		samplesFilename,
+		config,
+		cores
+	);
 	
 	CombineObjectives::Ptr sumMethod = CombineObjectivesFactory::make("sum", weights);
 	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
