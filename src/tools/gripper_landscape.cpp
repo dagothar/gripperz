@@ -192,7 +192,7 @@ int main(int argc, char* argv[]) {
 			Gripper::Ptr grp = func->getLastGripper();
 			stringstream sstr;
 			sstr << outDir << "/" << paramName << "_" << n++ << ".grp.xml";
-			GripperXMLLoader::save(grp, sstr.str());
+			//GripperXMLLoader::save(grp, sstr.str());
 		}
 		
 		dataFile.close();
