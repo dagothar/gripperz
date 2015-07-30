@@ -11,7 +11,7 @@ import sys
 
 
 # CONFIGURATION
-EVALUATION_COMMAND = "${{GRIPPERZ_ROOT}}/bin/gripper_evaluate -c {cores} -g {simulations} -r {robustness} -v {values} --dwc {dwc} --td {td} --samples {samples} --name {name} 1>/dev/null 2>/dev/null"
+EVALUATION_COMMAND = '${{GRIPPERZ_ROOT}}/bin/gripper_evaluate -c {cores} -g {simulations} -r {robustness} -v "{values}" --dwc {dwc} --td {td} --samples {samples} --name {name} 1>/dev/null 2>/dev/null'
 P_NAMES = ['length', 'width', 'depth', 'chfdepth', 'chfangle', 'cutdepth', 'cutangle', 'tilt', 'tcp', 'jawdist', 'stroke', 'force']
 P_RANGES = [
 	(0, 0.2),

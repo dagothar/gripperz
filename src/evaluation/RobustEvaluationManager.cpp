@@ -72,7 +72,7 @@ GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(Gripper::Ptr grippe
 	sstr << " -c " << _cores;
 	sstr << " -g " << config.nOfGraspsPerEvaluation;
 	sstr << " -r " << config.nOfRobustnessTargets;
-	sstr << " -v " << parameterString;
+	sstr << " -v \"" << parameterString << "\"";
 	sstr << " --dwc " << _dwcPath;
 	sstr << " --td " << _tdPath;
 	if (!_samplesPath.empty()) sstr << " --samples " << _samplesPath;

@@ -66,6 +66,8 @@ void initialize() {
 
 
 bool parse_cli(int argc, char* argv[], Configuration& conf) {
+	string values;
+	
 	string usage =
 		"This script evaluates gripper constructed from parameter values.\n\n"
 		"Usage:\n"
@@ -80,7 +82,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 		("grasps,g", value<int>(&conf.grasps)->default_value(100), "number of grasps to perform")
 		("robustness,r", value<int>(&conf.robustness)->default_value(100), "number of robustness tasks to generate")
 		("parameters,p", value<vector<int> >(&conf.parameters)->multitoken(), "gripper parameter indices")
-		("values,v", value<vector<double> >(&conf.values)->multitoken(), "gripper parameter values")
+		("values,v", value<string>(&values), "gripper parameter values in a quoted string")
 		("weights,w", value<vector<double> >(&conf.weights)->multitoken(), "7 weights for objectives (0-6)")
 		("method,m", value<string>(&conf.method)->default_value("product"), "method for combining objectives (sum, product, log)")
 		("dwc", value<string>(&conf.dwc)->required(), "dynamic workcell file")
@@ -105,6 +107,12 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 		cout << usage << endl;
 		cout << desc << endl;
 		return false;
+	}
+	
+	istringstream sstr(values);
+	double v;
+	while (sstr >> v) {
+		conf.values.push_back(v);
 	}
 	
 	if (conf.parameters.size() != conf.values.size()) {
