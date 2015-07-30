@@ -43,7 +43,7 @@ def init():
 	parser = argparse.ArgumentParser(description="Generates gripper landscape data")
 	parser.add_argument("--scene", metavar='SCENE', required=True, help="which scene to use")
 	parser.add_argument("--task", metavar='TASK', required=True, help="which task to use")
-	parser.add_argument("-p", "--parameters", nargs='+', metavar='PARAMETERS', required=True, help="parameters to landscape")
+	parser.add_argument("-p", "--parameters", nargs='+', metavar='PARAMETERS', default=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], help="parameters to landscape")
 	parser.add_argument("-i", "--seed", nargs='+', metavar='INITIAL', default=[0.1, 0.025, 0.02, 0.5, 45, 0.01, 90, 0, 0.025, 0, 0.05, 25], help="initial gripper configuration (12 values)")
 	parser.add_argument("--res", metavar='RES', default=20, help="landscape resolution")
 	parser.add_argument("-n", "--targets", metavar='TARGETS', default=100, help="number of simulations per evaluation")
