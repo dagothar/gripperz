@@ -33,6 +33,7 @@
 #include <models/MapGripperBuilder.hpp>
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
+#include <evaluation/RobustEvaluationManager.hpp>
 #include <evaluation/GripperEvaluationManagerFactory.hpp>
 #include <math/CombineObjectivesFactory.hpp>
 
@@ -150,12 +151,6 @@ int main(int argc, char* argv[]) {
 	
 
 	/* load data */
-	INFO << "* Loading dwc... ";
-	DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load(dwcFilename);
-	INFO << "Loaded." << endl;
-	INFO << "* Loading task description... " << tdFilename << " " << endl;
-	TaskDescription::Ptr td = TaskDescriptionLoader::load(tdFilename, dwc);
-	INFO << "Loaded." << endl;
 	INFO << "* Loading gripper... ";
 	Gripper::Ptr gripper = GripperXMLLoader::load(gripperFilename);
 	INFO << "Loaded." << endl;
@@ -172,8 +167,13 @@ int main(int argc, char* argv[]) {
 	GripperEvaluationManager::Configuration config;
 	config.nOfGraspsPerEvaluation = ntargets;
 	config.nOfRobustnessTargets = nrobust;
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, cores, ssamples);
-	
+	GripperEvaluationManager::Ptr manager = new RobustEvaluationManager(
+		dwcFilename,
+		tdFilename,
+		samplesFilename,
+		config,
+		cores
+	);
 	
 	/* construct gripper builder */
 	vector<MapGripperBuilder::ParameterName> params;
