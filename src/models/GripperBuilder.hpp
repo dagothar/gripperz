@@ -7,6 +7,7 @@
 #pragma once
 
 #include <rw/common/Ptr.hpp>
+#include <math/Types.hpp>
 #include "Gripper.hpp"
 
 namespace gripperz {
@@ -26,12 +27,12 @@ public:
 	/**
 	 * @brief Construct a gripper from a vector of parameters.
 	 */
-	virtual Gripper::Ptr parametersToGripper(const std::vector<double>& params) = 0;
+	virtual Gripper::Ptr parametersToGripper(const math::Vector& params) = 0;
 	
 	/**
 	 * @brief Convert a gripper into a vector of parameters.
 	 */
-	virtual std::vector<double> gripperToParameters(Gripper::Ptr gripper) = 0;
+	virtual math::Vector gripperToParameters(Gripper::Ptr gripper) = 0;
 };
 
 } /* models */

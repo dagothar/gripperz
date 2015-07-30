@@ -9,6 +9,7 @@
 #include <sstream>
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
+#include <evaluation/RobustEvaluationManager.hpp>
 #include <evaluation/GripperEvaluationManagerFactory.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <loaders/GripperXMLLoader.hpp>
@@ -59,11 +60,10 @@ string vectorToString(const vector<double>& v) {
 
 
 int main(int argc, char* argv[]) {
-	/* load data */
-	cout << "Loading workcell..." << endl;
-	DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load("../data/rotor/Scene.dwc.xml");
-	cout << "Loading context..." << endl;
-	TaskDescription::Ptr td = TaskDescriptionLoader::load("../data/rotor/task1.td.xml", dwc);
+	/* initialize RW */
+	Math::seed();
+	RobWork::getInstance()->initialize();
+	Log::log().setLevel(Log::Info);
 	
 	/* read weights */
 	cout << "Please input 7 weights (success, robustness, alignment, coverage, wrench, stress, volume): ";
@@ -88,7 +88,13 @@ int main(int argc, char* argv[]) {
 	GripperBuilder::Ptr builder = new MapGripperBuilder(new Gripper, params);
 	
 	GripperEvaluationManager::Configuration config;
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, 4, vector<SurfaceSample>());
+	GripperEvaluationManager::Ptr manager = new RobustEvaluationManager(
+		"../data/rotor/Scene.dwc.xml",
+		"../data/rotor/task1.td.xml",
+		"../data/rotor/samples1.xml",
+		config,
+		4 // cores
+	);
 	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 	
 	/* initialize combiners */

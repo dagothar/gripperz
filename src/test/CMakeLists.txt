@@ -37,7 +37,7 @@ if (BUILD_TESTS)
 	target_link_libraries(test_gripper_evaluator gripperz)
 	
 	# Target: test_robust_evaluation
-	add_executable(test_robust_evaluation testGripperObjective.cpp)
+	add_executable(test_robust_evaluation testRobustEvaluation.cpp)
 	add_dependencies(test_robust_evaluation gripperz)
 	target_link_libraries(test_robust_evaluation gripperz)
 endif ()

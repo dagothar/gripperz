@@ -13,13 +13,13 @@ using namespace gripperz::math;
 using namespace std;
 
 
-std::string gripperz::math::toString(const Vector& vec) {
+std::string gripperz::math::toString(const Vector& vec, const std::string& sep) {
 	stringstream sstr;
 	
 	for (Vector::const_iterator i = vec.begin(); i != vec.end(); ++i) {
 		sstr << *i;
 		
-		if (i != vec.end() - 1) sstr << ", ";
+		if (i != vec.end() - 1) sstr << sep;
 	}
 	
 	return sstr.str();

@@ -4,6 +4,8 @@
  * @date 2015-07-14
  */
 
+#pragma once
+
 #include <vector>
 #include <iostream>
 #include <string>
@@ -26,7 +28,7 @@ typedef std::vector<Range> RangeList;
 /**
  * @brief Converts Vector type to a string.
  */
-std::string toString(const Vector& vec);
+std::string toString(const Vector& vec, const std::string& sep=", ");
 
 /**
  * @brief Writes Vector to a stream.
