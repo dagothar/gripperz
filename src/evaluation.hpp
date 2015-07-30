@@ -9,6 +9,7 @@
 #include "evaluation/GripperObjectiveFunction.hpp"
 #include "evaluation/GripperEvaluationManager.hpp"
 #include "evaluation/StandardEvaluationManager.hpp"
+#include "evaluation/RobustEvaluationManager.hpp"
 #include "evaluation/GripperEvaluationManagerFactory.hpp"
 #include "evaluation/GripperEvaluationManagerBuilder.hpp"
 #include "evaluation/AlignmentCalculator.hpp"
