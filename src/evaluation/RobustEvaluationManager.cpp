@@ -22,4 +22,5 @@ RobustEvaluationManager::~RobustEvaluationManager() {
 
 
 GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(Gripper::Ptr gripper) {
+	
 }

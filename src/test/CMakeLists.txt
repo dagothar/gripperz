@@ -1,38 +1,43 @@
 if (BUILD_TESTS)
 	FIND_PACKAGE(Boost COMPONENTS unit_test_framework REQUIRED)
 
-	# Target: test-combine-objectives
-	add_executable(test-combine-objectives testCombineObjectives.cpp)
-	add_dependencies(test-combine-objectives gripperz)
-	target_link_libraries(test-combine-objectives gripperz)
+	# Target: test_combine_objectives
+	add_executable(test_combine_objectives testCombineObjectives.cpp)
+	add_dependencies(test_combine_objectives gripperz)
+	target_link_libraries(test_combine_objectives gripperz)
 	
-	# Target: test-basic-simulator
-	add_executable(test-basic-simulator testBasicSimulator.cpp)
-	add_dependencies(test-basic-simulator gripperz)
-	target_link_libraries(test-basic-simulator gripperz)
+	# Target: test_basic_simulator
+	add_executable(test_basic_simulator testBasicSimulator.cpp)
+	add_dependencies(test_basic_simulator gripperz)
+	target_link_libraries(test_basic_simulator gripperz)
 	
-	# Target: test-dlib-rosenbrock
-	add_executable(test-dlib-rosenbrock testDlibRosenbrock.cpp)
-	add_dependencies(test-dlib-rosenbrock gripperz)
-	target_link_libraries(test-dlib-rosenbrock gripperz)
+	# Target: test_dlib_rosenbrock
+	add_executable(test_dlib_rosenbrock testDlibRosenbrock.cpp)
+	add_dependencies(test_dlib_rosenbrock gripperz)
+	target_link_libraries(test_dlib_rosenbrock gripperz)
 	
 	# Target: test_bobyqa
 	add_executable(test_bobyqa testBOBYQA.cpp)
 	add_dependencies(test_bobyqa gripperz)
 	target_link_libraries(test_bobyqa gripperz)
 	
-	# Target: test-math
-	add_executable(test-math testMath.cpp)
-	target_link_libraries(test-math gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-	add_dependencies(test-math gripperz)
+	# Target: test_math
+	add_executable(test_math testMath.cpp)
+	target_link_libraries(test_math gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+	add_dependencies(test_math gripperz)
 	
-	# Target: test-gripper-objective
-	add_executable(test-gripper-objective testGripperObjective.cpp)
-	add_dependencies(test-gripper-objective gripperz)
-	target_link_libraries(test-gripper-objective gripperz)
+	# Target: test_gripper_objective
+	add_executable(test_gripper_objective testGripperObjective.cpp)
+	add_dependencies(test_gripper_objective gripperz)
+	target_link_libraries(test_gripper_objective gripperz)
 	
-	# Target: test-gripper-evaluator
-	add_executable(test-gripper-evaluator testGripperEvaluator.cpp)
-	add_dependencies(test-gripper-evaluator gripperz)
-	target_link_libraries(test-gripper-evaluator gripperz)
+	# Target: test_gripper_evaluator
+	add_executable(test_gripper_evaluator testGripperEvaluator.cpp)
+	add_dependencies(test_gripper_evaluator gripperz)
+	target_link_libraries(test_gripper_evaluator gripperz)
+	
+	# Target: test_robust_evaluation
+	add_executable(test_robust_evaluation testGripperObjective.cpp)
+	add_dependencies(test_robust_evaluation gripperz)
+	target_link_libraries(test_robust_evaluation gripperz)
 endif ()
