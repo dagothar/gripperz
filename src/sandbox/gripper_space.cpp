@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
 	bounds[MapGripperBuilder::Depth] = make_pair(0.0, 0.05);
 	bounds[MapGripperBuilder::ChfDepth] = make_pair(0.0, 1.0);
 	bounds[MapGripperBuilder::ChfAngle] = make_pair(0.0, 90.0);
-	bounds[MapGripperBuilder::CutDepth] = make_pair(0.0, 0.05);
+	bounds[MapGripperBuilder::CutDepth] = make_pair(0.0, 0.025);
 	bounds[MapGripperBuilder::CutAngle] = make_pair(0.0, 180.0);
 	bounds[MapGripperBuilder::CutTilt] = make_pair(-90.0, 90.0);
 	bounds[MapGripperBuilder::TcpOffset] = make_pair(0.0, 0.2);
