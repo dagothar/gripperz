@@ -96,7 +96,7 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
 		DEBUG << " --- SIMULATING ROBUSTNESS ---" << endl;
 		try {
 			rtargets = TaskGenerator::copyTasks(targets, true);
-			rtargets = TaskGenerator::addPerturbations(rtargets, config.sigma_p, config.sigma_a * Deg2Rad, config.nOfRobustnessTargets);
+			rtargets = TaskGenerator::generateRobustnessTasks(rtargets, config.nOfRobustnessTargets, config.sigma_p, config.sigma_a * Deg2Rad);
 			
 			_simulator->loadTasks(rtargets);
 			
