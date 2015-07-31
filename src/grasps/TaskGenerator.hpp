@@ -124,6 +124,16 @@ public:
 		double sigma_a,
 		int perturbations
 	);
+	
+	/**
+	 * @brief Generates targets for testing robustness.
+	 */
+	static rwlibs::task::GraspTask::Ptr generateRobustnessTasks(
+		rwlibs::task::GraspTask::Ptr tasks,
+		int n,
+		double sigma_p=0.003,
+		double sigma_a=8.0
+	);
 
 	/**
 	 * @brief Generates samples on the surface.

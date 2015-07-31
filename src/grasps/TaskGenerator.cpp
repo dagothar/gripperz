@@ -305,6 +305,44 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::addPerturbations(rwlibs::task::Grasp
 }
 
 
+rwlibs::task::GraspTask::Ptr TaskGenerator::generateRobustnessTasks(
+	rwlibs::task::GraspTask::Ptr tasks,
+	int n,
+	double sigma_p,
+	double sigma_a
+) {
+	/* prepare task */
+	auto targets = tasks->getAllTargets();
+	int n_targets = targets.size();
+	if (n_targets == 0) {
+		RW_WARN("No tasks to perturb");
+		return tasks->clone();
+	}
+	
+	GraspTask::Ptr perturbed = tasks->clone();
+	GraspSubTask stask = tasks->getSubTasks()[0].clone();
+	
+	/* generate perturbed targets */
+	int generated = 0;
+	while (generated++ < n) {
+		/* pick random target */
+		int idx = Math::ranI(0, n_targets);
+		GraspTarget* target = targets[idx].second;
+		
+		Vector3D<> pos(Math::ranNormalDist(0, sigma_p), Math::ranNormalDist(0, sigma_p), Math::ranNormalDist(0, sigma_p));
+
+        EAA<> rot(Math::ranNormalDist(0, sigma_a), Math::ranNormalDist(0, sigma_a), Math::ranNormalDist(0, sigma_a));
+                
+        Transform3D<> new_target = target->pose * Transform3D<>(pos, rot);
+        stask.addTarget(new_target);
+	}
+	
+	perturbed->addSubTask(stask);
+	
+	return perturbed;
+}
+
+
 rwlibs::task::GraspTask::Ptr TaskGenerator::generateTasks(
 	int nTargets,
 	rw::kinematics::State state

@@ -476,8 +476,7 @@ void GraspPlugin::perturbTasks() {
 	try {
 		if (onlySuccesses)
 			_tasks = TaskGenerator::copyTasks(_tasks, true);
-		_tasks = TaskGenerator::addPerturbations(_tasks, 0.003, 8.0 * Deg2Rad,
-				nPerturbations);
+		_tasks = TaskGenerator::generateRobustnessTasks(_tasks, nPerturbations, 0.003, 8.0 * Deg2Rad);
 
 	} catch (rw::common::Exception& e) {
 
