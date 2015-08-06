@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gripper name="gripper">
+	<parameters>
+		<length>0.1</length>
+		<width>0.025</width>
+		<depth>0.02</depth>
+		<chfdepth>0</chfdepth>
+		<chfangle>45</chfangle>
+		<cutdepth>0.01</cutdepth>
+		<cutangle>90</cutangle>
+		<cuttilt>0</cuttilt>
+		<tcpoffset>0.025</tcpoffset>
+		<jawdist>0</jawdist>
+		<stroke>0.05</stroke>
+		<force>25</force>
+		<basex>0.15</basex>
+		<basey>0.1</basey>
+		<basez>0.05</basez>
+	</parameters>
+	<qualities>
+		<success>0.7032967032967034</success>
+		<robustness>1</robustness>
+		<alignment>0.1781702379847238</alignment>
+		<coverage>0.288135593220339</coverage>
+		<wrench>0.08598084512675723</wrench>
+		<topwrench>0.1556025122114996</topwrench>
+		<stress>0.95248</stress>
+		<volume>0.5356249992411066</volume>
+		<quality>0.398066454550628</quality>
+	</qualities>
+</gripper>
