@@ -69,4 +69,64 @@ for (length in seq(0, 0.2, by=0.02)) {
 	idx <- idx + 1
 }
 
+# plot width slices
+idx <- 0
+for (width in seq(0, 0.05, by=0.005)) {
+
+	slice <- data[data$width == width,]
+	if (nrow(slice) == 0) break
+	
+	plot_name <- paste('width_', idx, sep='')
+	plot_name <- paste(plot_name, '.png', sep='')
+	
+	plot_title <- paste('width = ', length, sep='')
+
+	png(filename=plot_name, width=PLOT_W, height=PLOT_H, units="px", pointsize=PTSIZE)
+	trellis.par.set('axis.line', list(col='transparent'))
+	
+	plot <- wireframe(
+		coverage ~ width * depth, data = slice,
+		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
+		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
+		drape=T, col.regions=PLOT_COLORS, colorkey=F,
+		main=list(label=plot_title, line=-2),
+		zlab=list(rot=90),
+		par.settings=theme.novpadding,
+		zoom=0.9
+	)
+	
+	print(plot)
+	idx <- idx + 1
+}
+
+# plot depth slices
+idx <- 0
+for (depth in seq(0, 0.05, by=0.005)) {
+
+	slice <- data[data$depth == depth,]
+	if (nrow(slice) == 0) break
+	
+	plot_name <- paste('depth_', idx, sep='')
+	plot_name <- paste(plot_name, '.png', sep='')
+	
+	plot_title <- paste('depth = ', length, sep='')
+
+	png(filename=plot_name, width=PLOT_W, height=PLOT_H, units="px", pointsize=PTSIZE)
+	trellis.par.set('axis.line', list(col='transparent'))
+	
+	plot <- wireframe(
+		coverage ~ width * depth, data = slice,
+		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
+		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
+		drape=T, col.regions=PLOT_COLORS, colorkey=F,
+		main=list(label=plot_title, line=-2),
+		zlab=list(rot=90),
+		par.settings=theme.novpadding,
+		zoom=0.9
+	)
+	
+	print(plot)
+	idx <- idx + 1
+}
+
 dev.off()
