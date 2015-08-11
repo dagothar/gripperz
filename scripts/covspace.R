@@ -79,13 +79,13 @@ for (width in seq(0, 0.05, by=0.005)) {
 	plot_name <- paste('width_', idx, sep='')
 	plot_name <- paste(plot_name, '.png', sep='')
 	
-	plot_title <- paste('width = ', length, sep='')
+	plot_title <- paste('width = ', width, sep='')
 
 	png(filename=plot_name, width=PLOT_W, height=PLOT_H, units="px", pointsize=PTSIZE)
 	trellis.par.set('axis.line', list(col='transparent'))
 	
 	plot <- wireframe(
-		coverage ~ width * depth, data = slice,
+		coverage ~ length * depth, data = slice,
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=PLOT_COLORS, colorkey=F,
@@ -109,13 +109,13 @@ for (depth in seq(0, 0.05, by=0.005)) {
 	plot_name <- paste('depth_', idx, sep='')
 	plot_name <- paste(plot_name, '.png', sep='')
 	
-	plot_title <- paste('depth = ', length, sep='')
+	plot_title <- paste('depth = ', depth, sep='')
 
 	png(filename=plot_name, width=PLOT_W, height=PLOT_H, units="px", pointsize=PTSIZE)
 	trellis.par.set('axis.line', list(col='transparent'))
 	
 	plot <- wireframe(
-		coverage ~ width * depth, data = slice,
+		coverage ~ length * width, data = slice,
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=PLOT_COLORS, colorkey=F,
