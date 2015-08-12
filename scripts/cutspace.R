@@ -29,9 +29,11 @@ PLOT_COLORS = colorRampPalette(c('black', 'white'))(100)
 PLOT_ANGLE_Z = -235
 PLOT_ANGLE_X = -65
 N_TICKS = 10
-PTSIZE=12
-PLOT_W=1024
-PLOT_H=768
+PTSIZE = 12
+PLOT_W = 1024
+PLOT_H = 768
+
+Q = expression(coverage)
 
 # Script
 args <- commandArgs(T)
@@ -59,7 +61,7 @@ for (cutdepth in seq(0, 0.05, by=0.0025)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=PLOT_COLORS, colorkey=F,
-		main=list(label=plot_title, line=-2),
+		main=plot_title,
 		zlab=list(rot=90),
 		par.settings=theme.novpadding,
 		zoom=0.9
@@ -89,7 +91,7 @@ for (cutangle in seq(0, 180, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=PLOT_COLORS, colorkey=F,
-		main=list(label=plot_title, line=-2),
+		main=plot_title,
 		zlab=list(rot=90),
 		par.settings=theme.novpadding,
 		zoom=0.9
@@ -119,7 +121,7 @@ for (cuttilt in seq(-90, 90, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=PLOT_COLORS, colorkey=F,
-		main=list(label=plot_title, line=-2),
+		main=plot_title,
 		zlab=list(rot=90),
 		par.settings=theme.novpadding,
 		zoom=0.9

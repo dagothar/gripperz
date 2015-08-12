@@ -8,7 +8,7 @@
 #include <rwlibs/algorithms/PointModel.hpp>
 #include <rw/math.hpp>
 
-#define DEBUG rw::common::Log::debugLog()
+#define DEBUG rw::common::Log::infoLog()
 #define INFO rw::common::Log::infoLog()
 
 
@@ -50,20 +50,22 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 	vector<double> diffs;
 	DEBUG << "  Diffs: ";
 	BOOST_FOREACH (long unsigned idx, inliers) {
-		double diff = metric.distance(ts_before[idx].R(), ts_after[idx].R());
+		/* Pose difference is calculated as the angle change.
+		 * It is then divided by Pi for normalization.
+		 * I do not expect larger pose differences than 180 degrees.
+		 */
+		double diff = metric.distance(ts_before[idx].R(), ts_after[idx].R()) / Pi;
 		
-		if (diff < Pi/2.0) { // to remove outliers
-			diffs.push_back(diff);
-			DEBUG << diff << ", ";
-		}
+		diffs.push_back(diff);
+		DEBUG << diff << ", ";
+		
 	} DEBUG << endl;
 	
 	n = diffs.size();
-	
-	//sort(diffs.begin(), diffs.end()); // sort so we can weight the median more
+
 	total_w = 0.0;
 	for (unsigned i = 0; i < n; ++i) {
-		double w = 1; //+ ((i < n - i - 1) ? i : n - i - 1); // triangle weight distribution
+		double w = 1;
 		total_w += w;
 		
 		double diff = diffs[i];
@@ -78,6 +80,12 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 	vector<double> vars;
 	BOOST_FOREACH (double diff, diffs) {
 		double var = diff - mean;
+		
+		if (var > Pi/2.0) {
+			DEBUG << "Discarding diff (outlier)" << endl;
+			continue;
+		}
+		
 		vars.push_back(var * var);
 		DEBUG << var * var << ", ";
 	} DEBUG << endl;
@@ -90,7 +98,12 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 		
 		double var = vars[i];
 		variance += var * w;
-	} 
+	}
+	
+	if (total_w == 0) {
+		return 0.0;
+	}
+	
 	variance = variance / total_w;
 	
 	double deviation = sqrt(variance * n) / n;
@@ -154,8 +167,6 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 		/* pick best model (in terms of inliers */
 		sort(models.begin(), models.end());
 		reverse(models.begin(), models.end());
-		
-		//PointModel& bestModel = models.front();
 		
 		int totalInliers = 0;
 		double totalQuality = 0.0;
