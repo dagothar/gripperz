@@ -267,14 +267,6 @@ void GraspTaskSimulator::startSimulation(const rw::kinematics::State& initState)
 			);
 			sim->addSensor(sstate._bsensors.back(), sstate._state);
 		}
-		/*sstate._state.upgrade();
-		_homeState.upgrade();	
-		for (size_t j = 0; j < _fixedObjects.size(); j++) {
-			sstate._fsensors.push_back(
-				ownedPtr(new BodyContactSensor("SimTaskObjectSensorF", _fixedObjects[j]->getBodyFrame()))
-			);
-			sim->addSensor(sstate._fsensors.back(), sstate._state);
-		}*/
 		sstate._state.upgrade();
 		sstate._homeState = sstate._state.clone();
 		_homeState.upgrade();		
@@ -434,23 +426,22 @@ void GraspTaskSimulator::stepCB(
 	}
 	
 	/* test whether runtime collision occurs */
-	/*double maxForce = getMaxContactForce(state, sstate);
+	CollisionDetector::QueryResult collisionQueryResult;
+	bool collisionDuringExecution = _collisionDetector->inCollision(state, &collisionQueryResult, true);
 	
-	if (sstate._currentState != NEW_GRASP) {
-		if (maxForce > _maxForceThreshold) {
-			_simfailed++;
-			
-			INFO << "COLLISION" << endl;
-
-			sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
-			sstate._target->getResult()->testStatus = GraspResult::CollisionDuringExecution;
-			_stat[GraspResult::SimulationFailure]++;
-
-			sstate._currentState = NEW_GRASP;
-
-			graspFinished(sstate);
-		}
-	}*/
+	if (collisionDuringExecution) {
+		_simfailed++;
+		
+		INFO << "COLLISION" << endl;
+		
+		sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
+		sstate._target->getResult()->testStatus = GraspResult::CollisionDuringExecution;
+		_stat[GraspResult::SimulationFailure]++;
+		
+		sstate._currentState = NEW_GRASP;
+		
+		graspFinished(sstate);
+	}
 
 	if (sstate._currentState == APPROACH) {
 		Transform3D<> ct3d = Kinematics::worldTframe(_mbase, state);
