@@ -48,4 +48,9 @@ if (BUILD_SANDBOX)
 	add_executable(gripper_space gripper_space.cpp)
 	add_dependencies(gripper_space gripperz)
 	target_link_libraries(gripper_space gripperz)
+	
+	# Target: gripper_slice
+	add_executable(gripper_slice gripper_slice.cpp)
+	add_dependencies(gripper_slice gripperz)
+	target_link_libraries(gripper_slice gripperz)
 endif ()
