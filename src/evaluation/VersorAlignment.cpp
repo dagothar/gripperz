@@ -8,7 +8,7 @@
 #include <rwlibs/algorithms/PointModel.hpp>
 #include <rw/math.hpp>
 
-#define DEBUG rw::common::Log::infoLog()
+#define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
 
 

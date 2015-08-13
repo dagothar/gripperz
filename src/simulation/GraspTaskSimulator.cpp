@@ -432,7 +432,7 @@ void GraspTaskSimulator::stepCB(
 	if (collisionDuringExecution) {
 		_simfailed++;
 		
-		INFO << "COLLISION" << endl;
+		DEBUG << "COLLISION" << endl;
 		
 		sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
 		sstate._target->getResult()->testStatus = GraspResult::CollisionDuringExecution;
