@@ -185,8 +185,9 @@ int main(int argc, char* argv[]) {
 	
 	
 	/* landscapes */
-	ofstream dataFile(outDir + "/slice.csv");
-	dataFile << paramNames[0] << ", " << paramNames[1] << ", success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog" << endl;
+	string filename = outDir + "/" + paramNames[0] + "_" + paramNames[1] + ".csv";
+	ofstream dataFile(filename);
+	dataFile << "x, y, success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog" << endl;
 	
 	int x = 0, y = 0;
 	// 1st parameter
