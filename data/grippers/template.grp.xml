@@ -6,7 +6,7 @@
 		<depth>0.02</depth>
 		<chfdepth>0.5</chfdepth>
 		<chfangle>45</chfangle>
-		<cutdepth>0.01</cutdepth>
+		<cutdepth>0.02</cutdepth>
 		<cutangle>90</cutangle>
 		<cuttilt>0</cuttilt>
 		<tcpoffset>0.025</tcpoffset>
