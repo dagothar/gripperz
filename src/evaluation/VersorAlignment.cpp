@@ -51,10 +51,9 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 	DEBUG << "  Diffs: ";
 	BOOST_FOREACH (long unsigned idx, inliers) {
 		/* Pose difference is calculated as the angle change.
-		 * It is then divided by Pi for normalization.
 		 * I do not expect larger pose differences than 180 degrees.
 		 */
-		double diff = metric.distance(ts_before[idx].R(), ts_after[idx].R()) / Pi;
+		double diff = metric.distance(ts_before[idx].R(), ts_after[idx].R());
 		
 		diffs.push_back(diff);
 		DEBUG << diff << ", ";
