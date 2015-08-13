@@ -89,6 +89,8 @@ double calculatePoseVariance(vector<Transform3D<> >& ts_before, vector<Transform
 		DEBUG << var * var << ", ";
 	} DEBUG << endl;
 	
+	n = vars.size();
+	
 	sort(vars.begin(), vars.end()); // sort so we can weight the median more
 	total_w = 0.0;
 	for (unsigned i = 0; i < n; ++i) {
