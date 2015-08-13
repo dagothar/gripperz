@@ -45,6 +45,8 @@ COL_QUALITY = colorRampPalette(c('black', 'white'))(100)
 # Read data
 args <- commandArgs(T)
 (filename <- args[1])
+(xlabel <- args[2])
+(ylabel <- args[3])
 
 data <- read.csv(filename)
 
@@ -56,7 +58,7 @@ plot <- wireframe(
 	zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 	scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 	drape=T, col.regions=COL_SUCCESS, colorkey=F,
-	zlab=list(rot=90),
+	xlab=xlabel, ylab=ylabel, zlab=list(rot=90),
 	par.settings=theme.novpadding,
 	zoom=0.9
 )
@@ -71,7 +73,7 @@ plot <- wireframe(
 	zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 	scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 	drape=T, col.regions=COL_ROBUSTNESS, colorkey=F,
-	zlab=list(rot=90),
+	xlab=xlabel, ylab=ylabel, zlab=list(rot=90),
 	par.settings=theme.novpadding,
 	zoom=0.9
 )
@@ -86,7 +88,7 @@ plot <- wireframe(
 	zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 	scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 	drape=T, col.regions=COL_ALIGNMENT, colorkey=F,
-	zlab=list(rot=90),
+	xlab=xlabel, ylab=ylabel, zlab=list(rot=90),
 	par.settings=theme.novpadding,
 	zoom=0.9
 )
@@ -101,7 +103,7 @@ plot <- wireframe(
 	zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 	scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 	drape=T, col.regions=COL_COVERAGE, colorkey=F,
-	zlab=list(rot=90),
+	xlab=xlabel, ylab=ylabel, zlab=list(rot=90),
 	par.settings=theme.novpadding,
 	zoom=0.9
 )
@@ -116,7 +118,7 @@ plot <- wireframe(
 	zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 	scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 	drape=T, col.regions=COL_WRENCH, colorkey=F,
-	zlab=list(rot=90),
+	xlab=xlabel, ylab=ylabel, zlab=list(rot=90),
 	par.settings=theme.novpadding,
 	zoom=0.9
 )
@@ -131,7 +133,7 @@ plot <- wireframe(
 	zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 	scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 	drape=T, col.regions=COL_STRESS, colorkey=F,
-	zlab=list(rot=90),
+	xlab=xlabel, ylab=ylabel, zlab=list(rot=90),
 	par.settings=theme.novpadding,
 	zoom=0.9
 )
@@ -146,7 +148,7 @@ plot <- wireframe(
 	zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 	scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 	drape=T, col.regions=COL_VOLUME, colorkey=F,
-	zlab=list(rot=90),
+	xlab=xlabel, ylab=ylabel, zlab=list(rot=90),
 	par.settings=theme.novpadding,
 	zoom=0.9
 )
@@ -161,7 +163,7 @@ plot <- wireframe(
 	zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 	scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 	drape=T, col.regions=COL_QUALITY, colorkey=F,
-	zlab=list(rot=90),
+	xlab=xlabel, ylab=ylabel, zlab=list(rot=90),
 	par.settings=theme.novpadding,
 	zoom=0.9
 )
