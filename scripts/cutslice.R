@@ -39,7 +39,7 @@ COL_ALIGNMENT = colorRampPalette(c('orange', 'white'))(100)
 COL_COVERAGE = colorRampPalette(c('green', 'white'))(100)
 COL_WRENCH = colorRampPalette(c('blue', 'white'))(100)
 COL_STRESS = colorRampPalette(c('violet', 'white'))(100)
-COL_VOLUME = colorRampPalette(c('teal', 'white'))(100)
+COL_VOLUME = colorRampPalette(c('cyan', 'white'))(100)
 COL_QUALITY = colorRampPalette(c('black', 'white'))(100)
 
 # Read data
