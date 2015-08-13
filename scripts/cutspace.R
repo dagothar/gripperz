@@ -25,8 +25,8 @@ theme.novpadding <- list(
 )
 
 # Configuration
-PLOT_COLORS = colorRampPalette(c('black', 'white'))(100)
-PLOT_ANGLE_Z = -235
+PLOT_COLORS = colorRampPalette(c('orange', 'white'))(100)
+PLOT_ANGLE_Z = 35
 PLOT_ANGLE_X = -65
 N_TICKS = 10
 PTSIZE = 12
