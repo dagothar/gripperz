@@ -1,6 +1,7 @@
 #include "TaskDescription.hpp"
 #include <evaluation/StablePoseAlignment.hpp>
 #include <evaluation/VersorAlignment.hpp>
+#include <evaluation/SimpleAlignment.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -40,14 +41,15 @@ TaskDescription::~TaskDescription()
 
 
 AlignmentCalculator::Ptr TaskDescription::getAlignmentCalculator() {
-	VersorAlignment::Configuration conf;
+	SimpleAlignment::Configuration conf;
 	conf.iterations = _alignmentParameters.iterations;
 	conf.minInliers = _alignmentParameters.minInliers;
 	conf.dataThreshold = _alignmentParameters.dataThreshold;
 	conf.modelThreshold = _alignmentParameters.modelThreshold;
 	conf.maxModels = _alignmentParameters.maxModels;
+	
 	AlignmentCalculator::Ptr calc = ownedPtr(
-		new VersorAlignment(conf)
+		new SimpleAlignment(conf)
 	);
 	
 	return calc;
