@@ -188,7 +188,13 @@ double VersorAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 			totalInliers += nInliers;
 			totalQuality += quality;
 			
-			alignment += calculatePoseVariance(ts_before, ts_after, inliers) * nInliers / quality;
+			double modelAlignment = calculatePoseVariance(ts_before, ts_after, inliers);
+			double modelWeight = nInliers / quality;
+			double modelAlignmentAdjustment = modelAlignment * modelWeight;
+			
+			alignment += modelAlignmentAdjustment;
+			
+			DEBUG << "modelAlignmentAdjustment = " << modelAlignment << " * " << modelWeight << " = " << modelAlignmentAdjustment;
 		}
 		
 		alignment = alignment * totalQuality / totalInliers;

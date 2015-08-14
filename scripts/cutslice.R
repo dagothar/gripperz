@@ -25,7 +25,7 @@ theme.novpadding <- list(
 )
 
 # Configuration
-PLOT_ANGLE_Z = 35
+PLOT_ANGLE_Z = -235
 PLOT_ANGLE_X = -65
 N_TICKS = 10
 PTSIZE = 12
