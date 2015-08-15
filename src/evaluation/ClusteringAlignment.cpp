@@ -15,6 +15,7 @@
 using namespace gripperz::evaluation;
 using namespace rwlibs::algorithms;
 using namespace rwlibs::task;
+using namespace rw::common;
 using namespace rw::math;
 using namespace std;
 
@@ -41,12 +42,22 @@ vector<Vector3D<> > getVersors(const Vector3D<>& axis, const vector<Transform3D<
 }
 
 
+struct Point {
+	typedef rw::common::Ptr<Point> Ptr;
+	
+	Vector3D<> point;
+	bool filtered;
+	
+	Point(const Vector3D<> v) :
+		point(v),
+		filtered(false)
+	{}
+};
+
+
 vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radius=0.1) {
 	/* build search tree */
-	typedef struct {
-		Vector3D<> point;
-		bool filtered;
-	} ValueType;
+	typedef Point::Ptr ValueType;
 	typedef KDTreeQ<ValueType> NNSearch;
 	vector<NNSearch::KDNode> nodes;
 	
@@ -56,7 +67,7 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
 		key[1] = p[1];
 		key[2] = p[2];
 		
-		nodes.push_back(NNSearch::KDNode(key, {p, false}));
+		nodes.push_back(NNSearch::KDNode(key, ownedPtr(new Point(p))));
 	}
 	NNSearch *nntree = NNSearch::buildTree(nodes);
     
@@ -65,7 +76,7 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
     Q diff(3, radius, radius, radius);
     
     BOOST_FOREACH (NNSearch::KDNode& node, nodes) {
-		if (node.value.filtered != true) {
+		if (node.value->filtered != true) {
 			result.clear();
 			Q key = node.key;
 			nntree->nnSearchRect(key-diff, key+diff, result);
@@ -73,7 +84,7 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
 			BOOST_FOREACH (const NNSearch::KDNode* n, result) {
 				if (n->key == node.key) continue;
 				
-				const_cast<NNSearch::KDNode*>(n)->value.filtered = true;
+				const_cast<NNSearch::KDNode*>(n)->value->filtered = true;
 			}
 		}
 	}
@@ -82,8 +93,8 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
 	vector<Vector3D<> > filtered;
 	
 	BOOST_FOREACH (const NNSearch::KDNode& n, nodes) {
-		if (n.value.filtered == false) {
-			filtered.push_back(n.value.point);
+		if (n.value->filtered == false) {
+			filtered.push_back(n.value->point);
 		}
 	}
 	
@@ -99,7 +110,7 @@ double getAxisAlignment(const Vector3D<>& axis, const vector<Transform3D<> > tra
 	
 	vector<Vector3D<> > filtered_versors = filterPoints(versors, radius);
 	
-	double axis_alignment = 1.0 - filtered_versors.size() / versors.size();
+	double axis_alignment = 1.0 - 1.0 * filtered_versors.size() / versors.size();
 	
 	return axis_alignment;
 }
