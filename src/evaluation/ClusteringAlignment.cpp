@@ -107,6 +107,7 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
 
 double getAxisAlignment(const Vector3D<>& axis, const vector<Transform3D<> > transforms, double radius) {
 	vector<Vector3D<> > versors = getVersors(axis, transforms);
+	if (versors.size() == 0) return 0.0;
 	
 	vector<Vector3D<> > filtered_versors = filterPoints(versors, radius);
 	
