@@ -13,6 +13,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/AllPosesAlignment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/VersorAlignment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SimpleAlignment.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ClusteringAlignment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQualityExtractor.cpp
 	CACHE INTERNAL ""
 )

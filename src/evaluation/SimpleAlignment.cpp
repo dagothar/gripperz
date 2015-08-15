@@ -35,6 +35,7 @@ double SimpleAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 	typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
 	
 	int n = 0;
+	int nAllTargets = tasks->getAllTargets().size();
 	BOOST_FOREACH (TaskTarget p, tasks->getAllTargets()) {
 
 		// we take grasps with either success or interference
@@ -97,7 +98,7 @@ double SimpleAlignment::calculateAlignment(GraspTask::Ptr tasks) {
 			int nInliers = inliers.size();
 			double quality = m.getQuality();
 			
-			double modelAlignment = 1.0 * nInliers / n;
+			double modelAlignment = 1.0 * nInliers / nAllTargets;
 			double modelWeight = -log(quality);
 			if (modelWeight < 0.0) modelWeight = 0.0; // to safe-guard against positive logarithms (quality > 1)
 			double modelAlignmentAdjustment = modelAlignment * modelWeight;

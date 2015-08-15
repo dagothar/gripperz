@@ -16,4 +16,6 @@
 #include "evaluation/StablePoseAlignment.hpp"
 #include "evaluation/AllPosesAlignment.hpp"
 #include "evaluation/VersorAlignment.hpp"
+#include "evaluation/SimpleAlignment.hpp"
+#include "evaluation/ClusteringAlignment.hpp"
 #include "evaluation/GripperQualityExtractor.hpp"

@@ -2,6 +2,7 @@
 #include <evaluation/StablePoseAlignment.hpp>
 #include <evaluation/VersorAlignment.hpp>
 #include <evaluation/SimpleAlignment.hpp>
+#include <evaluation/ClusteringAlignment.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -41,7 +42,7 @@ TaskDescription::~TaskDescription()
 
 
 AlignmentCalculator::Ptr TaskDescription::getAlignmentCalculator() {
-	SimpleAlignment::Configuration conf;
+	/*SimpleAlignment::Configuration conf;
 	conf.iterations = _alignmentParameters.iterations;
 	conf.minInliers = _alignmentParameters.minInliers;
 	conf.dataThreshold = _alignmentParameters.dataThreshold;
@@ -50,6 +51,13 @@ AlignmentCalculator::Ptr TaskDescription::getAlignmentCalculator() {
 	
 	AlignmentCalculator::Ptr calc = ownedPtr(
 		new SimpleAlignment(conf)
+	);*/
+	
+	ClusteringAlignment::Configuration conf;
+	conf.filteringRadius = _alignmentParameters.dataThreshold;
+	
+	AlignmentCalculator::Ptr calc = ownedPtr(
+		new ClusteringAlignment(conf)
 	);
 	
 	return calc;
