@@ -239,6 +239,9 @@ public:
 		return _alignmentParameters;
 	}
 	
+	double getAlignmentFilteringDistance() const { return _alignmentFilteringDistance; }
+	void setAlignmentFilteringDistance(double dist) { _alignmentFilteringDistance = dist; }
+	
 	const std::string& getAlignmentCalculatorID() const { return _alignmentCalculatorID; }
 	void setAlignmentCalculatorID(const std::string& id) { _alignmentCalculatorID = id; }
 	
@@ -271,6 +274,8 @@ protected:
 	// ransac parameters for finding stable pose
 	std::string _alignmentCalculatorID;
 	AlignmentModelParameters _alignmentParameters;
+	
+	double _alignmentFilteringDistance;
 };
 
 } /* context */

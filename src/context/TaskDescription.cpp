@@ -42,19 +42,8 @@ TaskDescription::~TaskDescription()
 
 
 AlignmentCalculator::Ptr TaskDescription::getAlignmentCalculator() {
-	/*SimpleAlignment::Configuration conf;
-	conf.iterations = _alignmentParameters.iterations;
-	conf.minInliers = _alignmentParameters.minInliers;
-	conf.dataThreshold = _alignmentParameters.dataThreshold;
-	conf.modelThreshold = _alignmentParameters.modelThreshold;
-	conf.maxModels = _alignmentParameters.maxModels;
-	
-	AlignmentCalculator::Ptr calc = ownedPtr(
-		new SimpleAlignment(conf)
-	);*/
-	
 	ClusteringAlignment::Configuration conf;
-	conf.filteringRadius = _alignmentParameters.dataThreshold;
+	conf.filteringRadius = _alignmentFilteringDistance;
 	
 	AlignmentCalculator::Ptr calc = ownedPtr(
 		new ClusteringAlignment(conf)

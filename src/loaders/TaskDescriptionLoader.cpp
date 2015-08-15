@@ -266,12 +266,15 @@ void TaskDescriptionLoader::readAlignment(gripperz::util::PTree& tree, TaskDescr
 	
 	// read pose 0D parameters
 	TaskDescription::AlignmentModelParameters& params = task->getAlignmentParameters();
-	PTree& tag = tree.get_child("Parameters");
+	/*PTree& tag = tree.get_child("Parameters");
 	params.iterations = XMLHelpers::readInt(tag.get_child("Iterations"));
 	params.minInliers = XMLHelpers::readInt(tag.get_child("MinInliers"));
 	params.dataThreshold = XMLHelpers::readDouble(tag.get_child("DataThreshold"));
 	params.modelThreshold = XMLHelpers::readDouble(tag.get_child("ModelThreshold"));
-	params.maxModels = XMLHelpers::readInt(tag.get_child("MaxModels"));
+	params.maxModels = XMLHelpers::readInt(tag.get_child("MaxModels"));*/
+	
+	double filteringDistance = XMLHelpers::readDouble(tree.get_child("FilteringDistance"));
+	task->setAlignmentFilteringDistance(filteringDistance);
 }
 
 
