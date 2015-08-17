@@ -380,7 +380,7 @@ for (cuttilt in seq(-90, 90, by=18)) {
 	
 	# create slice name
 	slice_name <- 'cuttilt'
-	plot_title <- paste('cuttilt = ', cutangle, sep='')
+	plot_title <- paste('cuttilt = ', cuttilt, sep='')
 
 	# plot slice
 	plot_name <- paste(slice_name, 'success', sep='_')
