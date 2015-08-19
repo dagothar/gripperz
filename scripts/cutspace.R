@@ -71,8 +71,8 @@ for (cutdepth in seq(0, 0.05, by=0.0025)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_SUCCESS, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -89,8 +89,8 @@ for (cutdepth in seq(0, 0.05, by=0.0025)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_ROBUSTNESS, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -107,8 +107,8 @@ for (cutdepth in seq(0, 0.05, by=0.0025)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_ALIGNMENT, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -125,8 +125,8 @@ for (cutdepth in seq(0, 0.05, by=0.0025)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_COVERAGE, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -143,8 +143,8 @@ for (cutdepth in seq(0, 0.05, by=0.0025)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_WRENCH, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -161,8 +161,8 @@ for (cutdepth in seq(0, 0.05, by=0.0025)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_STRESS, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -179,8 +179,8 @@ for (cutdepth in seq(0, 0.05, by=0.0025)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_VOLUME, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -197,8 +197,8 @@ for (cutdepth in seq(0, 0.05, by=0.0025)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_QUALITY, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -232,8 +232,8 @@ for (cutangle in seq(0, 180, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_SUCCESS, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -250,8 +250,8 @@ for (cutangle in seq(0, 180, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_ROBUSTNESS, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -268,8 +268,8 @@ for (cutangle in seq(0, 180, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_ALIGNMENT, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -286,8 +286,8 @@ for (cutangle in seq(0, 180, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_COVERAGE, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -304,8 +304,8 @@ for (cutangle in seq(0, 180, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_WRENCH, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -322,8 +322,8 @@ for (cutangle in seq(0, 180, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_STRESS, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -340,8 +340,8 @@ for (cutangle in seq(0, 180, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_VOLUME, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -358,8 +358,8 @@ for (cutangle in seq(0, 180, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_QUALITY, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -393,8 +393,8 @@ for (cuttilt in seq(-90, 90, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_SUCCESS, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -411,8 +411,8 @@ for (cuttilt in seq(-90, 90, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_ROBUSTNESS, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -429,8 +429,8 @@ for (cuttilt in seq(-90, 90, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_ALIGNMENT, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -447,8 +447,8 @@ for (cuttilt in seq(-90, 90, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_COVERAGE, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -465,8 +465,8 @@ for (cuttilt in seq(-90, 90, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_WRENCH, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -483,8 +483,8 @@ for (cuttilt in seq(-90, 90, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_STRESS, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -501,8 +501,8 @@ for (cuttilt in seq(-90, 90, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_VOLUME, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
@@ -519,8 +519,8 @@ for (cuttilt in seq(-90, 90, by=18)) {
 		zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 		scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 		drape=T, col.regions=COL_QUALITY, colorkey=F,
-		main=plot_title,
-		zlab=list(rot=90),
+		main=list(label=plot_title, cex=2), xlab=list(cex=2), ylab=list(cex=2),
+		zlab=list(rot=90, cex=2),
 		par.settings=theme.novpadding,
 		zoom=0.9
 	)
