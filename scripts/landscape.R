@@ -8,7 +8,7 @@ data_file = paste(name, ".csv", sep="")
 # configuration
 title=paste(name)
 lwd = 2
-ptsize = 14
+ptsize = 28
 ymax = 1
 
 # read data
