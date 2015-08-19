@@ -4,40 +4,30 @@
 -->
 <TaskDescription>
 	<Target>object</Target>
+	
 	<Gripper>
 		<Name>gripper</Name>
 		<TCP>TCPgripper</TCP>
 		<Movable>gripper.Base</Movable>
 		<Controller>graspController</Controller>
 	</Gripper>
+	
 	<InterferenceObjects>
 		<Object>ob1</Object>
 		<Object>ob2</Object>
 	</InterferenceObjects>
+	
 	<Limits>
-		<Interference>1</Interference>
+		<Interference>10</Interference>
 		<Wrench>0</Wrench>
-		<Stress>5</Stress>
+		<Stress>25</Stress>
 		<Volume>100</Volume>
 	</Limits>
-	<Baseline>
-		<Shape>1</Shape>
-		<Coverage>1</Coverage>
-		<SuccessRatio>1</SuccessRatio>
-		<Wrench>1</Wrench>
-	</Baseline>
-	<Weights>
-		<Shape>0</Shape>
-		<SuccessRatio>0.33</SuccessRatio>
-		<Coverage>1.0</Coverage>
-		<Wrench>3.0</Wrench>
-		<Stress>1.0</Stress>
-		<Volume>1.0</Volume>
-		<Alignment>2.5</Alignment>
-	</Weights>
+	
 	<TeachDistance> 10 10 10 45 90</TeachDistance>
 	<PrefilteringDistance> 0.001 15 15 </PrefilteringDistance>
 	<CoverageDistance> 0.001 15 15 </CoverageDistance>
+	
 	<HintGrasps>
 		<Grasp>
 			<Pos> 0 0 0.225 </Pos>
@@ -45,13 +35,7 @@
 		</Grasp>
 	</HintGrasps>
 	
-	<Alignment>
-		<Parameters>
-			<Iterations>1000</Iterations>
-			<MinInliers>5</MinInliers>
-			<DataThreshold>0.1</DataThreshold>
-			<ModelThreshold>0.1</ModelThreshold>
-			<MaxModels>5</MaxModels>
-		</Parameters>
+	<Alignment>		
+		<FilteringDistance>0.01</FilteringDistance>
 	</Alignment>
 </TaskDescription>
