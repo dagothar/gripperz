@@ -83,15 +83,15 @@ int main(int argc, char* argv[]) {
 	
 	/* parameter bounds */
 	map<MapGripperBuilder::ParameterName, pair<double, double> > bounds;
-	bounds[MapGripperBuilder::Length] = make_pair(0.0, 0.2);
-	bounds[MapGripperBuilder::Width] = make_pair(0.0, 0.05);
-	bounds[MapGripperBuilder::Depth] = make_pair(0.0, 0.05);
+	bounds[MapGripperBuilder::Length] = make_pair(0.0, 0.1);
+	bounds[MapGripperBuilder::Width] = make_pair(0.0, 0.025);
+	bounds[MapGripperBuilder::Depth] = make_pair(0.0, 0.025);
 	bounds[MapGripperBuilder::ChfDepth] = make_pair(0.0, 1.0);
 	bounds[MapGripperBuilder::ChfAngle] = make_pair(0.0, 90.0);
-	bounds[MapGripperBuilder::CutDepth] = make_pair(0.0, 0.05);
+	bounds[MapGripperBuilder::CutDepth] = make_pair(0.0, 0.025);
 	bounds[MapGripperBuilder::CutAngle] = make_pair(0.0, 180.0);
 	bounds[MapGripperBuilder::CutTilt] = make_pair(-90.0, 90.0);
-	bounds[MapGripperBuilder::TcpOffset] = make_pair(0.0, 0.2);
+	bounds[MapGripperBuilder::TcpOffset] = make_pair(0.0, 0.1);
 	bounds[MapGripperBuilder::Jawdist] = make_pair(0.0, 0.05);
 	bounds[MapGripperBuilder::Stroke] = make_pair(0.0, 0.05);
 	bounds[MapGripperBuilder::Force] = make_pair(0.0, 50.0);
