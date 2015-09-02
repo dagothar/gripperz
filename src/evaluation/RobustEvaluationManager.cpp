@@ -7,6 +7,7 @@
 #include "RobustEvaluationManager.hpp"
 #include <loaders/GripperXMLLoader.hpp>
 #include <models/MapGripperBuilder.hpp>
+#include <boost/filesystem.hpp>
 #include <sstream>
 #include <string>
 
@@ -20,6 +21,7 @@ using namespace gripperz::loaders;
 using namespace gripperz::math;
 using namespace std;
 using namespace rw::common;
+using namespace boost::filesystem;
 
 
 const int FailReturnCode = -1;
@@ -82,13 +84,22 @@ GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(Gripper::Ptr grippe
 	string cmd = sstr.str();
 	DEBUG << cmd << endl;
 	
+	/* check if results file exists and remove it */
+	string filename = _tmpName + ".grp.xml";
+	if (exists(filename)) {
+		remove(filename);
+	}
+	
 	/* execute */
 	unsigned tries = 0;
 	int returnCode = FailReturnCode;
+	bool fileExists = false;
 	do {
 		returnCode = system(cmd.c_str());
 		
-		if (returnCode == SuccessReturnCode || returnCode == InterruptReturnCode) {
+		fileExists = exists(filename);
+		
+		if (fileExists || returnCode == InterruptReturnCode) {
 			break;
 		}
 	} while (tries++ < _ntries);
@@ -97,13 +108,12 @@ GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(Gripper::Ptr grippe
 		RW_THROW ("Evaluation interrupted (ctrl+c)");
 	}
 	
-	if (returnCode != SuccessReturnCode) {
+	if (returnCode != SuccessReturnCode || fileExists == false) {
 		RW_WARN ("Evaluation failed");
 		return ownedPtr(new GripperQuality);
 	}
 	
 	/* read results */
-	string filename = _tmpName + ".grp.xml";
 	Gripper::Ptr evaluatedGripper = GripperXMLLoader::load(filename);
 	
 	/* return */
