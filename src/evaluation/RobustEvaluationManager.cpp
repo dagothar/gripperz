@@ -108,7 +108,7 @@ GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(Gripper::Ptr grippe
 		RW_THROW ("Evaluation interrupted (ctrl+c)");
 	}
 	
-	if (returnCode != SuccessReturnCode || fileExists == false) {
+	if (fileExists == false) {
 		RW_WARN ("Evaluation failed");
 		return ownedPtr(new GripperQuality);
 	}
