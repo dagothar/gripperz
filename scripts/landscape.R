@@ -8,7 +8,7 @@ data_file = paste(name, ".csv", sep="")
 # configuration
 title=paste(name)
 lwd = 2
-ptsize = 20
+ptsize = 24
 ymax = 1
 
 # read data
@@ -29,7 +29,7 @@ qlog = as.numeric(unlist(data[10]))
 png(filename=plot_file, width=1024, height=768, units="px", pointsize=ptsize)
 
 # this is to make border for legend
-par(oma = c(1, 1, 1, 6))
+par(oma = c(0, 0, 0, 0))
 
 # actual plot
 plot(suc~val, type='l', xlab='value', ylab='q', col='red', main=title, lwd=lwd, ylim=range(c(0, ymax)), xaxs="i", yaxs="i")
@@ -53,6 +53,6 @@ par(new=F)
 
 par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
 plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-legend("right", legend=c("success", "alignment", "coverage", "wrench", "stress", "volume", "average", "Q"), col=c("red", "darkorange", "green", "blue", "violet", "cyan", "black", "black"), lty=c(1, 1, 1, 1, 1, 1, 2, 1), lwd=lwd, xpd = TRUE, inset = c(0, 0), bty='n')
+#legend("right", legend=c("success", "alignment", "coverage", "wrench", "stress", "volume", "average", "Q"), col=c("red", "darkorange", "green", "blue", "violet", "cyan", "black", "black"), lty=c(1, 1, 1, 1, 1, 1, 2, 1), lwd=lwd, xpd = TRUE, inset = c(0, 0), bty='n')
 
 dev.off()
