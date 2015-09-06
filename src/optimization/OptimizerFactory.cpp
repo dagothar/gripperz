@@ -66,3 +66,14 @@ CoordinateDescentOptimizer::Ptr OptimizerFactory::makeCoordinateDescentOptimizer
 	
 	return optimizer;
 }
+
+SimulatedAnnealingOptimizer::Ptr OptimizerFactory::makeSimulatedAnnealingOptimizer(double rho_init, double rho_stop, unsigned max_fev) {
+	SimulatedAnnealingOptimizer::Configuration config;
+	config.rho_0 = rho_init;
+	config.rho_final = rho_stop;
+	config.maxNOfEvaluations = max_fev;
+	
+	SimulatedAnnealingOptimizer::Ptr optimizer = ownedPtr(new SimulatedAnnealingOptimizer(config));
+	
+	return optimizer;
+}

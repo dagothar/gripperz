@@ -11,6 +11,7 @@
 #include "BOBYQAOptimizer.hpp"
 #include "SimplexOptimizer.hpp"
 #include "CoordinateDescentOptimizer.hpp"
+#include "SimulatedAnnealingOptimizer.hpp"
 
 namespace gripperz {
 namespace optimization {
@@ -34,6 +35,9 @@ public:
 	
 	//! Creates CD optimizer.
 	static CoordinateDescentOptimizer::Ptr makeCoordinateDescentOptimizer(double rho_init=1e-1, double rho_stop=1e-3, unsigned max_fev=1e3);
+	
+	//! Creates SA optimizer.
+	static SimulatedAnnealingOptimizer::Ptr makeSimulatedAnnealingOptimizer(double rho_init=1e-1, double rho_stop=1e-3, unsigned max_fev=1e3);
 };
 
 } /* optimization */

@@ -9,5 +9,6 @@
 #include "optimization/BOBYQAOptimizer.hpp"
 #include "optimization/SimplexOptimizer.hpp"
 #include "optimization/CoordinateDescentOptimizer.hpp"
+#include "optimization/SimulatedAnnealingOptimizer.hpp"
 #include "optimization/OptimizationManager.hpp"
 #include "optimization/GripperOptimizationManager.hpp"

@@ -5,26 +5,31 @@
  */
 
 #include <iostream>
-#include <math.hpp>
-#include <optimization.hpp>
-#include <util.hpp>
+#include <gripperz.hpp>
 #include <boost/foreach.hpp>
 
 
 using namespace std;
-using namespace gripperz::math;
-using namespace gripperz::optimization;
-using namespace gripperz::util;
+USE_ROBWORK_NAMESPACE
+using namespace robwork;
+USE_ROBWORKSIM_NAMESPACE
+using namespace robworksim;
+USE_GRIPPERZ_NAMESPACE
+using namespace gripperz;
 
 
 int main(int argc, char* argv[]) {
+	Math::seed();
+	RobWork::getInstance()->initialize();
+	
 	/* create objective function */
 	ObjectiveFunction::Ptr objective = new Rosenbrock(1, 100);
 	
 	/* create optimizer */
 	//Optimizer::Ptr optimizer = OptimizerFactory::makeBOBYQAOptimizer(2, 0.1, 1e-4);
 	//Optimizer::Ptr optimizer = OptimizerFactory::makeSimplexOptimizer(0.1, 1e-3);
-	Optimizer::Ptr optimizer = OptimizerFactory::makeCoordinateDescentOptimizer(0.1, 1e-5);
+	//Optimizer::Ptr optimizer = OptimizerFactory::makeCoordinateDescentOptimizer(0.1, 1e-5);
+	Optimizer::Ptr optimizer = OptimizerFactory::makeSimulatedAnnealingOptimizer(1, 1e-3);
 	OptimizationManager opt_manager(optimizer, {{0, 3}, {0, 3}});
 	
 	/* optimize */
