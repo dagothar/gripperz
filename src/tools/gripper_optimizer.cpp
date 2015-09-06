@@ -146,7 +146,7 @@ int main(int argc, char* argv[]) {
 		("out,o", value<string>(&Configuration.out_dir)->required(), "output directory")
 		("ssamples,s", value<string>(&Configuration.ssamples_filename), "surface samples file")
 		("combiner", value<string>(&Configuration.combiner)->default_value("product"), "objective combining method")
-		("optimizer", value<string>(&Configuration.optimizer)->default_value("simplex"), "optimization method")
+		("optimizer", value<string>(&Configuration.optimizer)->default_value("simplex"), "optimization method (simplex, coord, bobyqa, simu)")
 		("sigma_a",	value<double>(&Configuration.sigma_a)->default_value(8), "standard deviation in of angle in degrees")
 		("sigma_p",	value<double>(&Configuration.sigma_p)->default_value(0.003), "standard deviation of position in meters")
 		("rho0",	value<double>(&Configuration.rho0)->default_value(0.1), "initial step size")
@@ -229,12 +229,16 @@ int main(int argc, char* argv[]) {
 		optimizer = OptimizerFactory::makeSimplexOptimizer(Configuration.rho0, Configuration.rhof, Configuration.maxfev);
 	}
 	
-	if (Configuration.optimizer == "coordinatedescent") {
+	if (Configuration.optimizer == "coord") {
 		optimizer = OptimizerFactory::makeCoordinateDescentOptimizer(Configuration.rho0, Configuration.rhof, Configuration.maxfev);
 	}
 	
 	if (Configuration.optimizer == "bobyqa") {
 		optimizer = OptimizerFactory::makeBOBYQAOptimizer(params.size(), Configuration.rho0, Configuration.rhof, Configuration.maxfev);
+	}
+	
+	if (Configuration.optimizer == "simu") {
+		optimizer = OptimizerFactory::makeSimulatedAnnealingOptimizer(Configuration.rho0, Configuration.rhof, Configuration.maxfev);
 	}
 	
 	if (!optimizer) {
