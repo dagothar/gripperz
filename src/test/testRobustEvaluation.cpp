@@ -65,9 +65,7 @@ int main(int argc, char* argv[]) {
 	RobWork::getInstance()->initialize();
 	Log::log().setLevel(Log::Info);
 	
-	/* read weights */
-	cout << "Please input 7 weights (success, robustness, alignment, coverage, wrench, stress, volume): ";
-	vector<double> weights = readVector(cin);
+	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
 	cout << "Weights: " << vectorToString(weights) << endl;
 	
 	/* create objective function */
@@ -103,27 +101,19 @@ int main(int argc, char* argv[]) {
 	
 	/* read grippers */
 	unsigned n = 0;
-	while (true) {
-		cout << "#" << n++ << "> ";
-		cout << "Please input 12 parameters (length, width, depth, chf. depth, chf. angle, cut depth, cut angle, tilt, tcp, jawdist, stroke, force): ";
-		vector<double> param = readVector(cin);
+	vector<double> param{0.1, 0.025, 0.02, 0, 0, 0, 0, 0, 0.025, 0, 0.05, 25};
 		
-		/* evaluate */
-		vector<double> result = func->evaluate(param);
-		
-		cout << "Objectives (success, robustness, alignment, coverage, wrench, stress, volume): " << vectorToString(result) << endl;
-		
-		cout << "Sum=" << sumMethod->combine(result)
-			<< " Log=" << logMethod->combine(result) << endl;
-		
-		/* save gripper */
-		Gripper::Ptr grp = builder->parametersToGripper(param);
-		GripperXMLLoader::save(grp, "obj.grp.xml");
-		
-		/* save stls */
-		STLFile::save(*grp->getFingerGeometry()->getGeometryData()->getTriMesh(), "finger.stl");
-		STLFile::save(*grp->getBaseGeometry()->getGeometryData()->getTriMesh(), "base.stl");
-	}
+	/* evaluate */
+	vector<double> result = func->evaluate(param);
+	
+	cout << "Objectives (success, robustness, alignment, coverage, wrench, stress, volume): " << vectorToString(result) << endl;
+	
+	cout << "Sum=" << sumMethod->combine(result)
+		<< " Log=" << logMethod->combine(result) << endl;
+	
+	/* save gripper */
+	Gripper::Ptr grp = builder->parametersToGripper(param);
+	GripperXMLLoader::save(grp, "obj.grp.xml");
 	
 	return 0;
 }
