@@ -42,6 +42,12 @@ public:
 	//! @copydoc AlignmentCalculator::calculateAlignment
 	virtual double calculateAlignment(rwlibs::task::GraspTask::Ptr tasks);
 
+protected:
+	/**
+	 * @brief Adjusts the filtering radius according to the number of targets.
+	 */
+	virtual double adjustRadius(double radius, double ntargets);
+
 private:
 	Configuration _conf;
 };

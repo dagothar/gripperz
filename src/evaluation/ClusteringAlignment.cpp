@@ -117,6 +117,13 @@ double getAxisAlignment(const Vector3D<>& axis, const vector<Transform3D<> > tra
 }
 
 
+double ClusteringAlignment::adjustRadius(double radius, double ntargets) {
+	double adjusted_radius = radius / sqrt(ntargets / 100.0);
+	
+	return adjusted_radius;
+}
+
+
 double ClusteringAlignment::calculateAlignment(rwlibs::task::GraspTask::Ptr tasks) {
 	vector<Transform3D<> > ts_after;
 	typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
@@ -134,12 +141,15 @@ double ClusteringAlignment::calculateAlignment(rwlibs::task::GraspTask::Ptr task
 		}
 	}
 	
+	double filtering_radius = adjustRadius(_conf.filteringRadius, ts_after.size());
+	DEBUG << "Adjusted radius = " << filtering_radius << endl;
+	
 	DEBUG << "Calculating X alignment..." << endl;
-	double x_alignment = getAxisAlignment(Vector3D<>::x(), ts_after, _conf.filteringRadius);
+	double x_alignment = getAxisAlignment(Vector3D<>::x(), ts_after, filtering_radius);
 	DEBUG << "Calculating Y alignment..." << endl;
-	double y_alignment = getAxisAlignment(Vector3D<>::y(), ts_after, _conf.filteringRadius);
+	double y_alignment = getAxisAlignment(Vector3D<>::y(), ts_after, filtering_radius);
 	DEBUG << "Calculating Z alignment..." << endl;
-	double z_alignment = getAxisAlignment(Vector3D<>::z(), ts_after, _conf.filteringRadius);
+	double z_alignment = getAxisAlignment(Vector3D<>::z(), ts_after, filtering_radius);
 	
 	DEBUG << "* x alignment = " << x_alignment << endl;
 	DEBUG << "* y alignment = " << y_alignment << endl;
