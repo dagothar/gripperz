@@ -67,6 +67,7 @@ CoordinateDescentOptimizer::Ptr OptimizerFactory::makeCoordinateDescentOptimizer
 	return optimizer;
 }
 
+
 SimulatedAnnealingOptimizer::Ptr OptimizerFactory::makeSimulatedAnnealingOptimizer(double rho_init, double rho_stop, unsigned max_fev) {
 	SimulatedAnnealingOptimizer::Configuration config;
 	config.rho_0 = rho_init;
@@ -74,6 +75,18 @@ SimulatedAnnealingOptimizer::Ptr OptimizerFactory::makeSimulatedAnnealingOptimiz
 	config.maxNOfEvaluations = max_fev;
 	
 	SimulatedAnnealingOptimizer::Ptr optimizer = ownedPtr(new SimulatedAnnealingOptimizer(config));
+	
+	return optimizer;
+}
+
+
+PowellOptimizer::Ptr OptimizerFactory::makePowellOptimizer(double rho_init, double rho_stop, unsigned max_fev) {
+	PowellOptimizer::Configuration config;
+	config.rho_0 = rho_init;
+	config.rho_final = rho_stop;
+	config.maxNOfEvaluations = max_fev;
+	
+	PowellOptimizer::Ptr optimizer = ownedPtr(new PowellOptimizer(config));
 	
 	return optimizer;
 }

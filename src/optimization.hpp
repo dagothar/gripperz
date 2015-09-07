@@ -10,5 +10,6 @@
 #include "optimization/SimplexOptimizer.hpp"
 #include "optimization/CoordinateDescentOptimizer.hpp"
 #include "optimization/SimulatedAnnealingOptimizer.hpp"
+#include "optimization/PowellOptimizer.hpp"
 #include "optimization/OptimizationManager.hpp"
 #include "optimization/GripperOptimizationManager.hpp"

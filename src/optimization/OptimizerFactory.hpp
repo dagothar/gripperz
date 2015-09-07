@@ -12,6 +12,7 @@
 #include "SimplexOptimizer.hpp"
 #include "CoordinateDescentOptimizer.hpp"
 #include "SimulatedAnnealingOptimizer.hpp"
+#include "PowellOptimizer.hpp"
 
 namespace gripperz {
 namespace optimization {
@@ -38,6 +39,9 @@ public:
 	
 	//! Creates SA optimizer.
 	static SimulatedAnnealingOptimizer::Ptr makeSimulatedAnnealingOptimizer(double rho_init=1e-1, double rho_stop=1e-3, unsigned max_fev=1e3);
+	
+	//! Creates Powell optimizer.
+	static PowellOptimizer::Ptr makePowellOptimizer(double rho_init=1e-1, double rho_stop=1e-3, unsigned max_fev=1e3);
 };
 
 } /* optimization */
