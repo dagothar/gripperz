@@ -118,7 +118,7 @@ double getAxisAlignment(const Vector3D<>& axis, const vector<Transform3D<> > tra
 
 
 double ClusteringAlignment::adjustRadius(double radius, double ntargets) {
-	double adjusted_radius = radius / sqrt(ntargets / 100.0);
+	double adjusted_radius = radius; // / sqrt(ntargets / 100.0);
 	
 	return adjusted_radius;
 }
