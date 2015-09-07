@@ -8,7 +8,7 @@
 #include <rwlibs/algorithms/kdtree/KDTree.hpp>
 #include <rwlibs/algorithms/kdtree/KDTreeQ.hpp>
 
-#define DEBUG rw::common::Log::infoLog()
+#define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
 
 
