@@ -39,13 +39,14 @@ struct Configuration {
 	string method;
 	string dwc;
 	string td;
+	string gripper;
 	string samples;
 	string name;
 	double sigma_a;
 	double sigma_p;
 	
 	Configuration() :
-		parameters({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}),
+		//parameters({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}),
 		weights({1, 1, 1, 1, 1, 1, 1})
 	{}
 } configuration;
@@ -55,6 +56,7 @@ struct Data {
 	DynamicWorkCell::Ptr dwc;
 	TaskDescription::Ptr td;
 	vector<SurfaceSample> samples;
+	Gripper::Ptr gripper;
 } data;
 
 
@@ -88,6 +90,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 		("dwc", value<string>(&conf.dwc)->required(), "dynamic workcell file")
 		("td", value<string>(&conf.td)->required(), "task description file")
 		("samples", value<string>(&conf.samples), "surface samples file")
+		("gripper", value<string>(&conf.gripper), "base gripper file")
 		("name", value<string>(&conf.name)->default_value("gripper"), "gripper name")
 		("sigma_a",	value<double>(&conf.sigma_a)->default_value(8), "standard deviation in of angle in degrees")
 		("sigma_p",	value<double>(&conf.sigma_p)->default_value(0.003), "standard deviation of position in meters");
@@ -140,7 +143,7 @@ GripperObjectiveFunction::Ptr make_objective_function(const Configuration& confi
 		parameters.push_back(p);
 		names.push_back(MapGripperBuilder::parameterNameToString(p));
 	}
-	GripperBuilder::Ptr builder = new MapGripperBuilder(new Gripper(), parameters);
+	GripperBuilder::Ptr builder = new MapGripperBuilder(data.gripper, parameters);
 	
 	/* objective */
 	GripperObjectiveFunction::Ptr objective = new GripperObjectiveFunction(builder, manager);
@@ -161,6 +164,14 @@ void load_data(const Configuration& config, Data& data) {
 		INFO << "* Loading samples... ";
 		data.samples = SurfaceSample::loadFromXML(config.samples);
 		INFO << "Loaded." << endl;
+	}
+	
+	if (!config.gripper.empty()) {
+		INFO << "* Loading gripper... ";
+		data.gripper = GripperXMLLoader::load(config.gripper);
+		INFO << "Loaded." << endl;
+	} else {
+		data.gripper = ownedPtr(new Gripper());
 	}
 }
 
