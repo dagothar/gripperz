@@ -10,7 +10,7 @@
 #include <rw/math/Math.hpp>
 
 
-#define DEBUG rw::common::Log::debugLog()
+#define DEBUG rw::common::Log::infoLog()
 #define INFO rw::common::Log::infoLog()
 
 
@@ -67,9 +67,14 @@ Vector SimulatedAnnealingOptimizer::minimize(ObjectiveFunction::Ptr function, co
 		Vector new_state = generateNewState(current_state, T);
 		Scalar new_value = function->evaluate(new_state); ++fev;
 		
-		if (rw::math::Math::ran(0.0, 1.0) < calculateAcceptanceProbability(current_value, new_value, T)) {
+		double p = calculateAcceptanceProbability(current_value, new_value, T);
+		DEBUG << "transition probability from " << current_value << " to " << new_value << " at T=" << T << ": " << p << endl;
+		
+		if (rw::math::Math::ran(0.0, 1.0) < p) {
 			current_state = new_state;
 			current_value = new_value;
+			
+			DEBUG << "transition accepted" << endl;
 		}
 		
 		T -= dT; if (T < 0.0) T = 0.0;
