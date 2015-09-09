@@ -263,6 +263,10 @@ int main(int argc, char* argv[]) {
 	GripperQuality::Ptr opt_gripper_q = manager->evaluateGripper(opt_gripper);
 	gripper->setQuality(*opt_gripper_q);
 	
+	cout << "Optimization succesful!" << endl;
+	cout << "Result: " << *opt_gripper << endl;
+	cout << "Quality: " << *opt_gripper_q << endl;
+	
 	/* save results */
 	path opt_gripper_file = outdir / path("result.grp.xml");
 	GripperXMLLoader::save(opt_gripper, opt_gripper_file.string());
