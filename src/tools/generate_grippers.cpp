@@ -199,8 +199,8 @@ int main(int argc, char* argv[]) {
 	unsigned tries = 0;
 	int generated = last;
 	while (generated < ngrippers) {
-		cout << "# Trying gripper " << ++tries << endl;
-		cout << "# Grippers generated so far: " << generated << endl;
+		INFO << "# Trying gripper " << ++tries << endl;
+		INFO << "# Grippers generated so far: " << generated << endl;
 		
 		/* randomize parameters */
 		Q qparams = Math::ranQ(lower, upper);
@@ -210,7 +210,7 @@ int main(int argc, char* argv[]) {
 		double q = 0;
 		try {
 			q = objective->evaluate(vparams);
-			cout << "Gripper quality= " << q << endl;
+			INFO << "Gripper quality= " << q << endl;
 		} catch (exception& e) {
 			RW_WARN ("Exception during gripper evaluation: " << e.what());
 		}
@@ -224,17 +224,19 @@ int main(int argc, char* argv[]) {
 		if (q > 0.0) {
 			++generated;
 	
-			GripperXMLLoader::save(grp, sstr.str() + ".grp.xml");
+			string fname = sstr.str() + ".grp.xml";
+			GripperXMLLoader::save(grp, fname);
 			
-			cout << "Gripper OK" << endl;
+			INFO << "Gripper OK: " << fname << endl;
 		} else {
-			cout << "Gripper NOT OK" << endl;
-
-			GripperXMLLoader::save(grp, "_" + sstr.str() + ".grp.xml");
+			string fname = "_" + sstr.str() + ".grp.xml";
+			GripperXMLLoader::save(grp, fname);
+			
+			INFO << "Gripper NOT OK: " << fname << endl;
 		}
 	}
 	
-	cout << "Finished. Generated " << generated << " grippers with " << tries << " tries." << endl;
+	INFO << "Finished. Generated " << generated << " grippers with " << tries << " tries." << endl;
 
 	return 0;
 }
