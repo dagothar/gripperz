@@ -100,7 +100,7 @@ png(filename='coverage.png', width=PLOT_W, height=PLOT_H, units="px", pointsize=
 trellis.par.set('axis.line', list(col='transparent'))
 plot <- wireframe(
 	coverage ~ x * y, data = data,
-	zlim=c(0, 1), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
+	zlim=c(0, 0), screen=list(z=PLOT_ANGLE_Z, x=PLOT_ANGLE_X),
 	scales=list(arrows=F, col='black', tick.number=N_TICKS, axs='i'),
 	drape=T, col.regions=COL_COVERAGE, colorkey=F,
 	xlab=xlabel, ylab=ylabel, zlab=list(rot=90),

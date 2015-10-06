@@ -196,8 +196,8 @@ int main(int argc, char* argv[]) {
 	ObjectiveFunction::Ptr objective = new CombinedFunction(func, logMethod);
 	
 	/* generate grippers */
-	unsigned tries = 0;
-	int generated = last;
+	unsigned tries = last;
+	int generated = 0;
 	while (generated < ngrippers) {
 		INFO << "# Trying gripper " << ++tries << endl;
 		INFO << "# Grippers generated so far: " << generated << endl;

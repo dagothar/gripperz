@@ -53,4 +53,9 @@ if (BUILD_SANDBOX)
 	add_executable(gripper_slice gripper_slice.cpp)
 	add_dependencies(gripper_slice gripperz)
 	target_link_libraries(gripper_slice gripperz)
+	
+	# Target: filter_tasks
+	add_executable(filter_tasks filter_tasks.cpp)
+	add_dependencies(filter_tasks gripperz)
+	target_link_libraries(filter_tasks gripperz)
 endif ()
