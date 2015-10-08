@@ -24,6 +24,7 @@
 		using namespace gripperz::util; \
 		using namespace gripperz::grasps; \
                 using namespace gripperz::grasps::filters; \
+                using namespace gripperz::grasps::planners; \
                 using namespace gripperz::simulation; \
 		using namespace gripperz::models; \
 		using namespace gripperz::math; \

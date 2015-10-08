@@ -26,14 +26,14 @@ using namespace std;
 
 StandardEvaluationManager::StandardEvaluationManager(
         context::TaskDescription::Ptr context,
-        grasps::GraspSource::Ptr generator,
+        grasps::GraspSource::Ptr graspSource,
         simulation::GripperSimulator::Ptr simulator,
         evaluation::GripperEvaluator::Ptr evaluator,
         const Configuration& configuration
         ) :
 GripperEvaluationManager(configuration),
 _context(context),
-_generator(generator),
+_graspSource(graspSource),
 _simulator(simulator),
 _evaluator(evaluator) {
 }
@@ -63,10 +63,10 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
     GraspTask::Ptr samples = NULL;
     try {
         DEBUG << "Planning tasks" << endl;
-        _generator->generateTasks(config.nOfGraspsPerEvaluation, state);
+        _graspSource->generateTasks(config.nOfGraspsPerEvaluation, state);
 
-        targets = _generator->getGrasps();
-        samples = _generator->getSamples();
+        targets = _graspSource->getGrasps();
+        samples = _graspSource->getSamples();
     } catch (const std::exception& e) {
         RW_WARN("Exception during grasp generation! " << e.what());
     }
