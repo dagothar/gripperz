@@ -1,44 +1,47 @@
-#include "TaskGenerator.hpp"
+/* 
+ * File:   BasicParallelGripperGraspPlanner.cpp
+ * Author: dagothar
+ * 
+ * Created on October 8, 2015, 4:27 PM
+ */
 
-#include <vector>
-#include <iostream>
-#include <rw/math.hpp>
-#include <rwlibs/algorithms/kdtree/KDTree.hpp>
-#include <rwlibs/algorithms/kdtree/KDTreeQ.hpp>
+#include "BasicParallelGripperGraspPlanner.hpp"
+#include "grasps/SurfaceSample.hpp"
+#include <rw/math/RPY.hpp>
 #include <rw/geometry/TriMeshSurfaceSampler.hpp>
 #include <rwlibs/proximitystrategies/ProximityStrategyFactory.hpp>
 
-
-#define DEBUG rw::common::Log::debugLog()
-#define INFO rw::common::Log::infoLog()
-
-
 using namespace std;
-
-USE_ROBWORK_NAMESPACE;
-using namespace robwork;
-using namespace rw::math;
-using namespace rwsim;
 using namespace gripperz::context;
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::planners;
+using namespace rw::common;
+using namespace rw::math;
+using namespace rw::models;
+using namespace rw::kinematics;
+using namespace rw::geometry;
+using namespace rw::proximity;
+using namespace rwlibs::proximitystrategies;
+using namespace rwlibs::task;
 
-TaskGenerator::TaskGenerator(TaskDescription::Ptr td, const std::vector<SurfaceSample>& ssamples) :
-_td(td),
-_tasks(NULL),
-_samples(NULL),
-_ssamples(ssamples) {
+BasicParallelGripperGraspPlanner::BasicParallelGripperGraspPlanner(unsigned nGrasps, const rw::kinematics::State& state, context::TaskDescription::Ptr td) :
+GraspPlanner(nGrasps),
+_state(state),
+_td(td) {
 }
 
-void TaskGenerator::moveFrameW(const Transform3D<>& wTtcp, Frame* tcp,
-        MovableFrame* base, State& state) {
+BasicParallelGripperGraspPlanner::~BasicParallelGripperGraspPlanner() {
+}
+
+void moveFrameW(const Transform3D<>& wTtcp, Frame* tcp, MovableFrame* base, State& state) {
     Transform3D<> tcpTbase = Kinematics::frameTframe(tcp, base, state);
     Transform3D<> wTbase_target = wTtcp * tcpTbase;
 
     base->moveTo(wTbase_target, state);
 }
 
-SurfaceSample TaskGenerator::sample(const rw::kinematics::State& state, TriMeshSurfaceSampler& sampler, ProximityModel::Ptr object, ProximityModel::Ptr ray, CollisionStrategy::Ptr cstrategy) {
-    Transform3D<> wTobj = Kinematics::worldTframe(_td->getTargetObject()->getBase(), state);
+SurfaceSample sample(TaskDescription::Ptr td, const rw::kinematics::State& state, TriMeshSurfaceSampler& sampler, ProximityModel::Ptr object, ProximityModel::Ptr ray, CollisionStrategy::Ptr cstrategy) {
+    Transform3D<> wTobj = Kinematics::worldTframe(td->getTargetObject()->getBase(), state);
 
     // choose a random number in the total area
     TriMesh::Ptr mesh = sampler.getMesh();
@@ -98,7 +101,7 @@ SurfaceSample TaskGenerator::sample(const rw::kinematics::State& state, TriMeshS
 
                 target.P() = pos - faceNormal * (dist / 2.0);
 
-                if (_td->hasHints()) {
+                if (td->hasHints()) {
                     targetFound = false;
                 } else {
                     targetFound = true;
@@ -106,9 +109,9 @@ SurfaceSample TaskGenerator::sample(const rw::kinematics::State& state, TriMeshS
                 // test if the target belongs in the area around hinted grasps
                 Transform3D<> targetW = wTobj * target; //inverse(wTobj) * target;
 
-                BOOST_FOREACH(Transform3D<> hint, _td->getHints()) {
+                BOOST_FOREACH(Transform3D<> hint, td->getHints()) {
                     // calculate distance
-                    Q teachDist = _td->getTeachDistance();
+                    Q teachDist = td->getTeachDistance();
 
                     bool distOk = std::fabs(targetW.P()[0] - hint.P()[0]) <= teachDist[0] &&
                             std::fabs(targetW.P()[1] - hint.P()[1]) <= teachDist[1] &&
@@ -122,8 +125,8 @@ SurfaceSample TaskGenerator::sample(const rw::kinematics::State& state, TriMeshS
                     Vector3D<> targetY = targetW.R() * Vector3D<>::y();
                     Vector3D<> hintY = hint.R() * Vector3D<>::y();
 
-                    bool angleOk = (std::fabs(angle(targetZ, hintZ)) <= _td->getTeachDistance()[3]) &&
-                            (std::fabs(angle(targetY, hintY)) <= _td->getTeachDistance()[4]);
+                    bool angleOk = (std::fabs(angle(targetZ, hintZ)) <= td->getTeachDistance()[3]) &&
+                            (std::fabs(angle(targetY, hintY)) <= td->getTeachDistance()[4]);
 
                     if (distOk && angleOk) {
                         targetFound = true;
@@ -144,31 +147,10 @@ SurfaceSample TaskGenerator::sample(const rw::kinematics::State& state, TriMeshS
     return SurfaceSample(target, graspW);
 }
 
-int TaskGenerator::countTasks(const rwlibs::task::GraspTask::Ptr tasks, const rwlibs::task::GraspResult::TestStatus status) {
-    int n = 0;
+Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps, Grasps& grasps, Grasps& samples) {
+    vector<SurfaceSample> ssamples = _ssamples;
 
-    typedef std::pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
-
-    BOOST_FOREACH(TaskTarget p, tasks->getAllTargets()) {
-        if (p.second->getResult()->testStatus == status) {
-            ++n;
-        }
-    }
-
-    return n;
-}
-
-rwlibs::task::GraspTask::Ptr TaskGenerator::generateTasks(
-        int nTargets,
-        rw::kinematics::State state
-        ) {
-    std::vector<SurfaceSample> ssamples = _ssamples;
-    rwlibs::task::GraspTask::Ptr tasks = generateTask(nTargets, state, &ssamples, 0);
-    return tasks;
-}
-
-rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinematics::State state, std::vector<SurfaceSample>* ssamples, int nSamples) {
-    Transform3D<> wTobj = Kinematics::worldTframe(_td->getTargetObject()->getBase(), state);
+    Transform3D<> wTobj = Kinematics::worldTframe(_td->getTargetObject()->getBase(), _state);
 
     // setup task
     GraspTask::Ptr gtask = ownedPtr(new GraspTask);
@@ -197,7 +179,7 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
     PlainTriMeshF *rayMesh = new PlainTriMeshF(1);
     (*rayMesh)[0] = Triangle<float>(Vector3D<float>(0, (float) - 0.001, 0), Vector3D<float>(0, (float) 0.001, 0), Vector3D<float>(0, 0, (float) 10));
     ProximityModel::Ptr ray = cstrategy->createModel();
-    Geometry geom(rayMesh); // we have to wrap the trimesh in an geom object
+    Geometry geom(rayMesh);
     geom.setId("Ray");
     ray->addGeometry(geom);
 
@@ -213,40 +195,31 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
         cdetect->addRule(ProximitySetupRule::makeExclude("gripper.RightFinger", obj->getBase()->getName()));
     }
 
-    int failures_in_row = 0;
-    int successes = 0, samples = 0;
-    while ((nTargets > 0 && successes < nTargets) || (nSamples > 0 && samples < nSamples)) {
+    unsigned failures_in_row = 0;
+    unsigned successes = 0;
+    while (successes < nGrasps) {
         SurfaceSample ssample;
 
-        if (ssamples && ssamples->size() > 0) {
-            ssample = ssamples->back();
-            ssamples->pop_back();
+        if (ssamples.size() > 0) {
+            ssample = ssamples.back();
+            ssamples.pop_back();
 
         } else {
-            ssample = sample(state, sampler, object, ray, cstrategy);
+            ssample = sample(_td, _state, sampler, object, ray, cstrategy);
         }
 
-        ++samples;
-
-        //double& graspW = ssample.graspW;
         Transform3D<>& target = ssample.transform;
 
-        // distance between grasping points is graspW
-
         Q oq = Q(1, _td->getGripperDevice()->getBounds().second[0]);
-        //oq(0) = std::max(_closeQ(0), _closeQ(0)+(graspW+0.01)/2.0);
-        //oq(0) = std::min(_openQ(0), oq(0) );
-        _td->getGripperDevice()->setQ(oq, state);
+        _td->getGripperDevice()->setQ(oq, _state);
 
         // then check for collision
-        moveFrameW(wTobj * target, _td->getGripperTCP(), _td->getGripperMovable(), state);
+        moveFrameW(wTobj * target, _td->getGripperTCP(), _td->getGripperMovable(), _state);
 
         CollisionDetector::QueryResult result;
-        if (!cdetect->inCollision(state, &result, true)) {
+        if (!cdetect->inCollision(_state, &result, true)) {
             ++successes;
             failures_in_row = 0;
-
-            //DEBUG << "Adding target and sample" << endl;
 
             // make new subtask (for tasks)
             GraspSubTask subtask;
@@ -292,30 +265,17 @@ rwlibs::task::GraspTask::Ptr TaskGenerator::generateTask(int nTargets, rw::kinem
         }
     }
 
-    _tasks = gtask;
-    _samples = atask;
+    grasps = gtask;
+    samples = atask;
 
-    int ntargets = _tasks->getAllTargets().size();
-    int nsamples = _samples->getAllTargets().size();
+    //    Q preDist = _td->getPrefilteringDistance();
+    //    double R = 2.0 * sin(0.25 * preDist(1));
+    //    Q diff(7, preDist(0), preDist(0), preDist(0), R, R, R, preDist(2));
+    //
+    //    _tasks = filterTasks(_tasks, diff);
+    //
+    //    _samples = filterTasks(_samples, diff);
 
-    // preliminary filtering
-    DEBUG << "Preliminary filtering" << endl;
-    Q preDist = _td->getPrefilteringDistance();
-    double R = 2.0 * sin(0.25 * preDist(1));
-    Q diff(7, preDist(0), preDist(0), preDist(0), R, R, R, preDist(2));
 
-    DEBUG << " - filtering targets... ";
-    _tasks = filterTasks(_tasks, diff);
-    int nftargets = countTasks(_tasks, GraspResult::UnInitialized);
-    DEBUG << nftargets << " out of " << ntargets << endl;
-
-    DEBUG << " - filtering samples... ";
-    _samples = filterTasks(_samples, diff);
-    int nfsamples = countTasks(_samples, GraspResult::UnInitialized);
-    DEBUG << nfsamples << " out of " << nsamples << endl;
-
-    DEBUG << "Generated " << ntargets << " tasks & " << nsamples << " samples." << endl;
-
-    return _tasks;
+    return grasps;
 }
-

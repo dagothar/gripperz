@@ -49,13 +49,20 @@
           <in>RobustnessGraspFilter.cpp</in>
           <in>RobustnessGraspFilter.hpp</in>
         </df>
+        <df name="planners">
+          <in>BasicParallelGripperGraspPlanner.cpp</in>
+          <in>BasicParallelGripperGraspPlanner.hpp</in>
+        </df>
         <in>GraspDatabase.cpp</in>
+        <in>GraspPlanner.cpp</in>
+        <in>GraspPlanner.hpp</in>
         <in>GraspSource.cpp</in>
         <in>SurfaceSample.cpp</in>
         <in>TaskGenerator.cpp</in>
         <in>TaskStatistics.cpp</in>
         <in>Types.cpp</in>
         <in>filters.hpp</in>
+        <in>planners.hpp</in>
       </df>
       <df name="loaders">
         <in>GripperXMLLoader.cpp</in>
@@ -180,7 +187,7 @@
       <makefileType>
         <makeTool>
           <buildCommandWorkingDir>build</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -f Makefile -j 3</buildCommand>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
           <executablePath></executablePath>
         </makeTool>
@@ -797,6 +804,10 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="src/grasps/GraspPlanner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/grasps/GraspPlanner.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/grasps/GraspSource.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
@@ -847,6 +858,18 @@
             flavor2="0">
       </item>
       <item path="src/grasps/filters/RobustnessGraspFilter.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/planners.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/grasps/planners/BasicParallelGripperGraspPlanner.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/planners/BasicParallelGripperGraspPlanner.hpp"
             ex="false"
             tool="3"
             flavor2="0">

@@ -55,8 +55,14 @@
           <in>RobustnessGraspFilter.cpp</in>
           <in>RobustnessGraspFilter.hpp</in>
         </df>
+        <df name="planners">
+          <in>BasicParallelGripperGraspPlanner.cpp</in>
+          <in>BasicParallelGripperGraspPlanner.hpp</in>
+        </df>
         <in>GraspDatabase.cpp</in>
         <in>GraspDatabase.hpp</in>
+        <in>GraspPlanner.cpp</in>
+        <in>GraspPlanner.hpp</in>
         <in>GraspSource.cpp</in>
         <in>GraspSource.hpp</in>
         <in>SurfaceSample.cpp</in>
@@ -68,6 +74,7 @@
         <in>Types.cpp</in>
         <in>Types.hpp</in>
         <in>filters.hpp</in>
+        <in>planners.hpp</in>
       </df>
       <df name="loaders">
         <in>GripperXMLLoader.cpp</in>

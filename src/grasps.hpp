@@ -8,3 +8,4 @@
 #include "grasps/GraspSource.hpp"
 #include "grasps/GraspDatabase.hpp"
 #include "grasps/filters.hpp"
+#include "grasps/planners.hpp"
