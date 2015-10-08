@@ -31,6 +31,10 @@ namespace gripperz {
                 virtual Grasps filter(Grasps grasps);
                 
                 void addFilter(GraspFilter::Ptr filter);
+                
+                void clear() {
+                    _filters.clear();
+                }
 
             private:
 

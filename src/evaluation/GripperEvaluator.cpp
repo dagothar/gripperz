@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <grasps/TaskStatistics.hpp>
 #include <grasps/GraspSource.hpp>
+#include <grasps/filters/KDGraspFilter.hpp>
 #include <rwlibs/task/GraspTask.hpp>
 #include <rwlibs/task/GraspTarget.hpp>
 #include <rwlibs/algorithms/StablePose1DModel.hpp>
@@ -23,6 +24,7 @@ using namespace std;
 using namespace gripperz::evaluation;
 using namespace gripperz::models;
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::filters;
 using namespace gripperz::context;
 using namespace rw::common;
 using namespace rw::math;
@@ -128,15 +130,14 @@ double GripperEvaluator::calculateCoverage(models::Gripper::Ptr gripper, rwlibs:
 	double R = 2.0 * sin(0.25 * covDist(1));
 	Q diff(7, covDist(0), covDist(0), covDist(0), R, R, R, covDist(2));
 
-	/* okTargets is the number of succesful targets after filtering +
-	 * + the number of interferences
-	 */
-	GraspTask::Ptr coverageTasks = GraspSource::filterTasks(tasks, diff);
+        GraspFilter::Ptr coverageFilter = new KDGraspFilter(diff);
+	GraspTask::Ptr coverageTasks = coverageFilter->filter(tasks);
+        GraspTask::Ptr coverageSamples = coverageFilter->filter(samples);
 	
 	int okTargets = TaskStatistics::countTasksWithResult(coverageTasks, GraspResult::Success);
 	okTargets += TaskStatistics::countTasksWithResult(coverageTasks, GraspResult::Interference);
-
-	int allTargets = TaskStatistics::countTasksWithResult(GraspSource::filterTasks(samples, diff), GraspResult::UnInitialized);
+        
+	int allTargets = TaskStatistics::countTasksWithResult(coverageSamples, GraspResult::UnInitialized);
 	if (allTargets == 0) {
 		return 0.0;
 	}

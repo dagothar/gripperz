@@ -23,7 +23,8 @@
 		using namespace gripperz::loaders; \
 		using namespace gripperz::util; \
 		using namespace gripperz::grasps; \
-		using namespace gripperz::simulation; \
+                using namespace gripperz::grasps::filters; \
+                using namespace gripperz::simulation; \
 		using namespace gripperz::models; \
 		using namespace gripperz::math; \
 		using namespace gripperz::geometry; \
