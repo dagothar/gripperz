@@ -9,22 +9,22 @@
 #include <rw/common/Ptr.hpp>
 
 namespace gripperz {
-namespace context {
+    namespace context {
 
-/**
- * @class Context
- * @brief Base class for storing task context.
- */
-class Context {
-public:
-	//! Smart pointer.
-	typedef rw::common::Ptr<Context> Ptr;
+        /**
+         * @class Context
+         * @brief Base class for storing task context.
+         */
+        class Context {
+        public:
+            //! Smart pointer.
+            typedef rw::common::Ptr<Context> Ptr;
 
-public:
-	Context();
-	
-	virtual ~Context();
-};
+        public:
+            Context();
 
-} /* ontext */
+            virtual ~Context();
+        };
+
+    } /* context */
 } /* gripperz */
