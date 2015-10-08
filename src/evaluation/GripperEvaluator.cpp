@@ -7,7 +7,7 @@
 #include "GripperEvaluator.hpp"
 
 #include <algorithm>
-#include <grasps/TaskStatistics.hpp>
+#include <grasps/GraspStatistics.hpp>
 #include <grasps/GraspSource.hpp>
 #include <grasps/filters/KDGraspFilter.hpp>
 #include <rwlibs/task/GraspTask.hpp>
@@ -74,9 +74,9 @@ double GripperEvaluator::calculateSuccess(models::Gripper::Ptr gripper, rwlibs::
 	std::vector<std::pair<class GraspSubTask*, class GraspTarget*> > allTargets = tasks->getAllTargets();
 	int nAllTargets = allTargets.size();
 	
-	int successes = TaskStatistics::countTasksWithResult(tasks, GraspResult::Success);
-	int filtered = TaskStatistics::countTasksWithResult(tasks, GraspResult::Filtered);
-	int failures = TaskStatistics::countTasksWithResult(tasks, GraspResult::SimulationFailure);
+	int successes = GraspStatistics::countGraspsWithStatus(tasks, GraspResult::Success);
+	int filtered = GraspStatistics::countGraspsWithStatus(tasks, GraspResult::Filtered);
+	int failures = GraspStatistics::countGraspsWithStatus(tasks, GraspResult::SimulationFailure);
 	
 	DEBUG << "alltargets= " << nAllTargets << endl;
 	DEBUG << "successes= " << successes << endl;
@@ -105,7 +105,7 @@ double GripperEvaluator::calculateRobustness(models::Gripper::Ptr gripper, rwlib
 	std::vector<std::pair<class GraspSubTask*, class GraspTarget*> > allTargets = rtasks->getAllTargets();
 	int nAllTargets = allTargets.size();
 	
-	int successes = TaskStatistics::countTasksWithResult(rtasks, GraspResult::Success);
+	int successes = GraspStatistics::countGraspsWithStatus(rtasks, GraspResult::Success);
 	
 	DEBUG << "alltargets= " << nAllTargets << endl;
 	DEBUG << "successes= " << successes << endl;
@@ -134,10 +134,10 @@ double GripperEvaluator::calculateCoverage(models::Gripper::Ptr gripper, rwlibs:
 	GraspTask::Ptr coverageTasks = coverageFilter->filter(tasks);
         GraspTask::Ptr coverageSamples = coverageFilter->filter(samples);
 	
-	int okTargets = TaskStatistics::countTasksWithResult(coverageTasks, GraspResult::Success);
-	okTargets += TaskStatistics::countTasksWithResult(coverageTasks, GraspResult::Interference);
+	int okTargets = GraspStatistics::countGraspsWithStatus(coverageTasks, GraspResult::Success);
+	okTargets += GraspStatistics::countGraspsWithStatus(coverageTasks, GraspResult::Interference);
         
-	int allTargets = TaskStatistics::countTasksWithResult(coverageSamples, GraspResult::UnInitialized);
+	int allTargets = GraspStatistics::countGraspsWithStatus(coverageSamples, GraspResult::UnInitialized);
 	if (allTargets == 0) {
 		return 0.0;
 	}

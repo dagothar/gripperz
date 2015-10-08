@@ -57,8 +57,8 @@
         <in>GraspPlanner.cpp</in>
         <in>GraspPlanner.hpp</in>
         <in>GraspSource.cpp</in>
+        <in>GraspStatistics.cpp</in>
         <in>SurfaceSample.cpp</in>
-        <in>TaskStatistics.cpp</in>
         <in>Types.cpp</in>
         <in>filters.hpp</in>
         <in>planners.hpp</in>
@@ -811,11 +811,11 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/grasps/SurfaceSample.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/grasps/GraspStatistics.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/grasps/TaskStatistics.cpp" ex="false" tool="1" flavor2="8">
+      <item path="src/grasps/SurfaceSample.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
       </item>
