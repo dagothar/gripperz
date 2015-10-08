@@ -15,7 +15,7 @@
 #include "TaskDescription.hpp"
 #include "Gripper.hpp"
 #include "GripperXMLLoader.hpp"
-#include "TaskGenerator.hpp"
+#include "GraspSource.hpp"
 #include "GripperTaskSimulator.hpp"
 
 using namespace std;

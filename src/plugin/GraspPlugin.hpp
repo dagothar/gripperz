@@ -12,7 +12,7 @@
 #include <QtGui>
 #include <QTimer>
 
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 #include <models/Gripper.hpp>
 #include <simulation/GripperTaskSimulator.hpp>
 #include <simulation/BasicSimulator.hpp>
@@ -134,7 +134,7 @@ private:
 	rw::math::Transform3D<> _wTtarget; // target for grasping
 
 	int _nOfTargetsToGen;
-	gripperz::grasps::TaskGenerator::Ptr _generator;
+	gripperz::grasps::GraspSource::Ptr _generator;
 	rwlibs::task::GraspTask::Ptr _tasks; // grasp tasks planned or loaded from file
 	rwlibs::task::GraspTask::Ptr _samples; // all samples
 

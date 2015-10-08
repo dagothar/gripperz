@@ -39,11 +39,17 @@
         <in>JawPrimitive.cpp</in>
       </df>
       <df name="grasps">
+        <df name="filters">
+          <in>GraspFilter.cpp</in>
+          <in>GraspFilter.hpp</in>
+          <in>GraspFilterChain.cpp</in>
+          <in>GraspFilterChain.hpp</in>
+        </df>
         <in>GraspDatabase.cpp</in>
+        <in>GraspSource.cpp</in>
         <in>SurfaceSample.cpp</in>
         <in>TaskGenerator.cpp</in>
         <in>TaskStatistics.cpp</in>
-        <in>newfile.cpp</in>
       </df>
       <df name="loaders">
         <in>GripperXMLLoader.cpp</in>
@@ -785,6 +791,10 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="src/grasps/GraspSource.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
       <item path="src/grasps/SurfaceSample.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
@@ -797,7 +807,19 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/grasps/newfile.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/grasps/filters/GraspFilter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/grasps/filters/GraspFilter.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/grasps/filters/GraspFilterChain.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/filters/GraspFilterChain.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/loaders/GripperXMLLoader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">

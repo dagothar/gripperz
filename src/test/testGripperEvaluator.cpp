@@ -10,7 +10,7 @@
 #include <evaluation/GripperEvaluator.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <loaders/GripperXMLLoader.hpp>
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 #include <simulation/InterferenceSimulator.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
@@ -60,9 +60,9 @@ int main(int argc, char* argv[]) {
 	GripperEvaluator::Ptr evaluator = new GripperEvaluator(td, td->getAlignmentCalculator());
 	
 	/* generate tasks */
-	TaskGenerator::Ptr generator = new TaskGenerator(td);
+	GraspSource::Ptr generator = new GraspSource(td);
 	generator->generateTask(100, td->getInitState());
-	GraspTask::Ptr tasks = generator->getTasks();
+	GraspTask::Ptr tasks = generator->getGrasps();
 	GraspTask::Ptr samples = generator->getSamples();
 	
 	/* simulate tasks */

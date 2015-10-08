@@ -6,7 +6,7 @@
 
 #include "GripperEvaluationManagerFactory.hpp"
 #include <simulation/InterferenceSimulator.hpp>
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 #include <evaluation/GripperEvaluator.hpp>
 #include "GripperEvaluationManagerBuilder.hpp"
 
@@ -26,7 +26,7 @@ StandardEvaluationManager::Ptr GripperEvaluationManagerFactory::makeStandardEval
 	GripperEvaluationManagerBuilder builder(td, nThreads, ssamples);
 	
 	StandardEvaluationManager::Ptr manager = builder
-		.generator(ownedPtr(new TaskGenerator(td, ssamples)))
+		.generator(ownedPtr(new GraspSource(td, ssamples)))
 		.simulator(ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads)))
 		.evaluator(ownedPtr(new GripperEvaluator(td, td->getAlignmentCalculator())))
 		.configuration(config)

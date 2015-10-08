@@ -5,5 +5,5 @@
  */
 
 #include "grasps/SurfaceSample.hpp"
-#include "grasps/TaskGenerator.hpp"
+#include "grasps/GraspSource.hpp"
 #include "grasps/GraspDatabase.hpp"

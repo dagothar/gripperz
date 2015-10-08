@@ -25,7 +25,7 @@ using namespace std;
 
 StandardEvaluationManager::StandardEvaluationManager(
 	context::TaskDescription::Ptr context,
-	grasps::TaskGenerator::Ptr generator,
+	grasps::GraspSource::Ptr generator,
 	simulation::GripperSimulator::Ptr simulator,
 	evaluation::GripperEvaluator::Ptr evaluator,
 	const Configuration& configuration
@@ -67,7 +67,7 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
 		DEBUG << "Planning tasks" << endl;
 		_generator->generateTasks(config.nOfGraspsPerEvaluation, state);
 		
-		targets = _generator->getTasks();
+		targets = _generator->getGrasps();
 		samples = _generator->getSamples();
 	} catch (const std::exception& e) {
 		RW_WARN("Exception during grasp generation! " << e.what());
@@ -95,8 +95,8 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
 	if (config.nOfRobustnessTargets != 0) {
 		DEBUG << " --- SIMULATING ROBUSTNESS ---" << endl;
 		try {
-			rtargets = TaskGenerator::copyTasks(targets, true);
-			rtargets = TaskGenerator::generateRobustnessTasks(rtargets, config.nOfRobustnessTargets, config.sigma_p, config.sigma_a * Deg2Rad);
+			rtargets = GraspSource::copyTasks(targets, true);
+			rtargets = GraspSource::generateRobustnessTasks(rtargets, config.nOfRobustnessTargets, config.sigma_p, config.sigma_a * Deg2Rad);
 			
 			_simulator->loadTasks(rtargets);
 			

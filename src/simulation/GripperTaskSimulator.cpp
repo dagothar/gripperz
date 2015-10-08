@@ -5,7 +5,7 @@
 #include <rwlibs/algorithms/StablePose0DModel.hpp>
 #include <algorithm>
 #include <vector>
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 
 
 #define DEBUG rw::common::Log::debugLog()
@@ -142,16 +142,16 @@ double GripperTaskSimulator::calculateCoverage(double actualRatio) {
 
 	/* okTargets is the number of succesful targets after filtering +
 	 * the number of slippages + the number of interferences */
-	GraspTask::Ptr coverageTasks = TaskGenerator::filterTasks(_gtask, diff);
-	int okTargets = TaskGenerator::countTasks(coverageTasks,
+	GraspTask::Ptr coverageTasks = GraspSource::filterTasks(_gtask, diff);
+	int okTargets = GraspSource::countTasks(coverageTasks,
 			GraspResult::Success);
-	okTargets += TaskGenerator::countTasks(coverageTasks,
+	okTargets += GraspSource::countTasks(coverageTasks,
 			GraspResult::ObjectSlipped);
-	okTargets += TaskGenerator::countTasks(coverageTasks,
+	okTargets += GraspSource::countTasks(coverageTasks,
 			GraspResult::Interference);
 
-	int allTargets = TaskGenerator::countTasks(
-			TaskGenerator::filterTasks(_samples, diff),
+	int allTargets = GraspSource::countTasks(
+			GraspSource::filterTasks(_samples, diff),
 			GraspResult::UnInitialized);
 
 	DEBUG << "Requested targets: " << getNrTargets() << " / Samples: "
@@ -352,15 +352,15 @@ void GripperTaskSimulator::evaluateGripper() {
 	DEBUG << "EVALUATION - " << endl;
 	DEBUG << _gripper->getName() << " - Evaluating..." << endl;
 
-	int successes = TaskGenerator::countTasks(_gtask, GraspResult::Success);
-	int interferences = TaskGenerator::countTasks(_gtask,
+	int successes = GraspSource::countTasks(_gtask, GraspResult::Success);
+	int interferences = GraspSource::countTasks(_gtask,
 			GraspResult::Interference);
-	int slippages = TaskGenerator::countTasks(_gtask, GraspResult::ObjectSlipped);
-	int drops = TaskGenerator::countTasks(_gtask, GraspResult::ObjectDropped);
-	int failures = TaskGenerator::countTasks(_gtask,
+	int slippages = GraspSource::countTasks(_gtask, GraspResult::ObjectSlipped);
+	int drops = GraspSource::countTasks(_gtask, GraspResult::ObjectDropped);
+	int failures = GraspSource::countTasks(_gtask,
 			GraspResult::SimulationFailure);
-	int samples = TaskGenerator::countTasks(_samples, GraspResult::UnInitialized);
-	int removed = TaskGenerator::countTasks(_gtask, GraspResult::Filtered);
+	int samples = GraspSource::countTasks(_samples, GraspResult::UnInitialized);
+	int removed = GraspSource::countTasks(_gtask, GraspResult::Filtered);
 	int filtered = getNrTargets() - removed;
 	int actual = filtered - failures;
 

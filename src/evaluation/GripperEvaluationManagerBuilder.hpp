@@ -29,14 +29,14 @@ public:
 	
 	StandardEvaluationManager::Ptr build();
 	
-	GripperEvaluationManagerBuilder& generator(grasps::TaskGenerator::Ptr gen);
+	GripperEvaluationManagerBuilder& generator(grasps::GraspSource::Ptr gen);
 	GripperEvaluationManagerBuilder& simulator(simulation::GripperSimulator::Ptr sim);
 	GripperEvaluationManagerBuilder& evaluator(evaluation::GripperEvaluator::Ptr eval);
 	GripperEvaluationManagerBuilder& configuration(const GripperEvaluationManager::Configuration& config);
 	
 private:
 	context::TaskDescription::Ptr _td;
-	grasps::TaskGenerator::Ptr _generator;
+	grasps::GraspSource::Ptr _generator;
 	simulation::GripperSimulator::Ptr _simulator;
 	evaluation::GripperEvaluator::Ptr _evaluator;
 	GripperEvaluationManager::Configuration _config;

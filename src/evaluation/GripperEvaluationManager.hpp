@@ -8,7 +8,7 @@
 
 #include <rw/common/Ptr.hpp>
 #include <context/TaskDescription.hpp>
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 #include <simulation/GripperSimulator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
 #include <models/Gripper.hpp>

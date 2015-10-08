@@ -17,7 +17,7 @@
 
 #include <geometry/JawPrimitive.hpp>
 #include "RenderTarget.hpp"
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 #include "DesignDialog.hpp"
 #include <simulation/GripperTaskSimulator.hpp>
 #include <loaders/GripperXMLLoader.hpp>
@@ -429,7 +429,7 @@ void GraspPlugin::planTasks() {
 	}
 
 	try {
-		_generator = ownedPtr(new TaskGenerator(_td));
+		_generator = ownedPtr(new GraspSource(_td));
 		
 		/*
 		 * Test TCP position
@@ -439,7 +439,7 @@ void GraspPlugin::planTasks() {
 
 		_generator->generateTask(_nOfTargetsToGen, _td->getInitState());
 
-		_tasks = _generator->getTasks();
+		_tasks = _generator->getGrasps();
 		_samples = _generator->getSamples();
 	} catch (rw::common::Exception& e) {
 		QMessageBox::critical(NULL, "RW Exception", e.what());
@@ -475,8 +475,8 @@ void GraspPlugin::perturbTasks() {
 
 	try {
 		if (onlySuccesses)
-			_tasks = TaskGenerator::copyTasks(_tasks, true);
-		_tasks = TaskGenerator::generateRobustnessTasks(_tasks, nPerturbations, 0.003, 8.0 * Deg2Rad);
+			_tasks = GraspSource::copyTasks(_tasks, true);
+		_tasks = GraspSource::generateRobustnessTasks(_tasks, nPerturbations, 0.003, 8.0 * Deg2Rad);
 
 	} catch (rw::common::Exception& e) {
 

@@ -6,7 +6,7 @@
 
 #include "GripperEvaluationManagerBuilder.hpp"
 #include <simulation/InterferenceSimulator.hpp>
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 #include <evaluation/GripperEvaluator.hpp>
 #include "StandardEvaluationManager.hpp"
 
@@ -20,7 +20,7 @@ using namespace rw::common;
 
 GripperEvaluationManagerBuilder::GripperEvaluationManagerBuilder(context::TaskDescription::Ptr td, unsigned nThreads, const std::vector<grasps::SurfaceSample>& ssamples) :
 	_td(td),
-	_generator(ownedPtr(new TaskGenerator(td, ssamples))),
+	_generator(ownedPtr(new GraspSource(td, ssamples))),
 	_simulator(ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads))),
 	_evaluator(ownedPtr(new GripperEvaluator(td, td->getAlignmentCalculator())))
 {
@@ -36,7 +36,7 @@ StandardEvaluationManager::Ptr GripperEvaluationManagerBuilder::build() {
 }
 
 	
-GripperEvaluationManagerBuilder& GripperEvaluationManagerBuilder::generator(grasps::TaskGenerator::Ptr gen) {
+GripperEvaluationManagerBuilder& GripperEvaluationManagerBuilder::generator(grasps::GraspSource::Ptr gen) {
 	_generator = gen;
 	
 	return *this;

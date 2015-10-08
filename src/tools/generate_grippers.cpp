@@ -28,7 +28,7 @@
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <models/Gripper.hpp>
 #include <loaders/GripperXMLLoader.hpp>
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 #include <simulation/GripperTaskSimulator.hpp>
 #include <simulation/InterferenceSimulator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
