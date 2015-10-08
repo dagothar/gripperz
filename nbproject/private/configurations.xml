@@ -53,6 +53,7 @@
         <in>TaskGenerator.hpp</in>
         <in>TaskStatistics.cpp</in>
         <in>TaskStatistics.hpp</in>
+        <in>newfile.cpp</in>
       </df>
       <df name="loaders">
         <in>GripperXMLLoader.cpp</in>

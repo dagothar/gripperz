@@ -43,6 +43,7 @@
         <in>SurfaceSample.cpp</in>
         <in>TaskGenerator.cpp</in>
         <in>TaskStatistics.cpp</in>
+        <in>newfile.cpp</in>
       </df>
       <df name="loaders">
         <in>GripperXMLLoader.cpp</in>
@@ -795,6 +796,8 @@
       <item path="src/grasps/TaskStatistics.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
+      </item>
+      <item path="src/grasps/newfile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/loaders/GripperXMLLoader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
