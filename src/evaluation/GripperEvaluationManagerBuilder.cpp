@@ -8,19 +8,21 @@
 #include <simulation/InterferenceSimulator.hpp>
 #include <grasps/GraspSource.hpp>
 #include <evaluation/GripperEvaluator.hpp>
+#include <grasps/planners/BasicParallelGripperGraspPlanner.hpp>
 #include "StandardEvaluationManager.hpp"
 
 
 using namespace gripperz::evaluation;
 using namespace gripperz::context;
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::planners;
 using namespace gripperz::simulation;
 using namespace rw::common;
 
 
 GripperEvaluationManagerBuilder::GripperEvaluationManagerBuilder(context::TaskDescription::Ptr td, unsigned nThreads, const std::vector<grasps::SurfaceSample>& ssamples) :
 	_td(td),
-	_generator(ownedPtr(new GraspSource(td, ssamples))),
+	_generator(ownedPtr(new BasicParallelGripperGraspPlanner(100, td->getInitState(), td))),
 	_simulator(ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads))),
 	_evaluator(ownedPtr(new GripperEvaluator(td, td->getAlignmentCalculator())))
 {

@@ -24,9 +24,9 @@ namespace gripperz {
                 typedef rw::common::Ptr<GraspFilter> Ptr;
 
             public:
-                GraspFilter();
+                GraspFilter() {}
 
-                virtual ~GraspFilter();
+                virtual ~GraspFilter() {}
                 
                 virtual Grasps filter(Grasps grasps) = 0;
 

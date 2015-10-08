@@ -63,8 +63,6 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
     GraspTask::Ptr samples = NULL;
     try {
         DEBUG << "Planning tasks" << endl;
-        _graspSource->generateTasks(config.nOfGraspsPerEvaluation, state);
-
         targets = _graspSource->getGrasps();
         samples = _graspSource->getSamples();
     } catch (const std::exception& e) {
@@ -93,7 +91,6 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
     if (config.nOfRobustnessTargets != 0) {
         DEBUG << " --- SIMULATING ROBUSTNESS ---" << endl;
         try {
-
 
             GraspFilter::Ptr robustnessFilter = new RobustnessGraspFilter(config.nOfRobustnessTargets, config.sigma_p, config.sigma_a * Deg2Rad);
             rtargets = copyGrasps(targets, true);
@@ -134,10 +131,4 @@ void StandardEvaluationManager::applyGripperParametrization(models::Gripper::Ptr
             );
 
     DEBUG << "Updated gripper" << endl;
-}
-
-void StandardEvaluationManager::generateTasks(models::Gripper::Ptr gripper) {
-}
-
-void StandardEvaluationManager::simulateGripper(models::Gripper::Ptr gripper) {
 }
