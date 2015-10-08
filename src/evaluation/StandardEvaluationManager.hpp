@@ -23,7 +23,7 @@ public:
 public:
 	StandardEvaluationManager(
 		context::TaskDescription::Ptr context,
-		grasps::TaskGenerator::Ptr generator,
+		grasps::GraspSource::Ptr generator,
 		simulation::GripperSimulator::Ptr simulator,
 		evaluation::GripperEvaluator::Ptr evaluator,
 		const Configuration& configuration
@@ -33,8 +33,8 @@ public:
 	
 	context::TaskDescription::Ptr getContext() { return _context; }
 	
-	grasps::TaskGenerator::Ptr getGenerator() { return _generator; }
-	void setSimulator(grasps::TaskGenerator::Ptr gen) { _generator = gen; }
+	grasps::GraspSource::Ptr getGenerator() { return _generator; }
+	void setSimulator(grasps::GraspSource::Ptr gen) { _generator = gen; }
 	
 	simulation::GripperSimulator::Ptr getSimulator() { return _simulator; }
 	void setSimulator(simulation::GripperSimulator::Ptr sim) { _simulator = sim; }
@@ -53,7 +53,7 @@ protected:
 
 private:
 	context::TaskDescription::Ptr _context;
-	grasps::TaskGenerator::Ptr _generator;
+	grasps::GraspSource::Ptr _generator;
 	simulation::GripperSimulator::Ptr _simulator;
 	evaluation::GripperEvaluator::Ptr _evaluator;
 

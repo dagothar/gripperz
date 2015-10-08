@@ -7,7 +7,7 @@
 #include "GripperObjectiveFunction.hpp"
 
 #include <rwlibs/task/GraspTask.hpp>
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 #include <simulation/GripperTaskSimulator.hpp>
 
 #define DEBUG rw::common::Log::debugLog()

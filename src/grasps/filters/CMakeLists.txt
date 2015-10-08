@@ -1,0 +1,6 @@
+SET(SRC_FILES
+	${SRC_FILES}
+	${CMAKE_CURRENT_SOURCE_DIR}/GraspFilter.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/GraspFilterChain.cpp
+	CACHE INTERNAL ""
+)

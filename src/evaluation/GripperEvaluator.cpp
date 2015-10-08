@@ -8,7 +8,7 @@
 
 #include <algorithm>
 #include <grasps/TaskStatistics.hpp>
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 #include <rwlibs/task/GraspTask.hpp>
 #include <rwlibs/task/GraspTarget.hpp>
 #include <rwlibs/algorithms/StablePose1DModel.hpp>
@@ -131,12 +131,12 @@ double GripperEvaluator::calculateCoverage(models::Gripper::Ptr gripper, rwlibs:
 	/* okTargets is the number of succesful targets after filtering +
 	 * + the number of interferences
 	 */
-	GraspTask::Ptr coverageTasks = TaskGenerator::filterTasks(tasks, diff);
+	GraspTask::Ptr coverageTasks = GraspSource::filterTasks(tasks, diff);
 	
 	int okTargets = TaskStatistics::countTasksWithResult(coverageTasks, GraspResult::Success);
 	okTargets += TaskStatistics::countTasksWithResult(coverageTasks, GraspResult::Interference);
 
-	int allTargets = TaskStatistics::countTasksWithResult(TaskGenerator::filterTasks(samples, diff), GraspResult::UnInitialized);
+	int allTargets = TaskStatistics::countTasksWithResult(GraspSource::filterTasks(samples, diff), GraspResult::UnInitialized);
 	if (allTargets == 0) {
 		return 0.0;
 	}

@@ -17,7 +17,7 @@
 
 #include <context/TaskDescription.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
-#include <grasps/TaskGenerator.hpp>
+#include <grasps/GraspSource.hpp>
 
 
 using namespace std;
@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
 	cout << "Loaded." << endl;
 
 	/* prepare sampling */
-	TaskGenerator::Ptr generator = new TaskGenerator(td);
+	GraspSource::Ptr generator = new GraspSource(td);
 
 	// make sampler
 	TriMeshSurfaceSampler sampler(td->getTargetObject()->getGeometry()[0]);

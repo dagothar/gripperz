@@ -1,8 +1,11 @@
 SET(SRC_FILES
 	${SRC_FILES}
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceSample.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/TaskGenerator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/GraspSource.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/TaskGenerator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TaskStatistics.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GraspDatabase.cpp
 	CACHE INTERNAL ""
 )
+
+ADD_SUBDIRECTORY(filters)
