@@ -67,8 +67,6 @@
         <in>GraspSource.hpp</in>
         <in>SurfaceSample.cpp</in>
         <in>SurfaceSample.hpp</in>
-        <in>TaskGenerator.cpp</in>
-        <in>TaskGenerator.hpp</in>
         <in>TaskStatistics.cpp</in>
         <in>TaskStatistics.hpp</in>
         <in>Types.cpp</in>

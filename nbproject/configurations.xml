@@ -58,7 +58,6 @@
         <in>GraspPlanner.hpp</in>
         <in>GraspSource.cpp</in>
         <in>SurfaceSample.cpp</in>
-        <in>TaskGenerator.cpp</in>
         <in>TaskStatistics.cpp</in>
         <in>Types.cpp</in>
         <in>filters.hpp</in>
@@ -813,10 +812,6 @@
         </ccTool>
       </item>
       <item path="src/grasps/SurfaceSample.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/grasps/TaskGenerator.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
       </item>

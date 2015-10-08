@@ -100,7 +100,6 @@ int main(int argc, char* argv[]) {
 	CombineObjectives::Ptr logMethod = CombineObjectivesFactory::make("log", weights);
 	
 	/* read grippers */
-	unsigned n = 0;
 	vector<double> param{0.1, 0.025, 0.02, 0, 0, 0, 0, 0, 0.025, 0, 0.05, 25};
 		
 	/* evaluate */

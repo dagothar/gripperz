@@ -12,6 +12,7 @@
 #include <loaders/GripperXMLLoader.hpp>
 #include <grasps/GraspSource.hpp>
 #include <simulation/InterferenceSimulator.hpp>
+#include <grasps/planners/BasicParallelGripperGraspPlanner.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -24,6 +25,7 @@ using namespace gripperz::context;
 using namespace gripperz::loaders;
 using namespace gripperz::models;
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::planners;
 using namespace rwlibs::task;
 USE_ROBWORK_NAMESPACE
 using namespace robwork;
@@ -60,8 +62,7 @@ int main(int argc, char* argv[]) {
 	GripperEvaluator::Ptr evaluator = new GripperEvaluator(td, td->getAlignmentCalculator());
 	
 	/* generate tasks */
-	GraspSource::Ptr generator = new GraspSource(td);
-	generator->generateTask(100, td->getInitState());
+	GraspSource::Ptr generator = new BasicParallelGripperGraspPlanner(100, td->getInitState(), td);
 	GraspTask::Ptr tasks = generator->getGrasps();
 	GraspTask::Ptr samples = generator->getSamples();
 	

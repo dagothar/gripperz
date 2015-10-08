@@ -3,7 +3,7 @@
 using namespace gripperz::grasps;
 using namespace rwlibs::task;
 
-Grasps copyGrasps(const Grasps tasks, bool onlySuccesses = false) {
+Grasps gripperz::grasps::copyGrasps(const Grasps tasks, bool onlySuccesses) {
     Grasps tasks_copy = tasks->clone();
 
     // clone subtasks
