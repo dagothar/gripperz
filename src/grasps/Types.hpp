@@ -13,6 +13,9 @@ namespace gripperz {
 
         //! A type for grasp set
         typedef rwlibs::task::GraspTask::Ptr Grasps;
-        
+
+        //! Copies grasp set
+        Grasps copyGrasps(const Grasps tasks, bool onlySuccesses = false);
+
     } /* grasps */
 } /* gripperz */

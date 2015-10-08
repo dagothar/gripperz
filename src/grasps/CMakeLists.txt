@@ -1,5 +1,6 @@
 SET(SRC_FILES
 	${SRC_FILES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/Types.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceSample.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GraspSource.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/TaskGenerator.cpp

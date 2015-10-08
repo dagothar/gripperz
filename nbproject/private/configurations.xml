@@ -50,6 +50,10 @@
           <in>GraspFilter.hpp</in>
           <in>GraspFilterChain.cpp</in>
           <in>GraspFilterChain.hpp</in>
+          <in>KDGraspFilter.cpp</in>
+          <in>KDGraspFilter.hpp</in>
+          <in>RobustnessGraspFilter.cpp</in>
+          <in>RobustnessGraspFilter.hpp</in>
         </df>
         <in>GraspDatabase.cpp</in>
         <in>GraspDatabase.hpp</in>
@@ -61,7 +65,9 @@
         <in>TaskGenerator.hpp</in>
         <in>TaskStatistics.cpp</in>
         <in>TaskStatistics.hpp</in>
+        <in>Types.cpp</in>
         <in>Types.hpp</in>
+        <in>filters.hpp</in>
       </df>
       <df name="loaders">
         <in>GripperXMLLoader.cpp</in>

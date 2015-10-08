@@ -44,12 +44,18 @@
           <in>GraspFilter.hpp</in>
           <in>GraspFilterChain.cpp</in>
           <in>GraspFilterChain.hpp</in>
+          <in>KDGraspFilter.cpp</in>
+          <in>KDGraspFilter.hpp</in>
+          <in>RobustnessGraspFilter.cpp</in>
+          <in>RobustnessGraspFilter.hpp</in>
         </df>
         <in>GraspDatabase.cpp</in>
         <in>GraspSource.cpp</in>
         <in>SurfaceSample.cpp</in>
         <in>TaskGenerator.cpp</in>
         <in>TaskStatistics.cpp</in>
+        <in>Types.cpp</in>
+        <in>filters.hpp</in>
       </df>
       <df name="loaders">
         <in>GripperXMLLoader.cpp</in>
@@ -807,6 +813,10 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="src/grasps/Types.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/grasps/filters.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/grasps/filters/GraspFilter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/grasps/filters/GraspFilter.hpp" ex="false" tool="3" flavor2="0">
@@ -817,6 +827,26 @@
             flavor2="0">
       </item>
       <item path="src/grasps/filters/GraspFilterChain.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/filters/KDGraspFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/filters/KDGraspFilter.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/filters/RobustnessGraspFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/filters/RobustnessGraspFilter.hpp"
             ex="false"
             tool="3"
             flavor2="0">
