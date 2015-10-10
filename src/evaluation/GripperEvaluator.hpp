@@ -8,7 +8,7 @@
 
 #include <models/Gripper.hpp>
 #include <context/TaskDescription.hpp>
-#include <rwlibs/task/GraspTask.hpp>
+#include <grasps/Types.hpp>
 #include "AlignmentCalculator.hpp"
 
 namespace gripperz {
@@ -46,24 +46,24 @@ public:
 	 * @brief Evaluates gripper quality.
 	 * Uses gripper parameters and statistics in task performance to calculate the gripper quality.
 	 */
-	virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples, rwlibs::task::GraspTask::Ptr rtasks=NULL);
+	virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper, grasps::Grasps tasks, grasps::Grasps rtasks=NULL);
 
 protected:
 	//! Calculates the success index of the gripper.
-	virtual double calculateSuccess(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
+	virtual double calculateSuccess(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 	
 	//! Calculates the robustness index of the gripper.
-	virtual double calculateRobustness(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples, rwlibs::task::GraspTask::Ptr rtasks=NULL);
+	virtual double calculateRobustness(models::Gripper::Ptr gripper, grasps::Grasps grasps, grasps::Grasps rgrasps=NULL);
 	
 	//! Calculates the coverage index of the gripper.
-	virtual double calculateCoverage(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
+	virtual double calculateCoverage(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 	
 	//! Calculates the alignment index of the gripper.
-	virtual double calculateAlignment(rwlibs::task::GraspTask::Ptr tasks);
+	virtual double calculateAlignment(grasps::Grasps grasps);
 	
 	//! Calculates the wrench index of the gripper.
-	virtual double calculateWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
-	virtual double calculateTopWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks);
+	virtual double calculateWrench(models::Gripper::Ptr gripper, grasps::Grasps grasps);
+	virtual double calculateTopWrench(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 	
 	//! Calculates the stress index of the gripper.
 	virtual double calculateStress(models::Gripper::Ptr gripper);

@@ -29,7 +29,6 @@
 #include <models/Gripper.hpp>
 #include <loaders/GripperXMLLoader.hpp>
 #include <grasps/GraspSource.hpp>
-#include <simulation/GripperTaskSimulator.hpp>
 #include <simulation/InterferenceSimulator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
 #include <evaluation/ConstrainedGripperEvaluator.hpp>
@@ -55,7 +54,6 @@ using namespace rwlibs::task;
 using namespace rwsim;
 using namespace rwsim::dynamics;
 using namespace rwsim::loaders;
-using namespace rwsim::simulation;
 using namespace boost::program_options;
 namespace po = boost::program_options;
 using namespace gripperz::models;

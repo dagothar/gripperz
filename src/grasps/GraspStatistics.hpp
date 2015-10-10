@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <rwlibs/task/GraspTask.hpp>
+#include "Types.hpp"
 
 namespace gripperz {
     namespace grasps {
@@ -20,7 +20,12 @@ namespace gripperz {
             /**
              * @brief Counts tasks which have a specific grasp status.
              */
-            static int countGraspsWithStatus(rwlibs::task::GraspTask::Ptr tasks, const rwlibs::task::GraspResult::TestStatus& result);
+            static int countGraspsWithStatus(Grasps grasps, const rwlibs::task::GraspResult::TestStatus& result);
+            
+            /**
+             * @brief Counts all grasps
+             */
+            static int countGraspTargets(Grasps grasps);
         };
 
     } /* grasps */

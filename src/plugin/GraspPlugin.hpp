@@ -14,7 +14,6 @@
 
 #include <grasps/GraspSource.hpp>
 #include <models/Gripper.hpp>
-#include <simulation/GripperTaskSimulator.hpp>
 #include <simulation/BasicSimulator.hpp>
 #include <simulation/InterferenceSimulator.hpp>
 #include <evaluation/GripperEvaluator.hpp>

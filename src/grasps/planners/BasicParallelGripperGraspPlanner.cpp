@@ -186,7 +186,6 @@ Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps, Grasps& gr
     ProximityModel::Ptr object = cstrategy->createModel();
     cstrategy->addGeometry(object.get(), _td->getTargetObject()->getGeometry()[0]);
 
-    // make CD for WC & add rules excluding interference objects
     CollisionDetector::Ptr cdetect = new CollisionDetector(_td->getWorkCell(), ProximityStrategyFactory::makeDefaultCollisionStrategy());
 
     BOOST_FOREACH(Object::Ptr obj, _td->getInterferenceObjects()) {
@@ -235,15 +234,7 @@ Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps, Grasps& gr
             gtarget.result->objectTtcpTarget = target;
             subtask.addTarget(gtarget);
             gtask->addSubTask(subtask);
-
-            // make new subtask (for samples only)
-            GraspSubTask asubtask;
-            GraspTarget gtarget1(target);
-            gtarget1.result = ownedPtr(new GraspResult());
-            gtarget1.result->testStatus = GraspResult::UnInitialized;
-            gtarget1.result->objectTtcpTarget = target;
-            asubtask.addTarget(gtarget1);
-            atask->addSubTask(asubtask);
+            
         } else {
             ++failures_in_row;
             if (failures_in_row > 10000) {
@@ -255,13 +246,13 @@ Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps, Grasps& gr
 
             GraspTarget gtarget(target);
             gtarget.result = ownedPtr(new GraspResult());
-            gtarget.result->testStatus = GraspResult::UnInitialized;
+            gtarget.result->testStatus = GraspResult::Skip;
             gtarget.result->objectTtcpTarget = target;
             gtarget.result->gripperConfigurationGrasp = oq;
 
             GraspSubTask asubtask;
             asubtask.addTarget(gtarget);
-            atask->addSubTask(asubtask);
+            gtask->addSubTask(asubtask);
         }
     }
 

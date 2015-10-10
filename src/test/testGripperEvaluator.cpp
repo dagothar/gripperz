@@ -64,7 +64,6 @@ int main(int argc, char* argv[]) {
 	/* generate tasks */
 	GraspSource::Ptr generator = new BasicParallelGripperGraspPlanner(100, td->getInitState(), td);
 	GraspTask::Ptr tasks = generator->getGrasps();
-	GraspTask::Ptr samples = generator->getSamples();
 	
 	/* simulate tasks */
 	simulator->loadTasks(tasks);
@@ -74,7 +73,7 @@ int main(int argc, char* argv[]) {
 	
 	/* evaluate gripper */
 	Log::log().setLevel(Log::Debug);
-	GripperQuality::Ptr quality = evaluator->evaluateGripper(gripper, simulator->getTasks(), samples);
+	GripperQuality::Ptr quality = evaluator->evaluateGripper(gripper, simulator->getTasks());
 	gripper->setQuality(*quality);
 	
 	INFO << "\nRESULTS" << endl;

@@ -32,11 +32,6 @@ namespace gripperz {
 
             virtual Grasps getGrasps() = 0;
 
-            /**
-             * @brief Returns samples (to be removed)
-             * @return 
-             */
-            virtual Grasps getSamples() = 0;
         };
 
     } /* grasps */
