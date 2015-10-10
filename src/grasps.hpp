@@ -10,3 +10,4 @@
 #include "grasps/GraspStatistics.hpp"
 #include "grasps/filters.hpp"
 #include "grasps/planners.hpp"
+#include "grasps/databases.hpp"

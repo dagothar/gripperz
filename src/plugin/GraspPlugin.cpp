@@ -19,7 +19,6 @@
 #include "RenderTarget.hpp"
 #include <grasps/GraspSource.hpp>
 #include "DesignDialog.hpp"
-#include <simulation/GripperTaskSimulator.hpp>
 #include <loaders/GripperXMLLoader.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <grasps/planners/BasicParallelGripperGraspPlanner.hpp>
@@ -407,7 +406,7 @@ void GraspPlugin::planTasks() {
         cout << "Updated gripper: " << _td->getGripperTCP()->getTransform(_td->getInitState()) << endl;
 
         _tasks = _generator->getGrasps();
-        _samples = _generator->getSamples();
+        //_samples = _generator->getSamples();
     } catch (rw::common::Exception& e) {
         QMessageBox::critical(NULL, "RW Exception", e.what());
 
@@ -415,10 +414,9 @@ void GraspPlugin::planTasks() {
 
     log().info() << "Tasks: " << _tasks->getAllTargets().size()
             << endl;
-    log().info() << "Samples: " << _samples->getAllTargets().size()
-            << endl;
+    //log().info() << "Samples: " << _samples->getAllTargets().size() << endl;
     cout << "Tasks: " << _tasks->getSubTasks()[0].getTargets().size() << endl;
-    cout << "Samples: " << _samples->getSubTasks()[0].getTargets().size() << endl;
+    //cout << "Samples: " << _samples->getSubTasks()[0].getTargets().size() << endl;
 
     cout << "Done." << endl;
     log().info() << "Done." << endl;

@@ -28,8 +28,6 @@ namespace gripperz {
 
             virtual Grasps getGrasps();
 
-            virtual Grasps getSamples();
-
             void setNumberOfGraspsToPlan(unsigned _numberOfGraspsToPlan) {
                 this->_numberOfGraspsToPlan = _numberOfGraspsToPlan;
             }

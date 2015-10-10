@@ -11,6 +11,7 @@
 #include "filters/GraspFilter.hpp"
 #include "filters/GraspFilterChain.hpp"
 #include "filters/KDGraspFilter.hpp"
+#include "filters/GraspStatusFilter.hpp"
 #include "filters/RobustnessGraspFilter.hpp"
 
 #endif	/* FILTERS_HPP */

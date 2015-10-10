@@ -7,11 +7,32 @@
         <activeConfTypeElem>0</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/GraspSource.hpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/evaluation/StandardEvaluationManager.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases/CMakeLists.txt</file>
+            <file>file:/home/dagothar/gripperz-dev/src/tools/gripper_landscape.cpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/grasps/planners/BasicParallelGripperGraspPlanner.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/TaskGenerator.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/gripperz.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/simulation/GraspTaskSimulator.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperObjectiveFunction.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/GraspDatabase.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluator.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/simulation/CMakeLists.txt</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/StandardEvaluationManager.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluator.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases/RWGraspDatabase.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases/RWGraspDatabase.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/simulation.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluationManager.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluationManagerFactory.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/simulation/BasicSimulator.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/tools/generate_grippers.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluationManagerBuilder.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/plugin/GraspPlugin.hpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/grasps/planners/BasicParallelGripperGraspPlanner.cpp</file>
         </group>
     </open-files>

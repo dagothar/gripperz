@@ -39,11 +39,17 @@
         <in>JawPrimitive.cpp</in>
       </df>
       <df name="grasps">
+        <df name="databases">
+          <in>RWGraspDatabase.cpp</in>
+          <in>RWGraspDatabase.hpp</in>
+        </df>
         <df name="filters">
           <in>GraspFilter.cpp</in>
           <in>GraspFilter.hpp</in>
           <in>GraspFilterChain.cpp</in>
           <in>GraspFilterChain.hpp</in>
+          <in>GraspStatusFilter.cpp</in>
+          <in>GraspStatusFilter.hpp</in>
           <in>KDGraspFilter.cpp</in>
           <in>KDGraspFilter.hpp</in>
           <in>RobustnessGraspFilter.cpp</in>
@@ -60,6 +66,7 @@
         <in>GraspStatistics.cpp</in>
         <in>SurfaceSample.cpp</in>
         <in>Types.cpp</in>
+        <in>databases.hpp</in>
         <in>filters.hpp</in>
         <in>planners.hpp</in>
       </df>
@@ -128,7 +135,6 @@
         <in>BasicSimulator.cpp</in>
         <in>GraspTaskSimulator.cpp</in>
         <in>GripperSimulator.cpp</in>
-        <in>GripperTaskSimulator.cpp</in>
         <in>InterferenceSimulator.cpp</in>
       </df>
       <df name="test">
@@ -821,6 +827,18 @@
       </item>
       <item path="src/grasps/Types.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/grasps/databases.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/grasps/databases/RWGraspDatabase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/databases/RWGraspDatabase.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/grasps/filters.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/grasps/filters/GraspFilter.cpp" ex="false" tool="1" flavor2="0">
@@ -833,6 +851,16 @@
             flavor2="0">
       </item>
       <item path="src/grasps/filters/GraspFilterChain.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/filters/GraspStatusFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/filters/GraspStatusFilter.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1246,22 +1274,6 @@
             <Elem>QT_UITOOLS_LIB</Elem>
             <Elem>dDOUBLE</Elem>
           </preprocessorList>
-        </ccTool>
-      </item>
-      <item path="src/simulation/GripperTaskSimulator.cpp"
-            ex="false"
-            tool="1"
-            flavor2="4">
-        <ccTool>
-          <incDir>
-            <pElem>src</pElem>
-            <pElem>../robwork/trunk/RobWork/src</pElem>
-            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
-            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
-            <pElem>ext/dlib/string</pElem>
-            <pElem>ext/dlib</pElem>
-            <pElem>/usr/include/eigen3</pElem>
-          </incDir>
         </ccTool>
       </item>
       <item path="src/simulation/InterferenceSimulator.cpp"

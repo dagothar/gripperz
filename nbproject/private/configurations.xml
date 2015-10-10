@@ -45,11 +45,17 @@
         <in>JawPrimitive.hpp</in>
       </df>
       <df name="grasps">
+        <df name="databases">
+          <in>RWGraspDatabase.cpp</in>
+          <in>RWGraspDatabase.hpp</in>
+        </df>
         <df name="filters">
           <in>GraspFilter.cpp</in>
           <in>GraspFilter.hpp</in>
           <in>GraspFilterChain.cpp</in>
           <in>GraspFilterChain.hpp</in>
+          <in>GraspStatusFilter.cpp</in>
+          <in>GraspStatusFilter.hpp</in>
           <in>KDGraspFilter.cpp</in>
           <in>KDGraspFilter.hpp</in>
           <in>RobustnessGraspFilter.cpp</in>
@@ -71,6 +77,7 @@
         <in>SurfaceSample.hpp</in>
         <in>Types.cpp</in>
         <in>Types.hpp</in>
+        <in>databases.hpp</in>
         <in>filters.hpp</in>
         <in>planners.hpp</in>
       </df>
@@ -181,8 +188,6 @@
         <in>GraspTaskSimulator.hpp</in>
         <in>GripperSimulator.cpp</in>
         <in>GripperSimulator.hpp</in>
-        <in>GripperTaskSimulator.cpp</in>
-        <in>GripperTaskSimulator.hpp</in>
         <in>InterferenceSimulator.cpp</in>
         <in>InterferenceSimulator.hpp</in>
       </df>

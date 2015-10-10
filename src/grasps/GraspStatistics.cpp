@@ -23,3 +23,7 @@ int GraspStatistics::countGraspsWithStatus(rwlibs::task::GraspTask::Ptr tasks, c
 
     return n;
 }
+
+int GraspStatistics::countGraspTargets(Grasps grasps) {
+    return grasps->getAllTargets().size();
+}

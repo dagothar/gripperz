@@ -60,11 +60,9 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
      * Generate grasps.
      */
     GraspTask::Ptr targets = NULL;
-    GraspTask::Ptr samples = NULL;
     try {
-        DEBUG << "Planning tasks" << endl;
         targets = _graspSource->getGrasps();
-        samples = _graspSource->getSamples();
+        
     } catch (const std::exception& e) {
         RW_WARN("Exception during grasp generation! " << e.what());
     }
@@ -91,7 +89,6 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
     if (config.nOfRobustnessTargets != 0) {
         DEBUG << " --- SIMULATING ROBUSTNESS ---" << endl;
         try {
-
             GraspFilter::Ptr robustnessFilter = new RobustnessGraspFilter(config.nOfRobustnessTargets, config.sigma_p, config.sigma_a * Deg2Rad);
             rtargets = copyGrasps(targets, true);
             rtargets = robustnessFilter->filter(rtargets);
@@ -112,7 +109,8 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
      */
     GripperQuality::Ptr quality = NULL;
     try {
-        quality = _evaluator->evaluateGripper(gripper, targets, samples, rtargets);
+        quality = _evaluator->evaluateGripper(gripper, targets, rtargets);
+        
     } catch (const std::exception& e) {
         RW_THROW("Exception during gripper evaluation! " << e.what());
     }

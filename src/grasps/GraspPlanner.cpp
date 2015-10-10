@@ -25,13 +25,3 @@ Grasps GraspPlanner::getGrasps() {
 
     return _grasps;
 }
-
-Grasps GraspPlanner::getSamples() {
-    if (_samples) {
-        return _samples;
-    }
-
-    planGrasps(_numberOfGraspsToPlan, _grasps, _samples);
-
-    return _samples;
-}
