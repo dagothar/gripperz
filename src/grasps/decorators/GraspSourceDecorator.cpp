@@ -8,6 +8,7 @@
 #include "GraspSourceDecorator.hpp"
 
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::decorators;
 
 GraspSourceDecorator::GraspSourceDecorator(GraspSource::Ptr graspSource) :
 _graspSource(graspSource) {

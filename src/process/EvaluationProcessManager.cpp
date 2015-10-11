@@ -12,9 +12,6 @@ using namespace gripperz::process;
 EvaluationProcessManager::EvaluationProcessManager() {
 }
 
-EvaluationProcessManager::EvaluationProcessManager(const EvaluationProcessManager& orig) {
-}
-
 EvaluationProcessManager::~EvaluationProcessManager() {
 }
 

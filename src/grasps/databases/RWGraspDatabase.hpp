@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../GraspDatabase.hpp"
+#include "GraspDatabase.hpp"
 
 namespace gripperz {
     namespace grasps {

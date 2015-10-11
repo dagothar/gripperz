@@ -40,14 +40,21 @@
       </df>
       <df name="grasps">
         <df name="databases">
+          <in>GraspDatabase.cpp</in>
           <in>RWGraspDatabase.cpp</in>
           <in>RWGraspDatabase.hpp</in>
+        </df>
+        <df name="decorators">
+          <in>GraspSourceDecorator.cpp</in>
+          <in>GraspSourceDecorator.hpp</in>
         </df>
         <df name="filters">
           <in>GraspFilter.cpp</in>
           <in>GraspFilter.hpp</in>
           <in>GraspFilterChain.cpp</in>
           <in>GraspFilterChain.hpp</in>
+          <in>GraspOffsetFilter.cpp</in>
+          <in>GraspOffsetFilter.hpp</in>
           <in>GraspStatusFilter.cpp</in>
           <in>GraspStatusFilter.hpp</in>
           <in>KDGraspFilter.cpp</in>
@@ -58,17 +65,15 @@
         <df name="planners">
           <in>BasicParallelGripperGraspPlanner.cpp</in>
           <in>BasicParallelGripperGraspPlanner.hpp</in>
+          <in>GraspPlanner.cpp</in>
+          <in>GraspPlanner.hpp</in>
         </df>
-        <in>GraspDatabase.cpp</in>
-        <in>GraspPlanner.cpp</in>
-        <in>GraspPlanner.hpp</in>
         <in>GraspSource.cpp</in>
-        <in>GraspSourceDecorator.cpp</in>
-        <in>GraspSourceDecorator.hpp</in>
         <in>GraspStatistics.cpp</in>
         <in>SurfaceSample.cpp</in>
         <in>Types.cpp</in>
         <in>databases.hpp</in>
+        <in>decorators.hpp</in>
         <in>filters.hpp</in>
         <in>planners.hpp</in>
       </df>
@@ -807,27 +812,9 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/grasps/GraspDatabase.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/grasps/GraspPlanner.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/grasps/GraspPlanner.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/grasps/GraspSource.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
-      </item>
-      <item path="src/grasps/GraspSourceDecorator.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/GraspSourceDecorator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/grasps/GraspStatistics.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -841,12 +828,31 @@
       </item>
       <item path="src/grasps/databases.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/grasps/databases/GraspDatabase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
       <item path="src/grasps/databases/RWGraspDatabase.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/grasps/databases/RWGraspDatabase.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/decorators.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/grasps/decorators/GraspSourceDecorator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/decorators/GraspSourceDecorator.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -863,6 +869,16 @@
             flavor2="0">
       </item>
       <item path="src/grasps/filters/GraspFilterChain.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/filters/GraspOffsetFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/filters/GraspOffsetFilter.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -905,6 +921,16 @@
             flavor2="0">
       </item>
       <item path="src/grasps/planners/BasicParallelGripperGraspPlanner.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/planners/GraspPlanner.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/planners/GraspPlanner.hpp"
             ex="false"
             tool="3"
             flavor2="0">

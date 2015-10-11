@@ -3,13 +3,11 @@ SET(SRC_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/Types.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceSample.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GraspSource.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/GraspSourceDecorator.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/GraspPlanner.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GraspStatistics.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/GraspDatabase.cpp
 	CACHE INTERNAL ""
 )
 
 ADD_SUBDIRECTORY(filters)
 ADD_SUBDIRECTORY(planners)
 ADD_SUBDIRECTORY(databases)
+ADD_SUBDIRECTORY(decorators)

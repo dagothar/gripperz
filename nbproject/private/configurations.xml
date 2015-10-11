@@ -46,14 +46,22 @@
       </df>
       <df name="grasps">
         <df name="databases">
+          <in>GraspDatabase.cpp</in>
+          <in>GraspDatabase.hpp</in>
           <in>RWGraspDatabase.cpp</in>
           <in>RWGraspDatabase.hpp</in>
+        </df>
+        <df name="decorators">
+          <in>GraspSourceDecorator.cpp</in>
+          <in>GraspSourceDecorator.hpp</in>
         </df>
         <df name="filters">
           <in>GraspFilter.cpp</in>
           <in>GraspFilter.hpp</in>
           <in>GraspFilterChain.cpp</in>
           <in>GraspFilterChain.hpp</in>
+          <in>GraspOffsetFilter.cpp</in>
+          <in>GraspOffsetFilter.hpp</in>
           <in>GraspStatusFilter.cpp</in>
           <in>GraspStatusFilter.hpp</in>
           <in>KDGraspFilter.cpp</in>
@@ -64,15 +72,11 @@
         <df name="planners">
           <in>BasicParallelGripperGraspPlanner.cpp</in>
           <in>BasicParallelGripperGraspPlanner.hpp</in>
+          <in>GraspPlanner.cpp</in>
+          <in>GraspPlanner.hpp</in>
         </df>
-        <in>GraspDatabase.cpp</in>
-        <in>GraspDatabase.hpp</in>
-        <in>GraspPlanner.cpp</in>
-        <in>GraspPlanner.hpp</in>
         <in>GraspSource.cpp</in>
         <in>GraspSource.hpp</in>
-        <in>GraspSourceDecorator.cpp</in>
-        <in>GraspSourceDecorator.hpp</in>
         <in>GraspStatistics.cpp</in>
         <in>GraspStatistics.hpp</in>
         <in>SurfaceSample.cpp</in>
@@ -80,6 +84,7 @@
         <in>Types.cpp</in>
         <in>Types.hpp</in>
         <in>databases.hpp</in>
+        <in>decorators.hpp</in>
         <in>filters.hpp</in>
         <in>planners.hpp</in>
       </df>

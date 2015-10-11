@@ -15,14 +15,14 @@ namespace gripperz {
 
         class SurfaceSample {
         public:
-            /// Constructor
+            //! Constructor
 
             SurfaceSample(rw::math::Transform3D<> transform = rw::math::Transform3D<>(), double graspW = 0.0) :
             transform(transform),
             graspW(graspW) {
             }
 
-            /// Destructor
+            //! Destructor
 
             ~SurfaceSample() {
             }
