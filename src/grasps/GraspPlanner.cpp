@@ -17,11 +17,9 @@ GraspPlanner::~GraspPlanner() {
 }
 
 Grasps GraspPlanner::getGrasps() {
-    if (_grasps) {
-        return _grasps;
+    if (!_grasps) {
+        _grasps = planGrasps(_numberOfGraspsToPlan);
     }
-
-    planGrasps(_numberOfGraspsToPlan, _grasps, _samples);
 
     return _grasps;
 }

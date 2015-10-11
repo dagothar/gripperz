@@ -30,7 +30,7 @@ namespace gripperz {
 
                 virtual ~BasicParallelGripperGraspPlanner();
 
-                virtual Grasps planGrasps(unsigned nGrasps, Grasps& grasps, Grasps& samples);
+                virtual Grasps planGrasps(unsigned nGrasps);
 
                 void setSurfaceSamples(const std::vector<SurfaceSample>& _ssamples) {
                     this->_ssamples = _ssamples;

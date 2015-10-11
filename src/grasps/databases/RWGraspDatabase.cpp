@@ -9,6 +9,7 @@
 
 using namespace gripperz::grasps;
 using namespace gripperz::grasps::databases;
+using namespace rwlibs::task;
 
 RWGraspDatabase::RWGraspDatabase(const std::string& filename) :
 _filename(filename) {
@@ -17,10 +18,8 @@ _filename(filename) {
 RWGraspDatabase::~RWGraspDatabase() {
 }
 
-Grasps RWGraspDatabase::getGrasps() {
-    return NULL;
-}
-
-Grasps RWGraspDatabase::getSamples() {
-    return NULL;
+Grasps RWGraspDatabase::loadGrasps() {
+    Grasps grasps = GraspTask::load(_filename);
+    
+    return grasps;
 }

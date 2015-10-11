@@ -25,12 +25,12 @@ namespace gripperz {
             
             virtual ~GraspDatabase() {}
 
-            virtual Grasps getGrasps() = 0;
+            virtual Grasps getGrasps();
 
-            //! Temporary.
-            virtual Grasps getSamples() = 0;
-
-
+            virtual Grasps loadGrasps() = 0;
+            
+        private:
+            Grasps _grasps;
         };
 
     } /* grasps */

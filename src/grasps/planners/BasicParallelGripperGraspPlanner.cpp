@@ -147,27 +147,23 @@ SurfaceSample sample(TaskDescription::Ptr td, const rw::kinematics::State& state
     return SurfaceSample(target, graspW);
 }
 
-Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps, Grasps& grasps, Grasps& samples) {
+Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps) {
     vector<SurfaceSample> ssamples = _ssamples;
 
     Transform3D<> wTobj = Kinematics::worldTframe(_td->getTargetObject()->getBase(), _state);
 
     // setup task
-    GraspTask::Ptr gtask = ownedPtr(new GraspTask);
-    gtask->getSubTasks().resize(1);
-    GraspSubTask& stask = gtask->getSubTasks()[0];
-    gtask->setGripperID(_td->getGripperID());
+    Grasps grasps = ownedPtr(new GraspTask);
+    grasps->getSubTasks().resize(1);
+    GraspSubTask& stask = grasps->getSubTasks()[0];
+    grasps->setGripperID(_td->getGripperID());
     stask.offset = wTobj;
     stask.approach = Transform3D<>(Vector3D<>(0, 0, 0.1));
     stask.retract = Transform3D<>(Vector3D<>(0, 0, 0.1));
     stask.openQ = Q(1, _td->getGripperDevice()->getBounds().second[0]);
     stask.closeQ = Q(1, _td->getGripperDevice()->getBounds().first[0]);
-    gtask->setTCPID(_td->getGripperTCP()->getName());
-    gtask->setGraspControllerID(_td->getControllerID());
-
-    // setup all samples
-    GraspTask::Ptr atask = ownedPtr(new GraspTask);
-    atask->getSubTasks().resize(1);
+    grasps->setTCPID(_td->getGripperTCP()->getName());
+    grasps->setGraspControllerID(_td->getControllerID());
 
     // prepare
     TriMeshSurfaceSampler sampler(_td->getTargetObject()->getGeometry()[0]);
@@ -233,7 +229,7 @@ Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps, Grasps& gr
             gtarget.result->testStatus = GraspResult::UnInitialized;
             gtarget.result->objectTtcpTarget = target;
             subtask.addTarget(gtarget);
-            gtask->addSubTask(subtask);
+            grasps->addSubTask(subtask);
             
         } else {
             ++failures_in_row;
@@ -252,12 +248,9 @@ Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps, Grasps& gr
 
             GraspSubTask asubtask;
             asubtask.addTarget(gtarget);
-            gtask->addSubTask(asubtask);
+            grasps->addSubTask(asubtask);
         }
     }
-
-    grasps = gtask;
-    samples = atask;
 
     //    Q preDist = _td->getPrefilteringDistance();
     //    double R = 2.0 * sin(0.25 * preDist(1));
