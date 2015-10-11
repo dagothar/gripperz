@@ -71,6 +71,8 @@
         <in>GraspPlanner.hpp</in>
         <in>GraspSource.cpp</in>
         <in>GraspSource.hpp</in>
+        <in>GraspSourceDecorator.cpp</in>
+        <in>GraspSourceDecorator.hpp</in>
         <in>GraspStatistics.cpp</in>
         <in>GraspStatistics.hpp</in>
         <in>SurfaceSample.cpp</in>

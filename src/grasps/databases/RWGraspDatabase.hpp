@@ -13,38 +13,34 @@ namespace gripperz {
     namespace grasps {
         namespace databases {
 
-        /**
-         * @class RWGraspDatabase
-         * @brief
-         */
-        class RWGraspDatabase : public GraspDatabase {
-        public:
-            //! Smart pointer.
-            typedef rw::common::Ptr<RWGraspDatabase> Ptr;
+            /**
+             * @class RWGraspDatabase
+             * @brief
+             */
+            class RWGraspDatabase : public GraspDatabase {
+            public:
+                //! Smart pointer.
+                typedef rw::common::Ptr<RWGraspDatabase> Ptr;
 
-        public:
-            RWGraspDatabase(const std::string& filename);
+            public:
+                RWGraspDatabase(const std::string& filename);
 
-            virtual ~RWGraspDatabase();
-            
-            virtual Grasps getGrasps();
+                virtual ~RWGraspDatabase();
 
-            //! Temporary.
-            virtual Grasps getSamples();
+                virtual Grasps loadGrasps();
 
-            void setFilename(std::string _filename) {
-                this->_filename = _filename;
-            }
+                void setFilename(std::string _filename) {
+                    this->_filename = _filename;
+                }
 
-            std::string getFilename() const {
-                return _filename;
-            }
+                std::string getFilename() const {
+                    return _filename;
+                }
 
-        private:
-            std::string _filename;
-            Grasps _grasps;
-            Grasps _samples;
-        };
+            private:
+                std::string _filename;
+                Grasps _grasps;
+            };
 
         }
     }

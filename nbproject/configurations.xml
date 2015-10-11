@@ -63,6 +63,8 @@
         <in>GraspPlanner.cpp</in>
         <in>GraspPlanner.hpp</in>
         <in>GraspSource.cpp</in>
+        <in>GraspSourceDecorator.cpp</in>
+        <in>GraspSourceDecorator.hpp</in>
         <in>GraspStatistics.cpp</in>
         <in>SurfaceSample.cpp</in>
         <in>Types.cpp</in>
@@ -816,6 +818,16 @@
       <item path="src/grasps/GraspSource.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
+      </item>
+      <item path="src/grasps/GraspSourceDecorator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/GraspSourceDecorator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/grasps/GraspStatistics.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">

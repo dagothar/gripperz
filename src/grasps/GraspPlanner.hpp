@@ -28,6 +28,8 @@ namespace gripperz {
 
             virtual Grasps getGrasps();
 
+            virtual Grasps planGrasps(unsigned nGrasps) = 0;
+
             void setNumberOfGraspsToPlan(unsigned _numberOfGraspsToPlan) {
                 this->_numberOfGraspsToPlan = _numberOfGraspsToPlan;
             }
@@ -36,13 +38,9 @@ namespace gripperz {
                 return _numberOfGraspsToPlan;
             }
 
-        protected:
-            virtual Grasps planGrasps(unsigned nGrasps, Grasps& grasps, Grasps& samples) = 0;
-
         private:
             unsigned _numberOfGraspsToPlan;
             Grasps _grasps;
-            Grasps _samples;
         };
 
     }
