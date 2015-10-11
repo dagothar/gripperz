@@ -8,6 +8,7 @@
 #ifndef DATABASES_HPP
 #define	DATABASES_HPP
 
+#include "databases/GraspDatabase.hpp"
 #include "databases/RWGraspDatabase.hpp"
 
 #endif	/* DATABASES_HPP */

@@ -1,5 +1,6 @@
 SET(SRC_FILES
 	${SRC_FILES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/GraspDatabase.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RWGraspDatabase.cpp
 	CACHE INTERNAL ""
 )

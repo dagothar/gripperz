@@ -7,6 +7,7 @@
 #include "GraspDatabase.hpp"
 
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::databases;
 
 Grasps GraspDatabase::getGrasps() {
     if (!_grasps) {

@@ -8,6 +8,7 @@
 #ifndef PLANNERS_HPP
 #define	PLANNERS_HPP
 
+#include "planners/GraspPlanner.hpp"
 #include "planners/BasicParallelGripperGraspPlanner.hpp"
 
 #endif	/* PLANNERS_HPP */

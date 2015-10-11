@@ -30,8 +30,6 @@ namespace gripperz {
                 
                 virtual Grasps filter(Grasps grasps) = 0;
 
-            private:
-
             };
 
         }

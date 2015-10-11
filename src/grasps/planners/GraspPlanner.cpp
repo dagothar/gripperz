@@ -8,6 +8,7 @@
 #include "GraspPlanner.hpp"
 
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::planners;
 
 GraspPlanner::GraspPlanner(unsigned nGrasps) :
 _numberOfGraspsToPlan(nGrasps) {

@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../GraspPlanner.hpp"
+#include "GraspPlanner.hpp"
 #include <grasps/SurfaceSample.hpp>
 #include <context/TaskDescription.hpp>
 #include <rw/kinematics/State.hpp>

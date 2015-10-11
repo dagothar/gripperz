@@ -8,17 +8,21 @@
 #ifndef EVALUATIONPROCESSMANAGER_HPP
 #define	EVALUATIONPROCESSMANAGER_HPP
 
+#include <rw/common/Ptr.hpp>
 
 namespace gripperz {
     namespace process {
 
         class EvaluationProcessManager {
         public:
-            EvaluationProcessManager();
-            EvaluationProcessManager(const EvaluationProcessManager& orig);
-            virtual ~EvaluationProcessManager();
-        private:
+            //! Smart pointer.
+            typedef rw::common::Ptr<EvaluationProcessManager> Ptr;
 
+        public:
+            EvaluationProcessManager();
+            virtual ~EvaluationProcessManager();
+            
+        private:
         };
 
     }
