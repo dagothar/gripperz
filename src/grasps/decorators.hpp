@@ -9,6 +9,7 @@
 #define	DECORATORS_HPP
 
 #include "decorators/GraspSourceDecorator.hpp"
+#include "decorators/FilteredGraspSource.hpp"
 
 #endif	/* DECORATORS_HPP */
 

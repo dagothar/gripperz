@@ -52,6 +52,8 @@
           <in>RWGraspDatabase.hpp</in>
         </df>
         <df name="decorators">
+          <in>FilteredGraspSource.cpp</in>
+          <in>FilteredGraspSource.hpp</in>
           <in>GraspSourceDecorator.cpp</in>
           <in>GraspSourceDecorator.hpp</in>
         </df>

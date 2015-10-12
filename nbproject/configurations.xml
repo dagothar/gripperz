@@ -45,6 +45,8 @@
           <in>RWGraspDatabase.hpp</in>
         </df>
         <df name="decorators">
+          <in>FilteredGraspSource.cpp</in>
+          <in>FilteredGraspSource.hpp</in>
           <in>GraspSourceDecorator.cpp</in>
           <in>GraspSourceDecorator.hpp</in>
         </df>
@@ -846,6 +848,16 @@
             flavor2="0">
       </item>
       <item path="src/grasps/decorators.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/grasps/decorators/FilteredGraspSource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/grasps/decorators/FilteredGraspSource.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/grasps/decorators/GraspSourceDecorator.cpp"
             ex="false"
