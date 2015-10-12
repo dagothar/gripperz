@@ -56,7 +56,7 @@ struct Data {
     DynamicWorkCell::Ptr dwc;
     TaskDescription::Ptr td;
     vector<SurfaceSample> samples;
-    Gripper::Ptr gripper;
+    OldGripper::Ptr gripper;
 } data;
 
 void initialize() {
@@ -188,7 +188,7 @@ void load_data(const Configuration& config, Data& data) {
         data.gripper = GripperXMLLoader::load(config.gripper);
         INFO << "Loaded." << endl;
     } else {
-        data.gripper = ownedPtr(new Gripper());
+        data.gripper = ownedPtr(new OldGripper());
     }
 }
 
@@ -215,7 +215,7 @@ int main(int argc, char* argv[]) {
 
     vector<double> results = objective->evaluate(configuration.values);
 
-    Gripper::Ptr gripper = objective->getLastGripper();
+    OldGripper::Ptr gripper = objective->getLastGripper();
     GripperQuality& quality = gripper->getQuality();
     quality.quality = method->combine(results);
 

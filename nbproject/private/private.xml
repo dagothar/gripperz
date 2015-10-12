@@ -10,73 +10,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/dagothar/gripperz-dev/src/models/GripperQuality.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/planners.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/CMakeLists.txt</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/Types.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/Types.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperObjectiveFunction.cpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/GraspStatusFilter.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/StandardEvaluationManager.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/RobustnessGraspFilter.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/planners/GraspPlanner.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/process/CMakeLists.txt</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/RobustEvaluationManager.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/simulation/BasicSimulator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/SurfaceSample.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases/CMakeLists.txt</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/GraspOffsetFilter.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/simulation/GraspTaskSimulator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/GraspStatistics.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluationManager.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/plugin/GraspPlugin.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/SurfaceSample.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/GraspSource.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/GraspStatistics.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/test/testGripperEvaluator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/StandardEvaluationManager.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases/GraspDatabase.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/planners/GraspPlanner.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/CMakeLists.txt</file>
-            <file>file:/home/dagothar/gripperz-dev/src/tools/gripper_landscape.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/process/EvaluationProcessManager.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/GraspOffsetFilter.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/VersorAlignment.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/models/GripperQuality.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/process/EvaluationProcessManager.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/KDGraspFilter.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/ClearStatusFilter.cpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/plugin/GraspPlugin.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/simulation/CMakeLists.txt</file>
+            <file>file:/home/dagothar/gripperz-dev/src/tools/gripper_evaluate.cpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/GraspStatusFilter.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/GraspFilter.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases/RWGraspDatabase.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluationManager.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluationManagerFactory.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/RobustnessGraspFilter.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/tools/generate_grippers.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluationManagerBuilder.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/ConstrainedGripperEvaluator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/decorators/GraspSourceDecorator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/ConstrainedGripperEvaluator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/planners/BasicParallelGripperGraspPlanner.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/decorators.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/CMakeLists.txt</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/ClearStatusFilter.hpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/gripperz.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/CMakeLists.txt</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/decorators/GraspSourceDecorator.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/simulation/GraspTaskSimulator.cpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/grasps/filters.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/decorators/CMakeLists.txt</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/filters/KDGraspFilter.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/RobustEvaluationManager.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/planners/CMakeLists.txt</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases/RWGraspDatabase.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/simulation.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/databases/GraspDatabase.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/ClusteringAlignment.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grasps/planners/BasicParallelGripperGraspPlanner.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/simulation/GraspTaskSimulator.hpp</file>
         </group>
     </open-files>
 </project-private>

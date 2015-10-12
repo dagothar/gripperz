@@ -31,7 +31,7 @@ public:
 	/**
 	 * @brief Tests sanity of the gripper design.
 	 */
-	virtual bool isSane(models::Gripper::Ptr gripper);
+	virtual bool isSane(models::OldGripper::Ptr gripper);
 };
 
 } /* evaluation */

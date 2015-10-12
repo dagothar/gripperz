@@ -59,10 +59,10 @@ namespace gripperz {
                 _evaluator = evaluator;
             }
 
-            virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper);
+            virtual models::GripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper);
 
         protected:
-            virtual void applyGripperParametrization(models::Gripper::Ptr gripper, rw::kinematics::State& state);
+            virtual void applyGripperParametrization(models::OldGripper::Ptr gripper, rw::kinematics::State& state);
 
         private:
             context::TaskDescription::Ptr _context;

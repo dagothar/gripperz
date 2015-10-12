@@ -42,16 +42,16 @@ namespace models {
  * Default gripper constructor creates gripper with following parameters:
  * ...
  */
-class Gripper
+class OldGripper
 {
 public:
 	/// Smart pointer.
-	typedef rw::common::Ptr<Gripper> Ptr;
+	typedef rw::common::Ptr<OldGripper> Ptr;
 
 public:
-	Gripper(const std::string& name="gripper");
+	OldGripper(const std::string& name="gripper");
 
-	virtual ~Gripper() {
+	virtual ~OldGripper() {
 	}
 
 	std::string getName() const { return _name;	}
@@ -176,7 +176,7 @@ public:
 	// friends
 	friend class loaders::GripperXMLLoader;
 	
-	friend std::ostream& operator<<(std::ostream& stream, const Gripper& g);
+	friend std::ostream& operator<<(std::ostream& stream, const OldGripper& g);
 
 private:
 	std::string _name;
@@ -202,7 +202,7 @@ private:
 	GripperQuality _quality;
 };
 
-std::ostream& operator<<(std::ostream& stream, const Gripper& g);
+std::ostream& operator<<(std::ostream& stream, const OldGripper& g);
 
 } /* models */
 } /* gripperz */

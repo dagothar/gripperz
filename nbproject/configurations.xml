@@ -105,10 +105,10 @@
         <in>Types.cpp</in>
       </df>
       <df name="models">
-        <in>Gripper.cpp</in>
         <in>GripperBuilder.cpp</in>
         <in>GripperQuality.cpp</in>
         <in>MapGripperBuilder.cpp</in>
+        <in>OldGripper.cpp</in>
       </df>
       <df name="optimization">
         <in>BOBYQAOptimizer.cpp</in>
@@ -871,16 +871,6 @@
       </item>
       <item path="src/grasps/filters.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/grasps/filters/ClearStatusFilter.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/filters/ClearStatusFilter.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/grasps/filters/GraspFilter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/grasps/filters/GraspFilter.hpp" ex="false" tool="3" flavor2="0">
@@ -1053,10 +1043,6 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/models/Gripper.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
       <item path="src/models/GripperBuilder.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
@@ -1066,6 +1052,10 @@
         </ccTool>
       </item>
       <item path="src/models/MapGripperBuilder.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/OldGripper.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
       </item>

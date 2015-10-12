@@ -8,7 +8,7 @@
 
 #include <rw/common/Ptr.hpp>
 #include <math/Types.hpp>
-#include "Gripper.hpp"
+#include "OldGripper.hpp"
 
 namespace gripperz {
 namespace models {
@@ -27,12 +27,12 @@ public:
 	/**
 	 * @brief Construct a gripper from a vector of parameters.
 	 */
-	virtual Gripper::Ptr parametersToGripper(const math::Vector& params) = 0;
+	virtual OldGripper::Ptr parametersToGripper(const math::Vector& params) = 0;
 	
 	/**
 	 * @brief Convert a gripper into a vector of parameters.
 	 */
-	virtual math::Vector gripperToParameters(Gripper::Ptr gripper) = 0;
+	virtual math::Vector gripperToParameters(OldGripper::Ptr gripper) = 0;
 };
 
 } /* models */

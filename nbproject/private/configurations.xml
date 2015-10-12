@@ -58,6 +58,8 @@
           <in>GraspSourceDecorator.hpp</in>
         </df>
         <df name="filters">
+          <in>ClearStatusFilter.cpp</in>
+          <in>ClearStatusFilter.hpp</in>
           <in>GraspFilter.cpp</in>
           <in>GraspFilter.hpp</in>
           <in>GraspFilterChain.cpp</in>
@@ -137,14 +139,14 @@
         <in>Types.hpp</in>
       </df>
       <df name="models">
-        <in>Gripper.cpp</in>
-        <in>Gripper.hpp</in>
         <in>GripperBuilder.cpp</in>
         <in>GripperBuilder.hpp</in>
         <in>GripperQuality.cpp</in>
         <in>GripperQuality.hpp</in>
         <in>MapGripperBuilder.cpp</in>
         <in>MapGripperBuilder.hpp</in>
+        <in>OldGripper.cpp</in>
+        <in>OldGripper.hpp</in>
       </df>
       <df name="optimization">
         <in>BOBYQAOptimizer.cpp</in>

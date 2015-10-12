@@ -11,7 +11,7 @@
 #include <grasps/GraspSource.hpp>
 #include <simulation/GripperSimulator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
-#include <models/Gripper.hpp>
+#include <models/OldGripper.hpp>
 
 namespace gripperz {
 namespace evaluation {
@@ -48,7 +48,7 @@ public:
 	Configuration getConfiguration() const { return _config; }
 	void setConfiguration(const Configuration& config) { _config = config; }
 	
-	virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper) = 0;
+	virtual models::GripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper) = 0;
 	
 private:
 	Configuration _config;

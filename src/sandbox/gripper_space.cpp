@@ -152,7 +152,7 @@ int main(int argc, char* argv[]) {
 
 	/* load data */
 	INFO << "* Loading gripper... ";
-	Gripper::Ptr gripper = GripperXMLLoader::load(gripperFilename);
+	OldGripper::Ptr gripper = GripperXMLLoader::load(gripperFilename);
 	INFO << "Loaded." << endl;	
 	
 	/* construct evaluation manager */
@@ -214,7 +214,7 @@ int main(int argc, char* argv[]) {
 				cout << vectorToString(p) << vectorToString(result) << q_sum << ", " << q_log << endl;
 				dataFile << vectorToString(p) << vectorToString(result) << q_sum << ", " << q_log << endl;
 				
-				Gripper::Ptr grp = func->getLastGripper();
+				OldGripper::Ptr grp = func->getLastGripper();
 				stringstream sstr;
 				sstr << outDir << "/gripper_" << x << "_" << y << "_" << z << ".grp.xml";
 				GripperXMLLoader::save(grp, sstr.str());

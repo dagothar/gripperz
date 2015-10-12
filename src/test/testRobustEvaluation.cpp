@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
 		MapGripperBuilder::Stroke,
 		MapGripperBuilder::Force
 	};
-	GripperBuilder::Ptr builder = new MapGripperBuilder(new Gripper, params);
+	GripperBuilder::Ptr builder = new MapGripperBuilder(new OldGripper, params);
 	
 	GripperEvaluationManager::Configuration config;
 	GripperEvaluationManager::Ptr manager = new RobustEvaluationManager(
@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) {
 		<< " Log=" << logMethod->combine(result) << endl;
 	
 	/* save gripper */
-	Gripper::Ptr grp = builder->parametersToGripper(param);
+	OldGripper::Ptr grp = builder->parametersToGripper(param);
 	GripperXMLLoader::save(grp, "obj.grp.xml");
 	
 	return 0;

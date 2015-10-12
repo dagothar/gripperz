@@ -6,7 +6,7 @@
 #pragma once
 
 #include <QDialog>
-#include <models/Gripper.hpp>
+#include <models/OldGripper.hpp>
 #include "ui_DesignDialog.h"
 
 class QLineEdit;
@@ -25,7 +25,7 @@ public:
 	/// Constructor
 	DesignDialog(
 		QWidget* parent = 0,
-		gripperz::models::Gripper::Ptr gripper = 0,
+		gripperz::models::OldGripper::Ptr gripper = 0,
 		std::string wd = ""
 	);
 
@@ -34,7 +34,7 @@ public:
 	}
 
 	// methods
-	gripperz::models::Gripper::Ptr getGripper() {
+	gripperz::models::OldGripper::Ptr getGripper() {
 		return _gripper;
 	}
 	std::string getWorkingDirectory() {
@@ -54,7 +54,7 @@ private:
 	void _updateGripper();
 
 	// data
-	gripperz::models::Gripper::Ptr _gripper;
+	gripperz::models::OldGripper::Ptr _gripper;
 	bool _changed;
 
 	// GUI

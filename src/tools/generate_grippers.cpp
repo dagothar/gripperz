@@ -26,7 +26,7 @@
 
 #include <context/TaskDescription.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
-#include <models/Gripper.hpp>
+#include <models/OldGripper.hpp>
 #include <loaders/GripperXMLLoader.hpp>
 #include <grasps/GraspSource.hpp>
 #include <simulation/InterferenceSimulator.hpp>
@@ -157,7 +157,7 @@ int main(int argc, char* argv[]) {
 	TaskDescription::Ptr td = TaskDescriptionLoader::load(tdFilename, dwc);
 	INFO << "Loaded." << endl;
 	INFO << "* Loading gripper... " << gripper_filename;
-	Gripper::Ptr gripper = GripperXMLLoader::load(gripper_filename);
+	OldGripper::Ptr gripper = GripperXMLLoader::load(gripper_filename);
 	INFO << " Loaded." << endl;
 	
 	/* parameters */
@@ -215,7 +215,7 @@ int main(int argc, char* argv[]) {
 		
 		stringstream sstr;
 		sstr << name << "_" << tries;
-		Gripper::Ptr grp = func->getLastGripper();
+		OldGripper::Ptr grp = func->getLastGripper();
 		grp->setName(sstr.str());
 		grp->getQuality().quality = q;
 		

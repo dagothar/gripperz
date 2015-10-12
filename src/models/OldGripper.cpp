@@ -1,4 +1,4 @@
-#include "Gripper.hpp"
+#include "OldGripper.hpp"
 
 #include <rw/rw.hpp>
 #include <rwsim/rwsim.hpp>
@@ -18,7 +18,7 @@ using namespace gripperz::geometry;
 
 
 
-Gripper::Gripper(const std::string& name) :
+OldGripper::OldGripper(const std::string& name) :
 	_name(name),
 	_length(0.1),
 	_width(0.025),
@@ -39,7 +39,7 @@ Gripper::Gripper(const std::string& name) :
 }
 
 
-rw::geometry::Geometry::Ptr Gripper::getFingerGeometry() const {
+rw::geometry::Geometry::Ptr OldGripper::getFingerGeometry() const {
 	Q q(11);
 	
 	q(0) = 0;
@@ -60,7 +60,7 @@ rw::geometry::Geometry::Ptr Gripper::getFingerGeometry() const {
 }
 
 
-rw::geometry::Geometry::Ptr Gripper::getBaseGeometry() const {
+rw::geometry::Geometry::Ptr OldGripper::getBaseGeometry() const {
 	Q q(3, _basex, _basey, _basez);
 	
 	Geometry::Ptr baseGeo = ownedPtr(new Geometry(new Box(q), std::string("BaseGeo")));
@@ -69,7 +69,7 @@ rw::geometry::Geometry::Ptr Gripper::getBaseGeometry() const {
 }
 
 
-void Gripper::updateGripper(
+void OldGripper::updateGripper(
 	rw::models::WorkCell::Ptr wc,
 	rwsim::dynamics::DynamicWorkCell::Ptr dwc,
 	rw::models::TreeDevice::Ptr dev,
@@ -150,7 +150,7 @@ void Gripper::updateGripper(
 }
 
 
-bool Gripper::isSane() const {
+bool OldGripper::isSane() const {
 	/* are general dimensions > 0?*/
 	if (_length == 0.0 || _width == 0.0 || _depth == 0.0) return false;
 	
@@ -173,7 +173,7 @@ bool Gripper::isSane() const {
 }
 
 
-double Gripper::getCrossHeight(double x) const {
+double OldGripper::getCrossHeight(double x) const {
 
 	if (x > _length)
 		return 0.0; // far beyond the gripper
@@ -202,7 +202,7 @@ double Gripper::getCrossHeight(double x) const {
 }
 
 
-double Gripper::getMaxStress() const {
+double OldGripper::getMaxStress() const {
 	double sigmaMax = 0.0;
 
 	for (double x = 0.001; x < _length; x += 0.001) {
@@ -227,14 +227,14 @@ double Gripper::getMaxStress() const {
 }
 
 
-double Gripper::getVolume() const {
+double OldGripper::getVolume() const {
 	double volume = 1e6 * GeometryUtil::estimateVolume(*getFingerGeometry()->getGeometryData()->getTriMesh());
 	
 	return volume;
 }
 
 
-std::ostream& gripperz::models::operator<<(std::ostream& stream, const Gripper& g) {
+std::ostream& gripperz::models::operator<<(std::ostream& stream, const OldGripper& g) {
 	stream <<
 		"Gripper:\n" <<
 		" - length = " << g._length << "\n" <<

@@ -38,7 +38,7 @@ public:
 
 public:
 	MapGripperBuilder(
-		Gripper::Ptr prototype,
+		OldGripper::Ptr prototype,
 		const std::vector<ParameterName>& parameters=std::vector<ParameterName>{
 			Length,
 			Width,
@@ -57,12 +57,12 @@ public:
 	
 	virtual ~MapGripperBuilder();
 	
-	virtual Gripper::Ptr parametersToGripper(const math::Vector& params);
+	virtual OldGripper::Ptr parametersToGripper(const math::Vector& params);
 
-	virtual math::Vector gripperToParameters(Gripper::Ptr gripper);
+	virtual math::Vector gripperToParameters(OldGripper::Ptr gripper);
 	
-	Gripper::Ptr getPrototype() { return _prototype; }
-	void setPrototype(Gripper::Ptr prototype) { _prototype = prototype; }
+	OldGripper::Ptr getPrototype() { return _prototype; }
+	void setPrototype(OldGripper::Ptr prototype) { _prototype = prototype; }
 	
 	const std::vector<ParameterName>& getParameterList() const { return _parameters; }
 	void setParameterList(const std::vector<ParameterName>& parameters) { _parameters = parameters; }
@@ -70,12 +70,12 @@ public:
 	static std::string parameterNameToString(ParameterName parameter);
 	
 protected:
-	void applyParameter(Gripper::Ptr gripper, ParameterName name, double value);
+	void applyParameter(OldGripper::Ptr gripper, ParameterName name, double value);
 	
-	double fetchParameter(Gripper::Ptr gripper, ParameterName name);
+	double fetchParameter(OldGripper::Ptr gripper, ParameterName name);
 	
 private:
-	Gripper::Ptr _prototype;
+	OldGripper::Ptr _prototype;
 	std::vector<ParameterName> _parameters;
 };
 

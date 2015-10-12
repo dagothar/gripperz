@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <models/Gripper.hpp>
+#include <models/OldGripper.hpp>
 #include <models/GripperBuilder.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
 #include <evaluation/GripperQualityExtractor.hpp>
@@ -57,23 +57,23 @@ public:
 	void setQualityExtractor(GripperQualityExtractor::Ptr extractor) { _extractor = extractor; }
 	
 	//! Returns last evaluated gripper.
-	models::Gripper::Ptr getLastGripper() const { return _lastGripper; }
+	models::OldGripper::Ptr getLastGripper() const { return _lastGripper; }
 	
 	//! Returns last obtained gripper quality.
 	models::GripperQuality::Ptr getLastGripperQuality() const { return _lastQuality; }
 	
 	//! Sets function evaluation callback.
-	void setCallback(const boost::function<void(models::Gripper::Ptr)>& cb) { _callback = cb; }
+	void setCallback(const boost::function<void(models::OldGripper::Ptr)>& cb) { _callback = cb; }
 
 private:
 	models::GripperBuilder::Ptr _builder;
 	GripperEvaluationManager::Ptr _manager;
 	GripperQualityExtractor::Ptr _extractor;
 	
-	models::Gripper::Ptr _lastGripper;
+	models::OldGripper::Ptr _lastGripper;
 	models::GripperQuality::Ptr _lastQuality;
 	
-	boost::function<void(models::Gripper::Ptr)> _callback;
+	boost::function<void(models::OldGripper::Ptr)> _callback;
 };
 
 } /* evaluation */

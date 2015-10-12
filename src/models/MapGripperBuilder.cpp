@@ -16,7 +16,7 @@ using namespace rw::math;
 using namespace std;
 
 
-MapGripperBuilder::MapGripperBuilder(Gripper::Ptr prototype, const std::vector<ParameterName>& parameters) :
+MapGripperBuilder::MapGripperBuilder(OldGripper::Ptr prototype, const std::vector<ParameterName>& parameters) :
 	_prototype(prototype),
 	_parameters(parameters)
 {
@@ -27,7 +27,7 @@ MapGripperBuilder::~MapGripperBuilder() {
 }
 
 
-void MapGripperBuilder::applyParameter(Gripper::Ptr gripper, ParameterName name, double value) {
+void MapGripperBuilder::applyParameter(OldGripper::Ptr gripper, ParameterName name, double value) {
 	
 	switch (name) {
 		case Length:
@@ -84,12 +84,12 @@ void MapGripperBuilder::applyParameter(Gripper::Ptr gripper, ParameterName name,
 }
 
 
-Gripper::Ptr MapGripperBuilder::parametersToGripper(const std::vector<double>& params) {
+OldGripper::Ptr MapGripperBuilder::parametersToGripper(const std::vector<double>& params) {
 	if (params.size() != _parameters.size()) {
 		RW_THROW("Parameters vector size mismatch!");
 	}
 	
-	Gripper::Ptr gripper = ownedPtr(new Gripper(*_prototype));
+	OldGripper::Ptr gripper = ownedPtr(new OldGripper(*_prototype));
 	
 	for (unsigned i = 0; i < params.size(); ++i) {
 		applyParameter(gripper, _parameters[i], params[i]);
@@ -99,7 +99,7 @@ Gripper::Ptr MapGripperBuilder::parametersToGripper(const std::vector<double>& p
 }
 
 
-double MapGripperBuilder::fetchParameter(Gripper::Ptr gripper, ParameterName name) {
+double MapGripperBuilder::fetchParameter(OldGripper::Ptr gripper, ParameterName name) {
 
 	switch (name) {
 		case Length:
@@ -147,7 +147,7 @@ double MapGripperBuilder::fetchParameter(Gripper::Ptr gripper, ParameterName nam
 }
 
 
-std::vector<double> MapGripperBuilder::gripperToParameters(Gripper::Ptr gripper) {
+std::vector<double> MapGripperBuilder::gripperToParameters(OldGripper::Ptr gripper) {
 
 	vector<double> params;
 	

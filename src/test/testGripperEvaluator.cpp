@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
 	cout << "Loading context..." << endl;
 	TaskDescription::Ptr td = TaskDescriptionLoader::load("../data/rotor/task1.td.xml", dwc);
 	cout << "Loading gripper..." << endl;
-	Gripper::Ptr gripper = GripperXMLLoader::load("../data/grippers/template.grp.xml");
+	OldGripper::Ptr gripper = GripperXMLLoader::load("../data/grippers/template.grp.xml");
 	
 	gripper->updateGripper(
 		td->getWorkCell(),
