@@ -42,8 +42,8 @@ bool GripperEvaluator::isSane(models::OldGripper::Ptr gripper) {
     return true;
 }
 
-GripperQuality::Ptr GripperEvaluator::evaluateGripper(OldGripper::Ptr gripper, Grasps grasps, Grasps rgrasps) {
-    GripperQuality::Ptr quality = ownedPtr(new GripperQuality);
+OldGripperQuality::Ptr GripperEvaluator::evaluateGripper(OldGripper::Ptr gripper, Grasps grasps, Grasps rgrasps) {
+    OldGripperQuality::Ptr quality = ownedPtr(new OldGripperQuality);
 
     if (!isSane(gripper)) {
         return quality;

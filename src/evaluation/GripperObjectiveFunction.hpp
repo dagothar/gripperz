@@ -60,7 +60,7 @@ public:
 	models::OldGripper::Ptr getLastGripper() const { return _lastGripper; }
 	
 	//! Returns last obtained gripper quality.
-	models::GripperQuality::Ptr getLastGripperQuality() const { return _lastQuality; }
+	models::OldGripperQuality::Ptr getLastGripperQuality() const { return _lastQuality; }
 	
 	//! Sets function evaluation callback.
 	void setCallback(const boost::function<void(models::OldGripper::Ptr)>& cb) { _callback = cb; }
@@ -71,7 +71,7 @@ private:
 	GripperQualityExtractor::Ptr _extractor;
 	
 	models::OldGripper::Ptr _lastGripper;
-	models::GripperQuality::Ptr _lastQuality;
+	models::OldGripperQuality::Ptr _lastQuality;
 	
 	boost::function<void(models::OldGripper::Ptr)> _callback;
 };

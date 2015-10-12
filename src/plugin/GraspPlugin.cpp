@@ -125,8 +125,7 @@ void GraspPlugin::close() {
 }
 
 void GraspPlugin::addHint() {
-    Transform3D<> target = Kinematics::worldTframe(_td->getGripperTCP(),
-            getRobWorkStudio()->getState());
+    Transform3D<> target = Kinematics::worldTframe(_td->getGripperTCP().get(), getRobWorkStudio()->getState());
     log().info() << "Added hint grasp: " << target.P() << " "
             << RPY<>(target.R()) << endl;
 
@@ -190,10 +189,10 @@ void GraspPlugin::guiEvent() {
                 << "\n";
 
         _tasks = GraspTask::load(taskfile.toStdString());
-        
+
         GraspFilter::Ptr clearStatusFilter = new ClearStatusFilter();
         _tasks = clearStatusFilter->filter(_tasks);
-        
+
         ui.progressBar->setValue(0);
         ui.progressBar->setMaximum(_tasks->getAllTargets().size());
 
@@ -335,7 +334,7 @@ void GraspPlugin::updateGripper() {
     cout << "Updating gripper..." << endl;
     _gripper->updateGripper(_td->getWorkCell(), _td->getDynamicWorkCell(),
             _td->getGripperDevice(), _td->getGripperDynamicDevice(),
-            _td->getInitState(), _td);
+            _td->getInitState(), _td->getGripperTCP());
 
     cout << "Refreshing RWS..." << endl;
     getRobWorkStudio()->getWorkCellScene()->clearCache();
@@ -361,7 +360,7 @@ void GraspPlugin::updateSim() {
 
         //_gripper->getQuality() = GripperQuality(_graspSim->getGripperQuality());
         GripperEvaluator::Ptr evaluator = ownedPtr(new GripperEvaluator(_td, _td->getAlignmentCalculator()));
-        GripperQuality::Ptr quality = evaluator->evaluateGripper(_gripper, _tasks, _samples);
+        OldGripperQuality::Ptr quality = evaluator->evaluateGripper(_gripper, _tasks, _samples);
         _gripper->setQuality(*quality);
 
         log().info() << _gripper->getQuality() << endl;

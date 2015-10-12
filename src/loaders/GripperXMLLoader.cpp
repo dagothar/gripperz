@@ -69,7 +69,7 @@ void readParameters(PTree& tree, OldGripper::Ptr gripper, const std::string& pat
 
 void readResult(PTree& tree, OldGripper::Ptr gripper, const std::string& path) {
 	
-	GripperQuality& result = gripper->getQuality();
+	OldGripperQuality& result = gripper->getQuality();
 
 	
 	result.success = XMLHelpers::readDouble(tree.get_child("success"));
@@ -142,7 +142,7 @@ void GripperXMLLoader::save(OldGripper::Ptr gripper, const std::string& filename
 	tree.put("gripper.parameters.basez", gripper->getBaseZ());
 	
 	/* save qualities */
-	GripperQuality& q = gripper->getQuality();
+	OldGripperQuality& q = gripper->getQuality();
 	
 	tree.put("gripper.qualities.success", q.success);
 	tree.put("gripper.qualities.robustness", q.robustness);

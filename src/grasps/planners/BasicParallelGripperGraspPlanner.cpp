@@ -209,7 +209,7 @@ Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps) {
         _td->getGripperDevice()->setQ(oq, _state);
 
         // then check for collision
-        moveFrameW(wTobj * target, _td->getGripperTCP(), _td->getGripperMovable(), _state);
+        moveFrameW(wTobj * target, _td->getGripperTCP().get(), _td->getGripperMovable(), _state);
 
         CollisionDetector::QueryResult result;
         if (!cdetect->inCollision(_state, &result, true)) {

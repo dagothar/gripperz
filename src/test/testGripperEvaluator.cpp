@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 		td->getGripperDevice(),
 		td->getGripperDynamicDevice(),
 		td->getInitState(),
-		td
+		td->getGripperTCP()
 	);
 	
 	/* create evaluation objects */
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
 	
 	/* evaluate gripper */
 	Log::log().setLevel(Log::Debug);
-	GripperQuality::Ptr quality = evaluator->evaluateGripper(gripper, simulator->getTasks());
+	OldGripperQuality::Ptr quality = evaluator->evaluateGripper(gripper, simulator->getTasks());
 	gripper->setQuality(*quality);
 	
 	INFO << "\nRESULTS" << endl;

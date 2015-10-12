@@ -16,17 +16,17 @@ namespace models {
  * @class GripperQuality
  * @brief Stores gripper quality indices.
  */
-class GripperQuality {
+class OldGripperQuality {
 public:
 	//! Smart pointer.
-	typedef rw::common::Ptr<GripperQuality> Ptr;
+	typedef rw::common::Ptr<OldGripperQuality> Ptr;
 
 public:
-	GripperQuality();
+	OldGripperQuality();
 	
-	virtual ~GripperQuality();
+	virtual ~OldGripperQuality();
 	
-	friend std::ostream& operator<<(std::ostream& stream, const GripperQuality& q);
+	friend std::ostream& operator<<(std::ostream& stream, const OldGripperQuality& q);
 
 	double success;
 	double robustness;
@@ -39,7 +39,7 @@ public:
 	double quality;
 };
 
-std::ostream& operator<<(std::ostream& stream, const GripperQuality& q);
+std::ostream& operator<<(std::ostream& stream, const OldGripperQuality& q);
 
 } /* models */
 } /* gripperz */

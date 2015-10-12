@@ -206,11 +206,11 @@ public:
 		_gripperDynamicDevice = device;
 	}
 	
-	rw::kinematics::Frame* getGripperTCP() {
+	rw::kinematics::MovableFrame::Ptr getGripperTCP() {
 		return _gripperTCP;
 	}
 	
-	void setGripperTCP(rw::kinematics::Frame* frame) {
+	void setGripperTCP(rw::kinematics::MovableFrame::Ptr frame) {
 		_gripperTCP = frame;
 	}
 	
@@ -265,7 +265,7 @@ protected:
 	rw::kinematics::Frame* _targetFrame;
 	std::string _gripperID;
 	rw::models::TreeDevice::Ptr _gripperDevice;
-	rw::kinematics::Frame* _gripperTCP;
+	rw::kinematics::MovableFrame::Ptr _gripperTCP;
 	rw::kinematics::MovableFrame* _gripperMovable;
 	std::string _controllerID;
 	rwsim::dynamics::RigidDevice::Ptr _gripperDynamicDevice;

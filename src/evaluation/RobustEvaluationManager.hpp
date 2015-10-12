@@ -50,7 +50,7 @@ public:
 	
 	virtual ~RobustEvaluationManager();
 	
-	virtual models::GripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper);
+	virtual models::OldGripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper);
 	
 	const std::string& getDwcPath() const { return _dwcPath; }
 	void setDwcPath(const std::string& path) { _dwcPath = path; }

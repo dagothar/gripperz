@@ -48,7 +48,7 @@ public:
 	Configuration getConfiguration() const { return _config; }
 	void setConfiguration(const Configuration& config) { _config = config; }
 	
-	virtual models::GripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper) = 0;
+	virtual models::OldGripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper) = 0;
 	
 private:
 	Configuration _config;

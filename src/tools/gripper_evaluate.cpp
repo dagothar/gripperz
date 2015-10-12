@@ -216,7 +216,7 @@ int main(int argc, char* argv[]) {
     vector<double> results = objective->evaluate(configuration.values);
 
     OldGripper::Ptr gripper = objective->getLastGripper();
-    GripperQuality& quality = gripper->getQuality();
+    OldGripperQuality& quality = gripper->getQuality();
     quality.quality = method->combine(results);
 
     INFO << "* Results:" << endl;

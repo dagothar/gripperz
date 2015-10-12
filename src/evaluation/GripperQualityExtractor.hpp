@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <models/GripperQuality.hpp>
+#include <models/OldGripperQuality.hpp>
 #include <math/Types.hpp>
 
 namespace gripperz {
@@ -26,7 +26,7 @@ public:
 	
 	virtual ~GripperQualityExtractor();
 	
-	virtual math::Vector extract(models::GripperQuality::Ptr quality);
+	virtual math::Vector extract(models::OldGripperQuality::Ptr quality);
 };
 
 } /* evaluation */

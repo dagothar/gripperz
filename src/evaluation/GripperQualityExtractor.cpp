@@ -20,7 +20,7 @@ GripperQualityExtractor::~GripperQualityExtractor() {
 }
 
 
-Vector GripperQualityExtractor::extract(GripperQuality::Ptr q) {
+Vector GripperQualityExtractor::extract(OldGripperQuality::Ptr q) {
 	Vector result(7);
 	
 	result[0] = q->success;

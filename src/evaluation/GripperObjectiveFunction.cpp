@@ -86,7 +86,7 @@ std::vector<double> GripperObjectiveFunction::evaluate(const std::vector<double>
 	
 	try {
 		
-		GripperQuality::Ptr q = _manager->evaluateGripper(gripper);
+		OldGripperQuality::Ptr q = _manager->evaluateGripper(gripper);
 		
 		_lastQuality = q;
 		_lastGripper->setQuality(*q);

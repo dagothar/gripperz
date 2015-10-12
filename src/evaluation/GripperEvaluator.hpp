@@ -46,7 +46,7 @@ public:
 	 * @brief Evaluates gripper quality.
 	 * Uses gripper parameters and statistics in task performance to calculate the gripper quality.
 	 */
-	virtual models::GripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper, grasps::Grasps tasks, grasps::Grasps rtasks=NULL);
+	virtual models::OldGripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper, grasps::Grasps tasks, grasps::Grasps rtasks=NULL);
 
 protected:
 	//! Calculates the success index of the gripper.
