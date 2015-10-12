@@ -14,6 +14,7 @@
 #include "filters/GraspStatusFilter.hpp"
 #include "filters/GraspOffsetFilter.hpp"
 #include "filters/RobustnessGraspFilter.hpp"
+#include "filters/ClearStatusFilter.hpp"
 
 #endif	/* FILTERS_HPP */
 
