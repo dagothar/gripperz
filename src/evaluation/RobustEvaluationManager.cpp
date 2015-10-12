@@ -55,7 +55,7 @@ RobustEvaluationManager::~RobustEvaluationManager() {
 }
 
 
-GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(OldGripper::Ptr gripper) {
+OldGripperQuality::Ptr RobustEvaluationManager::evaluateGripper(OldGripper::Ptr gripper) {
 	Configuration config = getConfiguration();
 	
 	/*
@@ -111,13 +111,13 @@ GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(OldGripper::Ptr gri
 	
 	if (fileExists == false) {
 		RW_WARN ("Evaluation failed");
-		return ownedPtr(new GripperQuality);
+		return ownedPtr(new OldGripperQuality);
 	}
 	
 	/* read results */
 	OldGripper::Ptr evaluatedGripper = GripperXMLLoader::load(filename);
 	
 	/* return */
-	GripperQuality::Ptr quality = ownedPtr(new GripperQuality(evaluatedGripper->getQuality()));
+	OldGripperQuality::Ptr quality = ownedPtr(new OldGripperQuality(evaluatedGripper->getQuality()));
 	return quality;
 }

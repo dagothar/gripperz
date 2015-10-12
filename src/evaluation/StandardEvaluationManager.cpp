@@ -41,7 +41,7 @@ _evaluator(evaluator) {
 StandardEvaluationManager::~StandardEvaluationManager() {
 }
 
-GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(OldGripper::Ptr gripper) {
+OldGripperQuality::Ptr StandardEvaluationManager::evaluateGripper(OldGripper::Ptr gripper) {
     Configuration config = getConfiguration();
 
     /*
@@ -50,7 +50,7 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(OldGripper::Ptr g
     if (!_evaluator->isSane(gripper)) {
         RW_WARN("Gripper design is NOT sane!");
 
-        return ownedPtr(new GripperQuality);
+        return ownedPtr(new OldGripperQuality);
     }
 
     State state = _context->getInitState();
@@ -62,7 +62,7 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(OldGripper::Ptr g
     GraspTask::Ptr targets = NULL;
     try {
         targets = _graspSource->getGrasps();
-        
+
     } catch (const std::exception& e) {
         RW_WARN("Exception during grasp generation! " << e.what());
     }
@@ -107,10 +107,10 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(OldGripper::Ptr g
     /*
      * Evaluate gripper.
      */
-    GripperQuality::Ptr quality = NULL;
+    OldGripperQuality::Ptr quality = NULL;
     try {
         quality = _evaluator->evaluateGripper(gripper, targets, rtargets);
-        
+
     } catch (const std::exception& e) {
         RW_THROW("Exception during gripper evaluation! " << e.what());
     }
@@ -125,7 +125,7 @@ void StandardEvaluationManager::applyGripperParametrization(models::OldGripper::
             _context->getGripperDevice(),
             _context->getGripperDynamicDevice(),
             state,
-            _context
+            _context->getGripperTCP()
             );
 
     DEBUG << "Updated gripper" << endl;

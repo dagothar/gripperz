@@ -139,14 +139,16 @@
         <in>Types.hpp</in>
       </df>
       <df name="models">
+        <in>Gripper.cpp</in>
+        <in>Gripper.hpp</in>
         <in>GripperBuilder.cpp</in>
         <in>GripperBuilder.hpp</in>
-        <in>GripperQuality.cpp</in>
-        <in>GripperQuality.hpp</in>
         <in>MapGripperBuilder.cpp</in>
         <in>MapGripperBuilder.hpp</in>
         <in>OldGripper.cpp</in>
         <in>OldGripper.hpp</in>
+        <in>OldGripperQuality.cpp</in>
+        <in>OldGripperQuality.hpp</in>
       </df>
       <df name="optimization">
         <in>BOBYQAOptimizer.cpp</in>

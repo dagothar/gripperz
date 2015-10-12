@@ -80,7 +80,7 @@ void callback(OldGripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperB
 	
 	Vector args = builder->gripperToParameters(gripper);
 	
-	GripperQuality::Ptr q = &gripper->getQuality();
+	OldGripperQuality::Ptr q = &gripper->getQuality();
 	Vector res{
 		q->success,
 		q->robustness,
@@ -260,7 +260,7 @@ int main(int argc, char* argv[]) {
 	Vector result = opt_manager->optimize(objective, initialGuess, "maximize");
 	
 	OldGripper::Ptr opt_gripper = builder->parametersToGripper(result);
-	GripperQuality::Ptr opt_gripper_q = manager->evaluateGripper(opt_gripper);
+	OldGripperQuality::Ptr opt_gripper_q = manager->evaluateGripper(opt_gripper);
 	gripper->setQuality(*opt_gripper_q);
 	
 	cout << "Optimization succesful!" << endl;
