@@ -205,7 +205,7 @@ double GripperEvaluator::calculateWrench(models::Gripper::Ptr gripper, rwlibs::t
     wrench(1) /= successes;
     wrench(2) /= num;
 
-    return wrench(1);
+    return wrench(0);
 }
 
 double GripperEvaluator::calculateTopWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks) {

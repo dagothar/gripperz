@@ -44,6 +44,7 @@ struct Configuration {
     string task_file;
     double sigma_a;
     double sigma_p;
+    Transform3D<> offset;
 
     Configuration() :
     //parameters({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}),
@@ -66,6 +67,7 @@ void initialize() {
 
 bool parse_cli(int argc, char* argv[], Configuration& conf) {
     string values;
+    string offset;
 
     string usage =
             "This script evaluates gripper constructed from parameter values.\n\n"
@@ -91,7 +93,8 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("save_tasks", value<string>(&conf.task_file), "save tasks to file (optional)")
             ("name", value<string>(&conf.name)->default_value("gripper"), "gripper name")
             ("sigma_a", value<double>(&conf.sigma_a)->default_value(8), "standard deviation in of angle in degrees")
-            ("sigma_p", value<double>(&conf.sigma_p)->default_value(0.003), "standard deviation of position in meters");
+            ("sigma_p", value<double>(&conf.sigma_p)->default_value(0.003), "standard deviation of position in meters")
+            ("offset", value<string>(&offset), "offset noise for the grasps (6 values: x, y, z, r, p, y)");
     variables_map vm;
 
     try {
@@ -120,6 +123,15 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
         RW_THROW("Parameters and values size mismatch!");
     }
 
+    if (!offset.empty()) {
+        istringstream offset_sstr(offset);
+        double x, y, z, roll, pitch, yaw;
+
+        offset_sstr >> x >> y >> z >> roll >> pitch >> yaw;
+
+        conf.offset = Transform3D<>(Vector3D<>(x, y, z), RPY<>(roll * Deg2Rad, pitch * Deg2Rad, yaw * Deg2Rad));
+    }
+
     return true;
 }
 
@@ -130,7 +142,15 @@ GripperObjectiveFunction::Ptr make_objective_function(const Configuration& confi
     configuration.nOfRobustnessTargets = config.robustness;
     configuration.sigma_a = config.sigma_a;
     configuration.sigma_p = config.sigma_p;
-    GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(data.td, configuration, config.cores, data.samples);
+    StandardEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(data.td, configuration, config.cores, data.samples);
+    
+    GraspFilterChain::Ptr filterChain = new GraspFilterChain();
+    GraspFilter::Ptr offsetFilter = new GraspOffsetFilter(config.offset);
+    filterChain->addFilter(offsetFilter);
+    
+    GraspSource::Ptr graspSource = manager->getGraspSource();
+    graspSource = new FilteredGraspSource(graspSource, filterChain);
+    manager->setGraspSource(graspSource);
 
     /* gripper builder */
     vector<MapGripperBuilder::ParameterName> parameters;
@@ -187,12 +207,12 @@ int main(int argc, char* argv[]) {
     }
 
     GripperObjectiveFunction::Ptr objective = make_objective_function(configuration, data);
-    
+
     CombineObjectives::Ptr method = CombineObjectivesFactory::make(configuration.method, configuration.weights);
 
     INFO << "* Evaluating gripper:" << endl;
     INFO << *objective->getBuilder()->parametersToGripper(configuration.values);
-    
+
     vector<double> results = objective->evaluate(configuration.values);
 
     Gripper::Ptr gripper = objective->getLastGripper();
@@ -204,12 +224,12 @@ int main(int argc, char* argv[]) {
 
     gripper->setName(configuration.name);
     GripperXMLLoader::save(gripper, configuration.name + ".grp.xml");
-    
+
     /* save tasks if specified */
     if (configuration.task_file != "") {
-        StandardEvaluationManager::Ptr manager = dynamic_cast<StandardEvaluationManager*>(objective->getEvaluationManager().get());
+        StandardEvaluationManager::Ptr manager = dynamic_cast<StandardEvaluationManager*> (objective->getEvaluationManager().get());
         rwlibs::task::GraspTask::Ptr tasks = manager->getSimulator()->getTasks();
-        
+
         rwlibs::task::GraspTask::saveRWTask(tasks, configuration.task_file);
     }
 
