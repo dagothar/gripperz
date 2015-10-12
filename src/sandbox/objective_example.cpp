@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 	vector<SurfaceSample> ssamples = SurfaceSample::loadFromXML("../data/rotor/samples1.xml");
 	INFO << "Loaded." << endl;
 	INFO << "* Loading gripper... ";
-	Gripper::Ptr gripper = GripperXMLLoader::load("../data/grippers/template.grp.xml");
+	OldGripper::Ptr gripper = GripperXMLLoader::load("../data/grippers/template.grp.xml");
 	INFO << "Loaded." << endl;
 	
 	/*

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <models/Gripper.hpp>
+#include <models/OldGripper.hpp>
 #include <context/TaskDescription.hpp>
 #include <grasps/Types.hpp>
 #include "AlignmentCalculator.hpp"
@@ -40,36 +40,36 @@ public:
 	/**
 	 * @brief Tests sanity of the gripper design.
 	 */
-	virtual bool isSane(models::Gripper::Ptr gripper);
+	virtual bool isSane(models::OldGripper::Ptr gripper);
 	
 	/**
 	 * @brief Evaluates gripper quality.
 	 * Uses gripper parameters and statistics in task performance to calculate the gripper quality.
 	 */
-	virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper, grasps::Grasps tasks, grasps::Grasps rtasks=NULL);
+	virtual models::GripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper, grasps::Grasps tasks, grasps::Grasps rtasks=NULL);
 
 protected:
 	//! Calculates the success index of the gripper.
-	virtual double calculateSuccess(models::Gripper::Ptr gripper, grasps::Grasps grasps);
+	virtual double calculateSuccess(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 	
 	//! Calculates the robustness index of the gripper.
-	virtual double calculateRobustness(models::Gripper::Ptr gripper, grasps::Grasps grasps, grasps::Grasps rgrasps=NULL);
+	virtual double calculateRobustness(models::OldGripper::Ptr gripper, grasps::Grasps grasps, grasps::Grasps rgrasps=NULL);
 	
 	//! Calculates the coverage index of the gripper.
-	virtual double calculateCoverage(models::Gripper::Ptr gripper, grasps::Grasps grasps);
+	virtual double calculateCoverage(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 	
 	//! Calculates the alignment index of the gripper.
 	virtual double calculateAlignment(grasps::Grasps grasps);
 	
 	//! Calculates the wrench index of the gripper.
-	virtual double calculateWrench(models::Gripper::Ptr gripper, grasps::Grasps grasps);
-	virtual double calculateTopWrench(models::Gripper::Ptr gripper, grasps::Grasps grasps);
+	virtual double calculateWrench(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
+	virtual double calculateTopWrench(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 	
 	//! Calculates the stress index of the gripper.
-	virtual double calculateStress(models::Gripper::Ptr gripper);
+	virtual double calculateStress(models::OldGripper::Ptr gripper);
 	
 	//! Calculates the volume index of the gripper.
-	virtual double calculateVolume(models::Gripper::Ptr gripper);
+	virtual double calculateVolume(models::OldGripper::Ptr gripper);
 
 private:
 	context::TaskDescription::Ptr _context;

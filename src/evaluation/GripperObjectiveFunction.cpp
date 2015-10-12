@@ -70,7 +70,7 @@ std::vector<double> GripperObjectiveFunction::evaluate(const std::vector<double>
 	/*
 	 * Build gripper.
 	 */
-	Gripper::Ptr gripper = NULL;
+	OldGripper::Ptr gripper = NULL;
 	try {
 		
 		gripper = _builder->parametersToGripper(x);

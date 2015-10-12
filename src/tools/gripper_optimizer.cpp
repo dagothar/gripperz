@@ -72,7 +72,7 @@ vector<vector<double> > opt_log;
 ofstream log_file;
 path outdir;
 
-void callback(Gripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperBuilder::Ptr builder) {
+void callback(OldGripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperBuilder::Ptr builder) {
 	static unsigned step = 0;
 	
 	Vector entry;
@@ -179,7 +179,7 @@ int main(int argc, char* argv[]) {
 	TaskDescription::Ptr td = TaskDescriptionLoader::load(Configuration.td_filename, dwc);
 	INFO << " Loaded." << endl;
 	INFO << "* Loading gripper... " << Configuration.gripper_filename;
-	Gripper::Ptr gripper = GripperXMLLoader::load(Configuration.gripper_filename);
+	OldGripper::Ptr gripper = GripperXMLLoader::load(Configuration.gripper_filename);
 	INFO << " Loaded." << endl;
 
 	vector<SurfaceSample> ssamples;
@@ -259,7 +259,7 @@ int main(int argc, char* argv[]) {
 	Vector initialGuess = builder->gripperToParameters(gripper);
 	Vector result = opt_manager->optimize(objective, initialGuess, "maximize");
 	
-	Gripper::Ptr opt_gripper = builder->parametersToGripper(result);
+	OldGripper::Ptr opt_gripper = builder->parametersToGripper(result);
 	GripperQuality::Ptr opt_gripper_q = manager->evaluateGripper(opt_gripper);
 	gripper->setQuality(*opt_gripper_q);
 	

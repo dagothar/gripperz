@@ -55,7 +55,7 @@ RobustEvaluationManager::~RobustEvaluationManager() {
 }
 
 
-GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(Gripper::Ptr gripper) {
+GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(OldGripper::Ptr gripper) {
 	Configuration config = getConfiguration();
 	
 	/*
@@ -115,7 +115,7 @@ GripperQuality::Ptr RobustEvaluationManager::evaluateGripper(Gripper::Ptr grippe
 	}
 	
 	/* read results */
-	Gripper::Ptr evaluatedGripper = GripperXMLLoader::load(filename);
+	OldGripper::Ptr evaluatedGripper = GripperXMLLoader::load(filename);
 	
 	/* return */
 	GripperQuality::Ptr quality = ownedPtr(new GripperQuality(evaluatedGripper->getQuality()));

@@ -32,7 +32,7 @@ using namespace gripperz::loaders;
 using namespace gripperz::models;
 
 
-void readParameters(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
+void readParameters(PTree& tree, OldGripper::Ptr gripper, const std::string& path) {
 	double length = XMLHelpers::readDouble(tree.get_child("length"));
 	double width = XMLHelpers::readDouble(tree.get_child("width"));
 	double depth = XMLHelpers::readDouble(tree.get_child("depth"));
@@ -67,7 +67,7 @@ void readParameters(PTree& tree, Gripper::Ptr gripper, const std::string& path) 
 }
 
 
-void readResult(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
+void readResult(PTree& tree, OldGripper::Ptr gripper, const std::string& path) {
 	
 	GripperQuality& result = gripper->getQuality();
 
@@ -86,8 +86,8 @@ void readResult(PTree& tree, Gripper::Ptr gripper, const std::string& path) {
 	DEBUG << result << endl;
 }
 
-Gripper::Ptr readGripper(PTree& tree, const std::string& path) {
-	Gripper::Ptr gripper = ownedPtr(new Gripper);
+OldGripper::Ptr readGripper(PTree& tree, const std::string& path) {
+	OldGripper::Ptr gripper = ownedPtr(new OldGripper);
 
 	readParameters(tree.get_child("parameters"), gripper, path);
 	readResult(tree.get_child("qualities"), gripper, path);
@@ -95,8 +95,8 @@ Gripper::Ptr readGripper(PTree& tree, const std::string& path) {
 	return gripper;
 }
 
-Gripper::Ptr GripperXMLLoader::load(const std::string& filename) {
-	Gripper::Ptr gripper;
+OldGripper::Ptr GripperXMLLoader::load(const std::string& filename) {
+	OldGripper::Ptr gripper;
 
 	try {
 		// get path
@@ -118,7 +118,7 @@ Gripper::Ptr GripperXMLLoader::load(const std::string& filename) {
 	return gripper;
 }
 
-void GripperXMLLoader::save(Gripper::Ptr gripper, const std::string& filename) {
+void GripperXMLLoader::save(OldGripper::Ptr gripper, const std::string& filename) {
 	PTree tree;
 
 	/* save name */

@@ -36,13 +36,13 @@ _alignmentCalculator(alignmentCalculator) {
 GripperEvaluator::~GripperEvaluator() {
 }
 
-bool GripperEvaluator::isSane(models::Gripper::Ptr gripper) {
+bool GripperEvaluator::isSane(models::OldGripper::Ptr gripper) {
     if (!gripper->isSane()) return false;
 
     return true;
 }
 
-GripperQuality::Ptr GripperEvaluator::evaluateGripper(Gripper::Ptr gripper, Grasps grasps, Grasps rgrasps) {
+GripperQuality::Ptr GripperEvaluator::evaluateGripper(OldGripper::Ptr gripper, Grasps grasps, Grasps rgrasps) {
     GripperQuality::Ptr quality = ownedPtr(new GripperQuality);
 
     if (!isSane(gripper)) {
@@ -61,7 +61,7 @@ GripperQuality::Ptr GripperEvaluator::evaluateGripper(Gripper::Ptr gripper, Gras
     return quality;
 }
 
-double GripperEvaluator::calculateSuccess(models::Gripper::Ptr gripper, Grasps grasps) {
+double GripperEvaluator::calculateSuccess(models::OldGripper::Ptr gripper, Grasps grasps) {
     DEBUG << "CALCULATING SUCCESS - " << endl;
     std::vector<std::pair<class GraspSubTask*, class GraspTarget*> > allTargets = grasps->getAllTargets();
     
@@ -89,7 +89,7 @@ double GripperEvaluator::calculateSuccess(models::Gripper::Ptr gripper, Grasps g
     return successIndex;
 }
 
-double GripperEvaluator::calculateRobustness(models::Gripper::Ptr gripper, Grasps grasps, Grasps rgrasps) {
+double GripperEvaluator::calculateRobustness(models::OldGripper::Ptr gripper, Grasps grasps, Grasps rgrasps) {
     if (rgrasps == NULL) {
         RW_WARN("Not calculating robustness.");
         return 1.0;
@@ -115,7 +115,7 @@ double GripperEvaluator::calculateRobustness(models::Gripper::Ptr gripper, Grasp
     return robustnessIndex;
 }
 
-double GripperEvaluator::calculateCoverage(models::Gripper::Ptr gripper, Grasps grasps) {
+double GripperEvaluator::calculateCoverage(models::OldGripper::Ptr gripper, Grasps grasps) {
     DEBUG << "CALCULATING COVERAGE - " << endl;
     double coverage = 0.0;
     
@@ -159,7 +159,7 @@ bool sortf(double a, double b) {
     return (a > b);
 }
 
-double GripperEvaluator::calculateWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks) {
+double GripperEvaluator::calculateWrench(models::OldGripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks) {
     DEBUG << "CALCULATING WRENCH - " << endl;
 
     vector<double> wrenches; // used to find the top 10%
@@ -208,7 +208,7 @@ double GripperEvaluator::calculateWrench(models::Gripper::Ptr gripper, rwlibs::t
     return wrench(0);
 }
 
-double GripperEvaluator::calculateTopWrench(models::Gripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks) {
+double GripperEvaluator::calculateTopWrench(models::OldGripper::Ptr gripper, rwlibs::task::GraspTask::Ptr tasks) {
     DEBUG << "CALCULATING TOPWRENCH - " << endl;
 
     vector<double> wrenches; // used to find the top 10%
@@ -257,7 +257,7 @@ double GripperEvaluator::calculateTopWrench(models::Gripper::Ptr gripper, rwlibs
     return wrench(2);
 }
 
-double GripperEvaluator::calculateStress(models::Gripper::Ptr gripper) {
+double GripperEvaluator::calculateStress(models::OldGripper::Ptr gripper) {
     DEBUG << "CALCULATING STRESS - " << endl;
     double maxstress = gripper->getMaxStress();
     DEBUG << "Gripper stress= " << maxstress << endl;
@@ -271,7 +271,7 @@ double GripperEvaluator::calculateStress(models::Gripper::Ptr gripper) {
     return stress;
 }
 
-double GripperEvaluator::calculateVolume(models::Gripper::Ptr gripper) {
+double GripperEvaluator::calculateVolume(models::OldGripper::Ptr gripper) {
     DEBUG << "CALCULATING VOLUME - " << endl;
     double gripperVolume = gripper->getVolume();
     DEBUG << "Gripper volume= " << gripperVolume << endl;

@@ -57,7 +57,7 @@ false), _showSuccesses(false), _silentMode(false), _nOfTargetsToGen(
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(updateSim()));
 
-    _gripper = ownedPtr(new Gripper);
+    _gripper = ownedPtr(new OldGripper);
 }
 
 GraspPlugin::~GraspPlugin() {
@@ -326,7 +326,7 @@ void GraspPlugin::setupEvent() {
 
 void GraspPlugin::loadGripper(const std::string& filename) {
     cout << "Loading gripper from: " << filename << endl;
-    Gripper::Ptr gripper = GripperXMLLoader::load(filename);
+    OldGripper::Ptr gripper = GripperXMLLoader::load(filename);
     _gripperList.push_back(gripper);
     ui.gripperCombo->addItem(QString::fromStdString(gripper->getName()));
 }

@@ -41,7 +41,7 @@ _evaluator(evaluator) {
 StandardEvaluationManager::~StandardEvaluationManager() {
 }
 
-GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr gripper) {
+GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(OldGripper::Ptr gripper) {
     Configuration config = getConfiguration();
 
     /*
@@ -118,7 +118,7 @@ GripperQuality::Ptr StandardEvaluationManager::evaluateGripper(Gripper::Ptr grip
     return quality;
 }
 
-void StandardEvaluationManager::applyGripperParametrization(models::Gripper::Ptr gripper, rw::kinematics::State& state) {
+void StandardEvaluationManager::applyGripperParametrization(models::OldGripper::Ptr gripper, rw::kinematics::State& state) {
     gripper->updateGripper(
             _context->getWorkCell(),
             _context->getDynamicWorkCell(),

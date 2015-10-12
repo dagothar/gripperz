@@ -15,11 +15,11 @@ using namespace rwsim;
 using namespace gripperz::loaders;
 using namespace gripperz::models;
 
-DesignDialog::DesignDialog(QWidget* parent, Gripper::Ptr gripper,
+DesignDialog::DesignDialog(QWidget* parent, OldGripper::Ptr gripper,
 		std::string wd) :
 		QDialog(parent), _gripper(gripper), _changed(false), _wd(wd) {
 	if (!_gripper)
-		_gripper = ownedPtr(new Gripper);
+		_gripper = ownedPtr(new OldGripper);
 
 	ui.setupUi(this);
 
@@ -63,7 +63,7 @@ void DesignDialog::guiEvent() {
 	QObject* obj = sender();
 
 	if (obj == ui.okButton) {
-		_gripper = ownedPtr(new Gripper);
+		_gripper = ownedPtr(new OldGripper);
 		_updateGripper();
 		close();
 	}
@@ -73,7 +73,7 @@ void DesignDialog::guiEvent() {
 	}
 
 	else if (obj == ui.defaultButton) {
-		_gripper = ownedPtr(new Gripper);
+		_gripper = ownedPtr(new OldGripper);
 		_updateGUI();
 	}
 

@@ -13,7 +13,7 @@
 #include <QTimer>
 
 #include <grasps/GraspSource.hpp>
-#include <models/Gripper.hpp>
+#include <models/OldGripper.hpp>
 #include <simulation/BasicSimulator.hpp>
 #include <simulation/InterferenceSimulator.hpp>
 #include <evaluation/GripperEvaluator.hpp>
@@ -118,8 +118,8 @@ private:
 	QTimer *_timer; // used to update RWS view periodically
 
 	// grippers
-	gripperz::models::Gripper::Ptr _gripper;
-	std::vector<gripperz::models::Gripper::Ptr> _gripperList;
+	gripperz::models::OldGripper::Ptr _gripper;
+	std::vector<gripperz::models::OldGripper::Ptr> _gripperList;
 
 	// flags
 	bool _slowMotion;

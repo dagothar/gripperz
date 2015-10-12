@@ -25,7 +25,7 @@ ConstrainedGripperEvaluator::~ConstrainedGripperEvaluator()
 {}
 
 
-bool ConstrainedGripperEvaluator::isSane(models::Gripper::Ptr gripper) {
+bool ConstrainedGripperEvaluator::isSane(models::OldGripper::Ptr gripper) {
 	if (!GripperEvaluator::isSane(gripper)) return false;
 	
 	if (calculateStress(gripper) == 0.0) return false;
