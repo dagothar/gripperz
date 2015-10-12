@@ -472,16 +472,14 @@ void GraspTaskSimulator::stepCB(
                 sstate._graspTime = sim->getTime();
                 sstate._postLiftObjState = state;
                 // now instruct the RigidBodyController to move the object to the home configuration
-                sstate._target->getResult()->gripperConfigurationGrasp =
-                        currentQ;
+                sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
 
                 GraspedObject gobj = getObjectContacts(state, sstate);
 
                 if (gobj.object == NULL && scup == NULL) {
                     _failed++;
 
-                    sstate._target->getResult()->testStatus =
-                            GraspResult::ObjectMissed;
+                    sstate._target->getResult()->testStatus = GraspResult::ObjectMissed;
                     _stat[GraspResult::ObjectMissed]++;
                     sstate._target->getResult()->qualityBeforeLifting = Q();
                     sstate._currentState = NEW_GRASP;
@@ -490,11 +488,9 @@ void GraspTaskSimulator::stepCB(
                 } else {
                     State nstate = state;
                     Q qualities = calcGraspQuality(state, sstate);
-                    sstate._target->getResult()->qualityBeforeLifting =
-                            qualities;
+                    sstate._target->getResult()->qualityBeforeLifting = qualities;
                     sstate._target->getResult()->contactsGrasp = gobj.contacts;
-                    sim->getSimulator()->setTarget(_dhand->getBase(),
-                            sstate._wTmbase_retractTarget, nstate);
+                    sim->getSimulator()->setTarget(_dhand->getBase(), sstate._wTmbase_retractTarget, nstate);
                     sim->setState(nstate);
                     sstate._currentState = LIFTING;
                     sstate._restCount = 0;
@@ -532,8 +528,7 @@ void GraspTaskSimulator::stepCB(
             if ((gobj.object == NULL && scup == NULL)
                     || (scup != NULL && !scup->isClosed(state))) {
                 _failed++;
-                sstate._target->getResult()->testStatus =
-                        GraspResult::ObjectDropped;
+                sstate._target->getResult()->testStatus = GraspResult::ObjectDropped;
                 _stat[GraspResult::ObjectDropped]++;
                 sstate._target->getResult()->qualityAfterLifting = Q();
             } else if (scup != NULL) {
@@ -554,17 +549,13 @@ void GraspTaskSimulator::stepCB(
                 BOOST_FOREACH(Contact3D& c, sstate._target->getResult()->contactsLift) {
                     contactAvg += c.p;
                 }
-                contactAvg =
-                        contactAvg / ((double) sstate._target->getResult()->contactsLift.size());
+                contactAvg = contactAvg / ((double) sstate._target->getResult()->contactsLift.size());
 
                 Transform3D<> tcpTo_before = Kinematics::frameTframe(_tcp,
                         object->getBodyFrame(), sstate._postLiftObjState);
-                Transform3D<> tcpTo_after = Kinematics::frameTframe(_tcp,
-                        object->getBodyFrame(), state);
-                sstate._target->getResult()->objectTtcpGrasp = inverse(
-                        tcpTo_before);
-                sstate._target->getResult()->objectTtcpLift = inverse(
-                        tcpTo_after);
+                Transform3D<> tcpTo_after = Kinematics::frameTframe(_tcp, object->getBodyFrame(), state);
+                sstate._target->getResult()->objectTtcpGrasp = inverse(tcpTo_before);
+                sstate._target->getResult()->objectTtcpLift = inverse(tcpTo_after);
 
                 _stat[GraspResult::Success]++;
                 sstate._target->getResult()->testStatus = GraspResult::Success;
@@ -589,34 +580,26 @@ void GraspTaskSimulator::stepCB(
                 contactAvg =
                         contactAvg / ((double) sstate._target->getResult()->contactsLift.size());
 
-                Transform3D<> tcpTo_before = Kinematics::frameTframe(_tcp,
-                        object->getBodyFrame(), sstate._postLiftObjState);
-                Transform3D<> tcpTo_after = Kinematics::frameTframe(_tcp,
-                        object->getBodyFrame(), state);
-                sstate._target->getResult()->objectTtcpGrasp = inverse(
-                        tcpTo_before);
-                sstate._target->getResult()->objectTtcpLift = inverse(
-                        tcpTo_after);
+                Transform3D<> tcpTo_before = Kinematics::frameTframe(_tcp, object->getBodyFrame(), sstate._postLiftObjState);
+                Transform3D<> tcpTo_after = Kinematics::frameTframe(_tcp, object->getBodyFrame(), state);
+                sstate._target->getResult()->objectTtcpGrasp = inverse(tcpTo_before);
+                sstate._target->getResult()->objectTtcpLift = inverse(tcpTo_after);
 
                 Transform3D<> oTc(contactAvg);
 
-                Transform3D<> oTg_before = inverse(oTc)
-                        * Kinematics::frameTframe(object->getBodyFrame(),
-                        gripperBody->getBodyFrame(),
-                        sstate._postLiftObjState);
-                Transform3D<> oTg_after = inverse(oTc)
-                        * Kinematics::frameTframe(object->getBodyFrame(),
-                        gripperBody->getBodyFrame(), state);
+                Transform3D<> oTg_before = inverse(oTc) * Kinematics::frameTframe(object->getBodyFrame(), gripperBody->getBodyFrame(), sstate._postLiftObjState);
+                Transform3D<> oTg_after = inverse(oTc) * Kinematics::frameTframe(object->getBodyFrame(), gripperBody->getBodyFrame(), state);
                 Vector3D<> slipVector = oTg_after.P() - oTg_before.P();
                 // allow op to 2 cm slip else its a fault
 
                 double slippage = slipVector.norm2();
 
                 double liftResult;
-                if (slippage <= 0.02)
+                if (slippage <= 0.02) {
                     liftResult = (0.02 - slippage) * 50;
-                else
+                } else {
                     liftResult = 0.0;
+                }
 
                 sstate._target->getResult()->liftresult = liftResult;
                 sstate._restCount = 0;

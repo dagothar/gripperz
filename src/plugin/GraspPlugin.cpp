@@ -24,6 +24,7 @@
 #include <grasps/planners/BasicParallelGripperGraspPlanner.hpp>
 #include <grasps/filters/RobustnessGraspFilter.hpp>
 #include "TaskDialog.hpp"
+#include "grasps/filters/ClearStatusFilter.hpp"
 
 
 using namespace std;
@@ -189,6 +190,10 @@ void GraspPlugin::guiEvent() {
                 << "\n";
 
         _tasks = GraspTask::load(taskfile.toStdString());
+        
+        GraspFilter::Ptr clearStatusFilter = new ClearStatusFilter();
+        _tasks = clearStatusFilter->filter(_tasks);
+        
         ui.progressBar->setValue(0);
         ui.progressBar->setMaximum(_tasks->getAllTargets().size());
 
