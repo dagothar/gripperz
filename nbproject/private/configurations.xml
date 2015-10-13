@@ -151,6 +151,8 @@
         <in>OldGripper.hpp</in>
         <in>OldGripperQuality.cpp</in>
         <in>OldGripperQuality.hpp</in>
+        <in>Types.cpp</in>
+        <in>Types.hpp</in>
       </df>
       <df name="optimization">
         <in>BOBYQAOptimizer.cpp</in>
@@ -182,8 +184,8 @@
         <in>TaskDialog.hpp</in>
       </df>
       <df name="process">
-        <in>EvaluationProcessManager.cpp</in>
-        <in>EvaluationProcessManager.hpp</in>
+        <in>GripperEvaluationProcessManager.cpp</in>
+        <in>GripperEvaluationProcessManager.hpp</in>
       </df>
       <df name="sandbox">
         <in>alignment_test.cpp</in>
@@ -243,6 +245,7 @@
       <in>math.hpp</in>
       <in>models.hpp</in>
       <in>optimization.hpp</in>
+      <in>process.hpp</in>
       <in>simulation.hpp</in>
       <in>util.hpp</in>
     </df>

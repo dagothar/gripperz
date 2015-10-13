@@ -8,6 +8,7 @@
 #pragma once
 
 #include <rw/common/Ptr.hpp>
+#include "Types.hpp"
 
 namespace gripperz {
     namespace models {
@@ -26,16 +27,25 @@ namespace gripperz {
 
             virtual ~Gripper();
 
-            void SetName(const std::string& name) {
+            void setName(const std::string& name) {
                 this->_name = name;
             }
 
-            std::string GetName() const {
+            std::string getName() const {
                 return _name;
+            }
+
+            void setQuality(const GripperQuality& _quality) {
+                this->_quality = _quality;
+            }
+
+            GripperQuality getQuality() const {
+                return _quality;
             }
 
         private:
             std::string _name;
+            GripperQuality _quality;
         };
 
     }

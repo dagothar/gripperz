@@ -111,6 +111,8 @@
         <in>MapGripperBuilder.cpp</in>
         <in>OldGripper.cpp</in>
         <in>OldGripperQuality.cpp</in>
+        <in>Types.cpp</in>
+        <in>Types.hpp</in>
       </df>
       <df name="optimization">
         <in>BOBYQAOptimizer.cpp</in>
@@ -129,7 +131,7 @@
         <in>TaskDialog.cpp</in>
       </df>
       <df name="process">
-        <in>EvaluationProcessManager.cpp</in>
+        <in>GripperEvaluationProcessManager.cpp</in>
       </df>
       <df name="sandbox">
         <in>alignment_test.cpp</in>
@@ -173,6 +175,7 @@
         <in>Rosenbrock.cpp</in>
         <in>XMLHelpers.cpp</in>
       </df>
+      <in>process.hpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -1067,6 +1070,10 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="src/models/Types.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/models/Types.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/optimization/BOBYQAOptimizer.cpp"
             ex="false"
             tool="1"
@@ -1139,7 +1146,9 @@
         <ccTool flags="0">
         </ccTool>
       </item>
-      <item path="src/process/EvaluationProcessManager.cpp"
+      <item path="src/process.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/process/GripperEvaluationProcessManager.cpp"
             ex="false"
             tool="1"
             flavor2="8">
