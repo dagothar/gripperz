@@ -69,21 +69,21 @@ void readParameters(PTree& tree, OldGripper::Ptr gripper, const std::string& pat
 
 void readResult(PTree& tree, OldGripper::Ptr gripper, const std::string& path) {
 	
-	OldGripperQuality& result = gripper->getQuality();
-
-	
-	result.success = XMLHelpers::readDouble(tree.get_child("success"));
-	result.robustness = XMLHelpers::readDouble(tree.get_child("robustness"));
-	result.alignment = XMLHelpers::readDouble(tree.get_child("alignment"));
-	result.coverage = XMLHelpers::readDouble(tree.get_child("coverage"));
-	result.wrench = XMLHelpers::readDouble(tree.get_child("wrench"));
-	result.topwrench = XMLHelpers::readDouble(tree.get_child("topwrench"));
-	result.stress = XMLHelpers::readDouble(tree.get_child("stress"));
-	result.volume = XMLHelpers::readDouble(tree.get_child("volume"));
-	result.quality = XMLHelpers::readDouble(tree.get_child("quality"));
+	GripperQuality result;
+        
+	result["success"] = XMLHelpers::readDouble(tree.get_child("success"));
+	result["robustness"] = XMLHelpers::readDouble(tree.get_child("robustness"));
+	result["alignment"] = XMLHelpers::readDouble(tree.get_child("alignment"));
+	result["coverage"] = XMLHelpers::readDouble(tree.get_child("coverage"));
+	result["wrench"] = XMLHelpers::readDouble(tree.get_child("wrench"));
+	result["stress"] = XMLHelpers::readDouble(tree.get_child("stress"));
+	result["volume"] = XMLHelpers::readDouble(tree.get_child("volume"));
+	result["quality"] = XMLHelpers::readDouble(tree.get_child("quality"));
+        
+        gripper->setQuality(result);
 
 	DEBUG << "Read gripper quality:" << endl;
-	DEBUG << result << endl;
+	//DEBUG << result; // << endl;
 }
 
 OldGripper::Ptr readGripper(PTree& tree, const std::string& path) {
@@ -142,17 +142,17 @@ void GripperXMLLoader::save(OldGripper::Ptr gripper, const std::string& filename
 	tree.put("gripper.parameters.basez", gripper->getBaseZ());
 	
 	/* save qualities */
-	OldGripperQuality& q = gripper->getQuality();
+	GripperQuality q = gripper->getQuality();
 	
-	tree.put("gripper.qualities.success", q.success);
-	tree.put("gripper.qualities.robustness", q.robustness);
-	tree.put("gripper.qualities.alignment", q.alignment);
-	tree.put("gripper.qualities.coverage", q.coverage);
-	tree.put("gripper.qualities.wrench", q.wrench);
-	tree.put("gripper.qualities.topwrench", q.topwrench);
-	tree.put("gripper.qualities.stress", q.stress);
-	tree.put("gripper.qualities.volume", q.volume);
-	tree.put("gripper.qualities.quality", q.quality);
+	tree.put("gripper.qualities.success", q["success"]);
+	tree.put("gripper.qualities.robustness", q["robustness"]);
+	tree.put("gripper.qualities.alignment", q["alignment"]);
+	tree.put("gripper.qualities.coverage", q["coverage"]);
+	tree.put("gripper.qualities.wrench", q["wrench"]);
+	tree.put("gripper.qualities.topwrench", q["topwrench"]);
+	tree.put("gripper.qualities.stress", q["stress"]);
+	tree.put("gripper.qualities.volume", q["volume"]);
+	tree.put("gripper.qualities.quality", q["quality"]);
 
 	try {
 		boost::property_tree::xml_writer_settings<char> settings('\t', 1);

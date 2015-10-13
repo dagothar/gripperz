@@ -54,7 +54,7 @@ namespace gripperz {
                 _config = config;
             }
 
-            virtual models::OldGripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper) = 0;
+            virtual models::GripperQuality evaluateGripper(models::OldGripper::Ptr gripper) = 0;
 
         private:
             Configuration _config;

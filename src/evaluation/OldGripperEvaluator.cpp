@@ -42,25 +42,6 @@ bool OldGripperEvaluator::isSane(models::OldGripper::Ptr gripper) {
     return true;
 }
 
-OldGripperQuality::Ptr OldGripperEvaluator::evaluate(OldGripper::Ptr gripper, Grasps grasps, Grasps rgrasps) {
-    OldGripperQuality::Ptr quality = ownedPtr(new OldGripperQuality);
-
-    if (!isSane(gripper)) {
-        return quality;
-    }
-
-    quality->success = calculateSuccess(gripper, grasps);
-    quality->robustness = calculateRobustness(gripper, grasps, rgrasps);
-    quality->coverage = calculateCoverage(gripper, grasps);
-    quality->alignment = calculateAlignment(grasps);
-    quality->wrench = calculateWrench(gripper, grasps);
-    quality->topwrench = calculateTopWrench(gripper, grasps);
-    quality->stress = calculateStress(gripper);
-    quality->volume = calculateVolume(gripper);
-
-    return quality;
-}
-
 GripperQuality OldGripperEvaluator::evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
 
     GripperQuality quality;

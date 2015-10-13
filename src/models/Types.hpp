@@ -9,6 +9,7 @@
 
 #include <map>
 #include <string>
+#include <iostream>
 
 namespace gripperz {
     namespace models {
@@ -17,6 +18,8 @@ namespace gripperz {
          * Defines a type for the gripper quality
          */
         typedef std::map<std::string, double> GripperQuality;
+        
+        std::ostream& operator<<(std::ostream& stream, const GripperQuality& quality);
     }
 }
 

@@ -6,28 +6,29 @@
 
 #pragma once
 
-#include <models/OldGripperQuality.hpp>
+#include <rw/common/Ptr.hpp>
+#include <models/Types.hpp>
 #include <math/Types.hpp>
 
 namespace gripperz {
-namespace evaluation {
+    namespace evaluation {
 
-/**
- * @class GripperQualityExtractor
- * @brief Extracts values from GripperQuality into a vector of doubles
- */
-class GripperQualityExtractor {
-public:
-	//! Smart pointer.
-	typedef rw::common::Ptr<GripperQualityExtractor> Ptr;
+        /**
+         * @class GripperQualityExtractor
+         * @brief Extracts values from GripperQuality into a vector of doubles
+         */
+        class GripperQualityExtractor {
+        public:
+            //! Smart pointer.
+            typedef rw::common::Ptr<GripperQualityExtractor> Ptr;
 
-public:
-	GripperQualityExtractor();
-	
-	virtual ~GripperQualityExtractor();
-	
-	virtual math::Vector extract(models::OldGripperQuality::Ptr quality);
-};
+        public:
+            GripperQualityExtractor();
 
-} /* evaluation */
+            virtual ~GripperQualityExtractor();
+
+            virtual math::Vector extract(const models::GripperQuality& quality);
+        };
+
+    } /* evaluation */
 } /* gripperz */

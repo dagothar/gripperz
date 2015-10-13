@@ -53,13 +53,6 @@ namespace gripperz {
              */
             virtual bool isSane(models::OldGripper::Ptr gripper);
 
-            /**
-             * @brief Evaluates gripper quality.
-             * Uses gripper parameters and statistics in task performance to calculate the gripper quality.
-             */
-            virtual models::OldGripperQuality::Ptr evaluate(models::OldGripper::Ptr gripper, grasps::Grasps tasks, grasps::Grasps rtasks = NULL);
-
-
             virtual models::GripperQuality evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 
 

@@ -10,11 +10,37 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/dagothar/gripperz-dev/src/CMakeLists.txt</file>
+            <file>file:/home/dagothar/gripperz-dev/src/test/testGripperEvaluator.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/OldGripperEvaluator.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/tools/gripper_evaluate.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/OldGripperEvaluator.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/process/GripperEvaluationProcessManager.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/Gripper.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/process/RobustGripperEvaluationProcessManager.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperObjectiveFunction.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/process/StandardGripperEvaluationProcessManager.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluator.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/OldGripper.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/process/StandardGripperEvaluationProcessManager.cpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/models/OldGripper.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/models/AdaptedWorkcellGripper.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/CMakeLists.txt</file>
+            <file>file:/home/dagothar/gripperz-dev/src/math/Types.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/process/GripperEvaluationProcessManager.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/loaders/GripperXMLLoader.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperObjectiveFunction.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/CMakeLists.txt</file>
+            <file>file:/home/dagothar/gripperz-dev/src/tools/generate_grippers.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/OldGripperQuality.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/loaders/GripperXMLLoader.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperQualityExtractor.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/tools/gripper_optimizer.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/process/RobustGripperEvaluationProcessManager.hpp</file>
             <file>file:/home/dagothar/gripperz-dev/src/models/Types.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/process/GripperEvaluationManagerFactory.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperQualityExtractor.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluator.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/Types.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/GripperBuilder.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/math/Types.hpp</file>
         </group>
     </open-files>
 </project-private>

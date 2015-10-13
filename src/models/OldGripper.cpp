@@ -17,7 +17,7 @@ using namespace gripperz::context;
 using namespace gripperz::geometry;
 
 OldGripper::OldGripper(const std::string& name) :
-_name(name),
+Gripper(name),
 _length(0.1),
 _width(0.025),
 _depth(0.02),

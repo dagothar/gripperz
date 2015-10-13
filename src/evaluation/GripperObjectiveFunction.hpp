@@ -14,67 +14,91 @@
 #include <boost/function.hpp>
 
 namespace gripperz {
-namespace evaluation {
+    namespace evaluation {
 
-/**
- * @class GripperObjectiveFunction
- * @brief
- */
-class GripperObjectiveFunction : public math::MultiObjectiveFunction {
-public:
-	//! Smart pointer.
-	typedef rw::common::Ptr<GripperObjectiveFunction> Ptr;
-	
-	//! Number of parameters.
-	static const unsigned NParameters = 9;
-	
-	//! Number of objectives.
-	static const unsigned NObjectives = 7;
-	
-public:
-	GripperObjectiveFunction(models::GripperBuilder::Ptr builder, process::GripperEvaluationProcessManager::Ptr manager, GripperQualityExtractor::Ptr extractor=rw::common::ownedPtr(new GripperQualityExtractor));
-	
-	virtual ~GripperObjectiveFunction();
-	
-	/**
-	 * @brief Evaluates gripper given as the parameter vector.
-	 * 
-	 * Takes following parameters (9):
-	 * length, width, depth, chf. depth, chf. angle, cut depth, cut angle, cut tilt, tcp position
-	 * 
-	 * Returns following objectives (7):
-	 * success, robustness, alignment, coverage, wrench, stress, volume
-	 */
-	virtual std::vector<double> evaluate(const std::vector<double>& x);
-	
-	models::GripperBuilder::Ptr getBuilder() { return _builder; }
-	void setBuilder(models::GripperBuilder::Ptr builder) { _builder = builder; }
-	
-	process::GripperEvaluationProcessManager::Ptr getEvaluationManager() { return _manager; }
-	void setEvaluationManager(process::GripperEvaluationProcessManager::Ptr manager) { _manager = manager; }
-	
-	GripperQualityExtractor::Ptr getQualityExtractor() { return _extractor; }
-	void setQualityExtractor(GripperQualityExtractor::Ptr extractor) { _extractor = extractor; }
-	
-	//! Returns last evaluated gripper.
-	models::OldGripper::Ptr getLastGripper() const { return _lastGripper; }
-	
-	//! Returns last obtained gripper quality.
-	models::OldGripperQuality::Ptr getLastGripperQuality() const { return _lastQuality; }
-	
-	//! Sets function evaluation callback.
-	void setCallback(const boost::function<void(models::OldGripper::Ptr)>& cb) { _callback = cb; }
+        /**
+         * @class GripperObjectiveFunction
+         * @brief
+         */
+        class GripperObjectiveFunction : public math::MultiObjectiveFunction {
+        public:
+            //! Smart pointer.
+            typedef rw::common::Ptr<GripperObjectiveFunction> Ptr;
 
-private:
-	models::GripperBuilder::Ptr _builder;
-	process::GripperEvaluationProcessManager::Ptr _manager;
-	GripperQualityExtractor::Ptr _extractor;
-	
-	models::OldGripper::Ptr _lastGripper;
-	models::OldGripperQuality::Ptr _lastQuality;
-	
-	boost::function<void(models::OldGripper::Ptr)> _callback;
-};
+            //! Number of parameters.
+            static const unsigned NParameters = 9;
 
-} /* evaluation */
+            //! Number of objectives.
+            static const unsigned NObjectives = 7;
+
+        public:
+            GripperObjectiveFunction(models::GripperBuilder::Ptr builder, process::GripperEvaluationProcessManager::Ptr manager, GripperQualityExtractor::Ptr extractor = rw::common::ownedPtr(new GripperQualityExtractor));
+
+            virtual ~GripperObjectiveFunction();
+
+            /**
+             * @brief Evaluates gripper given as the parameter vector.
+             * 
+             * Takes following parameters (9):
+             * length, width, depth, chf. depth, chf. angle, cut depth, cut angle, cut tilt, tcp position
+             * 
+             * Returns following objectives (7):
+             * success, robustness, alignment, coverage, wrench, stress, volume
+             */
+            virtual std::vector<double> evaluate(const std::vector<double>& x);
+
+            models::GripperBuilder::Ptr getBuilder() {
+                return _builder;
+            }
+
+            void setBuilder(models::GripperBuilder::Ptr builder) {
+                _builder = builder;
+            }
+
+            process::GripperEvaluationProcessManager::Ptr getEvaluationManager() {
+                return _manager;
+            }
+
+            void setEvaluationManager(process::GripperEvaluationProcessManager::Ptr manager) {
+                _manager = manager;
+            }
+
+            GripperQualityExtractor::Ptr getQualityExtractor() {
+                return _extractor;
+            }
+
+            void setQualityExtractor(GripperQualityExtractor::Ptr extractor) {
+                _extractor = extractor;
+            }
+
+            //! Returns last evaluated gripper.
+
+            models::OldGripper::Ptr getLastGripper() const {
+                return _lastGripper;
+            }
+
+            //! Returns last obtained gripper quality.
+
+            models::GripperQuality getLastGripperQuality() const {
+                return _lastQuality;
+            }
+
+            //! Sets function evaluation callback.
+
+            void setCallback(const boost::function<void(models::OldGripper::Ptr)>& cb) {
+                _callback = cb;
+            }
+
+        private:
+            models::GripperBuilder::Ptr _builder;
+            process::GripperEvaluationProcessManager::Ptr _manager;
+            GripperQualityExtractor::Ptr _extractor;
+
+            models::OldGripper::Ptr _lastGripper;
+            models::GripperQuality _lastQuality;
+
+            boost::function<void(models::OldGripper::Ptr) > _callback;
+        };
+
+    } /* evaluation */
 } /* gripperz */

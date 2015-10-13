@@ -41,17 +41,17 @@ _evaluator(evaluator) {
 StandardGripperEvaluationProcessManager::~StandardGripperEvaluationProcessManager() {
 }
 
-OldGripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
+GripperQuality StandardGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
     Configuration config = getConfiguration();
 
     /*
      * First, check if gripper design is sane.
      */
-    if (!_evaluator->isSane(gripper)) {
+    /*if (!_evaluator->isSane(gripper)) {
         RW_WARN("Gripper design is NOT sane!");
 
         return ownedPtr(new OldGripperQuality);
-    }
+    }*/
 
     State state = _context->getInitState();
     applyGripperParametrization(gripper, state);
@@ -107,9 +107,9 @@ OldGripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(
     /*
      * Evaluate gripper.
      */
-    OldGripperQuality::Ptr quality = NULL;
+    GripperQuality quality;
     try {
-        quality = _evaluator->evaluate(gripper, targets, rtargets);
+        quality = _evaluator->evaluate(gripper, targets);
 
     } catch (const std::exception& e) {
         RW_THROW("Exception during gripper evaluation! " << e.what());

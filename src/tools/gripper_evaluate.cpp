@@ -216,11 +216,12 @@ int main(int argc, char* argv[]) {
     vector<double> results = objective->evaluate(configuration.values);
 
     OldGripper::Ptr gripper = objective->getLastGripper();
-    OldGripperQuality& quality = gripper->getQuality();
-    quality.quality = method->combine(results);
+    GripperQuality quality = gripper->getQuality();
+    quality["quality"] = method->combine(results);
+    gripper->setQuality(quality);
 
     INFO << "* Results:" << endl;
-    INFO << quality << endl;
+    //INFO << quality << endl;
 
     gripper->setName(configuration.name);
     GripperXMLLoader::save(gripper, configuration.name + ".grp.xml");
