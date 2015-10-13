@@ -19,6 +19,22 @@
         <in>TaskDescription.cpp</in>
       </df>
       <df name="evaluation">
+        <df name="calculators">
+          <in>AlignmentIndexCalculator.cpp</in>
+          <in>AlignmentIndexCalculator.hpp</in>
+          <in>CostIndexCalculator.cpp</in>
+          <in>CostIndexCalculator.hpp</in>
+          <in>CoverageIndexCalculator.cpp</in>
+          <in>CoverageIndexCalculator.hpp</in>
+          <in>RobustnessIndexCalculator.cpp</in>
+          <in>RobustnessIndexCalculator.hpp</in>
+          <in>StressIndexCalculator.cpp</in>
+          <in>StressIndexCalculator.hpp</in>
+          <in>SuccessIndexCalculator.cpp</in>
+          <in>SuccessIndexCalculator.hpp</in>
+          <in>WrenchIndexCalculator.cpp</in>
+          <in>WrenchIndexCalculator.hpp</in>
+        </df>
         <in>AlignmentCalculator.cpp</in>
         <in>AllPosesAlignment.cpp</in>
         <in>ClusteringAlignment.cpp</in>
@@ -38,6 +54,7 @@
         <in>Types.cpp</in>
         <in>Types.hpp</in>
         <in>VersorAlignment.cpp</in>
+        <in>calculators.hpp</in>
       </df>
       <df name="geometry">
         <in>JawPrimitive.cpp</in>
@@ -832,6 +849,78 @@
       <item path="src/evaluation/VersorAlignment.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
+      </item>
+      <item path="src/evaluation/calculators.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/AlignmentIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/AlignmentIndexCalculator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/CostIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/CostIndexCalculator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/CoverageIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/CoverageIndexCalculator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/RobustnessIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/RobustnessIndexCalculator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/StressIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/StressIndexCalculator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/SuccessIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/SuccessIndexCalculator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/WrenchIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/calculators/WrenchIndexCalculator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/geometry/JawPrimitive.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">

@@ -4,6 +4,7 @@
  * @date 3-07-2015
  */
 
+#include "evaluation/calculators.hpp"
 #include "evaluation/Types.hpp"
 #include "evaluation/GripperEvaluator.hpp"
 #include "evaluation/ConstrainedGripperEvaluator.hpp"
