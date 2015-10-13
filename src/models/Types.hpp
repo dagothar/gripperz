@@ -5,8 +5,8 @@
  * Created on October 13, 2015, 9:48 AM
  */
 
-#ifndef TYPES_HPP
-#define	TYPES_HPP
+#ifndef MODELS_TYPES_HPP
+#define	MODELS_TYPES_HPP
 
 #include <map>
 #include <string>
