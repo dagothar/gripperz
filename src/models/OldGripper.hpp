@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "Gripper.hpp"
 #include <rw/common/Ptr.hpp>
 #include <geometry/JawPrimitive.hpp>
 #include <context/TaskDescription.hpp>
@@ -42,7 +43,7 @@ namespace gripperz {
          * Default gripper constructor creates gripper with following parameters:
          * ...
          */
-        class OldGripper {
+        class OldGripper : public Gripper {
         public:
             /// Smart pointer.
             typedef rw::common::Ptr<OldGripper> Ptr;
@@ -51,14 +52,6 @@ namespace gripperz {
             OldGripper(const std::string& name = "gripper");
 
             virtual ~OldGripper() {
-            }
-
-            std::string getName() const {
-                return _name;
-            }
-
-            void setName(const std::string& name) {
-                _name = name;
             }
 
             double getLength() const {
@@ -217,14 +210,6 @@ namespace gripperz {
                     rw::kinematics::MovableFrame::Ptr tcpFrame
                     );
 
-            OldGripperQuality& getQuality() {
-                return _quality;
-            }
-
-            void setQuality(const OldGripperQuality& quality) {
-                _quality = quality;
-            }
-
             /**
              * @brief Evaluates if the parameters are sane.
              */
@@ -263,8 +248,6 @@ namespace gripperz {
             friend std::ostream& operator<<(std::ostream& stream, const OldGripper& g);
 
         private:
-            std::string _name;
-
             /* parameters */
             double _length;
             double _width;
@@ -281,9 +264,6 @@ namespace gripperz {
             double _basex;
             double _basey;
             double _basez;
-
-            /* quality */
-            OldGripperQuality _quality;
         };
 
         std::ostream& operator<<(std::ostream& stream, const OldGripper& g);

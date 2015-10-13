@@ -51,7 +51,7 @@ _ntries(nTries) {
 RobustGripperEvaluationProcessManager::~RobustGripperEvaluationProcessManager() {
 }
 
-OldGripperQuality::Ptr RobustGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
+GripperQuality RobustGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
     Configuration config = getConfiguration();
 
     /*
@@ -105,15 +105,16 @@ OldGripperQuality::Ptr RobustGripperEvaluationProcessManager::evaluateGripper(Ol
         RW_THROW("Evaluation interrupted (ctrl+c)");
     }
 
-    if (fileExists == false) {
+    // TODO: 
+    /*if (fileExists == false) {
         RW_WARN("Evaluation failed");
         return ownedPtr(new OldGripperQuality);
-    }
+    }*/
 
     /* read results */
     OldGripper::Ptr evaluatedGripper = GripperXMLLoader::load(filename);
 
     /* return */
-    OldGripperQuality::Ptr quality = ownedPtr(new OldGripperQuality(evaluatedGripper->getQuality()));
+    GripperQuality quality = evaluatedGripper->getQuality();
     return quality;
 }

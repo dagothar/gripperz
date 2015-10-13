@@ -217,7 +217,7 @@ int main(int argc, char* argv[]) {
         sstr << name << "_" << tries;
         OldGripper::Ptr grp = func->getLastGripper();
         grp->setName(sstr.str());
-        grp->getQuality().quality = q;
+        //grp->getQuality().quality = q;
 
         if (q > 0.0) {
             ++generated;

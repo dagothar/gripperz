@@ -59,7 +59,7 @@ namespace gripperz {
                 _evaluator = evaluator;
             }
 
-            virtual models::OldGripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper);
+            virtual models::GripperQuality evaluateGripper(models::OldGripper::Ptr gripper);
 
         protected:
             virtual void applyGripperParametrization(models::OldGripper::Ptr gripper, rw::kinematics::State& state);

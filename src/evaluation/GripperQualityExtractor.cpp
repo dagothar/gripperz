@@ -11,25 +11,23 @@ using namespace gripperz::evaluation;
 using namespace gripperz::math;
 using namespace gripperz::models;
 
-
 GripperQualityExtractor::GripperQualityExtractor() {
 }
-
 
 GripperQualityExtractor::~GripperQualityExtractor() {
 }
 
+Vector GripperQualityExtractor::extract(const GripperQuality& q) {
+    Vector result(7);
 
-Vector GripperQualityExtractor::extract(OldGripperQuality::Ptr q) {
-	Vector result(7);
-	
-	result[0] = q->success;
-	result[1] = q->robustness;
-	result[2] = q->alignment;
-	result[3] = q->coverage;
-	result[4] = q->wrench;
-	result[5] = q->stress;
-	result[6] = q->volume;
-	
-	return result;
+    result[0] = q.at("success");
+    result[1] = q.at("robustness");
+    result[2] = q.at("alignment");
+    result[3] = q.at("coverage");
+    result[4] = q.at("wrench");
+    result[5] = q.at("stress");
+    result[6] = q.at("volume");
+
+    return result;
 }
+
