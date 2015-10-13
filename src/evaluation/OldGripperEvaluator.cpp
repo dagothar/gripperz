@@ -61,6 +61,22 @@ OldGripperQuality::Ptr OldGripperEvaluator::evaluate(OldGripper::Ptr gripper, Gr
     return quality;
 }
 
+GripperQuality OldGripperEvaluator::evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+
+    GripperQuality quality;
+    
+    quality["success"] = calculateSuccess(gripper, grasps);
+    quality["robustness"] = calculateRobustness(gripper, grasps, NULL);
+    quality["alignment"] = calculateAlignment(grasps);
+    quality["coverage"] = calculateCoverage(gripper, grasps);
+    quality["wrench"] = calculateWrench(gripper, grasps);
+    quality["stress"] = calculateStress(gripper);
+    quality["volume"] = calculateVolume(gripper);
+    
+    return quality;
+}
+
+
 double OldGripperEvaluator::calculateSuccess(models::OldGripper::Ptr gripper, Grasps grasps) {
     DEBUG << "CALCULATING SUCCESS - " << endl;
     std::vector<std::pair<class GraspSubTask*, class GraspTarget*> > allTargets = grasps->getAllTargets();
