@@ -6,6 +6,7 @@
 
 #include "optimization.hpp"
 #include "evaluation.hpp"
+#include "process.hpp"
 #include "context.hpp"
 #include "loaders.hpp"
 #include "util.hpp"
@@ -19,6 +20,7 @@
 	namespace gripperz { \
 		using namespace gripperz::optimization; \
 		using namespace gripperz::evaluation; \
+		using namespace gripperz::process; \
 		using namespace gripperz::context; \
 		using namespace gripperz::loaders; \
 		using namespace gripperz::util; \

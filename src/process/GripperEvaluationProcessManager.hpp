@@ -13,14 +13,14 @@
 namespace gripperz {
     namespace process {
 
-        class EvaluationProcessManager {
+        class GripperEvaluationProcessManager {
         public:
             //! Smart pointer.
-            typedef rw::common::Ptr<EvaluationProcessManager> Ptr;
+            typedef rw::common::Ptr<GripperEvaluationProcessManager> Ptr;
 
         public:
-            EvaluationProcessManager();
-            virtual ~EvaluationProcessManager();
+            GripperEvaluationProcessManager();
+            virtual ~GripperEvaluationProcessManager();
             
         private:
         };
