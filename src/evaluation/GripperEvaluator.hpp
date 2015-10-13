@@ -28,7 +28,7 @@ namespace gripperz {
             
             virtual models::GripperQuality evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
             
-            void addQualityIndexCalculator(QualityIndexCalculator::Ptr index);
+            void addQualityIndexCalculator(QualityIndexCalculator::Ptr calculator);
 
         private:
             std::vector<QualityIndexCalculator::Ptr> _calculators;
