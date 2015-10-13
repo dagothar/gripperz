@@ -19,3 +19,5 @@ SET(SRC_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/QualityIndexCalculator.cpp
 	CACHE INTERNAL ""
 )
+
+ADD_SUBDIRECTORY(calculators)
