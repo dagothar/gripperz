@@ -29,10 +29,14 @@
         <in>GripperEvaluator.cpp</in>
         <in>GripperObjectiveFunction.cpp</in>
         <in>GripperQualityExtractor.cpp</in>
+        <in>QualityIndexCalculator.cpp</in>
+        <in>QualityIndexCalculator.hpp</in>
         <in>RobustEvaluationManager.cpp</in>
         <in>SimpleAlignment.cpp</in>
         <in>StablePoseAlignment.cpp</in>
         <in>StandardEvaluationManager.cpp</in>
+        <in>Types.cpp</in>
+        <in>Types.hpp</in>
         <in>VersorAlignment.cpp</in>
       </df>
       <df name="geometry">
@@ -786,6 +790,16 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="src/evaluation/QualityIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/QualityIndexCalculator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/evaluation/RobustEvaluationManager.cpp"
             ex="false"
             tool="1"
@@ -810,6 +824,10 @@
             flavor2="8">
         <ccTool flags="1">
         </ccTool>
+      </item>
+      <item path="src/evaluation/Types.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/evaluation/Types.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/evaluation/VersorAlignment.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">

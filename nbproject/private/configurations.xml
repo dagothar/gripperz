@@ -29,6 +29,8 @@
         <in>GripperObjectiveFunction.hpp</in>
         <in>GripperQualityExtractor.cpp</in>
         <in>GripperQualityExtractor.hpp</in>
+        <in>QualityIndexCalculator.cpp</in>
+        <in>QualityIndexCalculator.hpp</in>
         <in>RobustEvaluationManager.cpp</in>
         <in>RobustEvaluationManager.hpp</in>
         <in>SimpleAlignment.cpp</in>
@@ -37,6 +39,8 @@
         <in>StablePoseAlignment.hpp</in>
         <in>StandardEvaluationManager.cpp</in>
         <in>StandardEvaluationManager.hpp</in>
+        <in>Types.cpp</in>
+        <in>Types.hpp</in>
         <in>VersorAlignment.cpp</in>
         <in>VersorAlignment.hpp</in>
       </df>
