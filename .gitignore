@@ -4,4 +4,3 @@ libs/*
 test/*
 *.cfg.xml
 *~
-nbproject/*
