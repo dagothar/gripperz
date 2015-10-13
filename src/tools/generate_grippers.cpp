@@ -34,7 +34,7 @@
 #include <evaluation/ConstrainedGripperEvaluator.hpp>
 #include <models/MapGripperBuilder.hpp>
 #include <evaluation/GripperObjectiveFunction.hpp>
-#include <process/GripperEvaluationManager.hpp>
+#include <process/GripperEvaluationProcessManager.hpp>
 #include <process/GripperEvaluationManagerFactory.hpp>
 #include <math/CombineObjectivesFactory.hpp>
 #include <math/CombinedFunction.hpp>
@@ -180,10 +180,10 @@ int main(int argc, char* argv[]) {
     }
 
     /* construct objective function */
-    GripperEvaluationManager::Configuration config;
+    GripperEvaluationProcessManager::Configuration config;
     config.nOfGraspsPerEvaluation = ntargets;
     config.nOfRobustnessTargets = nrobust;
-    StandardEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, cores, ssamples);
+    StandardGripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, cores, ssamples);
     OldGripperEvaluator::Ptr evaluator = new ConstrainedGripperEvaluator(td, td->getAlignmentCalculator());
     manager->setEvaluator(evaluator);
 

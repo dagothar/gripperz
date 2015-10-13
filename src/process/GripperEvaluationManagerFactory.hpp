@@ -6,26 +6,26 @@
 
 #pragma once
 
-#include "GripperEvaluationManager.hpp"
-#include "StandardEvaluationManager.hpp"
+#include "GripperEvaluationProcessManager.hpp"
+#include "StandardGripperEvaluationProcessManager.hpp"
 #include <grasps/SurfaceSample.hpp>
 
 namespace gripperz {
-namespace process {
+    namespace process {
 
-/**
- * @class GripperEvaluationManagerFactory
- * @brief
- */
-class GripperEvaluationManagerFactory {
-public:
-	static StandardEvaluationManager::Ptr makeStandardEvaluationManager(
-		context::TaskDescription::Ptr td,
-		const GripperEvaluationManager::Configuration& config,
-		unsigned nThreads=1,
-		const std::vector<grasps::SurfaceSample>& ssamples=std::vector<grasps::SurfaceSample>()
-	);
-};
+        /**
+         * @class GripperEvaluationManagerFactory
+         * @brief
+         */
+        class GripperEvaluationManagerFactory {
+        public:
+            static StandardGripperEvaluationProcessManager::Ptr makeStandardEvaluationManager(
+                    context::TaskDescription::Ptr td,
+                    const GripperEvaluationProcessManager::Configuration& config,
+                    unsigned nThreads = 1,
+                    const std::vector<grasps::SurfaceSample>& ssamples = std::vector<grasps::SurfaceSample>()
+                    );
+        };
 
-} /* evaluation */
+    } /* evaluation */
 } /* gripperz */

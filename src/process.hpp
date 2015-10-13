@@ -8,10 +8,9 @@
 #ifndef PROCESS_HPP
 #define	PROCESS_HPP
 
+#include "process/StandardGripperEvaluationProcessManager.hpp"
 #include "process/GripperEvaluationProcessManager.hpp"
-#include "process/StandardEvaluationManager.hpp"
-#include "process/GripperEvaluationManager.hpp"
-#include "process/RobustEvaluationManager.hpp"
+#include "process/RobustGripperEvaluationProcessManager.hpp"
 #include "process/GripperEvaluationManagerFactory.hpp"
 #include "process/GripperEvaluationManagerBuilder.hpp"
 

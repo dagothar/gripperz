@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "GripperEvaluationManager.hpp"
+#include "GripperEvaluationProcessManager.hpp"
 
 namespace gripperz {
     namespace process {
@@ -15,13 +15,13 @@ namespace gripperz {
          * @class StandardEvaluationManager
          * @brief Uses standard evaluation (in the same process).
          */
-        class StandardEvaluationManager : public GripperEvaluationManager {
+        class StandardGripperEvaluationProcessManager : public GripperEvaluationProcessManager {
         public:
             //! Smart pointer.
-            typedef rw::common::Ptr<StandardEvaluationManager> Ptr;
+            typedef rw::common::Ptr<StandardGripperEvaluationProcessManager> Ptr;
 
         public:
-            StandardEvaluationManager(
+            StandardGripperEvaluationProcessManager(
                     context::TaskDescription::Ptr context,
                     grasps::GraspSource::Ptr graspSource,
                     simulation::GripperSimulator::Ptr simulator,
@@ -29,7 +29,7 @@ namespace gripperz {
                     const Configuration& configuration
                     );
 
-            virtual ~StandardEvaluationManager();
+            virtual ~StandardGripperEvaluationProcessManager();
 
             context::TaskDescription::Ptr getContext() {
                 return _context;

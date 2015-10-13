@@ -4,7 +4,7 @@
  * @date 2015-07-30
  */
 
-#include "StandardEvaluationManager.hpp"
+#include "StandardGripperEvaluationProcessManager.hpp"
 #include <grasps/filters/RobustnessGraspFilter.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
@@ -24,24 +24,24 @@ using namespace rw::math;
 using namespace rw::common;
 using namespace std;
 
-StandardEvaluationManager::StandardEvaluationManager(
+StandardGripperEvaluationProcessManager::StandardGripperEvaluationProcessManager(
         context::TaskDescription::Ptr context,
         grasps::GraspSource::Ptr graspSource,
         simulation::GripperSimulator::Ptr simulator,
         evaluation::OldGripperEvaluator::Ptr evaluator,
         const Configuration& configuration
         ) :
-GripperEvaluationManager(configuration),
+GripperEvaluationProcessManager(configuration),
 _context(context),
 _graspSource(graspSource),
 _simulator(simulator),
 _evaluator(evaluator) {
 }
 
-StandardEvaluationManager::~StandardEvaluationManager() {
+StandardGripperEvaluationProcessManager::~StandardGripperEvaluationProcessManager() {
 }
 
-OldGripperQuality::Ptr StandardEvaluationManager::evaluateGripper(OldGripper::Ptr gripper) {
+OldGripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
     Configuration config = getConfiguration();
 
     /*
@@ -118,7 +118,7 @@ OldGripperQuality::Ptr StandardEvaluationManager::evaluateGripper(OldGripper::Pt
     return quality;
 }
 
-void StandardEvaluationManager::applyGripperParametrization(models::OldGripper::Ptr gripper, rw::kinematics::State& state) {
+void StandardGripperEvaluationProcessManager::applyGripperParametrization(models::OldGripper::Ptr gripper, rw::kinematics::State& state) {
     gripper->updateGripper(
             _context->getWorkCell(),
             _context->getDynamicWorkCell(),
