@@ -16,7 +16,7 @@
 #include <models/OldGripper.hpp>
 #include <simulation/BasicSimulator.hpp>
 #include <simulation/InterferenceSimulator.hpp>
-#include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/OldGripperEvaluator.hpp>
 #include <context/TaskDescription.hpp>
 
 #include "ui_GraspPlugin.h"

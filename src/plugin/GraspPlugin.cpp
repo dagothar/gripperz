@@ -359,8 +359,8 @@ void GraspPlugin::updateSim() {
         _timer->stop();
 
         //_gripper->getQuality() = GripperQuality(_graspSim->getGripperQuality());
-        GripperEvaluator::Ptr evaluator = ownedPtr(new GripperEvaluator(_td, _td->getAlignmentCalculator()));
-        OldGripperQuality::Ptr quality = evaluator->evaluateGripper(_gripper, _tasks, _samples);
+        OldGripperEvaluator::Ptr evaluator = ownedPtr(new OldGripperEvaluator(_td, _td->getAlignmentCalculator()));
+        OldGripperQuality::Ptr quality = evaluator->evaluate(_gripper, _tasks, _samples);
         _gripper->setQuality(*quality);
 
         log().info() << _gripper->getQuality() << endl;

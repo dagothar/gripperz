@@ -15,6 +15,7 @@
 
 using namespace std;
 using namespace gripperz::evaluation;
+using namespace gripperz::process;
 using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::simulation;
@@ -25,7 +26,7 @@ using namespace rw::math;
 using namespace rwlibs::task;
 
 
-GripperObjectiveFunction::GripperObjectiveFunction(GripperBuilder::Ptr builder, evaluation::GripperEvaluationManager::Ptr manager, GripperQualityExtractor::Ptr extractor) :
+GripperObjectiveFunction::GripperObjectiveFunction(GripperBuilder::Ptr builder, GripperEvaluationManager::Ptr manager, GripperQualityExtractor::Ptr extractor) :
 	_builder(builder),
 	_manager(manager),
 	_extractor(extractor)

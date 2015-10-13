@@ -15,7 +15,7 @@
 #define INFO rw::common::Log::infoLog()
 
 
-using namespace gripperz::evaluation;
+using namespace gripperz::process;
 using namespace gripperz::models;
 using namespace gripperz::loaders;
 using namespace gripperz::math;

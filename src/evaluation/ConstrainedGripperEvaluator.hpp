@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "GripperEvaluator.hpp"
+#include "OldGripperEvaluator.hpp"
 
 namespace gripperz {
 namespace evaluation {
@@ -15,7 +15,7 @@ namespace evaluation {
  * @class ConstrainedGripperEvaluator
  * @brief Adds precondition on values of stress and volume.
  */
-class ConstrainedGripperEvaluator: public GripperEvaluator {
+class ConstrainedGripperEvaluator: public OldGripperEvaluator {
 public:
 	typedef rw::common::Ptr<ConstrainedGripperEvaluator> Ptr;
 

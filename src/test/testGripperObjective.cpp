@@ -8,8 +8,8 @@
 #include <vector>
 #include <sstream>
 #include <evaluation/GripperObjectiveFunction.hpp>
-#include <evaluation/GripperEvaluationManager.hpp>
-#include <evaluation/GripperEvaluationManagerFactory.hpp>
+#include <process/GripperEvaluationManager.hpp>
+#include <process/GripperEvaluationManagerFactory.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <loaders/GripperXMLLoader.hpp>
 #include <simulation/InterferenceSimulator.hpp>
@@ -19,6 +19,7 @@
 
 using namespace std;
 using namespace gripperz::evaluation;
+using namespace gripperz::process;
 using namespace gripperz::math;
 using namespace gripperz::context;
 using namespace gripperz::simulation;

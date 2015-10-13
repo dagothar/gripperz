@@ -5,8 +5,7 @@
  * Created on October 13, 2015, 9:48 AM
  */
 
-#ifndef MODELS_TYPES_HPP
-#define	MODELS_TYPES_HPP
+#pragma once
 
 #include <map>
 #include <string>
@@ -21,5 +20,4 @@ namespace gripperz {
     }
 }
 
-#endif	/* TYPES_HPP */
 

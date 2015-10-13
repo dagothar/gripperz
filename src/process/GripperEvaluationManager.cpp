@@ -7,7 +7,7 @@
 #include "GripperEvaluationManager.hpp"
 
 
-using namespace gripperz::evaluation;
+using namespace gripperz::process;
 
 
 GripperEvaluationManager::GripperEvaluationManager(const Configuration& configuration) :

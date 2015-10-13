@@ -11,7 +11,7 @@
 #define INFO rw::common::Log::infoLog()
 
 
-using namespace gripperz::evaluation;
+using namespace gripperz::process;
 using namespace gripperz::models;
 using namespace gripperz::context;
 using namespace gripperz::simulation;
@@ -28,7 +28,7 @@ StandardEvaluationManager::StandardEvaluationManager(
         context::TaskDescription::Ptr context,
         grasps::GraspSource::Ptr graspSource,
         simulation::GripperSimulator::Ptr simulator,
-        evaluation::GripperEvaluator::Ptr evaluator,
+        evaluation::OldGripperEvaluator::Ptr evaluator,
         const Configuration& configuration
         ) :
 GripperEvaluationManager(configuration),
@@ -109,7 +109,7 @@ OldGripperQuality::Ptr StandardEvaluationManager::evaluateGripper(OldGripper::Pt
      */
     OldGripperQuality::Ptr quality = NULL;
     try {
-        quality = _evaluator->evaluateGripper(gripper, targets, rtargets);
+        quality = _evaluator->evaluate(gripper, targets, rtargets);
 
     } catch (const std::exception& e) {
         RW_THROW("Exception during gripper evaluation! " << e.what());

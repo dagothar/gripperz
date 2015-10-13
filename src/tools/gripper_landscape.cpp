@@ -28,12 +28,12 @@
 #include <loaders/GripperXMLLoader.hpp>
 #include <grasps/GraspSource.hpp>
 #include <simulation/InterferenceSimulator.hpp>
-#include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/OldGripperEvaluator.hpp>
 #include <models/MapGripperBuilder.hpp>
 #include <evaluation/GripperObjectiveFunction.hpp>
-#include <evaluation/GripperEvaluationManager.hpp>
-#include <evaluation/RobustEvaluationManager.hpp>
-#include <evaluation/GripperEvaluationManagerFactory.hpp>
+#include <process/GripperEvaluationManager.hpp>
+#include <process/RobustEvaluationManager.hpp>
+#include <process/GripperEvaluationManagerFactory.hpp>
 #include <math/CombineObjectivesFactory.hpp>
 
 
@@ -58,6 +58,7 @@ using namespace gripperz::context;
 using namespace gripperz::simulation;
 using namespace gripperz::math;
 using namespace gripperz::evaluation;
+using namespace gripperz::process;
 using namespace gripperz::grasps;
 using namespace gripperz::loaders;
 

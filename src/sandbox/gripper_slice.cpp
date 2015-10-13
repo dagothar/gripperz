@@ -29,7 +29,7 @@
 #include <grasps/GraspSource.hpp>
 #include <simulation/GripperTaskSimulator.hpp>
 #include <simulation/InterferenceSimulator.hpp>
-#include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/OldGripperEvaluator.hpp>
 #include <models/MapGripperBuilder.hpp>
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <evaluation/GripperEvaluationManager.hpp>
