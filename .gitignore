@@ -4,3 +4,5 @@ libs/*
 test/*
 *.cfg.xml
 *~
+CMakeFiles/*
+CMakeCache.txt
