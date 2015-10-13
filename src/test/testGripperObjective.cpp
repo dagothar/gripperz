@@ -8,7 +8,7 @@
 #include <vector>
 #include <sstream>
 #include <evaluation/GripperObjectiveFunction.hpp>
-#include <process/GripperEvaluationManager.hpp>
+#include <process/GripperEvaluationProcessManager.hpp>
 #include <process/GripperEvaluationManagerFactory.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <loaders/GripperXMLLoader.hpp>
@@ -88,8 +88,8 @@ int main(int argc, char* argv[]) {
 	};
 	GripperBuilder::Ptr builder = new MapGripperBuilder(new OldGripper, params);
 	
-	GripperEvaluationManager::Configuration config;
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, 4, vector<SurfaceSample>());
+	GripperEvaluationProcessManager::Configuration config;
+	GripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, 4, vector<SurfaceSample>());
 	MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
 	
 	/* initialize combiners */

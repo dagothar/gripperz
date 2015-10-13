@@ -137,12 +137,12 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 
 GripperObjectiveFunction::Ptr make_objective_function(const Configuration& config, const Data& data) {
     /* evaluation manager */
-    GripperEvaluationManager::Configuration configuration;
+    GripperEvaluationProcessManager::Configuration configuration;
     configuration.nOfGraspsPerEvaluation = config.grasps;
     configuration.nOfRobustnessTargets = config.robustness;
     configuration.sigma_a = config.sigma_a;
     configuration.sigma_p = config.sigma_p;
-    StandardEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(data.td, configuration, config.cores, data.samples);
+    StandardGripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(data.td, configuration, config.cores, data.samples);
     
     GraspFilterChain::Ptr filterChain = new GraspFilterChain();
     GraspFilter::Ptr offsetFilter = new GraspOffsetFilter(config.offset);
@@ -227,7 +227,7 @@ int main(int argc, char* argv[]) {
 
     /* save tasks if specified */
     if (configuration.task_file != "") {
-        StandardEvaluationManager::Ptr manager = dynamic_cast<StandardEvaluationManager*> (objective->getEvaluationManager().get());
+        StandardGripperEvaluationProcessManager::Ptr manager = dynamic_cast<StandardGripperEvaluationProcessManager*> (objective->getEvaluationManager().get());
         rwlibs::task::GraspTask::Ptr tasks = manager->getSimulator()->getTasks();
 
         rwlibs::task::GraspTask::saveRWTask(tasks, configuration.task_file);

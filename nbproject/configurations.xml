@@ -149,12 +149,11 @@
         <in>TaskDialog.cpp</in>
       </df>
       <df name="process">
-        <in>GripperEvaluationManager.cpp</in>
         <in>GripperEvaluationManagerBuilder.cpp</in>
         <in>GripperEvaluationManagerFactory.cpp</in>
         <in>GripperEvaluationProcessManager.cpp</in>
-        <in>RobustEvaluationManager.cpp</in>
-        <in>StandardEvaluationManager.cpp</in>
+        <in>RobustGripperEvaluationProcessManager.cpp</in>
+        <in>StandardGripperEvaluationProcessManager.cpp</in>
       </df>
       <df name="sandbox">
         <in>alignment_test.cpp</in>
@@ -1234,13 +1233,6 @@
       </item>
       <item path="src/process.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/process/GripperEvaluationManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
       <item path="src/process/GripperEvaluationManagerBuilder.cpp"
             ex="false"
             tool="1"
@@ -1262,14 +1254,14 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/process/RobustEvaluationManager.cpp"
+      <item path="src/process/RobustGripperEvaluationProcessManager.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/process/StandardEvaluationManager.cpp"
+      <item path="src/process/StandardGripperEvaluationProcessManager.cpp"
             ex="false"
             tool="1"
             flavor2="8">

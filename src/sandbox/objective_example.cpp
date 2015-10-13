@@ -60,11 +60,11 @@ int main(int argc, char* argv[]) {
 	 * Manager takes care of setting up task generation, simulation, etc.
 	 * If calculation of robustness index is neccesary, nOfRobustnessTargets should be set to the value of nOfGraspsPerEvaluation.
 	 */
-	GripperEvaluationManager::Configuration config;
+	GripperEvaluationProcessManager::Configuration config;
 	config.nOfGraspsPerEvaluation = 100;		// number of simulations per gripper evaluation
 	config.nOfRobustnessTargets = 0;			// robustness targets
 	
-	GripperEvaluationManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(
+	GripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(
 		td,			// task description
 		config,		// configuration
 		4,			// number of threads to use

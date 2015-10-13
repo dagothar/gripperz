@@ -197,18 +197,16 @@
         <in>TaskDialog.hpp</in>
       </df>
       <df name="process">
-        <in>GripperEvaluationManager.cpp</in>
-        <in>GripperEvaluationManager.hpp</in>
         <in>GripperEvaluationManagerBuilder.cpp</in>
         <in>GripperEvaluationManagerBuilder.hpp</in>
         <in>GripperEvaluationManagerFactory.cpp</in>
         <in>GripperEvaluationManagerFactory.hpp</in>
         <in>GripperEvaluationProcessManager.cpp</in>
         <in>GripperEvaluationProcessManager.hpp</in>
-        <in>RobustEvaluationManager.cpp</in>
-        <in>RobustEvaluationManager.hpp</in>
-        <in>StandardEvaluationManager.cpp</in>
-        <in>StandardEvaluationManager.hpp</in>
+        <in>RobustGripperEvaluationProcessManager.cpp</in>
+        <in>RobustGripperEvaluationProcessManager.hpp</in>
+        <in>StandardGripperEvaluationProcessManager.cpp</in>
+        <in>StandardGripperEvaluationProcessManager.hpp</in>
       </df>
       <df name="sandbox">
         <in>alignment_test.cpp</in>

@@ -1,17 +1,17 @@
-/* 
- * File:   EvaluationProcessManager.cpp
- * Author: dagothar
- * 
- * Created on October 7, 2015, 3:39 PM
+/**
+ * @file GripperEvaluationManager.cpp
+ * @author Adam Wolniakowski
+ * @date 2015-07-06
  */
 
 #include "GripperEvaluationProcessManager.hpp"
 
+
 using namespace gripperz::process;
 
-GripperEvaluationProcessManager::GripperEvaluationProcessManager() {
+GripperEvaluationProcessManager::GripperEvaluationProcessManager(const Configuration& configuration) :
+_config(configuration) {
 }
 
 GripperEvaluationProcessManager::~GripperEvaluationProcessManager() {
 }
-

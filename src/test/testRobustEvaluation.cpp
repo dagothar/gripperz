@@ -8,8 +8,8 @@
 #include <vector>
 #include <sstream>
 #include <evaluation/GripperObjectiveFunction.hpp>
-#include <process/GripperEvaluationManager.hpp>
-#include <process/RobustEvaluationManager.hpp>
+#include <process/GripperEvaluationProcessManager.hpp>
+#include <process/RobustGripperEvaluationProcessManager.hpp>
 #include <process/GripperEvaluationManagerFactory.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <loaders/GripperXMLLoader.hpp>
@@ -86,8 +86,8 @@ int main(int argc, char* argv[]) {
 	};
 	GripperBuilder::Ptr builder = new MapGripperBuilder(new OldGripper, params);
 	
-	GripperEvaluationManager::Configuration config;
-	GripperEvaluationManager::Ptr manager = new RobustEvaluationManager(
+	GripperEvaluationProcessManager::Configuration config;
+	GripperEvaluationProcessManager::Ptr manager = new RobustGripperEvaluationProcessManager(
 		"../data/rotor/Scene.dwc.xml",
 		"../data/rotor/task1.td.xml",
 		"../data/rotor/samples1.xml",

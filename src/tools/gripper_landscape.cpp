@@ -31,8 +31,8 @@
 #include <evaluation/OldGripperEvaluator.hpp>
 #include <models/MapGripperBuilder.hpp>
 #include <evaluation/GripperObjectiveFunction.hpp>
-#include <process/GripperEvaluationManager.hpp>
-#include <process/RobustEvaluationManager.hpp>
+#include <process/GripperEvaluationProcessManager.hpp>
+#include <process/RobustGripperEvaluationProcessManager.hpp>
 #include <process/GripperEvaluationManagerFactory.hpp>
 #include <math/CombineObjectivesFactory.hpp>
 
@@ -150,10 +150,10 @@ int main(int argc, char* argv[]) {
 	INFO << "Loaded." << endl;
 	
 	/* construct objective function */
-	GripperEvaluationManager::Configuration config;
+	GripperEvaluationProcessManager::Configuration config;
 	config.nOfGraspsPerEvaluation = ntargets;
 	config.nOfRobustnessTargets = nrobust;
-	GripperEvaluationManager::Ptr manager = new RobustEvaluationManager(
+	GripperEvaluationProcessManager::Ptr manager = new RobustGripperEvaluationProcessManager(
 		dwcFilename,
 		tdFilename,
 		samplesFilename,
