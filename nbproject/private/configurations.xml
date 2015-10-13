@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="src" name="0">
+      <df name="context">
+        <in>Context.cpp</in>
+        <in>Context.hpp</in>
+        <in>TaskDescription.cpp</in>
+        <in>TaskDescription.hpp</in>
+      </df>
+      <df name="evaluation">
+        <in>AlignmentCalculator.cpp</in>
+        <in>AlignmentCalculator.hpp</in>
+        <in>AllPosesAlignment.cpp</in>
+        <in>AllPosesAlignment.hpp</in>
+        <in>ClusteringAlignment.cpp</in>
+        <in>ClusteringAlignment.hpp</in>
+        <in>ConstrainedGripperEvaluator.cpp</in>
+        <in>ConstrainedGripperEvaluator.hpp</in>
+        <in>GripperEvaluationManager.cpp</in>
+        <in>GripperEvaluationManager.hpp</in>
+        <in>GripperEvaluationManagerBuilder.cpp</in>
+        <in>GripperEvaluationManagerBuilder.hpp</in>
+        <in>GripperEvaluationManagerFactory.cpp</in>
+        <in>GripperEvaluationManagerFactory.hpp</in>
+        <in>GripperEvaluator.cpp</in>
+        <in>GripperEvaluator.hpp</in>
+        <in>GripperObjectiveFunction.cpp</in>
+        <in>GripperObjectiveFunction.hpp</in>
+        <in>GripperQualityExtractor.cpp</in>
+        <in>GripperQualityExtractor.hpp</in>
+        <in>RobustEvaluationManager.cpp</in>
+        <in>RobustEvaluationManager.hpp</in>
+        <in>SimpleAlignment.cpp</in>
+        <in>SimpleAlignment.hpp</in>
+        <in>StablePoseAlignment.cpp</in>
+        <in>StablePoseAlignment.hpp</in>
+        <in>StandardEvaluationManager.cpp</in>
+        <in>StandardEvaluationManager.hpp</in>
+        <in>VersorAlignment.cpp</in>
+        <in>VersorAlignment.hpp</in>
+      </df>
+      <df name="geometry">
+        <in>JawPrimitive.cpp</in>
+        <in>JawPrimitive.hpp</in>
+      </df>
+      <df name="grasps">
+        <df name="databases">
+          <in>GraspDatabase.cpp</in>
+          <in>GraspDatabase.hpp</in>
+          <in>RWGraspDatabase.cpp</in>
+          <in>RWGraspDatabase.hpp</in>
+        </df>
+        <df name="decorators">
+          <in>FilteredGraspSource.cpp</in>
+          <in>FilteredGraspSource.hpp</in>
+          <in>GraspSourceDecorator.cpp</in>
+          <in>GraspSourceDecorator.hpp</in>
+        </df>
+        <df name="filters">
+          <in>ClearStatusFilter.cpp</in>
+          <in>ClearStatusFilter.hpp</in>
+          <in>GraspFilter.cpp</in>
+          <in>GraspFilter.hpp</in>
+          <in>GraspFilterChain.cpp</in>
+          <in>GraspFilterChain.hpp</in>
+          <in>GraspOffsetFilter.cpp</in>
+          <in>GraspOffsetFilter.hpp</in>
+          <in>GraspStatusFilter.cpp</in>
+          <in>GraspStatusFilter.hpp</in>
+          <in>KDGraspFilter.cpp</in>
+          <in>KDGraspFilter.hpp</in>
+          <in>RobustnessGraspFilter.cpp</in>
+          <in>RobustnessGraspFilter.hpp</in>
+        </df>
+        <df name="planners">
+          <in>BasicParallelGripperGraspPlanner.cpp</in>
+          <in>BasicParallelGripperGraspPlanner.hpp</in>
+          <in>GraspPlanner.cpp</in>
+          <in>GraspPlanner.hpp</in>
+        </df>
+        <in>GraspSource.cpp</in>
+        <in>GraspSource.hpp</in>
+        <in>GraspStatistics.cpp</in>
+        <in>GraspStatistics.hpp</in>
+        <in>SurfaceSample.cpp</in>
+        <in>SurfaceSample.hpp</in>
+        <in>Types.cpp</in>
+        <in>Types.hpp</in>
+        <in>databases.hpp</in>
+        <in>decorators.hpp</in>
+        <in>filters.hpp</in>
+        <in>planners.hpp</in>
+      </df>
+      <df name="loaders">
+        <in>GripperXMLLoader.cpp</in>
+        <in>GripperXMLLoader.hpp</in>
+        <in>TaskDescriptionLoader.cpp</in>
+        <in>TaskDescriptionLoader.hpp</in>
+      </df>
+      <df name="math">
+        <in>BoxConstraint.cpp</in>
+        <in>BoxConstraint.hpp</in>
+        <in>CallbackFunction.cpp</in>
+        <in>CallbackFunction.hpp</in>
+        <in>CombineLog.cpp</in>
+        <in>CombineLog.hpp</in>
+        <in>CombineObjectives.cpp</in>
+        <in>CombineObjectives.hpp</in>
+        <in>CombineObjectivesFactory.cpp</in>
+        <in>CombineObjectivesFactory.hpp</in>
+        <in>CombineProduct.cpp</in>
+        <in>CombineProduct.hpp</in>
+        <in>CombineSum.cpp</in>
+        <in>CombineSum.hpp</in>
+        <in>CombinedFunction.cpp</in>
+        <in>CombinedFunction.hpp</in>
+        <in>ConstrainedFunction.cpp</in>
+        <in>ConstrainedFunction.hpp</in>
+        <in>Constraint.cpp</in>
+        <in>Constraint.hpp</in>
+        <in>DlibFunction.cpp</in>
+        <in>DlibFunction.hpp</in>
+        <in>DlibWrapper.cpp</in>
+        <in>DlibWrapper.hpp</in>
+        <in>MappedFunction.cpp</in>
+        <in>MappedFunction.hpp</in>
+        <in>MultiObjectiveFunction.cpp</in>
+        <in>MultiObjectiveFunction.hpp</in>
+        <in>ObjectiveFunction.cpp</in>
+        <in>ObjectiveFunction.hpp</in>
+        <in>ObjectiveFunctionDecorator.cpp</in>
+        <in>ObjectiveFunctionDecorator.hpp</in>
+        <in>ParameterMapping.cpp</in>
+        <in>ParameterMapping.hpp</in>
+        <in>RevertedFunction.cpp</in>
+        <in>RevertedFunction.hpp</in>
+        <in>Types.cpp</in>
+        <in>Types.hpp</in>
+      </df>
+      <df name="models">
+        <in>Gripper.cpp</in>
+        <in>Gripper.hpp</in>
+        <in>GripperBuilder.cpp</in>
+        <in>GripperBuilder.hpp</in>
+        <in>MapGripperBuilder.cpp</in>
+        <in>MapGripperBuilder.hpp</in>
+        <in>OldGripper.cpp</in>
+        <in>OldGripper.hpp</in>
+        <in>OldGripperQuality.cpp</in>
+        <in>OldGripperQuality.hpp</in>
+      </df>
+      <df name="optimization">
+        <in>BOBYQAOptimizer.cpp</in>
+        <in>BOBYQAOptimizer.hpp</in>
+        <in>CoordinateDescentOptimizer.cpp</in>
+        <in>CoordinateDescentOptimizer.hpp</in>
+        <in>GripperOptimizationManager.cpp</in>
+        <in>GripperOptimizationManager.hpp</in>
+        <in>OptimizationManager.cpp</in>
+        <in>OptimizationManager.hpp</in>
+        <in>Optimizer.cpp</in>
+        <in>Optimizer.hpp</in>
+        <in>OptimizerFactory.cpp</in>
+        <in>OptimizerFactory.hpp</in>
+        <in>PowellOptimizer.cpp</in>
+        <in>PowellOptimizer.hpp</in>
+        <in>SimplexOptimizer.cpp</in>
+        <in>SimplexOptimizer.hpp</in>
+        <in>SimulatedAnnealingOptimizer.cpp</in>
+        <in>SimulatedAnnealingOptimizer.hpp</in>
+      </df>
+      <df name="plugin">
+        <in>DesignDialog.cpp</in>
+        <in>DesignDialog.hpp</in>
+        <in>GraspPlugin.cpp</in>
+        <in>GraspPlugin.hpp</in>
+        <in>RenderTarget.hpp</in>
+        <in>TaskDialog.cpp</in>
+        <in>TaskDialog.hpp</in>
+      </df>
+      <df name="process">
+        <in>EvaluationProcessManager.cpp</in>
+        <in>EvaluationProcessManager.hpp</in>
+      </df>
+      <df name="sandbox">
+        <in>alignment_test.cpp</in>
+        <in>extract_constraints.cpp</in>
+        <in>extract_poses.cpp</in>
+        <in>extract_versors.cpp</in>
+        <in>gripper_slice.cpp</in>
+        <in>gripper_space.cpp</in>
+        <in>objective_example.cpp</in>
+        <in>trying_opt.cpp</in>
+        <in>versor_test.cpp</in>
+      </df>
+      <df name="simulation">
+        <in>BasicSimulator.cpp</in>
+        <in>BasicSimulator.hpp</in>
+        <in>GraspTaskSimulator.cpp</in>
+        <in>GraspTaskSimulator.hpp</in>
+        <in>GripperSimulator.cpp</in>
+        <in>GripperSimulator.hpp</in>
+        <in>InterferenceSimulator.cpp</in>
+        <in>InterferenceSimulator.hpp</in>
+      </df>
+      <df name="test">
+        <in>testBOBYQA.cpp</in>
+        <in>testBasicSimulator.cpp</in>
+        <in>testCombineObjectives.cpp</in>
+        <in>testDlibRosenbrock.cpp</in>
+        <in>testGripperEvaluator.cpp</in>
+        <in>testGripperObjective.cpp</in>
+        <in>testMath.cpp</in>
+        <in>testOptimization.cpp</in>
+        <in>testRobustEvaluation.cpp</in>
+      </df>
+      <df name="tools">
+        <in>evaluatePerturbedTasks.cpp</in>
+        <in>generateSurfaceSamples.cpp</in>
+        <in>generateTasks.cpp</in>
+        <in>generate_grippers.cpp</in>
+        <in>gripper_evaluate.cpp</in>
+        <in>gripper_landscape.cpp</in>
+        <in>gripper_optimizer.cpp</in>
+      </df>
+      <df name="util">
+        <in>DlibUtil.cpp</in>
+        <in>DlibUtil.hpp</in>
+        <in>Rosenbrock.cpp</in>
+        <in>Rosenbrock.hpp</in>
+        <in>XMLHelpers.cpp</in>
+        <in>XMLHelpers.hpp</in>
+      </df>
+      <in>context.hpp</in>
+      <in>evaluation.hpp</in>
+      <in>geometry.hpp</in>
+      <in>grasps.hpp</in>
+      <in>gripperz.hpp</in>
+      <in>loaders.hpp</in>
+      <in>math.hpp</in>
+      <in>models.hpp</in>
+      <in>optimization.hpp</in>
+      <in>simulation.hpp</in>
+      <in>util.hpp</in>
+    </df>
+  </logicalFolder>
+  <projectmakefile>build/Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>build</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>
