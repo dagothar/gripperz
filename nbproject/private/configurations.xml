@@ -139,6 +139,8 @@
         <in>Types.hpp</in>
       </df>
       <df name="models">
+        <in>AdaptedWorkcellGripper.cpp</in>
+        <in>AdaptedWorkcellGripper.hpp</in>
         <in>Gripper.cpp</in>
         <in>Gripper.hpp</in>
         <in>GripperBuilder.cpp</in>
