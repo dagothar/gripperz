@@ -5,7 +5,6 @@
  */
 
 #include "models/Gripper.hpp"
-#include "models/AdaptedWorkcellGripper.hpp"
 #include "models/OldGripper.hpp"
 #include "models/OldGripperQuality.hpp"
 #include "models/GripperBuilder.hpp"
