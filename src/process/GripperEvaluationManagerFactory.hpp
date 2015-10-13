@@ -11,7 +11,7 @@
 #include <grasps/SurfaceSample.hpp>
 
 namespace gripperz {
-namespace evaluation {
+namespace process {
 
 /**
  * @class GripperEvaluationManagerFactory

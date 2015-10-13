@@ -7,10 +7,11 @@
 #include "GripperEvaluationManagerFactory.hpp"
 #include <simulation/InterferenceSimulator.hpp>
 #include <grasps/planners/BasicParallelGripperGraspPlanner.hpp>
-#include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/OldGripperEvaluator.hpp>
 #include "GripperEvaluationManagerBuilder.hpp"
 
 
+using namespace gripperz::process;
 using namespace gripperz::evaluation;
 using namespace gripperz::grasps;
 using namespace gripperz::grasps::planners;
@@ -32,7 +33,7 @@ StandardEvaluationManager::Ptr GripperEvaluationManagerFactory::makeStandardEval
     StandardEvaluationManager::Ptr manager = builder
             .generator(graspSource)
             .simulator(ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads)))
-            .evaluator(ownedPtr(new GripperEvaluator(td, td->getAlignmentCalculator())))
+            .evaluator(ownedPtr(new OldGripperEvaluator(td, td->getAlignmentCalculator())))
             .configuration(config)
             .build();
 

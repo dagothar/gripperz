@@ -39,18 +39,15 @@
         <in>AllPosesAlignment.cpp</in>
         <in>ClusteringAlignment.cpp</in>
         <in>ConstrainedGripperEvaluator.cpp</in>
-        <in>GripperEvaluationManager.cpp</in>
-        <in>GripperEvaluationManagerBuilder.cpp</in>
-        <in>GripperEvaluationManagerFactory.cpp</in>
         <in>GripperEvaluator.cpp</in>
+        <in>GripperEvaluator.hpp</in>
         <in>GripperObjectiveFunction.cpp</in>
         <in>GripperQualityExtractor.cpp</in>
+        <in>OldGripperEvaluator.cpp</in>
         <in>QualityIndexCalculator.cpp</in>
         <in>QualityIndexCalculator.hpp</in>
-        <in>RobustEvaluationManager.cpp</in>
         <in>SimpleAlignment.cpp</in>
         <in>StablePoseAlignment.cpp</in>
-        <in>StandardEvaluationManager.cpp</in>
         <in>Types.cpp</in>
         <in>Types.hpp</in>
         <in>VersorAlignment.cpp</in>
@@ -152,7 +149,12 @@
         <in>TaskDialog.cpp</in>
       </df>
       <df name="process">
+        <in>GripperEvaluationManager.cpp</in>
+        <in>GripperEvaluationManagerBuilder.cpp</in>
+        <in>GripperEvaluationManagerFactory.cpp</in>
         <in>GripperEvaluationProcessManager.cpp</in>
+        <in>RobustEvaluationManager.cpp</in>
+        <in>StandardEvaluationManager.cpp</in>
       </df>
       <df name="sandbox">
         <in>alignment_test.cpp</in>
@@ -765,33 +767,17 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/evaluation/GripperEvaluationManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/evaluation/GripperEvaluationManagerBuilder.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/evaluation/GripperEvaluationManagerFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
       <item path="src/evaluation/GripperEvaluator.cpp"
             ex="false"
             tool="1"
             flavor2="8">
         <ccTool flags="1">
         </ccTool>
+      </item>
+      <item path="src/evaluation/GripperEvaluator.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/evaluation/GripperObjectiveFunction.cpp"
             ex="false"
@@ -801,6 +787,13 @@
         </ccTool>
       </item>
       <item path="src/evaluation/GripperQualityExtractor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/evaluation/OldGripperEvaluator.cpp"
             ex="false"
             tool="1"
             flavor2="8">
@@ -817,25 +810,11 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/evaluation/RobustEvaluationManager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
       <item path="src/evaluation/SimpleAlignment.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
       </item>
       <item path="src/evaluation/StablePoseAlignment.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="1">
-        </ccTool>
-      </item>
-      <item path="src/evaluation/StandardEvaluationManager.cpp"
             ex="false"
             tool="1"
             flavor2="8">
@@ -1255,7 +1234,42 @@
       </item>
       <item path="src/process.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/process/GripperEvaluationManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/process/GripperEvaluationManagerBuilder.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/process/GripperEvaluationManagerFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
       <item path="src/process/GripperEvaluationProcessManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/process/RobustEvaluationManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/process/StandardEvaluationManager.cpp"
             ex="false"
             tool="1"
             flavor2="8">

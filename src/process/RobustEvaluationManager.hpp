@@ -10,7 +10,7 @@
 #include <string>
 
 namespace gripperz {
-namespace evaluation {
+namespace process {
 
 /**
  * @class RobustEvaluationManager

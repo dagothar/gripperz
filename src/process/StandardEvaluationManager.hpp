@@ -9,7 +9,7 @@
 #include "GripperEvaluationManager.hpp"
 
 namespace gripperz {
-    namespace evaluation {
+    namespace process {
 
         /**
          * @class StandardEvaluationManager
@@ -25,7 +25,7 @@ namespace gripperz {
                     context::TaskDescription::Ptr context,
                     grasps::GraspSource::Ptr graspSource,
                     simulation::GripperSimulator::Ptr simulator,
-                    evaluation::GripperEvaluator::Ptr evaluator,
+                    evaluation::OldGripperEvaluator::Ptr evaluator,
                     const Configuration& configuration
                     );
 
@@ -51,11 +51,11 @@ namespace gripperz {
                 _simulator = sim;
             }
 
-            evaluation::GripperEvaluator::Ptr getEvaluator() {
+            evaluation::OldGripperEvaluator::Ptr getEvaluator() {
                 return _evaluator;
             }
 
-            void setEvaluator(evaluation::GripperEvaluator::Ptr evaluator) {
+            void setEvaluator(evaluation::OldGripperEvaluator::Ptr evaluator) {
                 _evaluator = evaluator;
             }
 
@@ -68,7 +68,7 @@ namespace gripperz {
             context::TaskDescription::Ptr _context;
             grasps::GraspSource::Ptr _graspSource;
             simulation::GripperSimulator::Ptr _simulator;
-            evaluation::GripperEvaluator::Ptr _evaluator;
+            evaluation::OldGripperEvaluator::Ptr _evaluator;
 
         };
 

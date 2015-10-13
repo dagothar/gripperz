@@ -33,28 +33,20 @@
         <in>ClusteringAlignment.hpp</in>
         <in>ConstrainedGripperEvaluator.cpp</in>
         <in>ConstrainedGripperEvaluator.hpp</in>
-        <in>GripperEvaluationManager.cpp</in>
-        <in>GripperEvaluationManager.hpp</in>
-        <in>GripperEvaluationManagerBuilder.cpp</in>
-        <in>GripperEvaluationManagerBuilder.hpp</in>
-        <in>GripperEvaluationManagerFactory.cpp</in>
-        <in>GripperEvaluationManagerFactory.hpp</in>
         <in>GripperEvaluator.cpp</in>
         <in>GripperEvaluator.hpp</in>
         <in>GripperObjectiveFunction.cpp</in>
         <in>GripperObjectiveFunction.hpp</in>
         <in>GripperQualityExtractor.cpp</in>
         <in>GripperQualityExtractor.hpp</in>
+        <in>OldGripperEvaluator.cpp</in>
+        <in>OldGripperEvaluator.hpp</in>
         <in>QualityIndexCalculator.cpp</in>
         <in>QualityIndexCalculator.hpp</in>
-        <in>RobustEvaluationManager.cpp</in>
-        <in>RobustEvaluationManager.hpp</in>
         <in>SimpleAlignment.cpp</in>
         <in>SimpleAlignment.hpp</in>
         <in>StablePoseAlignment.cpp</in>
         <in>StablePoseAlignment.hpp</in>
-        <in>StandardEvaluationManager.cpp</in>
-        <in>StandardEvaluationManager.hpp</in>
         <in>Types.cpp</in>
         <in>Types.hpp</in>
         <in>VersorAlignment.cpp</in>
@@ -205,8 +197,18 @@
         <in>TaskDialog.hpp</in>
       </df>
       <df name="process">
+        <in>GripperEvaluationManager.cpp</in>
+        <in>GripperEvaluationManager.hpp</in>
+        <in>GripperEvaluationManagerBuilder.cpp</in>
+        <in>GripperEvaluationManagerBuilder.hpp</in>
+        <in>GripperEvaluationManagerFactory.cpp</in>
+        <in>GripperEvaluationManagerFactory.hpp</in>
         <in>GripperEvaluationProcessManager.cpp</in>
         <in>GripperEvaluationProcessManager.hpp</in>
+        <in>RobustEvaluationManager.cpp</in>
+        <in>RobustEvaluationManager.hpp</in>
+        <in>StandardEvaluationManager.cpp</in>
+        <in>StandardEvaluationManager.hpp</in>
       </df>
       <df name="sandbox">
         <in>alignment_test.cpp</in>

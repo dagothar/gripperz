@@ -17,7 +17,7 @@ using namespace gripperz::context;
 
 
 ConstrainedGripperEvaluator::ConstrainedGripperEvaluator(TaskDescription::Ptr context, AlignmentCalculator::Ptr alignmentCalculator) :
-	GripperEvaluator(context, alignmentCalculator)
+	OldGripperEvaluator(context, alignmentCalculator)
 {}
 
 
@@ -26,7 +26,7 @@ ConstrainedGripperEvaluator::~ConstrainedGripperEvaluator()
 
 
 bool ConstrainedGripperEvaluator::isSane(models::OldGripper::Ptr gripper) {
-	if (!GripperEvaluator::isSane(gripper)) return false;
+	if (!OldGripperEvaluator::isSane(gripper)) return false;
 	
 	if (calculateStress(gripper) == 0.0) return false;
 	

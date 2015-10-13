@@ -10,11 +10,11 @@
 #include <context/TaskDescription.hpp>
 #include <grasps/GraspSource.hpp>
 #include <simulation/GripperSimulator.hpp>
-#include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/OldGripperEvaluator.hpp>
 #include <models/OldGripper.hpp>
 
 namespace gripperz {
-namespace evaluation {
+namespace process {
 
 /**
  * @class GripperEvaluationManager

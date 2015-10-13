@@ -10,6 +10,7 @@
 #include <rw/common/Ptr.hpp>
 #include <models/OldGripper.hpp>
 #include <grasps/Types.hpp>
+#include <models/Types.hpp>
 #include "Types.hpp"
 
 namespace gripperz {

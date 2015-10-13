@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/OldGripperEvaluator.hpp>
 #include <loaders/TaskDescriptionLoader.hpp>
 #include <loaders/GripperXMLLoader.hpp>
 #include <grasps/GraspSource.hpp>
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
 	
 	/* create evaluation objects */
 	GripperSimulator::Ptr simulator = new InterferenceSimulator(dwc, td->getInterferenceLimit(), td->getInterferenceObjects());
-	GripperEvaluator::Ptr evaluator = new GripperEvaluator(td, td->getAlignmentCalculator());
+	OldGripperEvaluator::Ptr evaluator = new OldGripperEvaluator(td, td->getAlignmentCalculator());
 	
 	/* generate tasks */
 	GraspSource::Ptr generator = new BasicParallelGripperGraspPlanner(100, td->getInitState(), td);
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
 	
 	/* evaluate gripper */
 	Log::log().setLevel(Log::Debug);
-	OldGripperQuality::Ptr quality = evaluator->evaluateGripper(gripper, simulator->getTasks());
+	OldGripperQuality::Ptr quality = evaluator->evaluate(gripper, simulator->getTasks());
 	gripper->setQuality(*quality);
 	
 	INFO << "\nRESULTS" << endl;

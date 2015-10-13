@@ -11,7 +11,7 @@
 #include <grasps/SurfaceSample.hpp>
 
 namespace gripperz {
-namespace evaluation {
+namespace process {
 
 /**
  * @class GripperEvaluationManagerBuilder
@@ -31,14 +31,14 @@ public:
 	
 	GripperEvaluationManagerBuilder& generator(grasps::GraspSource::Ptr gen);
 	GripperEvaluationManagerBuilder& simulator(simulation::GripperSimulator::Ptr sim);
-	GripperEvaluationManagerBuilder& evaluator(evaluation::GripperEvaluator::Ptr eval);
+	GripperEvaluationManagerBuilder& evaluator(evaluation::OldGripperEvaluator::Ptr eval);
 	GripperEvaluationManagerBuilder& configuration(const GripperEvaluationManager::Configuration& config);
 	
 private:
 	context::TaskDescription::Ptr _td;
 	grasps::GraspSource::Ptr _generator;
 	simulation::GripperSimulator::Ptr _simulator;
-	evaluation::GripperEvaluator::Ptr _evaluator;
+	evaluation::OldGripperEvaluator::Ptr _evaluator;
 	GripperEvaluationManager::Configuration _config;
 	std::vector<grasps::SurfaceSample> _ssamples;
 };
