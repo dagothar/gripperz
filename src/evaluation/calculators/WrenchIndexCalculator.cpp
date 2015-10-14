@@ -8,6 +8,7 @@
 #include "CostIndexCalculator.hpp"
 
 using namespace std;
+using namespace gripperz::models;
 using namespace gripperz::evaluation;
 using namespace gripperz::evaluation::calculators;
 
@@ -17,9 +18,9 @@ CostIndexCalculator::CostIndexCalculator() {
 CostIndexCalculator::~CostIndexCalculator() {
 }
 
-QualityIndex CostIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+GripperQuality::QualityIndexValue CostIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
 
     //TODO: implement
     
-    return QualityIndex("wrench", 0.0);
+    return 0;
 }

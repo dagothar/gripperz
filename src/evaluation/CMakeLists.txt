@@ -1,6 +1,5 @@
 SET(SRC_FILES
 	${SRC_FILES}
-	${CMAKE_CURRENT_SOURCE_DIR}/Types.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperEvaluator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OldGripperEvaluator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ConstrainedGripperEvaluator.cpp

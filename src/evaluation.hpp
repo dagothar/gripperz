@@ -5,7 +5,6 @@
  */
 
 #include "evaluation/calculators.hpp"
-#include "evaluation/Types.hpp"
 #include "evaluation/GripperEvaluator.hpp"
 #include "evaluation/OldGripperEvaluator.hpp"
 #include "evaluation/ConstrainedGripperEvaluator.hpp"

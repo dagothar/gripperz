@@ -79,7 +79,7 @@ namespace gripperz {
 
             //! Returns last obtained gripper quality.
 
-            models::GripperQuality getLastGripperQuality() const {
+            models::GripperQuality::Ptr getLastGripperQuality() const {
                 return _lastQuality;
             }
 
@@ -95,7 +95,7 @@ namespace gripperz {
             GripperQualityExtractor::Ptr _extractor;
 
             models::OldGripper::Ptr _lastGripper;
-            models::GripperQuality _lastQuality;
+            models::GripperQuality::Ptr _lastQuality;
 
             boost::function<void(models::OldGripper::Ptr) > _callback;
         };

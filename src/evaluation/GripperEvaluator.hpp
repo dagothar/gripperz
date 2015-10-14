@@ -14,24 +14,27 @@ namespace gripperz {
 
         /**
          * @class GripperEvaluator
-         * @brief Queries a set of calulators to obtain gripper quality
+         * @brief Queries a set of calculators to obtain gripper quality
          */
         class GripperEvaluator {
         public:
             //! Smart pointer.
             typedef rw::common::Ptr<GripperEvaluator> Ptr;
 
+            //! Type for the internal (key, calculator) pair storage
+            typedef std::pair<models::GripperQuality::QualityIndexKey, QualityIndexCalculator::Ptr> KeyCalculator;
+
         public:
             GripperEvaluator();
 
             virtual ~GripperEvaluator();
-            
-            virtual models::GripperQuality evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
-            
-            void addQualityIndexCalculator(QualityIndexCalculator::Ptr calculator);
+
+            virtual models::GripperQuality::Ptr evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
+
+            void addQualityIndexCalculator(const models::GripperQuality::QualityIndexKey& indexName, QualityIndexCalculator::Ptr calculator);
 
         private:
-            std::vector<QualityIndexCalculator::Ptr> _calculators;
+            std::vector<KeyCalculator> _calculators;
         };
 
     }

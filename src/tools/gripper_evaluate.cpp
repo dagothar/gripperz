@@ -143,11 +143,11 @@ GripperObjectiveFunction::Ptr make_objective_function(const Configuration& confi
     configuration.sigma_a = config.sigma_a;
     configuration.sigma_p = config.sigma_p;
     StandardGripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(data.td, configuration, config.cores, data.samples);
-    
+
     GraspFilterChain::Ptr filterChain = new GraspFilterChain();
     GraspFilter::Ptr offsetFilter = new GraspOffsetFilter(config.offset);
     filterChain->addFilter(offsetFilter);
-    
+
     GraspSource::Ptr graspSource = manager->getGraspSource();
     graspSource = new FilteredGraspSource(graspSource, filterChain);
     manager->setGraspSource(graspSource);
@@ -216,8 +216,8 @@ int main(int argc, char* argv[]) {
     vector<double> results = objective->evaluate(configuration.values);
 
     OldGripper::Ptr gripper = objective->getLastGripper();
-    GripperQuality quality = gripper->getQuality();
-    quality["quality"] = method->combine(results);
+    GripperQuality::Ptr quality = gripper->getQuality();
+    quality->setIndex("quality", method->combine(results));
     gripper->setQuality(quality);
 
     INFO << "* Results:" << endl;

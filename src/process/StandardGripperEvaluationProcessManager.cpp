@@ -41,7 +41,7 @@ _evaluator(evaluator) {
 StandardGripperEvaluationProcessManager::~StandardGripperEvaluationProcessManager() {
 }
 
-GripperQuality StandardGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
+GripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
     Configuration config = getConfiguration();
 
     /*
@@ -107,7 +107,7 @@ GripperQuality StandardGripperEvaluationProcessManager::evaluateGripper(OldGripp
     /*
      * Evaluate gripper.
      */
-    GripperQuality quality;
+    GripperQuality::Ptr quality;
     try {
         quality = _evaluator->evaluate(gripper, targets);
 

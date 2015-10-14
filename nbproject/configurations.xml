@@ -48,8 +48,6 @@
         <in>QualityIndexCalculator.hpp</in>
         <in>SimpleAlignment.cpp</in>
         <in>StablePoseAlignment.cpp</in>
-        <in>Types.cpp</in>
-        <in>Types.hpp</in>
         <in>VersorAlignment.cpp</in>
         <in>calculators.hpp</in>
       </df>
@@ -126,11 +124,15 @@
         <in>Gripper.cpp</in>
         <in>Gripper.hpp</in>
         <in>GripperBuilder.cpp</in>
+        <in>GripperQuality.cpp</in>
+        <in>GripperQuality.hpp</in>
+        <in>GripperQualityFactory.cpp</in>
+        <in>GripperQualityFactory.hpp</in>
+        <in>GripperQualityImpl.cpp</in>
+        <in>GripperQualityImpl.hpp</in>
         <in>MapGripperBuilder.cpp</in>
         <in>OldGripper.cpp</in>
         <in>OldGripperQuality.cpp</in>
-        <in>Types.cpp</in>
-        <in>Types.hpp</in>
       </df>
       <df name="optimization">
         <in>BOBYQAOptimizer.cpp</in>
@@ -820,10 +822,6 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/evaluation/Types.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/evaluation/Types.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/evaluation/VersorAlignment.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
@@ -1143,6 +1141,24 @@
         <ccTool flags="1">
         </ccTool>
       </item>
+      <item path="src/models/GripperQuality.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/models/GripperQuality.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/models/GripperQualityFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/models/GripperQualityFactory.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/models/GripperQualityImpl.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/models/GripperQualityImpl.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/models/MapGripperBuilder.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
@@ -1154,10 +1170,6 @@
       <item path="src/models/OldGripperQuality.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
-      </item>
-      <item path="src/models/Types.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/models/Types.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/optimization/BOBYQAOptimizer.cpp"
             ex="false"

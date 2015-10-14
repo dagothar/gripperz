@@ -7,6 +7,7 @@
 
 #include "CoverageIndexCalculator.hpp"
 
+using namespace gripperz::models;
 using namespace gripperz::evaluation;
 using namespace gripperz::evaluation::calculators;
 
@@ -16,6 +17,6 @@ CoverageIndexCalculator::CoverageIndexCalculator() {
 CoverageIndexCalculator::~CoverageIndexCalculator() {
 }
 
-QualityIndex CoverageIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
-    return QualityIndex("coverage", 0.0);
+GripperQuality::QualityIndexValue CoverageIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+    return 0;
 }

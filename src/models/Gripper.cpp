@@ -6,11 +6,13 @@
  */
 
 #include "Gripper.hpp"
+#include "GripperQualityFactory.hpp"
 
 using namespace gripperz::models;
 
 Gripper::Gripper(const std::string& name) :
 _name(name) {
+    this->_quality = GripperQualityFactory::makeGripperQuality();
 }
 
 Gripper::~Gripper() {

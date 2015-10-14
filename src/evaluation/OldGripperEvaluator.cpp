@@ -5,6 +5,7 @@
  */
 
 #include "OldGripperEvaluator.hpp"
+#include "models/GripperQualityFactory.hpp"
 
 #include <algorithm>
 #include <grasps/GraspStatistics.hpp>
@@ -42,26 +43,25 @@ bool OldGripperEvaluator::isSane(models::OldGripper::Ptr gripper) {
     return true;
 }
 
-GripperQuality OldGripperEvaluator::evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+GripperQuality::Ptr OldGripperEvaluator::evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
 
-    GripperQuality quality;
-    
-    quality["success"] = calculateSuccess(gripper, grasps);
-    quality["robustness"] = calculateRobustness(gripper, grasps, NULL);
-    quality["alignment"] = calculateAlignment(grasps);
-    quality["coverage"] = calculateCoverage(gripper, grasps);
-    quality["wrench"] = calculateWrench(gripper, grasps);
-    quality["stress"] = calculateStress(gripper);
-    quality["volume"] = calculateVolume(gripper);
-    
+    GripperQuality::Ptr quality = GripperQualityFactory::makeGripperQuality();
+
+    quality->setIndex("success", calculateSuccess(gripper, grasps));
+    quality->setIndex("robustness", calculateRobustness(gripper, grasps, NULL));
+    quality->setIndex("alignment", calculateAlignment(grasps));
+    quality->setIndex("coverage", calculateCoverage(gripper, grasps));
+    quality->setIndex("wrench", calculateWrench(gripper, grasps));
+    quality->setIndex("stress", calculateStress(gripper));
+    quality->setIndex("volume", calculateVolume(gripper));
+
     return quality;
 }
-
 
 double OldGripperEvaluator::calculateSuccess(models::OldGripper::Ptr gripper, Grasps grasps) {
     DEBUG << "CALCULATING SUCCESS - " << endl;
     std::vector<std::pair<class GraspSubTask*, class GraspTarget*> > allTargets = grasps->getAllTargets();
-    
+
     int nAllTargets = allTargets.size();
     int successes = GraspStatistics::countGraspsWithStatus(grasps, GraspResult::Success);
     int filtered = GraspStatistics::countGraspsWithStatus(grasps, GraspResult::Filtered);
@@ -75,7 +75,7 @@ double OldGripperEvaluator::calculateSuccess(models::OldGripper::Ptr gripper, Gr
     DEBUG << "samples= " << samples << endl;
 
     double validTasks = nAllTargets - filtered - failures - samples;
-    
+
     if (validTasks == 0) {
         RW_WARN("No valid tasks");
         return 0.0;
@@ -94,7 +94,7 @@ double OldGripperEvaluator::calculateRobustness(models::OldGripper::Ptr gripper,
 
     DEBUG << "CALCULATING ROBUSTNESS - " << endl;
     std::vector<std::pair<class GraspSubTask*, class GraspTarget*> > allTargets = rgrasps->getAllTargets();
-    
+
     int nAllTargets = allTargets.size();
     int successes = GraspStatistics::countGraspsWithStatus(rgrasps, GraspResult::Success);
 
@@ -115,10 +115,10 @@ double OldGripperEvaluator::calculateRobustness(models::OldGripper::Ptr gripper,
 double OldGripperEvaluator::calculateCoverage(models::OldGripper::Ptr gripper, Grasps grasps) {
     DEBUG << "CALCULATING COVERAGE - " << endl;
     double coverage = 0.0;
-    
+
     /* split targets & samples*/
     GraspFilter::Ptr targetsFilter = new GraspStatusFilter({GraspResult::Success, GraspResult::Interference});
-    
+
     Grasps targets = targetsFilter->filter(grasps);
     Grasps samples = grasps;
 
@@ -127,7 +127,7 @@ double OldGripperEvaluator::calculateCoverage(models::OldGripper::Ptr gripper, G
     double R = 2.0 * sin(0.25 * covDist(1));
     Q diff(7, covDist(0), covDist(0), covDist(0), R, R, R, covDist(2));
     GraspFilter::Ptr coverageFilter = new KDGraspFilter(diff);
-    
+
     Grasps coverageTargets = coverageFilter->filter(targets);
     Grasps coverageSamples = coverageFilter->filter(samples);
 

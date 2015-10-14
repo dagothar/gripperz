@@ -73,11 +73,11 @@ int main(int argc, char* argv[]) {
 	
 	/* evaluate gripper */
 	Log::log().setLevel(Log::Debug);
-	OldGripperQuality::Ptr quality = evaluator->evaluate(gripper, simulator->getTasks(), NULL);
-	gripper->setQuality(*quality);
+	GripperQuality::Ptr quality = evaluator->evaluate(gripper, simulator->getTasks());
+	gripper->setQuality(quality);
 	
 	INFO << "\nRESULTS" << endl;
-	INFO << gripper->getQuality() << endl;
+	//INFO << gripper->getQuality() << endl;
 	
 	return 0;
 }

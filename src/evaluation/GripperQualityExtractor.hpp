@@ -7,8 +7,8 @@
 #pragma once
 
 #include <rw/common/Ptr.hpp>
-#include <models/Types.hpp>
 #include <math/Types.hpp>
+#include <models/GripperQuality.hpp>
 
 namespace gripperz {
     namespace evaluation {
@@ -27,7 +27,7 @@ namespace gripperz {
 
             virtual ~GripperQualityExtractor();
 
-            virtual math::Vector extract(const models::GripperQuality& quality);
+            virtual math::Vector extract(const models::GripperQuality::Ptr quality);
         };
 
     } /* evaluation */

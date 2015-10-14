@@ -10,8 +10,6 @@
 #include <rw/common/Ptr.hpp>
 #include <models/OldGripper.hpp>
 #include <grasps/Types.hpp>
-#include <models/Types.hpp>
-#include "Types.hpp"
 
 namespace gripperz {
     namespace evaluation {
@@ -29,8 +27,8 @@ namespace gripperz {
             QualityIndexCalculator();
 
             virtual ~QualityIndexCalculator();
-            
-            virtual QualityIndex calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) = 0;
+
+            virtual models::GripperQuality::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) = 0;
 
         private:
 
