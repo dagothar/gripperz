@@ -221,7 +221,7 @@ int main(int argc, char* argv[]) {
     gripper->setQuality(quality);
 
     INFO << "* Results:" << endl;
-    //INFO << quality << endl;
+    INFO << *quality << endl;
 
     gripper->setName(configuration.name);
     GripperXMLLoader::save(gripper, configuration.name + ".grp.xml");
