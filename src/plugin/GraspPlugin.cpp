@@ -363,7 +363,7 @@ void GraspPlugin::updateSim() {
         GripperQuality::Ptr quality = evaluator->evaluate(_gripper, _tasks);
         _gripper->setQuality(quality);
 
-        //log().info() << _gripper->getQuality() << endl;
+        log().info() << *quality << endl;
     }
 }
 

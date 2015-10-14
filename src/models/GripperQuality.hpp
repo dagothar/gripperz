@@ -8,6 +8,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 #include <rw/common/Ptr.hpp>
 
 namespace gripperz {
@@ -42,9 +43,29 @@ namespace gripperz {
 
             virtual std::vector<QualityIndex> getIndices() const = 0;
 
+            friend std::ostream& operator<<(std::ostream& stream, const GripperQuality& quality);
+
         private:
 
         };
+
+        template<class T>
+        T& operator<<(T& stream, const GripperQuality& quality) {
+            std::vector<GripperQuality::QualityIndex> indices = quality.getIndices();
+
+            stream << "GripperQuality:\n";
+
+            for (
+                    std::vector<GripperQuality::QualityIndex>::iterator i = indices.begin();
+                    i != indices.end();
+                    ++i
+                    ) {
+                stream << " - " << i->first << "= " << i->second << "\n";
+            }
+            stream << std::endl;
+
+            return stream;
+        }
 
     }
 }
