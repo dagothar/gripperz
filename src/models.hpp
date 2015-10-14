@@ -4,6 +4,7 @@
  * @date 6-07-2015
  */
 
+#include "models/Types.hpp"
 #include "models/Gripper.hpp"
 #include "models/GripperQuality.hpp"
 #include "models/GripperQualityFactory.hpp"

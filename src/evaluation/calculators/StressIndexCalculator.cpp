@@ -18,7 +18,7 @@ StressIndexCalculator::StressIndexCalculator() {
 StressIndexCalculator::~StressIndexCalculator() {
 }
 
-GripperQuality::QualityIndexValue StressIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+QualityIndexValue StressIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
 
     //TODO: implement
     

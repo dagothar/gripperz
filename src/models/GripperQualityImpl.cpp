@@ -18,11 +18,11 @@ GripperQualityImpl::GripperQualityImpl() {
 GripperQualityImpl::~GripperQualityImpl() {
 }
 
-GripperQuality::QualityIndexValue GripperQualityImpl::getIndex(const QualityIndexKey& key) const {
+QualityIndexValue GripperQualityImpl::getIndex(const QualityIndexKey& key) const {
     return _indices.at(key);
 }
 
-vector<GripperQuality::QualityIndex> GripperQualityImpl::getIndices() const {
+vector<QualityIndex> GripperQualityImpl::getIndices() const {
 
     vector<QualityIndex> indices;
 

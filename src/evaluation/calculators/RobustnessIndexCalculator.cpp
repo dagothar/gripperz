@@ -18,7 +18,7 @@ RobustnessIndexCalculator::RobustnessIndexCalculator() {
 RobustnessIndexCalculator::~RobustnessIndexCalculator() {
 }
 
-GripperQuality::QualityIndexValue RobustnessIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+QualityIndexValue RobustnessIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
 
     //TODO: implement
     

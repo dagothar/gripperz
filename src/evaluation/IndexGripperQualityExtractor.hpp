@@ -22,22 +22,22 @@ namespace gripperz {
             typedef rw::common::Ptr<IndexGripperQualityExtractor> Ptr;
 
         public:
-            IndexGripperQualityExtractor(const std::vector<models::GripperQuality::QualityIndexKey>& indexNames);
+            IndexGripperQualityExtractor(const std::vector<models::QualityIndexKey>& indexNames);
 
             virtual ~IndexGripperQualityExtractor();
 
             virtual math::Vector extract(const models::GripperQuality::Ptr quality) const;
 
-            void setIndexNames(const std::vector<models::GripperQuality::QualityIndexKey>& _indexNames) {
+            void setIndexNames(const std::vector<models::QualityIndexKey>& _indexNames) {
                 this->_indexNames = _indexNames;
             }
 
-            std::vector<models::GripperQuality::QualityIndexKey> getIndexNames() const {
+            std::vector<models::QualityIndexKey> getIndexNames() const {
                 return _indexNames;
             }
 
         private:
-            std::vector<models::GripperQuality::QualityIndexKey> _indexNames;
+            std::vector<models::QualityIndexKey> _indexNames;
         };
 
     }

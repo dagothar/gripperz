@@ -17,6 +17,6 @@ CoverageIndexCalculator::CoverageIndexCalculator() {
 CoverageIndexCalculator::~CoverageIndexCalculator() {
 }
 
-GripperQuality::QualityIndexValue CoverageIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+QualityIndexValue CoverageIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
     return 0;
 }

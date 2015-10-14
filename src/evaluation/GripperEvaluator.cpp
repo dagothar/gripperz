@@ -22,13 +22,23 @@ GripperQuality::Ptr GripperEvaluator::evaluate(models::OldGripper::Ptr gripper, 
     GripperQuality::Ptr quality = GripperQualityFactory::makeGripperQuality();
 
     BOOST_FOREACH(KeyCalculator& keyCalculator, _calculators) {
-        GripperQuality::QualityIndexValue value = keyCalculator.second->calculate(gripper, grasps);
+        QualityIndexValue value = keyCalculator.second->calculate(gripper, grasps);
         quality->setIndex(keyCalculator.first, value);
     }
 
     return quality;
 }
 
-void GripperEvaluator::addQualityIndexCalculator(const models::GripperQuality::QualityIndexKey& indexName, QualityIndexCalculator::Ptr calculator) {
+void GripperEvaluator::addQualityIndexCalculator(const models::QualityIndexKey& indexName, QualityIndexCalculator::Ptr calculator) {
     _calculators.push_back(make_pair(indexName, calculator));
+}
+
+vector<QualityIndexKey> GripperEvaluator::getIndexKeys() const {
+    vector<QualityIndexKey> keys;
+    
+    BOOST_FOREACH(const KeyCalculator& keyCalculator, _calculators) {
+        keys.push_back(keyCalculator.first);
+    }
+    
+    return keys;
 }

@@ -11,7 +11,7 @@ using namespace gripperz::evaluation;
 using namespace gripperz::math;
 using namespace gripperz::models;
 
-IndexGripperQualityExtractor::IndexGripperQualityExtractor(const std::vector<models::GripperQuality::QualityIndexKey>& indexNames) :
+IndexGripperQualityExtractor::IndexGripperQualityExtractor(const std::vector<models::QualityIndexKey>& indexNames) :
 _indexNames(indexNames) {
 
 }

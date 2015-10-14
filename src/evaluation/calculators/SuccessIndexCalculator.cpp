@@ -18,7 +18,7 @@ SuccessIndexCalculator::SuccessIndexCalculator() {
 SuccessIndexCalculator::~SuccessIndexCalculator() {
 }
 
-GripperQuality::QualityIndexValue SuccessIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+QualityIndexValue SuccessIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
 
     //TODO: implement
     

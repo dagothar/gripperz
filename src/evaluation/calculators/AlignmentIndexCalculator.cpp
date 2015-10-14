@@ -17,6 +17,6 @@ AlignmentIndexCalculator::AlignmentIndexCalculator() {
 AlignmentIndexCalculator::~AlignmentIndexCalculator() {
 }
 
-GripperQuality::QualityIndexValue AlignmentIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+QualityIndexValue AlignmentIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
     return 0;
 }
