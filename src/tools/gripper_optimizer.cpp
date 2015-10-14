@@ -80,15 +80,15 @@ void callback(OldGripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperB
 	
 	Vector args = builder->gripperToParameters(gripper);
 	
-	OldGripperQuality::Ptr q = &gripper->getQuality();
+	GripperQuality q = gripper->getQuality();
 	Vector res{
-		q->success,
-		q->robustness,
-		q->alignment,
-		q->coverage,
-		q->wrench,
-		q->stress,
-		q->volume
+		q["success"],
+		q["robustness"],
+		q["alignment"],
+		q["coverage"],
+		q["wrench"],
+		q["stress"],
+		q["volume"]
 	};
 	
 	entry.insert(entry.end(), args.begin(), args.end());
@@ -260,12 +260,12 @@ int main(int argc, char* argv[]) {
 	Vector result = opt_manager->optimize(objective, initialGuess, "maximize");
 	
 	OldGripper::Ptr opt_gripper = builder->parametersToGripper(result);
-	OldGripperQuality::Ptr opt_gripper_q = manager->evaluateGripper(opt_gripper);
-	gripper->setQuality(*opt_gripper_q);
+	GripperQuality opt_gripper_q = manager->evaluateGripper(opt_gripper);
+	gripper->setQuality(opt_gripper_q);
 	
 	cout << "Optimization succesful!" << endl;
-	cout << "Result: " << *opt_gripper << endl;
-	cout << "Quality: " << *opt_gripper_q << endl;
+	cout << "Result: " << opt_gripper << endl;
+	cout << "Quality: " << opt_gripper_q << endl;
 	
 	/* save results */
 	path opt_gripper_file = outdir / path("result.grp.xml");
