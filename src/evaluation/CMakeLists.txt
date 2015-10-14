@@ -11,6 +11,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/SimpleAlignment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ClusteringAlignment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQualityExtractor.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/IndexGripperQualityExtractor.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/QualityIndexCalculator.cpp
 	CACHE INTERNAL ""
 )

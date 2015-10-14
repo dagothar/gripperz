@@ -16,5 +16,6 @@
 #include "evaluation/SimpleAlignment.hpp"
 #include "evaluation/ClusteringAlignment.hpp"
 #include "evaluation/GripperQualityExtractor.hpp"
+#include "evaluation/IndexGripperQualityExtractor.hpp"
 #include "evaluation/QualityIndexCalculator.hpp"
 

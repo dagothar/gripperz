@@ -15,7 +15,7 @@ namespace gripperz {
 
         /**
          * @class GripperQualityExtractor
-         * @brief Extracts values from GripperQuality into a vector of doubles
+         * @brief Extracts values from GripperQuality into a vector of doubles - interface
          */
         class GripperQualityExtractor {
         public:
@@ -27,7 +27,7 @@ namespace gripperz {
 
             virtual ~GripperQualityExtractor();
 
-            virtual math::Vector extract(const models::GripperQuality::Ptr quality);
+            virtual math::Vector extract(const models::GripperQuality::Ptr quality) const = 0;
         };
 
     } /* evaluation */

@@ -36,6 +36,8 @@
 #include <process/GripperEvaluationManagerFactory.hpp>
 #include <math/CombineObjectivesFactory.hpp>
 
+#include "evaluation/IndexGripperQualityExtractor.hpp"
+
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -102,6 +104,7 @@ int main(int argc, char* argv[]) {
 	string gripperFilename;
 	string outDir;
 	string samplesFilename;
+        vector<string> indices{"success", "robustness", "alignment", "coverage", "wrench", "stress", "volume"};
 	vector<int> parameters{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
 
@@ -173,7 +176,8 @@ int main(int argc, char* argv[]) {
 		dataFile << "# " << paramName << ", success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog" << endl;
 		
 		GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, vector<MapGripperBuilder::ParameterName>{name});
-		GripperObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);
+                GripperQualityExtractor::Ptr extractor = new IndexGripperQualityExtractor(indices);
+		GripperObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager, extractor);
 		
 		double range = bounds[name].second - bounds[name].first;
 		double step = range / resolution;
