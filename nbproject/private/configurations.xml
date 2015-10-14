@@ -39,6 +39,8 @@
         <in>GripperObjectiveFunction.hpp</in>
         <in>GripperQualityExtractor.cpp</in>
         <in>GripperQualityExtractor.hpp</in>
+        <in>IndexGripperQualityExtractor.cpp</in>
+        <in>IndexGripperQualityExtractor.hpp</in>
         <in>OldGripperEvaluator.cpp</in>
         <in>OldGripperEvaluator.hpp</in>
         <in>QualityIndexCalculator.cpp</in>

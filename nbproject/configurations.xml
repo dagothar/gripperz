@@ -43,6 +43,8 @@
         <in>GripperEvaluator.hpp</in>
         <in>GripperObjectiveFunction.cpp</in>
         <in>GripperQualityExtractor.cpp</in>
+        <in>IndexGripperQualityExtractor.cpp</in>
+        <in>IndexGripperQualityExtractor.hpp</in>
         <in>OldGripperEvaluator.cpp</in>
         <in>QualityIndexCalculator.cpp</in>
         <in>QualityIndexCalculator.hpp</in>
@@ -793,6 +795,16 @@
             flavor2="8">
         <ccTool flags="1">
         </ccTool>
+      </item>
+      <item path="src/evaluation/IndexGripperQualityExtractor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/evaluation/IndexGripperQualityExtractor.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/evaluation/OldGripperEvaluator.cpp"
             ex="false"

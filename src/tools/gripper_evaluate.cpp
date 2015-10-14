@@ -34,6 +34,7 @@ struct Configuration {
     int robustness;
     vector<int> parameters;
     vector<double> values;
+    vector<string> indices;
     vector<double> weights;
     string method;
     string dwc;
@@ -48,6 +49,7 @@ struct Configuration {
 
     Configuration() :
     //parameters({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}),
+    indices({"success", "robustness", "alignment", "coverage", "wrench", "stress", "volume"}),
     weights({1, 1, 1, 1, 1, 1, 1}) {
     }
 } configuration;
@@ -164,7 +166,8 @@ GripperObjectiveFunction::Ptr make_objective_function(const Configuration& confi
     GripperBuilder::Ptr builder = new MapGripperBuilder(data.gripper, parameters);
 
     /* objective */
-    GripperObjectiveFunction::Ptr objective = new GripperObjectiveFunction(builder, manager);
+    GripperQualityExtractor::Ptr extractor = new IndexGripperQualityExtractor(config.indices);
+    GripperObjectiveFunction::Ptr objective = new GripperObjectiveFunction(builder, manager, extractor);
 
     return objective;
 }

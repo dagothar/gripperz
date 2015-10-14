@@ -44,6 +44,7 @@ struct {
     string combiner;
     string optimizer;
     vector<double> weights;
+    vector<string> indices;
     vector<int> parameters;
     double sigma_a, sigma_p;
     double rho0, rhof;
@@ -80,7 +81,8 @@ void callback(OldGripper::Ptr gripper, CombineObjectives::Ptr combiner, GripperB
     Vector args = builder->gripperToParameters(gripper);
 
     GripperQuality::Ptr q = gripper->getQuality();
-    GripperQualityExtractor::Ptr extractor = new GripperQualityExtractor();
+    vector<string> indices{"success", "robustness", "alignment", "coverage", "wrench", "stress", "volume"};
+    GripperQualityExtractor::Ptr extractor = new IndexGripperQualityExtractor(indices);
     Vector res = extractor->extract(q);
 
     entry.insert(entry.end(), args.begin(), args.end());
@@ -206,7 +208,9 @@ int main(int argc, char* argv[]) {
         opt_ranges.push_back(ranges[id]);
     }
     GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, params);
-    GripperObjectiveFunction::Ptr multi_function = new GripperObjectiveFunction(builder, manager);
+    vector<string> indices{"success", "robustness", "alignment", "coverage", "wrench", "stress", "volume"};
+    GripperQualityExtractor::Ptr extractor = new IndexGripperQualityExtractor(indices);
+    GripperObjectiveFunction::Ptr multi_function = new GripperObjectiveFunction(builder, manager, extractor);
 
     CombineObjectives::Ptr comb_method = CombineObjectivesFactory::make(Configuration.combiner, Configuration.weights);
     ObjectiveFunction::Ptr objective = new CombinedFunction(multi_function, comb_method);

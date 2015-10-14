@@ -32,7 +32,11 @@ namespace gripperz {
             static const unsigned NObjectives = 7;
 
         public:
-            GripperObjectiveFunction(models::GripperBuilder::Ptr builder, process::GripperEvaluationProcessManager::Ptr manager, GripperQualityExtractor::Ptr extractor = rw::common::ownedPtr(new GripperQualityExtractor));
+            GripperObjectiveFunction(
+                    models::GripperBuilder::Ptr builder,
+                    process::GripperEvaluationProcessManager::Ptr manager,
+                    GripperQualityExtractor::Ptr extractor
+                    );
 
             virtual ~GripperObjectiveFunction();
 
