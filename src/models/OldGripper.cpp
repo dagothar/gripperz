@@ -102,8 +102,7 @@ void OldGripper::updateGripper(
 
     RigidObject* leftobj = new RigidObject(wc->findFrame("gripper.LeftFinger"));
     Model3D* leftmodel = new Model3D("LeftModel");
-    leftmodel->addTriMesh(Model3D::Material("stlmat", 0.4f, 0.4f, 0.4f),
-            *leftGeometry->getGeometryData()->getTriMesh());
+    leftmodel->addTriMesh(Model3D::Material("stlmat", 0.4f, 0.4f, 0.4f), *leftGeometry->getGeometryData()->getTriMesh());
     leftmodel->setTransform(Transform3D<>());
     leftGeometry->setTransform(Transform3D<>());
     leftobj->addModel(leftmodel);
@@ -113,14 +112,9 @@ void OldGripper::updateGripper(
 
     RigidObject* rightobj = new RigidObject(wc->findFrame("gripper.RightFinger"));
     Model3D* rightmodel = new Model3D("RightModel");
-    rightmodel->addTriMesh(Model3D::Material("stlmat", 0.4f, 0.4f, 0.4f),
-            *rightGeometry->getGeometryData()->getTriMesh());
-    rightmodel->setTransform(
-            Transform3D<>(Vector3D<>(),
-            Rotation3D<>(1, 0, 0, 0, 1, 0, 0, 0, -1)));
-    rightGeometry->setTransform(
-            Transform3D<>(Vector3D<>(),
-            Rotation3D<>(1, 0, 0, 0, 1, 0, 0, 0, -1)));
+    rightmodel->addTriMesh(Model3D::Material("stlmat", 0.4f, 0.4f, 0.4f), *rightGeometry->getGeometryData()->getTriMesh());
+    rightmodel->setTransform(Transform3D<>(Vector3D<>(), Rotation3D<>(1, 0, 0, 0, 1, 0, 0, 0, -1)));
+    rightGeometry->setTransform(Transform3D<>(Vector3D<>(), Rotation3D<>(1, 0, 0, 0, 1, 0, 0, 0, -1)));
     rightobj->addModel(rightmodel);
     rightobj->addGeometry(rightGeometry);
     wc->add(rightobj);

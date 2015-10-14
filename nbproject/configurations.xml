@@ -21,37 +21,26 @@
       <df name="evaluation">
         <df name="calculators">
           <in>AlignmentIndexCalculator.cpp</in>
-          <in>AlignmentIndexCalculator.hpp</in>
           <in>CostIndexCalculator.cpp</in>
-          <in>CostIndexCalculator.hpp</in>
           <in>CoverageIndexCalculator.cpp</in>
-          <in>CoverageIndexCalculator.hpp</in>
           <in>RobustnessIndexCalculator.cpp</in>
-          <in>RobustnessIndexCalculator.hpp</in>
           <in>StressIndexCalculator.cpp</in>
-          <in>StressIndexCalculator.hpp</in>
           <in>SuccessIndexCalculator.cpp</in>
-          <in>SuccessIndexCalculator.hpp</in>
           <in>WrenchIndexCalculator.cpp</in>
-          <in>WrenchIndexCalculator.hpp</in>
         </df>
         <in>AlignmentCalculator.cpp</in>
         <in>AllPosesAlignment.cpp</in>
         <in>ClusteringAlignment.cpp</in>
         <in>ConstrainedGripperEvaluator.cpp</in>
         <in>GripperEvaluator.cpp</in>
-        <in>GripperEvaluator.hpp</in>
         <in>GripperObjectiveFunction.cpp</in>
         <in>GripperQualityExtractor.cpp</in>
         <in>IndexGripperQualityExtractor.cpp</in>
-        <in>IndexGripperQualityExtractor.hpp</in>
         <in>OldGripperEvaluator.cpp</in>
         <in>QualityIndexCalculator.cpp</in>
-        <in>QualityIndexCalculator.hpp</in>
         <in>SimpleAlignment.cpp</in>
         <in>StablePoseAlignment.cpp</in>
         <in>VersorAlignment.cpp</in>
-        <in>calculators.hpp</in>
       </df>
       <df name="geometry">
         <in>JawPrimitive.cpp</in>
@@ -60,42 +49,27 @@
         <df name="databases">
           <in>GraspDatabase.cpp</in>
           <in>RWGraspDatabase.cpp</in>
-          <in>RWGraspDatabase.hpp</in>
         </df>
         <df name="decorators">
           <in>FilteredGraspSource.cpp</in>
-          <in>FilteredGraspSource.hpp</in>
           <in>GraspSourceDecorator.cpp</in>
-          <in>GraspSourceDecorator.hpp</in>
         </df>
         <df name="filters">
           <in>GraspFilter.cpp</in>
-          <in>GraspFilter.hpp</in>
           <in>GraspFilterChain.cpp</in>
-          <in>GraspFilterChain.hpp</in>
           <in>GraspOffsetFilter.cpp</in>
-          <in>GraspOffsetFilter.hpp</in>
           <in>GraspStatusFilter.cpp</in>
-          <in>GraspStatusFilter.hpp</in>
           <in>KDGraspFilter.cpp</in>
-          <in>KDGraspFilter.hpp</in>
           <in>RobustnessGraspFilter.cpp</in>
-          <in>RobustnessGraspFilter.hpp</in>
         </df>
         <df name="planners">
           <in>BasicParallelGripperGraspPlanner.cpp</in>
-          <in>BasicParallelGripperGraspPlanner.hpp</in>
           <in>GraspPlanner.cpp</in>
-          <in>GraspPlanner.hpp</in>
         </df>
         <in>GraspSource.cpp</in>
         <in>GraspStatistics.cpp</in>
         <in>SurfaceSample.cpp</in>
         <in>Types.cpp</in>
-        <in>databases.hpp</in>
-        <in>decorators.hpp</in>
-        <in>filters.hpp</in>
-        <in>planners.hpp</in>
       </df>
       <df name="loaders">
         <in>GripperXMLLoader.cpp</in>
@@ -124,17 +98,14 @@
       </df>
       <df name="models">
         <in>Gripper.cpp</in>
-        <in>Gripper.hpp</in>
         <in>GripperBuilder.cpp</in>
         <in>GripperQuality.cpp</in>
-        <in>GripperQuality.hpp</in>
         <in>GripperQualityFactory.cpp</in>
-        <in>GripperQualityFactory.hpp</in>
         <in>GripperQualityImpl.cpp</in>
-        <in>GripperQualityImpl.hpp</in>
         <in>MapGripperBuilder.cpp</in>
         <in>OldGripper.cpp</in>
         <in>OldGripperQuality.cpp</in>
+        <in>Types.cpp</in>
       </df>
       <df name="optimization">
         <in>BOBYQAOptimizer.cpp</in>
@@ -201,7 +172,6 @@
         <in>Rosenbrock.cpp</in>
         <in>XMLHelpers.cpp</in>
       </df>
-      <in>process.hpp</in>
     </df>
     <df root="src" name="1">
     </df>
@@ -666,6 +636,44 @@
           </incDir>
         </ccTool>
       </folder>
+      <folder path="0/simulation">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>/usr/include/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>/usr/include/lua5.1</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>/usr/include/ode</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
       <folder path="0/util">
         <ccTool>
           <incDir>
@@ -787,11 +795,6 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/evaluation/GripperEvaluator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/evaluation/GripperObjectiveFunction.cpp"
             ex="false"
             tool="1"
@@ -809,12 +812,9 @@
       <item path="src/evaluation/IndexGripperQualityExtractor.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/evaluation/IndexGripperQualityExtractor.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/evaluation/OldGripperEvaluator.cpp"
             ex="false"
@@ -826,12 +826,9 @@
       <item path="src/evaluation/QualityIndexCalculator.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/evaluation/QualityIndexCalculator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/evaluation/SimpleAlignment.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -848,77 +845,54 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/evaluation/calculators.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/evaluation/calculators/AlignmentIndexCalculator.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/evaluation/calculators/AlignmentIndexCalculator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/evaluation/calculators/CostIndexCalculator.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/evaluation/calculators/CostIndexCalculator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/evaluation/calculators/CoverageIndexCalculator.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/evaluation/calculators/CoverageIndexCalculator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/evaluation/calculators/RobustnessIndexCalculator.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/evaluation/calculators/RobustnessIndexCalculator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/evaluation/calculators/StressIndexCalculator.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/evaluation/calculators/StressIndexCalculator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/evaluation/calculators/SuccessIndexCalculator.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/evaluation/calculators/SuccessIndexCalculator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/evaluation/calculators/WrenchIndexCalculator.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/evaluation/calculators/WrenchIndexCalculator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/geometry/JawPrimitive.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -936,9 +910,7 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/grasps/Types.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/grasps/databases.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/grasps/Types.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/grasps/databases/GraspDatabase.cpp"
             ex="false"
@@ -950,112 +922,54 @@
       <item path="src/grasps/databases/RWGraspDatabase.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/databases/RWGraspDatabase.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/decorators.hpp" ex="false" tool="3" flavor2="0">
+            flavor2="4">
       </item>
       <item path="src/grasps/decorators/FilteredGraspSource.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/decorators/FilteredGraspSource.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="4">
       </item>
       <item path="src/grasps/decorators/GraspSourceDecorator.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
       </item>
-      <item path="src/grasps/decorators/GraspSourceDecorator.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/filters.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/grasps/filters/GraspFilter.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/grasps/filters/GraspFilter.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/grasps/filters/GraspFilter.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/grasps/filters/GraspFilterChain.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/filters/GraspFilterChain.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="4">
       </item>
       <item path="src/grasps/filters/GraspOffsetFilter.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/filters/GraspOffsetFilter.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="4">
       </item>
       <item path="src/grasps/filters/GraspStatusFilter.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/filters/GraspStatusFilter.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="4">
       </item>
       <item path="src/grasps/filters/KDGraspFilter.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/filters/KDGraspFilter.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="4">
       </item>
       <item path="src/grasps/filters/RobustnessGraspFilter.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/filters/RobustnessGraspFilter.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/planners.hpp" ex="false" tool="3" flavor2="0">
+            flavor2="4">
       </item>
       <item path="src/grasps/planners/BasicParallelGripperGraspPlanner.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/planners/BasicParallelGripperGraspPlanner.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="4">
       </item>
       <item path="src/grasps/planners/GraspPlanner.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/grasps/planners/GraspPlanner.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
+            flavor2="4">
       </item>
       <item path="src/loaders/GripperXMLLoader.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -1157,29 +1071,24 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/models/Gripper.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/models/GripperBuilder.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/models/GripperQuality.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/models/GripperQuality.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/models/GripperQuality.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/models/GripperQualityFactory.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
-      <item path="src/models/GripperQualityFactory.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/models/GripperQualityImpl.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/models/GripperQualityImpl.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/models/GripperQualityImpl.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/models/MapGripperBuilder.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
@@ -1193,9 +1102,13 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/models/Types.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/models/Types.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
-      <item path="src/models/Types.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/models/WorkcellGripper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/models/WorkcellGripper.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/optimization/BOBYQAOptimizer.cpp"
             ex="false"
@@ -1268,8 +1181,6 @@
       <item path="src/plugin/TaskDialog.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
-      </item>
-      <item path="src/process.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/process/GripperEvaluationManagerBuilder.cpp"
             ex="false"
@@ -1376,40 +1287,6 @@
       </item>
       <item path="src/simulation/BasicSimulator.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/qt4</pElem>
-            <pElem>/usr/include/qt4/QtOpenGL</pElem>
-            <pElem>/usr/include/qt4/QtDesigner</pElem>
-            <pElem>/usr/include/qt4/QtUiTools</pElem>
-            <pElem>/usr/include/qt4/QtGui</pElem>
-            <pElem>/usr/include/qt4/QtCore</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
-            <pElem>/usr/include/eigen3</pElem>
-            <pElem>../robwork/trunk/RobWork/src</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
-            <pElem>/usr/include/lua5.1</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
-            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
-            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
-            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
-            <pElem>/usr/include/ode</pElem>
-            <pElem>src</pElem>
-            <pElem>ext</pElem>
-            <pElem>build</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>BOOST_DISABLE_ASSERTS</Elem>
-            <Elem>NDEBUG</Elem>
-            <Elem>QT_CORE_LIB</Elem>
-            <Elem>QT_DESIGNER_LIB</Elem>
-            <Elem>QT_GUI_LIB</Elem>
-            <Elem>QT_NO_DEBUG</Elem>
-            <Elem>QT_OPENGL_LIB</Elem>
-            <Elem>QT_UITOOLS_LIB</Elem>
-            <Elem>dDOUBLE</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/simulation/GraspTaskSimulator.cpp"
@@ -1417,40 +1294,6 @@
             tool="1"
             flavor2="8">
         <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/qt4</pElem>
-            <pElem>/usr/include/qt4/QtOpenGL</pElem>
-            <pElem>/usr/include/qt4/QtDesigner</pElem>
-            <pElem>/usr/include/qt4/QtUiTools</pElem>
-            <pElem>/usr/include/qt4/QtGui</pElem>
-            <pElem>/usr/include/qt4/QtCore</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
-            <pElem>/usr/include/eigen3</pElem>
-            <pElem>../robwork/trunk/RobWork/src</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
-            <pElem>/usr/include/lua5.1</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
-            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
-            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
-            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
-            <pElem>/usr/include/ode</pElem>
-            <pElem>src</pElem>
-            <pElem>ext</pElem>
-            <pElem>build</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>BOOST_DISABLE_ASSERTS</Elem>
-            <Elem>NDEBUG</Elem>
-            <Elem>QT_CORE_LIB</Elem>
-            <Elem>QT_DESIGNER_LIB</Elem>
-            <Elem>QT_GUI_LIB</Elem>
-            <Elem>QT_NO_DEBUG</Elem>
-            <Elem>QT_OPENGL_LIB</Elem>
-            <Elem>QT_UITOOLS_LIB</Elem>
-            <Elem>dDOUBLE</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/simulation/GripperSimulator.cpp"
@@ -1458,40 +1301,6 @@
             tool="1"
             flavor2="8">
         <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/qt4</pElem>
-            <pElem>/usr/include/qt4/QtOpenGL</pElem>
-            <pElem>/usr/include/qt4/QtDesigner</pElem>
-            <pElem>/usr/include/qt4/QtUiTools</pElem>
-            <pElem>/usr/include/qt4/QtGui</pElem>
-            <pElem>/usr/include/qt4/QtCore</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
-            <pElem>/usr/include/eigen3</pElem>
-            <pElem>../robwork/trunk/RobWork/src</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
-            <pElem>/usr/include/lua5.1</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
-            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
-            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
-            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
-            <pElem>/usr/include/ode</pElem>
-            <pElem>src</pElem>
-            <pElem>ext</pElem>
-            <pElem>build</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>BOOST_DISABLE_ASSERTS</Elem>
-            <Elem>NDEBUG</Elem>
-            <Elem>QT_CORE_LIB</Elem>
-            <Elem>QT_DESIGNER_LIB</Elem>
-            <Elem>QT_GUI_LIB</Elem>
-            <Elem>QT_NO_DEBUG</Elem>
-            <Elem>QT_OPENGL_LIB</Elem>
-            <Elem>QT_UITOOLS_LIB</Elem>
-            <Elem>dDOUBLE</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/simulation/InterferenceSimulator.cpp"
@@ -1499,40 +1308,6 @@
             tool="1"
             flavor2="8">
         <ccTool flags="1">
-          <incDir>
-            <pElem>/usr/include/qt4</pElem>
-            <pElem>/usr/include/qt4/QtOpenGL</pElem>
-            <pElem>/usr/include/qt4/QtDesigner</pElem>
-            <pElem>/usr/include/qt4/QtUiTools</pElem>
-            <pElem>/usr/include/qt4/QtGui</pElem>
-            <pElem>/usr/include/qt4/QtCore</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
-            <pElem>/usr/include/eigen3</pElem>
-            <pElem>../robwork/trunk/RobWork/src</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
-            <pElem>/usr/include/lua5.1</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
-            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
-            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
-            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
-            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
-            <pElem>/usr/include/ode</pElem>
-            <pElem>src</pElem>
-            <pElem>ext</pElem>
-            <pElem>build</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>BOOST_DISABLE_ASSERTS</Elem>
-            <Elem>NDEBUG</Elem>
-            <Elem>QT_CORE_LIB</Elem>
-            <Elem>QT_DESIGNER_LIB</Elem>
-            <Elem>QT_GUI_LIB</Elem>
-            <Elem>QT_NO_DEBUG</Elem>
-            <Elem>QT_OPENGL_LIB</Elem>
-            <Elem>QT_UITOOLS_LIB</Elem>
-            <Elem>dDOUBLE</Elem>
-          </preprocessorList>
         </ccTool>
       </item>
       <item path="src/test/testBOBYQA.cpp" ex="false" tool="1" flavor2="8">
