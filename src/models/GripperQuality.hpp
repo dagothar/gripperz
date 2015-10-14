@@ -35,8 +35,6 @@ namespace gripperz {
 
             virtual std::vector<QualityIndex> getIndices() const = 0;
 
-            friend std::ostream& operator<<(std::ostream& stream, const GripperQuality& quality);
-
         private:
 
         };

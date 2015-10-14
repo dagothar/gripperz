@@ -6,6 +6,7 @@
 
 #include "models/Types.hpp"
 #include "models/Gripper.hpp"
+#include "models/WorkcellGripper.hpp"
 #include "models/GripperQuality.hpp"
 #include "models/GripperQualityFactory.hpp"
 #include "models/GripperQualityImpl.hpp"
