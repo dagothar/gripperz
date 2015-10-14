@@ -53,7 +53,7 @@ namespace gripperz {
              */
             virtual bool isSane(models::OldGripper::Ptr gripper);
 
-            virtual models::GripperQuality evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
+            virtual models::GripperQuality::Ptr evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 
 
         protected:

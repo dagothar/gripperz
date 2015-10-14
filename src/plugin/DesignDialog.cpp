@@ -100,15 +100,14 @@ void DesignDialog::_updateGripper() {
 		_gripper->setBaseZ(ui.basezEdit->text().toDouble());
 
 		/* update results */
-		_gripper->getQuality().success = ui.successEdit->text().toDouble();
-		_gripper->getQuality().robustness = ui.robustnessEdit->text().toDouble();
-		_gripper->getQuality().alignment = ui.alignmentEdit->text().toDouble();
-		_gripper->getQuality().coverage = ui.coverageEdit->text().toDouble();
-		_gripper->getQuality().wrench = ui.wrenchEdit->text().toDouble();
-		_gripper->getQuality().topwrench = ui.topWrenchEdit->text().toDouble();
-		_gripper->getQuality().stress = ui.stressEdit->text().toDouble();
-		_gripper->getQuality().volume = ui.volumeEdit->text().toDouble();
-		_gripper->getQuality().quality = ui.qualityEdit->text().toDouble();
+		_gripper->getQuality()->setIndex("success", ui.successEdit->text().toDouble());
+		_gripper->getQuality()->setIndex("robustness", ui.robustnessEdit->text().toDouble());
+		_gripper->getQuality()->setIndex("alignment", ui.alignmentEdit->text().toDouble());
+		_gripper->getQuality()->setIndex("coverage", ui.coverageEdit->text().toDouble());
+		_gripper->getQuality()->setIndex("wrench", ui.wrenchEdit->text().toDouble());
+		_gripper->getQuality()->setIndex("stress", ui.stressEdit->text().toDouble());
+		_gripper->getQuality()->setIndex("volume", ui.volumeEdit->text().toDouble());
+		_gripper->getQuality()->setIndex("quality", ui.qualityEdit->text().toDouble());
 	}
 }
 
@@ -133,14 +132,13 @@ void DesignDialog::_updateGUI() {
 		ui.basezEdit->setText(QString::number(_gripper->getBaseZ()));
 
 		/* update results area */
-		ui.coverageEdit->setText(QString::number(_gripper->getQuality().coverage));
-		ui.successEdit->setText(QString::number(_gripper->getQuality().success));
-		ui.robustnessEdit->setText(QString::number(_gripper->getQuality().robustness));
-		ui.alignmentEdit->setText(QString::number(_gripper->getQuality().alignment));
-		ui.wrenchEdit->setText(QString::number(_gripper->getQuality().wrench));
-		ui.topWrenchEdit->setText(QString::number(_gripper->getQuality().topwrench));
-		ui.stressEdit->setText(QString::number(_gripper->getQuality().stress));
-		ui.volumeEdit->setText(QString::number(_gripper->getQuality().volume));
-		ui.qualityEdit->setText(QString::number(_gripper->getQuality().quality));
+		ui.coverageEdit->setText(QString::number(_gripper->getQuality()->getIndex("coverage")));
+		ui.successEdit->setText(QString::number(_gripper->getQuality()->getIndex("success")));
+		ui.robustnessEdit->setText(QString::number(_gripper->getQuality()->getIndex("robustness")));
+		ui.alignmentEdit->setText(QString::number(_gripper->getQuality()->getIndex("alignment")));
+		ui.wrenchEdit->setText(QString::number(_gripper->getQuality()->getIndex("wrench")));
+		ui.stressEdit->setText(QString::number(_gripper->getQuality()->getIndex("stress")));
+		ui.volumeEdit->setText(QString::number(_gripper->getQuality()->getIndex("volume")));
+		ui.qualityEdit->setText(QString::number(_gripper->getQuality()->getIndex("quality")));
 	}
 }

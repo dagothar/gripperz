@@ -27,7 +27,7 @@ namespace gripperz {
 
                 virtual ~StressIndexCalculator();
                 
-                virtual QualityIndex calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
+                virtual models::GripperQuality::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 
             private:
 

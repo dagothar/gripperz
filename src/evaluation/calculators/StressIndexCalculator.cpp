@@ -8,6 +8,7 @@
 #include "StressIndexCalculator.hpp"
 
 using namespace std;
+using namespace gripperz::models;
 using namespace gripperz::evaluation;
 using namespace gripperz::evaluation::calculators;
 
@@ -17,9 +18,9 @@ StressIndexCalculator::StressIndexCalculator() {
 StressIndexCalculator::~StressIndexCalculator() {
 }
 
-QualityIndex StressIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+GripperQuality::QualityIndexValue StressIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
 
     //TODO: implement
     
-    return QualityIndex("cost", 0.0);
+    return 0;
 }

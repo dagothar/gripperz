@@ -5,6 +5,7 @@
  */
 
 #include "GripperQualityExtractor.hpp"
+#include "models/GripperQuality.hpp"
 
 
 using namespace gripperz::evaluation;
@@ -17,16 +18,16 @@ GripperQualityExtractor::GripperQualityExtractor() {
 GripperQualityExtractor::~GripperQualityExtractor() {
 }
 
-Vector GripperQualityExtractor::extract(const GripperQuality& q) {
+Vector GripperQualityExtractor::extract(GripperQuality::Ptr q) {
     Vector result(7);
 
-    result[0] = q.at("success");
-    result[1] = q.at("robustness");
-    result[2] = q.at("alignment");
-    result[3] = q.at("coverage");
-    result[4] = q.at("wrench");
-    result[5] = q.at("stress");
-    result[6] = q.at("volume");
+    result[0] = q->getIndex("success");
+    result[1] = q->getIndex("robustness");
+    result[2] = q->getIndex("alignment");
+    result[3] = q->getIndex("coverage");
+    result[4] = q->getIndex("wrench");
+    result[5] = q->getIndex("stress");
+    result[6] = q->getIndex("volume");
 
     return result;
 }

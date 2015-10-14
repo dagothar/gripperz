@@ -199,7 +199,6 @@ namespace gripperz {
              * having it reloaded, which requires restarting RobWorkStudio. Another approach would be to
              * add gripper to the workcell and then remove it, but methods neccessary for are not yet implemented.
              *
-             * @todo Make this use only TaskDescription.
              */
             void updateGripper(
                     rw::models::WorkCell::Ptr wc,

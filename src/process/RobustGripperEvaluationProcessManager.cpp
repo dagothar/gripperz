@@ -51,7 +51,7 @@ _ntries(nTries) {
 RobustGripperEvaluationProcessManager::~RobustGripperEvaluationProcessManager() {
 }
 
-GripperQuality RobustGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
+GripperQuality::Ptr RobustGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
     Configuration config = getConfiguration();
 
     /*
@@ -115,6 +115,6 @@ GripperQuality RobustGripperEvaluationProcessManager::evaluateGripper(OldGripper
     OldGripper::Ptr evaluatedGripper = GripperXMLLoader::load(filename);
 
     /* return */
-    GripperQuality quality = evaluatedGripper->getQuality();
+    GripperQuality::Ptr quality = evaluatedGripper->getQuality();
     return quality;
 }

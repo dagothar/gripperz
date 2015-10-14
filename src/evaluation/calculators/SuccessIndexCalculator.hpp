@@ -27,8 +27,7 @@ namespace gripperz {
 
                 virtual ~SuccessIndexCalculator();
                 
-
-                virtual QualityIndex calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
+                virtual models::GripperQuality::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 
             private:
 

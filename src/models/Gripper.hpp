@@ -8,7 +8,7 @@
 #pragma once
 
 #include <rw/common/Ptr.hpp>
-#include "Types.hpp"
+#include "GripperQuality.hpp"
 
 namespace gripperz {
     namespace models {
@@ -35,17 +35,17 @@ namespace gripperz {
                 return _name;
             }
 
-            void setQuality(const GripperQuality& _quality) {
-                this->_quality = _quality;
+            void setQuality(GripperQuality::Ptr quality) {
+                this->_quality = quality;
             }
 
-            GripperQuality getQuality() const {
+            GripperQuality::Ptr getQuality() const {
                 return _quality;
             }
 
         private:
             std::string _name;
-            GripperQuality _quality;
+            GripperQuality::Ptr _quality;
         };
 
     }
