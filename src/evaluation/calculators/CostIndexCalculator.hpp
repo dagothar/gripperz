@@ -27,7 +27,7 @@ namespace gripperz {
 
                 virtual ~CostIndexCalculator();
                 
-                virtual models::GripperQuality::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
+                virtual models::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 
             private:
 

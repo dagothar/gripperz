@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <rw/common/Ptr.hpp>
+#include "Types.hpp"
 
 namespace gripperz {
     namespace models {
@@ -22,15 +23,6 @@ namespace gripperz {
         public:
             //! Smart pointer.
             typedef rw::common::Ptr<GripperQuality> Ptr;
-
-            //! Defines the type for the quality index key
-            typedef std::string QualityIndexKey;
-
-            //! Defines the type for the quality index value
-            typedef double QualityIndexValue;
-
-            //! Defines the quality index type
-            typedef std::pair<QualityIndexKey, QualityIndexValue> QualityIndex;
 
         public:
             GripperQuality();
@@ -51,12 +43,12 @@ namespace gripperz {
 
         template<class T>
         T& operator<<(T& stream, const GripperQuality& quality) {
-            std::vector<GripperQuality::QualityIndex> indices = quality.getIndices();
+            std::vector<QualityIndex> indices = quality.getIndices();
 
             stream << "GripperQuality:\n";
 
             for (
-                    std::vector<GripperQuality::QualityIndex>::iterator i = indices.begin();
+                    std::vector<QualityIndex>::iterator i = indices.begin();
                     i != indices.end();
                     ++i
                     ) {

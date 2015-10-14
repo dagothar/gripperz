@@ -27,7 +27,7 @@ namespace gripperz {
 
             virtual ~GripperQualityImpl();
 
-            virtual GripperQuality::QualityIndexValue getIndex(const QualityIndexKey& key) const;
+            virtual QualityIndexValue getIndex(const QualityIndexKey& key) const;
 
             virtual std::vector<QualityIndex> getIndices() const;
 

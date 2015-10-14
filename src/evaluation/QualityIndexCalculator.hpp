@@ -28,7 +28,7 @@ namespace gripperz {
 
             virtual ~QualityIndexCalculator();
 
-            virtual models::GripperQuality::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) = 0;
+            virtual models::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) = 0;
 
         private:
 

@@ -272,6 +272,48 @@
       <in>simulation.hpp</in>
       <in>util.hpp</in>
     </df>
+    <df root="src" name="1">
+      <df name="context">
+      </df>
+      <df name="evaluation">
+        <df name="calculators">
+        </df>
+      </df>
+      <df name="geometry">
+      </df>
+      <df name="grasps">
+        <df name="databases">
+        </df>
+        <df name="decorators">
+        </df>
+        <df name="filters">
+        </df>
+        <df name="planners">
+        </df>
+      </df>
+      <df name="loaders">
+      </df>
+      <df name="math">
+      </df>
+      <df name="models">
+      </df>
+      <df name="optimization">
+      </df>
+      <df name="plugin">
+      </df>
+      <df name="process">
+      </df>
+      <df name="sandbox">
+      </df>
+      <df name="simulation">
+      </df>
+      <df name="test">
+      </df>
+      <df name="tools">
+      </df>
+      <df name="util">
+      </df>
+    </df>
   </logicalFolder>
   <projectmakefile>build/Makefile</projectmakefile>
   <confs>

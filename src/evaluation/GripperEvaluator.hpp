@@ -22,7 +22,7 @@ namespace gripperz {
             typedef rw::common::Ptr<GripperEvaluator> Ptr;
 
             //! Type for the internal (key, calculator) pair storage
-            typedef std::pair<models::GripperQuality::QualityIndexKey, QualityIndexCalculator::Ptr> KeyCalculator;
+            typedef std::pair<models::QualityIndexKey, QualityIndexCalculator::Ptr> KeyCalculator;
 
         public:
             GripperEvaluator();
@@ -31,7 +31,9 @@ namespace gripperz {
 
             virtual models::GripperQuality::Ptr evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 
-            void addQualityIndexCalculator(const models::GripperQuality::QualityIndexKey& indexName, QualityIndexCalculator::Ptr calculator);
+            void addQualityIndexCalculator(const models::QualityIndexKey& indexName, QualityIndexCalculator::Ptr calculator);
+            
+            std::vector<models::QualityIndexKey> getIndexKeys() const;
 
         private:
             std::vector<KeyCalculator> _calculators;

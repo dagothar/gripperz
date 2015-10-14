@@ -203,6 +203,15 @@
       </df>
       <in>process.hpp</in>
     </df>
+    <df root="src" name="1">
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>CMakeLists.txt</itemPath>
+      <itemPath>build/Makefile</itemPath>
+    </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false"
@@ -213,6 +222,7 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
+    <Elem>src</Elem>
     <Elem>src</Elem>
   </sourceRootList>
   <projectmakefile>build/Makefile</projectmakefile>
@@ -1182,6 +1192,10 @@
       <item path="src/models/OldGripperQuality.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="1">
         </ccTool>
+      </item>
+      <item path="src/models/Types.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/models/Types.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/optimization/BOBYQAOptimizer.cpp"
             ex="false"
