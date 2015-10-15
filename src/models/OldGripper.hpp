@@ -240,6 +240,18 @@ namespace gripperz {
              * @return Volume [m^3].
              */
             double getVolume() const;
+            
+
+            virtual double getCost() {
+                return getVolume();
+            }
+            
+
+            virtual double getFeasibility() {
+                return getMaxStress();
+            }
+
+
 
             // friends
             friend class loaders::GripperXMLLoader;
