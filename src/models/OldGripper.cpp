@@ -91,8 +91,7 @@ void OldGripper::updateGripper(
 
     RigidObject* baseobj = new RigidObject(wc->findFrame("gripper.Base"));
     Model3D* basemodel = new Model3D("BaseModel");
-    basemodel->addTriMesh(Model3D::Material("stlmat", 0.4f, 0.4f, 0.4f),
-            *baseGeometry->getGeometryData()->getTriMesh());
+    basemodel->addTriMesh(Model3D::Material("stlmat", 0.4f, 0.4f, 0.4f), *baseGeometry->getGeometryData()->getTriMesh());
     basemodel->setTransform(baseT);
     baseGeometry->setTransform(baseT);
     baseobj->addModel(basemodel);

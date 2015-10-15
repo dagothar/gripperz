@@ -10,41 +10,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/OldGripperEvaluator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/CMakeLists.txt</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grippers/Gripper.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grippers/Types.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/AlignmentIndexCalculator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/RobustnessIndexCalculator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grippers/CMakeLists.txt</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grippers/Types.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/IndexGripperQualityExtractor.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/StressIndexCalculator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/process/RobustGripperEvaluationProcessManager.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grippers.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/AlignmentIndexCalculator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/CoverageIndexCalculator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/process/GripperEvaluationProcessManager.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/loaders/GripperXMLLoader.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grippers/GripperQuality.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/CostIndexCalculator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/SuccessIndexCalculator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/IndexGripperQualityExtractor.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/RobustnessIndexCalculator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/WrenchIndexCalculator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/SuccessIndexCalculator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/loaders/GripperXMLLoader.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/WrenchIndexCalculator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/gripperz.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/CoverageIndexCalculator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/QualityIndexCalculator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/context.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/StressIndexCalculator.hpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/GripperEvaluator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/evaluation/calculators/CostIndexCalculator.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grippers/GripperQualityImpl.cpp</file>
-            <file>file:/home/dagothar/gripperz-dev/src/grippers/GripperQualityImpl.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/OldGripper.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/WorkcellGripper.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/process/StandardGripperEvaluationProcessManager.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/planners/BasicParallelGripperGraspPlanner.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/WorkcellGripper.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/CMakeLists.txt</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models/Gripper.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/models.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/context/TaskDescription.hpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/simulation/GraspTaskSimulator.cpp</file>
+            <file>file:/home/dagothar/gripperz-dev/src/grasps/planners/BasicParallelGripperGraspPlanner.cpp</file>
         </group>
     </open-files>
 </project-private>

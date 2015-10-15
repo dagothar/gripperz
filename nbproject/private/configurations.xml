@@ -170,6 +170,8 @@
         <in>OldGripperQuality.hpp</in>
         <in>Types.cpp</in>
         <in>Types.hpp</in>
+        <in>WorkcellGripper.cpp</in>
+        <in>WorkcellGripper.hpp</in>
       </df>
       <df name="optimization">
         <in>BOBYQAOptimizer.cpp</in>

@@ -106,6 +106,7 @@
         <in>OldGripper.cpp</in>
         <in>OldGripperQuality.cpp</in>
         <in>Types.cpp</in>
+        <in>WorkcellGripper.cpp</in>
       </df>
       <df name="optimization">
         <in>BOBYQAOptimizer.cpp</in>
@@ -1106,9 +1107,9 @@
         <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="src/models/WorkcellGripper.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/models/WorkcellGripper.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/models/WorkcellGripper.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
       </item>
       <item path="src/optimization/BOBYQAOptimizer.cpp"
             ex="false"
