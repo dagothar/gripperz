@@ -6,3 +6,4 @@ test/*
 *~
 CMakeFiles/*
 CMakeCache.txt
+nbproject/*
