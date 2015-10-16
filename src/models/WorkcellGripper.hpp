@@ -16,7 +16,7 @@ namespace gripperz {
 
         /**
          * @class WorkcellGripper
-         * @brief A gripper pre-existing in the workcell
+         * @brief A basic gripper pre-existing in the workcell with RobWork implementation 
          */
         class WorkcellGripper : public Gripper {
         public:
@@ -28,9 +28,9 @@ namespace gripperz {
 
             virtual ~WorkcellGripper();
 
-            virtual void registerWithContext(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
+            virtual void initialize(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
 
-            virtual bool isRegistered();
+            virtual bool isInitialized();
 
             rw::kinematics::MovableFrame* getMovableFrame() const {
                 return _movableFrame;

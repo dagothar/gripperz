@@ -20,14 +20,14 @@ Gripper(name) {
 WorkcellGripper::~WorkcellGripper() {
 }
 
-void WorkcellGripper::registerWithContext(WorkCell::Ptr wc, DynamicWorkCell::Ptr dwc, State& state) {
+void WorkcellGripper::initialize(WorkCell::Ptr wc, DynamicWorkCell::Ptr dwc, State& state) {
     _device = wc->findDevice(_deviceId);
     _dynamicDevice = dwc->findDevice(_dynamicDeviceId);
     _TCPFrame = wc->findFrame(_TCPFrameId);
     _movableFrame = wc->findFrame<MovableFrame>(_movableFrameId);
 }
 
-bool WorkcellGripper::isRegistered() {
+bool WorkcellGripper::isInitialized() {
     if (_device == NULL) return false;
     if (_dynamicDevice == NULL) return false;
     if (_TCPFrame == NULL) return false;

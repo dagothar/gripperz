@@ -3,7 +3,6 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/Types.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Gripper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/WorkcellGripper.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ModifiedWorkcellGripper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQuality.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQualityImpl.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQualityFactory.cpp
