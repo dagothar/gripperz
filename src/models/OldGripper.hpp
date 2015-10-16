@@ -5,11 +5,10 @@
 
 #pragma once
 
-#include "Gripper.hpp"
-#include <rw/common/Ptr.hpp>
 #include <geometry/JawPrimitive.hpp>
 #include <context/TaskDescription.hpp>
 #include "OldGripperQuality.hpp"
+#include "ParallelFingerGripper.hpp"
 
 namespace rw {
     namespace kinematics {
@@ -26,24 +25,7 @@ namespace gripperz {
 
     namespace models {
 
-        /**
-         * @class Gripper
-         * @brief Gripper device (parallel jaw gripper) with parametrized geometry and kinematic and dynamic parameters.
-         * 
-         * Gripper is described by its geometric and kinematic & dynamic parameters. It contains geometries for jaws (shared between
-         * left & right jaw) and gripper base. These geometries can either be initialized from mesh (e.g. from STL file) or
-         * procedurally generated using JawPrimitive and Box primitive for fingers and base respectively.
-         * Kinematic & dynamic parameters include:
-         * - min. and max. opening
-         * - max. force
-         * - TCP position
-         * 
-         * Gripper contains a GripperQuality structure which describes gripper's qualities.
-         * 
-         * Default gripper constructor creates gripper with following parameters:
-         * ...
-         */
-        class OldGripper : public Gripper {
+        class OldGripper : public ParallelFingerGripper {
         public:
             /// Smart pointer.
             typedef rw::common::Ptr<OldGripper> Ptr;
@@ -53,6 +35,10 @@ namespace gripperz {
 
             virtual ~OldGripper() {
             }
+            
+            virtual void initialize(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
+
+            virtual void applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
 
             double getLength() const {
                 return _length;
@@ -184,22 +170,6 @@ namespace gripperz {
              */
             rw::geometry::Geometry::Ptr getBaseGeometry() const;
 
-            /**
-             * @brief Updates selected gripper device in the workcell according to data in this class.
-             *
-             * THIS IS A DIRTY HACK.
-             * Basically, workcell contains a skeleton of gripper device and dynamic gripper device. What this class and
-             * method does, is to dress this skeleton up. Geometries are removed and replaced in:
-             * - workcell
-             * - workcellscene (for displaying purposes)
-             * - collision detector
-             * - also dynamicworkcell has internal storage for some internal purposes apparently
-             *
-             * This was done as the easiest way to try different gripper designs in the same workcell without
-             * having it reloaded, which requires restarting RobWorkStudio. Another approach would be to
-             * add gripper to the workcell and then remove it, but methods neccessary for are not yet implemented.
-             *
-             */
             void updateGripper(
                     rw::models::WorkCell::Ptr wc,
                     rwsim::dynamics::DynamicWorkCell::Ptr dwc,
@@ -240,18 +210,14 @@ namespace gripperz {
              * @return Volume [m^3].
              */
             double getVolume() const;
-            
 
             virtual double getCost() {
                 return getVolume();
             }
-            
 
             virtual double getFeasibility() {
                 return getMaxStress();
             }
-
-
 
             // friends
             friend class loaders::GripperXMLLoader;
