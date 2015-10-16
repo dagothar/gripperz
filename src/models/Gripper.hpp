@@ -47,13 +47,13 @@ namespace gripperz {
              * Calculates the cost of the gripper design
              * @return the cost of the design (0 - 1)
              */
-            virtual double getCost() = 0;
+            //virtual double getCost() = 0;
             
             /**
              * Calculates a physical feasibility of the design
              * @return a physical feasibility of the design (0 - 1)
              */
-            virtual double getFeasibility() = 0;
+            //virtual double getFeasibility() = 0;
 
         private:
             std::string _name;

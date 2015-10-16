@@ -4,6 +4,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/Gripper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/WorkcellGripper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ParallelFingerGripper.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/GripperFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQuality.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQualityImpl.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQualityFactory.cpp
