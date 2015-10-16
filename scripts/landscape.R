@@ -22,8 +22,9 @@ cov = as.numeric(unlist(data[5]))
 wre = as.numeric(unlist(data[6]))
 str = as.numeric(unlist(data[7]))
 vol = as.numeric(unlist(data[8]))
-qsum = as.numeric(unlist(data[9]))
-qlog = as.numeric(unlist(data[10]))
+cer = as.numeric(unlist(data[9]))
+qsum = as.numeric(unlist(data[10]))
+qlog = as.numeric(unlist(data[11]))
 
 # draw plot
 png(filename=plot_file, width=1024, height=768, units="px", pointsize=ptsize)
@@ -46,6 +47,8 @@ plot(str~val, type='l', col='violet', lwd=lwd, axes = FALSE, xlab = "", ylab = "
 par(new=TRUE)
 plot(vol~val, type='l', col='cyan', lwd=lwd, axes = FALSE, xlab = "", ylab = "", ylim=range(c(0, ymax)), xaxs="i", yaxs="i")
 par(new=TRUE)
+plot(cer~val, type='l', col='darkred', lwd=lwd, axes = FALSE, xlab = "", ylab = "", ylim=range(c(0, ymax)), xaxs="i", yaxs="i")
+par(new=TRUE)
 plot(qsum~val, type='l', col='black', lwd=3, axes = FALSE, xlab = "", ylab = "", ylim=range(c(0, ymax)), lty=2, xaxs="i", yaxs="i")
 par(new=TRUE)
 plot(qlog~val, type='l', col='black', lwd=3, axes = FALSE, xlab = "", ylab = "", ylim=range(c(0, ymax)), xaxs="i", yaxs="i")
@@ -53,6 +56,6 @@ par(new=F)
 
 par(fig = c(0, 1, 0, 1), oma = c(0, 0, 0, 0), mar = c(0, 0, 0, 0), new = TRUE)
 plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
-#legend("right", legend=c("success", "alignment", "coverage", "wrench", "stress", "volume", "average", "Q"), col=c("red", "darkorange", "green", "blue", "violet", "cyan", "black", "black"), lty=c(1, 1, 1, 1, 1, 1, 2, 1), lwd=lwd, xpd = TRUE, inset = c(0, 0), bty='n')
+legend("right", legend=c("success", "alignment", "coverage", "wrench", "stress", "volume", "certainty", "average", "Q"), col=c("red", "darkorange", "green", "blue", "violet", "cyan", "darkred", "black", "black"), lty=c(1, 1, 1, 1, 1, 1, 1, 2, 1), lwd=lwd, xpd = TRUE, inset = c(0, 0), bty='n')
 
 dev.off()
