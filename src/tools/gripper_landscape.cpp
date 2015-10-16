@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
 	string outDir;
 	string samplesFilename;
 	vector<int> parameters{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-	vector<double> weights{1, 1, 1, 1, 1, 1, 1};
+	vector<double> weights{1, 1, 1, 1, 1, 1, 1, 1};
 
 	/* define CLI options */
 	string usage =
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 		("ntargets,t", value<int>(&ntargets)->default_value(100), "number of tasks to generate")
 		("nrobust,r", value<int>(&nrobust)->default_value(100), "number of robustness tasks to generate")
 		("parameters,p", value<vector<int> >(&parameters)->multitoken(), "9 parameters to landscape (0-8)")
-		("weights,w", value<vector<double> >(&weights)->multitoken(), "7 weights for objectives (0-6)")
+		("weights,w", value<vector<double> >(&weights)->multitoken(), "8 weights for objectives")
 		("dwc", value<string>(&dwcFilename)->required(), "dynamic workcell file")
 		("td", value<string>(&tdFilename)->required(), "task description file")
 		("gripper,g", value<string>(&gripperFilename)->required(), "gripper file")
@@ -171,7 +171,7 @@ int main(int argc, char* argv[]) {
 		
 		string paramName = MapGripperBuilder::parameterNameToString(name);
 		ofstream dataFile(outDir + "/" + paramName + ".csv");
-		dataFile << "# " << paramName << ", success, robustness, alignment, coverage, wrench, stress, volume, qsum, qlog" << endl;
+		dataFile << "# " << paramName << ", success, robustness, alignment, coverage, wrench, stress, volume, certainty, qsum, qlog" << endl;
 		
 		GripperBuilder::Ptr builder = new MapGripperBuilder(gripper, vector<MapGripperBuilder::ParameterName>{name});
 		GripperObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager);

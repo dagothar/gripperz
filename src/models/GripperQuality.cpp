@@ -40,6 +40,7 @@ std::ostream& gripperz::models::operator<<(std::ostream& stream, const GripperQu
 		" - topwrench = " << q.topwrench << "\n" <<
 		" - stress = " << q.stress << "\n" <<
 		" - volume = " << q.volume << "\n" <<
+		" - certainty = " << q.certainty << "\n" <<
 		" - QUALITY = " << q.quality << "\n" << endl;
 
 	return stream;

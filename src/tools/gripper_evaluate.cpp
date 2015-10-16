@@ -47,7 +47,7 @@ struct Configuration {
 	
 	Configuration() :
 		//parameters({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}),
-		weights({1, 1, 1, 1, 1, 1, 1})
+		weights({1, 1, 1, 1, 1, 1, 1, 1})
 	{}
 } configuration;
 
@@ -85,7 +85,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 		("robustness,r", value<int>(&conf.robustness)->default_value(100), "number of robustness tasks to generate")
 		("parameters,p", value<vector<int> >(&conf.parameters)->multitoken(), "gripper parameter indices")
 		("values,v", value<string>(&values), "gripper parameter values in a quoted string")
-		("weights,w", value<vector<double> >(&conf.weights)->multitoken(), "7 weights for objectives (0-6)")
+		("weights,w", value<vector<double> >(&conf.weights)->multitoken(), "8 weights for objectives (0-7)")
 		("method,m", value<string>(&conf.method)->default_value("product"), "method for combining objectives (sum, product, log)")
 		("dwc", value<string>(&conf.dwc)->required(), "dynamic workcell file")
 		("td", value<string>(&conf.td)->required(), "task description file")

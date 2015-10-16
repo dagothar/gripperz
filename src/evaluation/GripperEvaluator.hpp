@@ -70,6 +70,8 @@ protected:
 	
 	//! Calculates the volume index of the gripper.
 	virtual double calculateVolume(models::Gripper::Ptr gripper);
+        
+        virtual double calculateCertainty(rwlibs::task::GraspTask::Ptr tasks, rwlibs::task::GraspTask::Ptr samples);
 
 private:
 	context::TaskDescription::Ptr _context;

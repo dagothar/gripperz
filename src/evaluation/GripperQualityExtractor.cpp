@@ -21,7 +21,7 @@ GripperQualityExtractor::~GripperQualityExtractor() {
 
 
 Vector GripperQualityExtractor::extract(GripperQuality::Ptr q) {
-	Vector result(7);
+	Vector result(8);
 	
 	result[0] = q->success;
 	result[1] = q->robustness;
@@ -30,6 +30,7 @@ Vector GripperQualityExtractor::extract(GripperQuality::Ptr q) {
 	result[4] = q->wrench;
 	result[5] = q->stress;
 	result[6] = q->volume;
+        result[7] = q->certainty;
 	
 	return result;
 }

@@ -37,6 +37,7 @@ public:
 	double stress;
 	double volume;
 	double quality;
+        double certainty;
 };
 
 std::ostream& operator<<(std::ostream& stream, const GripperQuality& q);

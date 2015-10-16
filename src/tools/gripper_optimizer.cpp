@@ -139,7 +139,7 @@ int main(int argc, char* argv[]) {
 		("ntargets,t", value<int>(&Configuration.n_targets)->default_value(100), "number of tasks to generate")
 		("nrobust,r", value<int>(&Configuration.n_robust)->default_value(100), "number of robustness tasks to generate")
 		("parameters,p", value<vector<int> >(&Configuration.parameters)->multitoken(), "12 parameters to optimize (0-11)")
-		("weights,w", value<vector<double> >(&Configuration.weights)->multitoken(), "7 weights for objectives (0-6)")
+		("weights,w", value<vector<double> >(&Configuration.weights)->multitoken(), "8 weights for objectives")
 		("dwc", value<string>(&Configuration.dwc_filename)->required(), "dynamic workcell file")
 		("td", value<string>(&Configuration.td_filename)->required(), "task description file")
 		("gripper,g", value<string>(&Configuration.gripper_filename)->required(), "gripper file")
