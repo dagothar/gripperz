@@ -30,7 +30,7 @@ qlog = as.numeric(unlist(data[11]))
 png(filename=plot_file, width=1024, height=768, units="px", pointsize=ptsize)
 
 # this is to make border for legend
-par(oma = c(0, 0, 0, 0))
+par(oma = c(0, 0, 0, 5))
 
 # actual plot
 plot(suc~val, type='l', xlab='value', ylab='q', col='red', main=title, lwd=lwd, ylim=range(c(0, ymax)), xaxs="i", yaxs="i")
