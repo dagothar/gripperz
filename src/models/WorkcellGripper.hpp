@@ -28,9 +28,32 @@ namespace gripperz {
 
             virtual ~WorkcellGripper();
 
+            /**
+             * @brief Registers the gripper with the RW context
+             * Based on the data IDs (frame name etc.) the references to RW data structures are initialized. This has to be done
+             * before the gripper is used!
+             * @note All of the deriving classes are supposed to call the super class initialize()
+             * when overriding the method! Only the base implementation sets the isInitialized() flag.
+             * @param wc
+             * @param dwc
+             * @param state
+             */
             virtual void initialize(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
 
-            virtual bool isInitialized();
+            bool isInitialized() const {
+                return _initialized;
+            }
+
+            /**
+             * @brief Applies RW context modification
+             * If necessary (e.g. a parametrized gripper), a gripper can modify the RW context. The base implementation of this method does nothing.
+             * @note Call super::applyModifications() when overriding this method!
+             * @param wc
+             * @param dwc
+             * @param state
+             */
+            virtual void applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state) {
+            }
 
             rw::kinematics::MovableFrame* getMovableFrame() const {
                 return _movableFrame;
@@ -89,6 +112,9 @@ namespace gripperz {
             }
 
         private:
+            bool _initialized;
+            bool _applied;
+
             std::string _deviceId;
             std::string _dynamicDeviceId;
             std::string _TCPFrameId;
