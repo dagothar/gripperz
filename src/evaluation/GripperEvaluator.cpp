@@ -18,7 +18,7 @@ GripperEvaluator::GripperEvaluator() {
 GripperEvaluator::~GripperEvaluator() {
 }
 
-GripperQuality::Ptr GripperEvaluator::evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+GripperQuality::Ptr GripperEvaluator::evaluate(models::Gripper::Ptr gripper, grasps::Grasps grasps) {
     GripperQuality::Ptr quality = GripperQualityFactory::makeGripperQuality();
 
     BOOST_FOREACH(KeyCalculator& keyCalculator, _calculators) {

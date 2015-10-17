@@ -1,7 +1,7 @@
 <WorkCell name="Belt Rotorcap">
 	
 	<!-- this is used for task description -->
-	<Property name="taskDescription">task.td.xml</Property>
+	<Property name="taskDescription">task1.td.xml</Property>
 
 	<!-- gripper -->
 	<Frame name="gripper" refframe="WORLD">
@@ -29,7 +29,7 @@
 	<!-- other objects (obstacles) -->
 	<Frame name="ob1" refframe="WORLD" type="Movable">
 		<RPY>0 0 0</RPY>
-		<Pos>-0.1 0 0.00001</Pos>
+		<Pos>-0.05 0 0.00001</Pos>
 		<Drawable name="ob1Geo">
 			<Polytope file="rotorcap.stl"/>
 		</Drawable>
@@ -37,7 +37,7 @@
 	
 	<Frame name="ob2" refframe="WORLD" type="Movable">
 		<RPY>0 0 0</RPY>
-		<Pos>0.1 0 0.00001</Pos>
+		<Pos>0.05 0 0.00001</Pos>
 		<Drawable name="ob2Geo">
 			<Polytope file="rotorcap.stl"/>
 		</Drawable>

@@ -21,21 +21,21 @@
 		<Mass>0.1</Mass>
 		<EstimateInertia/>
 		<Integrator>Euler</Integrator>
-		<MaterialID>Plastic</MaterialID>
+		<MaterialID>Aluminum</MaterialID>
 	</RigidBody>
 	
 	<RigidBody frame="ob1">
 		<Mass>0.1</Mass>
 		<EstimateInertia/>
 		<Integrator>Euler</Integrator>
-		<MaterialID>Plastic</MaterialID>
+		<MaterialID>Aluminum</MaterialID>
 	</RigidBody>
 	
 	<RigidBody frame="ob2">
 		<Mass>0.1</Mass>
 		<EstimateInertia/>
 		<Integrator>Euler</Integrator>
-		<MaterialID>Plastic</MaterialID>
+		<MaterialID>Aluminum</MaterialID>
 	</RigidBody>
 	
 	<FixedBody frame="table">

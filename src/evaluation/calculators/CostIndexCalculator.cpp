@@ -18,7 +18,7 @@ CostIndexCalculator::CostIndexCalculator() {
 CostIndexCalculator::~CostIndexCalculator() {
 }
 
-QualityIndexValue CostIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+QualityIndexValue CostIndexCalculator::calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps) {
 
     //TODO: implement
     

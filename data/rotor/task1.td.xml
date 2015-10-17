@@ -20,7 +20,7 @@
 	<Limits>
 		<Interference>10</Interference>
 		<Wrench>0</Wrench>
-		<Stress>25</Stress>
+		<Stress>10</Stress>
 		<Volume>100</Volume>
 	</Limits>
 

@@ -25,8 +25,9 @@ SuccessIndexCalculator::SuccessIndexCalculator() {
 SuccessIndexCalculator::~SuccessIndexCalculator() {
 }
 
-QualityIndexValue SuccessIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
-    DEBUG << "CALCULATING SUCCESS" << endl;
+QualityIndexValue SuccessIndexCalculator::calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps) {
+
+    DEBUG << "CALCULATING COVERAGE" << endl;
     
     vector<pair<class GraspSubTask*, class GraspTarget*> > allTargets = grasps->getAllTargets();
 

@@ -87,7 +87,7 @@ void OldGripper::updateGripper(
 
             // remove existing objects
             DEBUG << "- Removing objects..." << endl;
-            wc->removeObject(wc->findObject("gripper.Base").get());
+            //wc->removeObject(wc->findObject("gripper.Base").get());
             wc->removeObject(wc->findObject("gripper.LeftFinger").get());
             wc->removeObject(wc->findObject("gripper.RightFinger").get());
             DEBUG << "- Objects removed." << endl;
@@ -96,7 +96,7 @@ void OldGripper::updateGripper(
             DEBUG << "- Adding new objects..." << endl;
 
             // if base is parametrized, the box has to be moved from origin by half its height
-            Transform3D<> baseT;
+            /*Transform3D<> baseT;
             baseT = Transform3D<>(-0.5 * _basez * Vector3D<>::z());
 
             RigidObject* baseobj = new RigidObject(wc->findFrame("gripper.Base"));
@@ -107,7 +107,7 @@ void OldGripper::updateGripper(
             baseobj->addModel(basemodel);
             baseobj->addGeometry(baseGeometry);
             wc->add(baseobj);
-            dwc->findBody("gripper.Base")->setObject(baseobj);
+            dwc->findBody("gripper.Base")->setObject(baseobj);*/
 
             RigidObject* leftobj = new RigidObject(wc->findFrame("gripper.LeftFinger"));
             Model3D* leftmodel = new Model3D("LeftModel");

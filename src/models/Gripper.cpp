@@ -26,4 +26,8 @@ void Gripper::registerWithContext(WorkCell::Ptr wc, DynamicWorkCell::Ptr dwc, St
     _dynamicDevice = dwc->findDevice(_dynamicDeviceId);
     _TCPFrame = wc->findFrame(_TCPFrameId);
     _movableFrame = wc->findFrame<MovableFrame>(_movableFrameId);
+    _leftFingerObject = wc->findObject(_leftFingerId);
+    _rightFingerObject = wc->findObject(_rightFingerId);
+    _leftFingerBody = dwc->findBody(_leftFingerId);
+    _rightFingerBody = dwc->findBody(_rightFingerId);
 }

@@ -27,7 +27,7 @@ namespace gripperz {
 
                 virtual ~AlignmentIndexCalculator();
 
-                virtual models::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
+                virtual models::QualityIndexValue calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 
             private:
 

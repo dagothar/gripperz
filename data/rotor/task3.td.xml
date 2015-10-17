@@ -20,7 +20,7 @@
 	<Limits>
 		<Interference>10</Interference>
 		<Wrench>0</Wrench>
-		<Stress>25</Stress>
+		<Stress>10</Stress>
 		<Volume>100</Volume>
 	</Limits>
 
@@ -30,7 +30,7 @@
 	
 	<HintGrasps>
 		<Grasp>
-			<Pos> 0 -0.05 0.30004 </Pos>
+			<Pos> 0 -0.05 0.055 </Pos>
 			<RPY> 0 -0 1.57 </RPY>
 		</Grasp>
 	</HintGrasps>
