@@ -17,7 +17,7 @@ using namespace gripperz::context;
 using namespace gripperz::geometry;
 
 OldGripper::OldGripper(const std::string& name) :
-ParallelFingerGripper(name),
+Gripper(name),
 _length(0.1),
 _width(0.025),
 _depth(0.02),
@@ -35,9 +35,9 @@ _basey(0.1),
 _basez(0.05) {
 }
 
-void OldGripper::initialize(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state) {
+void OldGripper::registerWithContext(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state) {
 
-    ParallelFingerGripper::initialize(wc, dwc, state);
+    Gripper::registerWithContext(wc, dwc, state);
 }
 
 void OldGripper::applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state) {

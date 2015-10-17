@@ -8,7 +8,7 @@
 #include <geometry/JawPrimitive.hpp>
 #include <context/TaskDescription.hpp>
 #include "OldGripperQuality.hpp"
-#include "ParallelFingerGripper.hpp"
+#include "Gripper.hpp"
 
 namespace rw {
     namespace kinematics {
@@ -25,7 +25,7 @@ namespace gripperz {
 
     namespace models {
 
-        class OldGripper : public ParallelFingerGripper {
+        class OldGripper : public Gripper {
         public:
             /// Smart pointer.
             typedef rw::common::Ptr<OldGripper> Ptr;
@@ -36,7 +36,7 @@ namespace gripperz {
             virtual ~OldGripper() {
             }
             
-            virtual void initialize(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
+            virtual void registerWithContext(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
 
             virtual void applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
 
