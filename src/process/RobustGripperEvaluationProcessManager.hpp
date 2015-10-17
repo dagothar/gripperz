@@ -41,7 +41,6 @@ namespace gripperz {
                     const std::string& dwcPath,
                     const std::string& tdPath,
                     const std::string& samplesPath,
-                    const Configuration& config,
                     unsigned nCores = 1,
                     unsigned nTries = 5,
                     const std::string& tmpName = ".gripper",

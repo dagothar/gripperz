@@ -31,7 +31,7 @@ GripperEvaluationManagerBuilder::~GripperEvaluationManagerBuilder() {
 }
 
 StandardGripperEvaluationProcessManager::Ptr GripperEvaluationManagerBuilder::build() {
-    return ownedPtr(new StandardGripperEvaluationProcessManager(_td, _generator, _simulator, _evaluator, _config));
+    return ownedPtr(new StandardGripperEvaluationProcessManager(_td, _generator, _simulator, _evaluator));
 }
 
 GripperEvaluationManagerBuilder& GripperEvaluationManagerBuilder::generator(grasps::GraspSource::Ptr gen) {
@@ -48,12 +48,6 @@ GripperEvaluationManagerBuilder& GripperEvaluationManagerBuilder::simulator(simu
 
 GripperEvaluationManagerBuilder& GripperEvaluationManagerBuilder::evaluator(evaluation::OldGripperEvaluator::Ptr eval) {
     _evaluator = eval;
-
-    return *this;
-}
-
-GripperEvaluationManagerBuilder& GripperEvaluationManagerBuilder::configuration(const GripperEvaluationProcessManager::Configuration& config) {
-    _config = config;
 
     return *this;
 }

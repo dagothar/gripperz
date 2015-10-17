@@ -32,14 +32,12 @@ namespace gripperz {
             GripperEvaluationManagerBuilder& generator(grasps::GraspSource::Ptr gen);
             GripperEvaluationManagerBuilder& simulator(simulation::GripperSimulator::Ptr sim);
             GripperEvaluationManagerBuilder& evaluator(evaluation::OldGripperEvaluator::Ptr eval);
-            GripperEvaluationManagerBuilder& configuration(const GripperEvaluationProcessManager::Configuration& config);
 
         private:
             context::TaskDescription::Ptr _td;
             grasps::GraspSource::Ptr _generator;
             simulation::GripperSimulator::Ptr _simulator;
             evaluation::OldGripperEvaluator::Ptr _evaluator;
-            GripperEvaluationProcessManager::Configuration _config;
             std::vector<grasps::SurfaceSample> _ssamples;
         };
 

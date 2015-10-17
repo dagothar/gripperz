@@ -153,14 +153,10 @@ int main(int argc, char* argv[]) {
 	INFO << "Loaded." << endl;
 	
 	/* construct objective function */
-	GripperEvaluationProcessManager::Configuration config;
-	config.nOfGraspsPerEvaluation = ntargets;
-	config.nOfRobustnessTargets = nrobust;
 	GripperEvaluationProcessManager::Ptr manager = new RobustGripperEvaluationProcessManager(
 		dwcFilename,
 		tdFilename,
 		samplesFilename,
-		config,
 		cores
 	);
 	

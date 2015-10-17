@@ -21,7 +21,7 @@ namespace gripperz {
         public:
             static StandardGripperEvaluationProcessManager::Ptr makeStandardEvaluationManager(
                     context::TaskDescription::Ptr td,
-                    const GripperEvaluationProcessManager::Configuration& config,
+                    unsigned nOfGraspsPerEvaluation,
                     unsigned nThreads = 1,
                     const std::vector<grasps::SurfaceSample>& ssamples = std::vector<grasps::SurfaceSample>()
                     );
