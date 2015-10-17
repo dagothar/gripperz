@@ -12,6 +12,7 @@
 #include <rw/kinematics/State.hpp>
 #include <rw/kinematics/MovableFrame.hpp>
 #include <rwsim/dynamics/DynamicWorkCell.hpp>
+#include <rwsim/dynamics/RigidDevice.hpp>
 #include "GripperQuality.hpp"
 
 namespace gripperz {
@@ -74,11 +75,11 @@ namespace gripperz {
                 return _movableFrame;
             }
 
-            rw::kinematics::Frame* getTCPFrame() const {
+            rw::kinematics::MovableFrame* getTCPFrame() const {
                 return _TCPFrame;
             }
 
-            rwsim::dynamics::DynamicDevice::Ptr getDynamicDevice() const {
+            rwsim::dynamics::RigidDevice::Ptr getDynamicDevice() const {
                 return _dynamicDevice;
             }
 
@@ -170,8 +171,8 @@ namespace gripperz {
             GripperQuality::Ptr _quality;
 
             rw::models::Device::Ptr _device;
-            rwsim::dynamics::DynamicDevice::Ptr _dynamicDevice;
-            rw::kinematics::Frame* _TCPFrame;
+            rwsim::dynamics::RigidDevice::Ptr _dynamicDevice;
+            rw::kinematics::MovableFrame* _TCPFrame;
             rw::kinematics::MovableFrame* _movableFrame;
             rw::models::Object::Ptr _leftFingerObject;
             rw::models::Object::Ptr _rightFingerObject;

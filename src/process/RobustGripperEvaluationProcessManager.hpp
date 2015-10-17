@@ -50,7 +50,7 @@ namespace gripperz {
 
             virtual ~RobustGripperEvaluationProcessManager();
 
-            virtual models::GripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper);
+            virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper);
 
             const std::string& getDwcPath() const {
                 return _dwcPath;

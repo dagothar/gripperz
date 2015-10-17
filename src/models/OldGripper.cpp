@@ -36,12 +36,11 @@ _basez(0.05) {
 }
 
 void OldGripper::registerWithContext(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state) {
-
     Gripper::registerWithContext(wc, dwc, state);
 }
 
 void OldGripper::applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state) {
-
+    updateGripper(wc, dwc, getDevice(), getDynamicDevice(), state, getTCPFrame());
 }
 
 rw::geometry::Geometry::Ptr OldGripper::getFingerGeometry() const {
@@ -75,7 +74,7 @@ rw::geometry::Geometry::Ptr OldGripper::getBaseGeometry() const {
 void OldGripper::updateGripper(
         rw::models::WorkCell::Ptr wc,
         rwsim::dynamics::DynamicWorkCell::Ptr dwc,
-        rw::models::TreeDevice::Ptr dev,
+        rw::models::Device::Ptr dev,
         rwsim::dynamics::RigidDevice::Ptr ddev,
         rw::kinematics::State& state,
         MovableFrame::Ptr tcpFrame

@@ -41,7 +41,7 @@ _evaluator(evaluator) {
 StandardGripperEvaluationProcessManager::~StandardGripperEvaluationProcessManager() {
 }
 
-GripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
+GripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(Gripper::Ptr gripper) {
     Configuration config = getConfiguration();
 
     /*
@@ -54,7 +54,8 @@ GripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(Old
     }*/
 
     State state = _context->getInitState();
-    applyGripperParametrization(gripper, state);
+
+    gripper->applyModifications(_context->getWorkCell(), _context->getDynamicWorkCell(), state);
 
     /*
      * Generate grasps.
@@ -116,17 +117,4 @@ GripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(Old
     }
 
     return quality;
-}
-
-void StandardGripperEvaluationProcessManager::applyGripperParametrization(models::OldGripper::Ptr gripper, rw::kinematics::State& state) {
-    gripper->updateGripper(
-            _context->getWorkCell(),
-            _context->getDynamicWorkCell(),
-            _context->getGripperDevice(),
-            _context->getGripperDynamicDevice(),
-            state,
-            _context->getGripperTCP()
-            );
-
-    DEBUG << "Updated gripper" << endl;
 }

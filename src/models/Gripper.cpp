@@ -23,8 +23,8 @@ Gripper::~Gripper() {
 
 void Gripper::registerWithContext(WorkCell::Ptr wc, DynamicWorkCell::Ptr dwc, State& state) {
     _device = wc->findDevice(_deviceId);
-    _dynamicDevice = dwc->findDevice(_dynamicDeviceId);
-    _TCPFrame = wc->findFrame(_TCPFrameId);
+    _dynamicDevice = dwc->findDevice<RigidDevice>(_dynamicDeviceId);
+    _TCPFrame = wc->findFrame<MovableFrame>(_TCPFrameId);
     _movableFrame = wc->findFrame<MovableFrame>(_movableFrameId);
     _leftFingerObject = wc->findObject(_leftFingerId);
     _rightFingerObject = wc->findObject(_rightFingerId);
