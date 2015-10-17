@@ -32,13 +32,11 @@ RobustGripperEvaluationProcessManager::RobustGripperEvaluationProcessManager(
         const std::string& dwcPath,
         const std::string& tdPath,
         const std::string& samplesPath,
-        const Configuration& config,
         unsigned nCores,
         unsigned nTries,
         const string& tmpName,
         const string& executable
         ) :
-GripperEvaluationProcessManager(config),
 _executable(executable),
 _cores(nCores),
 _dwcPath(dwcPath),
@@ -56,8 +54,6 @@ GripperQuality::Ptr RobustGripperEvaluationProcessManager::evaluateGripper(Gripp
     if (!gripper) {
         RW_THROW ("Gripper class not supported");
     }
-    
-    Configuration config = getConfiguration();
 
     /*
      * extract parameters
@@ -73,8 +69,8 @@ GripperQuality::Ptr RobustGripperEvaluationProcessManager::evaluateGripper(Gripp
     stringstream sstr;
     sstr << _executable;
     sstr << " -c " << _cores;
-    sstr << " -g " << config.nOfGraspsPerEvaluation;
-    sstr << " -r " << config.nOfRobustnessTargets;
+    sstr << " -g " << 100; //TODO: add as the class property
+    sstr << " -r " << 0;
     sstr << " -p 0 1 2 3 4 5 6 7 8 9 10 11 ";
     sstr << " -v \"" << parameterString << "\"";
     sstr << " --dwc " << _dwcPath;

@@ -28,10 +28,8 @@ StandardGripperEvaluationProcessManager::StandardGripperEvaluationProcessManager
         context::TaskDescription::Ptr context,
         grasps::GraspSource::Ptr graspSource,
         simulation::GripperSimulator::Ptr simulator,
-        evaluation::OldGripperEvaluator::Ptr evaluator,
-        const Configuration& configuration
+        evaluation::OldGripperEvaluator::Ptr evaluator
         ) :
-GripperEvaluationProcessManager(configuration),
 _context(context),
 _graspSource(graspSource),
 _simulator(simulator),
@@ -52,7 +50,7 @@ GripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(Gri
 }
 
 void StandardGripperEvaluationProcessManager::registerGripper(models::Gripper::Ptr gripper) {
-    
+
     gripper->registerWithContext(_context->getWorkCell(), _context->getDynamicWorkCell(), _context->getInitState());
     gripper->applyModifications(_context->getWorkCell(), _context->getDynamicWorkCell(), _context->getInitState());
 }
@@ -89,7 +87,7 @@ Grasps StandardGripperEvaluationProcessManager::simulateGrasps(Grasps grasps) {
 
 GripperQuality::Ptr StandardGripperEvaluationProcessManager::doEvaluation(Gripper::Ptr gripper, Grasps grasps) {
     DEBUG << " --- EVALUATING GRIPPER & GRASPS ---" << endl;
-    
+
     GripperQuality::Ptr quality = NULL;
     try {
         quality = _evaluator->evaluate(gripper, grasps);
@@ -97,6 +95,6 @@ GripperQuality::Ptr StandardGripperEvaluationProcessManager::doEvaluation(Grippe
     } catch (const std::exception& e) {
         RW_THROW("Exception during gripper evaluation! " << e.what());
     }
-    
+
     return quality;
 }

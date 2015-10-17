@@ -191,12 +191,7 @@ int main(int argc, char* argv[]) {
 
 
     /* construct evaluation manager */
-    GripperEvaluationProcessManager::Configuration config;
-    config.nOfGraspsPerEvaluation = Configuration.n_targets;
-    config.nOfRobustnessTargets = Configuration.n_robust;
-    config.sigma_a = Configuration.sigma_a;
-    config.sigma_p = Configuration.sigma_p;
-    GripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, Configuration.cores, ssamples);
+    GripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, Configuration.n_targets, Configuration.cores, ssamples);
 
 
     /* construct objective function */

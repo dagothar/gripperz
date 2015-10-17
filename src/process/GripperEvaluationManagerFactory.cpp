@@ -20,21 +20,19 @@ using namespace rw::common;
 
 StandardGripperEvaluationProcessManager::Ptr GripperEvaluationManagerFactory::makeStandardEvaluationManager(
         context::TaskDescription::Ptr td,
-        const GripperEvaluationProcessManager::Configuration& config,
+        unsigned nOfGraspsPerEvaluation,
         unsigned nThreads,
         const std::vector<grasps::SurfaceSample>& ssamples
         ) {
     GripperEvaluationManagerBuilder builder(td, nThreads, ssamples);
 
-    BasicParallelGripperGraspPlanner::Ptr graspSource =
-            ownedPtr(new BasicParallelGripperGraspPlanner(config.nOfGraspsPerEvaluation, td->getInitState(), td));
+    BasicParallelGripperGraspPlanner::Ptr graspSource = ownedPtr(new BasicParallelGripperGraspPlanner(nOfGraspsPerEvaluation, td->getInitState(), td));
     graspSource->setSurfaceSamples(ssamples);
 
     StandardGripperEvaluationProcessManager::Ptr manager = builder
             .generator(graspSource)
             .simulator(ownedPtr(new InterferenceSimulator(td->getDynamicWorkCell(), td->getInterferenceLimit(), td->getInterferenceObjects(), nThreads)))
             .evaluator(ownedPtr(new OldGripperEvaluator(td, td->getAlignmentCalculator())))
-            .configuration(config)
             .build();
 
     return manager;

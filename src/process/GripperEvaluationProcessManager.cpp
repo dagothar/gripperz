@@ -9,8 +9,7 @@
 
 using namespace gripperz::process;
 
-GripperEvaluationProcessManager::GripperEvaluationProcessManager(const Configuration& configuration) :
-_config(configuration) {
+GripperEvaluationProcessManager::GripperEvaluationProcessManager() {
 }
 
 GripperEvaluationProcessManager::~GripperEvaluationProcessManager() {

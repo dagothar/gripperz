@@ -183,10 +183,7 @@ int main(int argc, char* argv[]) {
     }
 
     /* construct objective function */
-    GripperEvaluationProcessManager::Configuration config;
-    config.nOfGraspsPerEvaluation = ntargets;
-    config.nOfRobustnessTargets = nrobust;
-    StandardGripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, cores, ssamples);
+    StandardGripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, ntargets, cores, ssamples);
     OldGripperEvaluator::Ptr evaluator = new ConstrainedGripperEvaluator(td, td->getAlignmentCalculator());
     manager->setEvaluator(evaluator);
 

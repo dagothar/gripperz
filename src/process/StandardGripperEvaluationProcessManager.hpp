@@ -28,8 +28,7 @@ namespace gripperz {
                     context::TaskDescription::Ptr context,
                     grasps::GraspSource::Ptr graspSource,
                     simulation::GripperSimulator::Ptr simulator,
-                    evaluation::OldGripperEvaluator::Ptr evaluator,
-                    const Configuration& configuration
+                    evaluation::OldGripperEvaluator::Ptr evaluator
                     );
 
             virtual ~StandardGripperEvaluationProcessManager();

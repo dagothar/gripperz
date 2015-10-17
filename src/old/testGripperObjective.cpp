@@ -86,8 +86,7 @@ int main(int argc, char* argv[]) {
     };
     GripperBuilder::Ptr builder = new MapGripperBuilder(new OldGripper, params);
 
-    GripperEvaluationProcessManager::Configuration config;
-    GripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, config, 4, vector<SurfaceSample>());
+    GripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(td, 100, 4, vector<SurfaceSample>());
     vector<string> indices{"success", "robustness", "alignment", "coverage", "wrench", "stress", "volume"};
     GripperQualityExtractor::Ptr extractor = new IndexGripperQualityExtractor(indices);
     MultiObjectiveFunction::Ptr func = new GripperObjectiveFunction(builder, manager, extractor);

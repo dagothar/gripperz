@@ -84,12 +84,10 @@ int main(int argc, char* argv[]) {
     };
     GripperBuilder::Ptr builder = new MapGripperBuilder(new OldGripper, params);
 
-    GripperEvaluationProcessManager::Configuration config;
     GripperEvaluationProcessManager::Ptr manager = new RobustGripperEvaluationProcessManager(
             "../data/rotor/Scene.dwc.xml",
             "../data/rotor/task1.td.xml",
             "../data/rotor/samples1.xml",
-            config,
             4 // cores
             );
     vector<string> indices{"success", "robustness", "alignment", "coverage", "wrench", "stress", "volume"};
