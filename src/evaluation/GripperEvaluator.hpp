@@ -29,7 +29,7 @@ namespace gripperz {
 
             virtual ~GripperEvaluator();
 
-            virtual models::GripperQuality::Ptr evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
+            virtual models::GripperQuality::Ptr evaluate(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 
             void addQualityIndexCalculator(const models::QualityIndexKey& indexName, QualityIndexCalculator::Ptr calculator);
             

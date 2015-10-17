@@ -43,7 +43,12 @@ bool OldGripperEvaluator::isSane(models::OldGripper::Ptr gripper) {
     return true;
 }
 
-GripperQuality::Ptr OldGripperEvaluator::evaluate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+GripperQuality::Ptr OldGripperEvaluator::evaluate(models::Gripper::Ptr _gripper, grasps::Grasps grasps) {
+    
+    OldGripper::Ptr gripper = _gripper.cast<OldGripper>();
+    if (!gripper) {
+        RW_THROW("Gripper class not supported!");
+    }
 
     GripperQuality::Ptr quality = GripperQualityFactory::makeGripperQuality();
 

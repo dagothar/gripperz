@@ -8,7 +8,7 @@
 #pragma once
 
 #include <rw/common/Ptr.hpp>
-#include <models/OldGripper.hpp>
+#include <models/Gripper.hpp>
 #include <grasps/Types.hpp>
 
 namespace gripperz {
@@ -28,7 +28,7 @@ namespace gripperz {
 
             virtual ~QualityIndexCalculator();
 
-            virtual models::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) = 0;
+            virtual models::QualityIndexValue calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps) = 0;
 
         private:
 

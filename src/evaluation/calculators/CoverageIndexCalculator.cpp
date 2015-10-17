@@ -33,8 +33,9 @@ _angleFilteringRadius(angleFilteringRadius) {
 CoverageIndexCalculator::~CoverageIndexCalculator() {
 }
 
-QualityIndexValue CoverageIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
+QualityIndexValue CoverageIndexCalculator::calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps) {
     DEBUG << "CALCULATING COVERAGE" << endl;
+    
     double coverage = 0.0;
 
     /* split targets & samples*/

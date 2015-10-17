@@ -32,7 +32,25 @@ using namespace gripperz::util;
 using namespace gripperz::loaders;
 using namespace gripperz::models;
 
-void readParameters(PTree& tree, OldGripper::Ptr gripper, const std::string& path) {
+void readData(PTree& tree, OldGripper::Ptr gripper) {
+    string deviceId = tree.get_child("deviceId").get_value<string>();
+    string dynamicDeviceId = tree.get_child("dynamicDeviceId").get_value<string>();
+    string tcpFrameId = tree.get_child("tcpFrameId").get_value<string>();
+    string movableFrameId = tree.get_child("movableFrameId").get_value<string>();
+    string graspControllerId = tree.get_child("graspControllerId").get_value<string>();
+    string leftFingerId = tree.get_child("leftFingerId").get_value<string>();
+    string rightFingerId = tree.get_child("rightFingerId").get_value<string>();
+    
+    gripper->setDeviceId(deviceId);
+    gripper->setDynamicDeviceId(dynamicDeviceId);
+    gripper->setTCPFrameId(tcpFrameId);
+    gripper->setMovableFrameId(movableFrameId);
+    gripper->setGraspControllerId(graspControllerId);
+    gripper->setLeftFingerId(leftFingerId);
+    gripper->setRightFingerId(rightFingerId);
+}
+
+void readParameters(PTree& tree, OldGripper::Ptr gripper) {
     double length = XMLHelpers::readDouble(tree.get_child("length"));
     double width = XMLHelpers::readDouble(tree.get_child("width"));
     double depth = XMLHelpers::readDouble(tree.get_child("depth"));
@@ -66,7 +84,7 @@ void readParameters(PTree& tree, OldGripper::Ptr gripper, const std::string& pat
     gripper->setBaseZ(basez);
 }
 
-void readResult(PTree& tree, OldGripper::Ptr gripper, const std::string& path) {
+void readResult(PTree& tree, OldGripper::Ptr gripper) {
 
     GripperQuality::Ptr quality = GripperQualityFactory::makeGripperQuality();
 
@@ -78,7 +96,7 @@ void readResult(PTree& tree, OldGripper::Ptr gripper, const std::string& path) {
     quality->setIndex("wrench", XMLHelpers::readDouble(tree.get_child("wrench")));
     quality->setIndex("stress", XMLHelpers::readDouble(tree.get_child("stress")));
     quality->setIndex("volume", XMLHelpers::readDouble(tree.get_child("volume")));
-    quality->setIndex("quality", XMLHelpers::readDouble(tree.get_child("quality")));
+    quality->setIndex("quality", XMLHelpers::readDouble(tree.get_child("objective")));
 
     gripper->setQuality(quality);
 
@@ -86,11 +104,12 @@ void readResult(PTree& tree, OldGripper::Ptr gripper, const std::string& path) {
     //DEBUG << result; // << endl;
 }
 
-OldGripper::Ptr readGripper(PTree& tree, const std::string& path) {
+OldGripper::Ptr readGripper(PTree& tree) {
     OldGripper::Ptr gripper = ownedPtr(new OldGripper);
 
-    readParameters(tree.get_child("parameters"), gripper, path);
-    readResult(tree.get_child("qualities"), gripper, path);
+    readData(tree.get_child("data"), gripper);
+    readParameters(tree.get_child("parameters"), gripper);
+    readResult(tree.get_child("quality"), gripper);
 
     return gripper;
 }
@@ -106,7 +125,7 @@ OldGripper::Ptr GripperXMLLoader::load(const std::string& filename) {
         PTree tree;
         read_xml(filename, tree);
 
-        gripper = readGripper(tree.get_child("gripper"), gripperPath);
+        gripper = readGripper(tree.get_child("gripper"));
         string name = tree.get_child("gripper").get_child("<xmlattr>.name").get_value<string>();
 
         gripper->setName(name);
@@ -123,6 +142,15 @@ void GripperXMLLoader::save(OldGripper::Ptr gripper, const std::string& filename
 
     /* save name */
     tree.put("gripper.<xmlattr>.name", gripper->getName());
+    
+    /* save data */
+    tree.put("gripper.data.deviceId", gripper->getDeviceId());
+    tree.put("gripper.data.dynamicDeviceId", gripper->getDynamicDeviceId());
+    tree.put("gripper.data.tcpFrameId", gripper->getTCPFrameId());
+    tree.put("gripper.data.movableFrameId", gripper->getMovableFrameId());
+    tree.put("gripper.data.graspControllerId", gripper->getGraspControllerId());
+    tree.put("gripper.data.leftFingerId", gripper->getLeftFingerId());
+    tree.put("gripper.data.rightFingerId", gripper->getRightFingerId());
 
     /* save parameters */
     tree.put("gripper.parameters.length", gripper->getLength());
@@ -145,14 +173,14 @@ void GripperXMLLoader::save(OldGripper::Ptr gripper, const std::string& filename
     GripperQuality::Ptr quality = gripper->getQuality();
 
     // TODO: iterate
-    tree.put("gripper.qualities.success", quality->getIndex("success"));
-    tree.put("gripper.qualities.robustness", quality->getIndex("robustness"));
-    tree.put("gripper.qualities.alignment", quality->getIndex("alignment"));
-    tree.put("gripper.qualities.coverage", quality->getIndex("coverage"));
-    tree.put("gripper.qualities.wrench", quality->getIndex("wrench"));
-    tree.put("gripper.qualities.stress", quality->getIndex("stress"));
-    tree.put("gripper.qualities.volume", quality->getIndex("volume"));
-    tree.put("gripper.qualities.quality", quality->getIndex("quality"));
+    tree.put("gripper.quality.success", quality->getIndex("success"));
+    tree.put("gripper.quality.robustness", quality->getIndex("robustness"));
+    tree.put("gripper.quality.alignment", quality->getIndex("alignment"));
+    tree.put("gripper.quality.coverage", quality->getIndex("coverage"));
+    tree.put("gripper.quality.wrench", quality->getIndex("wrench"));
+    tree.put("gripper.quality.stress", quality->getIndex("stress"));
+    tree.put("gripper.quality.volume", quality->getIndex("volume"));
+    tree.put("gripper.quality.objective", quality->getIndex("quality"));
 
     try {
         boost::property_tree::xml_writer_settings<char> settings('\t', 1);

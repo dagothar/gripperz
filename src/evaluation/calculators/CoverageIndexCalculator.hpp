@@ -27,7 +27,7 @@ namespace gripperz {
 
                 virtual ~CoverageIndexCalculator();
 
-                virtual models::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
+                virtual models::QualityIndexValue calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 
                 void setAngleFilteringRadius(double _angleFilteringRadius) {
                     this->_angleFilteringRadius = _angleFilteringRadius;
