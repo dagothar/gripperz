@@ -35,7 +35,7 @@ namespace gripperz {
 
             virtual ~OldGripper() {
             }
-            
+
             virtual void registerWithContext(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
 
             virtual void applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
@@ -160,20 +160,10 @@ namespace gripperz {
                 _basez = z;
             }
 
-            /**
-             * @brief Creates finger geometry
-             */
-            rw::geometry::Geometry::Ptr getFingerGeometry() const;
-
-            /**
-             * @brief Creates base geometry.
-             */
-            rw::geometry::Geometry::Ptr getBaseGeometry() const;
-
             void updateGripper(
                     rw::models::WorkCell::Ptr wc,
                     rwsim::dynamics::DynamicWorkCell::Ptr dwc,
-                    rw::models::TreeDevice::Ptr dev,
+                    rw::models::Device::Ptr dev,
                     rwsim::dynamics::RigidDevice::Ptr ddev,
                     rw::kinematics::State& state,
                     rw::kinematics::MovableFrame::Ptr tcpFrame
@@ -211,18 +201,15 @@ namespace gripperz {
              */
             double getVolume() const;
 
-            virtual double getCost() {
-                return getVolume();
-            }
-
-            virtual double getFeasibility() {
-                return getMaxStress();
-            }
-
             // friends
             friend class loaders::GripperXMLLoader;
 
             friend std::ostream& operator<<(std::ostream& stream, const OldGripper& g);
+
+        protected:
+            rw::geometry::Geometry::Ptr getFingerGeometry() const;
+
+            rw::geometry::Geometry::Ptr getBaseGeometry() const;
 
         private:
             /* parameters */

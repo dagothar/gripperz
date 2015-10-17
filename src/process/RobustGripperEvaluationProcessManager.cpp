@@ -51,7 +51,12 @@ _ntries(nTries) {
 RobustGripperEvaluationProcessManager::~RobustGripperEvaluationProcessManager() {
 }
 
-GripperQuality::Ptr RobustGripperEvaluationProcessManager::evaluateGripper(OldGripper::Ptr gripper) {
+GripperQuality::Ptr RobustGripperEvaluationProcessManager::evaluateGripper(Gripper::Ptr _gripper) {
+    OldGripper::Ptr gripper = _gripper.cast<OldGripper>();
+    if (!gripper) {
+        RW_THROW ("Gripper class not supported");
+    }
+    
     Configuration config = getConfiguration();
 
     /*

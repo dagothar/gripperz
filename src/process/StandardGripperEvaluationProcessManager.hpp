@@ -7,6 +7,9 @@
 #pragma once
 
 #include "GripperEvaluationProcessManager.hpp"
+#include <grasps/GraspSource.hpp>
+#include <simulation/GripperSimulator.hpp>
+#include <evaluation/OldGripperEvaluator.hpp>
 
 namespace gripperz {
     namespace process {
@@ -59,10 +62,7 @@ namespace gripperz {
                 _evaluator = evaluator;
             }
 
-            virtual models::GripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper);
-
-        protected:
-            virtual void applyGripperParametrization(models::OldGripper::Ptr gripper, rw::kinematics::State& state);
+            virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper);
 
         private:
             context::TaskDescription::Ptr _context;

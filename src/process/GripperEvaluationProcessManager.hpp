@@ -6,12 +6,7 @@
 
 #pragma once
 
-#include <rw/common/Ptr.hpp>
-#include <context/TaskDescription.hpp>
-#include <grasps/GraspSource.hpp>
-#include <simulation/GripperSimulator.hpp>
-#include <evaluation/OldGripperEvaluator.hpp>
-#include <models/OldGripper.hpp>
+#include <models/Gripper.hpp>
 
 namespace gripperz {
     namespace process {
@@ -54,7 +49,7 @@ namespace gripperz {
                 _config = config;
             }
 
-            virtual models::GripperQuality::Ptr evaluateGripper(models::OldGripper::Ptr gripper) = 0;
+            virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper) = 0;
 
         private:
             Configuration _config;

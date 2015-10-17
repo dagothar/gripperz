@@ -189,6 +189,7 @@ void load_data(const Configuration& config, Data& data) {
     if (!config.gripper.empty()) {
         INFO << "* Loading gripper... ";
         data.gripper = GripperXMLLoader::load(config.gripper);
+        data.gripper->registerWithContext(data.dwc->getWorkcell(), data.dwc, data.td->getInitState());
         INFO << "Loaded." << endl;
     } else {
         data.gripper = ownedPtr(new OldGripper());
