@@ -21,11 +21,3 @@ _initialized(false) {
 WorkcellGripper::~WorkcellGripper() {
 }
 
-void WorkcellGripper::initialize(WorkCell::Ptr wc, DynamicWorkCell::Ptr dwc, State& state) {
-    _device = wc->findDevice(_deviceId);
-    _dynamicDevice = dwc->findDevice(_dynamicDeviceId);
-    _TCPFrame = wc->findFrame(_TCPFrameId);
-    _movableFrame = wc->findFrame<MovableFrame>(_movableFrameId);
-
-    _initialized = true;
-}
