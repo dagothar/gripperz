@@ -42,40 +42,41 @@ StandardGripperEvaluationProcessManager::~StandardGripperEvaluationProcessManage
 }
 
 GripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(Gripper::Ptr gripper) {
-    Configuration config = getConfiguration();
 
-    /*
-     * First, check if gripper design is sane.
-     */
-    /*if (!_evaluator->isSane(gripper)) {
-        RW_WARN("Gripper design is NOT sane!");
+    registerGripper(gripper);
+    Grasps grasps = generateGrasps();
+    Grasps simulatedGrasps = simulateGrasps(grasps);
+    GripperQuality::Ptr quality = doEvaluation(gripper, simulatedGrasps);
 
-        return ownedPtr(new OldGripperQuality);
-    }*/
+    return quality;
+}
 
-    State state = _context->getInitState();
+void StandardGripperEvaluationProcessManager::registerGripper(models::Gripper::Ptr gripper) {
+    
+    gripper->registerWithContext(_context->getWorkCell(), _context->getDynamicWorkCell(), _context->getInitState());
+    gripper->applyModifications(_context->getWorkCell(), _context->getDynamicWorkCell(), _context->getInitState());
+}
 
-    gripper->applyModifications(_context->getWorkCell(), _context->getDynamicWorkCell(), state);
+Grasps StandardGripperEvaluationProcessManager::generateGrasps() {
+    DEBUG << " --- GENERATING GRASPS ---" << endl;
 
-    /*
-     * Generate grasps.
-     */
-    GraspTask::Ptr targets = NULL;
+    Grasps grasps = NULL;
     try {
-        targets = _graspSource->getGrasps();
+        grasps = _graspSource->getGrasps();
 
     } catch (const std::exception& e) {
         RW_WARN("Exception during grasp generation! " << e.what());
     }
 
-    /*
-     * Simulate grasping.
-     */
-    DEBUG << " --- SIMULATING TASKS ---" << endl;
-    try {
-        _simulator->loadTasks(targets);
+    return grasps;
+}
 
-        _simulator->start(state);
+Grasps StandardGripperEvaluationProcessManager::simulateGrasps(Grasps grasps) {
+    DEBUG << " --- SIMULATING GRASPS ---" << endl;
+
+    try {
+        _simulator->loadTasks(grasps);
+        _simulator->start(_context->getInitState());
 
         while (_simulator->isRunning()) {
         }
@@ -83,38 +84,19 @@ GripperQuality::Ptr StandardGripperEvaluationProcessManager::evaluateGripper(Gri
         RW_THROW("Exception during grasp simulation! " << e.what());
     }
 
-    /*
-     * Simulate grasps with noise for robustness.
-     */
-    GraspTask::Ptr rtargets = NULL;
-    if (config.nOfRobustnessTargets != 0) {
-        DEBUG << " --- SIMULATING ROBUSTNESS ---" << endl;
-        try {
-            GraspFilter::Ptr robustnessFilter = new RobustnessGraspFilter(config.nOfRobustnessTargets, config.sigma_p, config.sigma_a * Deg2Rad);
-            rtargets = copyGrasps(targets, true);
-            rtargets = robustnessFilter->filter(rtargets);
+    return _simulator->getTasks();
+}
 
-            _simulator->loadTasks(rtargets);
-
-            _simulator->start(state);
-
-            while (_simulator->isRunning()) {
-            }
-        } catch (const std::exception& e) {
-            RW_THROW("Exception during grasp simulation for robustness: " << e.what());
-        }
-    }
-
-    /*
-     * Evaluate gripper.
-     */
-    GripperQuality::Ptr quality;
+GripperQuality::Ptr StandardGripperEvaluationProcessManager::doEvaluation(Gripper::Ptr gripper, Grasps grasps) {
+    DEBUG << " --- EVALUATING GRIPPER & GRASPS ---" << endl;
+    
+    GripperQuality::Ptr quality = NULL;
     try {
-        quality = _evaluator->evaluate(gripper, targets);
+        quality = _evaluator->evaluate(gripper, grasps);
 
     } catch (const std::exception& e) {
         RW_THROW("Exception during gripper evaluation! " << e.what());
     }
-
+    
     return quality;
 }

@@ -64,6 +64,15 @@ namespace gripperz {
 
             virtual models::GripperQuality::Ptr evaluateGripper(models::Gripper::Ptr gripper);
 
+        protected:
+            virtual void registerGripper(models::Gripper::Ptr gripper);
+
+            virtual grasps::Grasps generateGrasps();
+
+            virtual grasps::Grasps simulateGrasps(grasps::Grasps grasps);
+
+            virtual models::GripperQuality::Ptr doEvaluation(models::Gripper::Ptr gripper, grasps::Grasps grasps);
+
         private:
             context::TaskDescription::Ptr _context;
             grasps::GraspSource::Ptr _graspSource;
