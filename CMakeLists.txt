@@ -7,7 +7,7 @@ OPTION(BUILD_TESTS "Build tests" ON)
 OPTION(BUILD_TOOLS "Build tools" ON)
 OPTION(BUILD_SANDBOX "Build sandbox" ON)
 OPTION(BUILD_PLUGIN "Build plugin" ON)
-OPTION(BUILD_PLUGIN "Build old code" OFF)
+OPTION(BUILD_OLD "Build old code" OFF)
 OPTION(BUILD_DOCS "Build documentation" OFF)
 
 # Used to resolve absolute path names

@@ -11,6 +11,6 @@
 using namespace gripperz::geometry;
 using namespace rw::common;
 
-Beam::Ptr BeamFactory::makeBeam(rw::geometry::Geometry::Ptr geometry) {
-    return ownedPtr(new EulerBeam(geometry));
+Beam::Ptr BeamFactory::makeBeam(rw::geometry::TriMesh::Ptr mesh) {
+    return ownedPtr(new EulerBeam(mesh));
 }

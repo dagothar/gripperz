@@ -11,8 +11,8 @@ using namespace rw::geometry;
 using namespace gripperz::geometry;
 
 BOOST_AUTO_TEST_CASE(LoadTest) {
-    Geometry::Ptr geometry = NULL;
-    Beam::Ptr beam = BeamFactory::makeBeam(geometry);
+    TriMesh::Ptr mesh = NULL;
+    Beam::Ptr beam = BeamFactory::makeBeam(mesh);
 
     BOOST_CHECK(beam->moment(0) == 0.0);
     BOOST_CHECK(beam->moment(1) == 0.0);

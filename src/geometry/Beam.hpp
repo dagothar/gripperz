@@ -9,7 +9,7 @@
 
 #include <vector>
 #include <rw/common/Ptr.hpp>
-#include <rw/geometry/Geometry.hpp>
+#include <rw/geometry/TriMesh.hpp>
 
 namespace gripperz {
     namespace geometry {
@@ -30,7 +30,7 @@ namespace gripperz {
             typedef struct { double magnitude, position; } Moment;
 
         public:
-            Beam(rw::geometry::Geometry::Ptr geometry);
+            Beam(rw::geometry::TriMesh::Ptr mesh);
 
             virtual ~Beam();
             
@@ -80,16 +80,16 @@ namespace gripperz {
                 _forces.push_back({magnitude, position});
             }
             
-            void setBeamGeometry(rw::geometry::Geometry::Ptr _beamGeometry) {
-                this->_beamGeometry = _beamGeometry;
+            void setBeamMesh(rw::geometry::TriMesh::Ptr _beamMesh) {
+                this->_beamMesh = _beamMesh;
             }
 
-            rw::geometry::Geometry::Ptr getBeamGeometry() const {
-                return _beamGeometry;
+            rw::geometry::TriMesh::Ptr getBeamMesh() const {
+                return _beamMesh;
             }
             
         private:
-            rw::geometry::Geometry::Ptr _beamGeometry;
+            rw::geometry::TriMesh::Ptr _beamMesh;
             std::vector<Force> _forces;
             std::vector<Moment> _moments;
         };

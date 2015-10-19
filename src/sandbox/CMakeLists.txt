@@ -1,6 +1,13 @@
 if (BUILD_SANDBOX)
-	# Target: trying_opt
-	#add_executable(trying_opt trying_opt.cpp)
-	#add_dependencies(trying_opt gripperz)
-	#target_link_libraries(trying_opt gripperz)
-endif ()
+
+#Target: try_contour
+add_executable(try_contour try_contour.cpp)
+add_dependencies(try_contour gripperz)
+target_link_libraries(try_contour gripperz)
+        
+#Target: try_slice
+add_executable(try_slice try_slice.cpp)
+add_dependencies(try_slice gripperz)
+target_link_libraries(try_slice gripperz)
+    
+endif()
