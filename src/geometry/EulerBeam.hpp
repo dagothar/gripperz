@@ -22,7 +22,7 @@ namespace gripperz {
             typedef rw::common::Ptr<EulerBeam> Ptr;
 
         public:
-            EulerBeam(rw::geometry::Geometry::Ptr geometry);
+            EulerBeam(rw::geometry::TriMesh::Ptr mesh);
 
             virtual ~EulerBeam();
 

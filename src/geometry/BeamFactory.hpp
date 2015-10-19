@@ -19,7 +19,7 @@ namespace gripperz {
         class BeamFactory {
         public:
             
-            static Beam::Ptr makeBeam(rw::geometry::Geometry::Ptr geometry);
+            static Beam::Ptr makeBeam(rw::geometry::TriMesh::Ptr mesh);
 
         };
 

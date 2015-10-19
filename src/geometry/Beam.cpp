@@ -9,8 +9,8 @@
 
 using namespace gripperz::geometry;
 
-Beam::Beam(rw::geometry::Geometry::Ptr geometry) :
-_beamGeometry(geometry) {
+Beam::Beam(rw::geometry::TriMesh::Ptr mesh) :
+_beamMesh(mesh) {
 }
 
 Beam::~Beam() {
