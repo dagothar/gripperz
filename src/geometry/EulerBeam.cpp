@@ -67,6 +67,10 @@ double EulerBeam::calculateSecondMomentOfAreaAt(double x) {
     slice->intersect(probe);
 
     double area = GeometryUtil::estimateVolume(*slice->getTriMesh()) / sliceDepth;
+    if (area == 0.0) {
+        return 0.0;
+    }
+    
     Geometry::Ptr geometry = new Geometry(slice->getTriMesh());
     Vector3D<> cog = GeometryUtil::estimateCOG(*slice->getTriMesh());
     InertiaMatrix<> I = GeometryUtil::estimateInertia(area,{geometry}, Transform3D<>(-cog));
