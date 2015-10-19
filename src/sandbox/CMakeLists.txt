@@ -9,5 +9,10 @@ target_link_libraries(try_contour gripperz)
 add_executable(try_slice try_slice.cpp)
 add_dependencies(try_slice gripperz)
 target_link_libraries(try_slice gripperz)
+        
+#Target: try_finger
+add_executable(try_finger try_finger.cpp)
+add_dependencies(try_finger gripperz)
+target_link_libraries(try_finger gripperz)
     
 endif()
