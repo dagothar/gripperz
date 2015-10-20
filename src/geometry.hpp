@@ -4,3 +4,4 @@
 #include "geometry/Beam.hpp"
 #include "geometry/EulerBeam.hpp"
 #include "geometry/BeamFactory.hpp"
+#include "geometry/GeometryUtils.hpp"

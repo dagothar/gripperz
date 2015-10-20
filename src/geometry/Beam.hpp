@@ -16,7 +16,10 @@ namespace gripperz {
 
         /**
          * @class Beam
-         * @brief
+         * @brief Represents a beam.
+         * The beam geometry is oriented s.t. the x axis runs along the beam, while
+         * the forces act in the z axis direction. The bending moment is calculated
+         * around the axis y.
          */
         class Beam {
         public:
