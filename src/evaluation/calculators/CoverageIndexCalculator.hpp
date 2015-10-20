@@ -23,14 +23,31 @@ namespace gripperz {
                 typedef rw::common::Ptr<CoverageIndexCalculator> Ptr;
 
             public:
-                CoverageIndexCalculator();
+                CoverageIndexCalculator(double positionFilteringRadius = 0.001, double angleFilteringRadius = 15.0);
 
                 virtual ~CoverageIndexCalculator();
 
                 virtual models::QualityIndexValue calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps);
 
-            private:
+                void setAngleFilteringRadius(double _angleFilteringRadius) {
+                    this->_angleFilteringRadius = _angleFilteringRadius;
+                }
 
+                double getAngleFilteringRadius() const {
+                    return _angleFilteringRadius;
+                }
+
+                void setPositionFilteringRadius(double _positionFilteringRadius) {
+                    this->_positionFilteringRadius = _positionFilteringRadius;
+                }
+
+                double getPositionFilteringRadius() const {
+                    return _positionFilteringRadius;
+                }
+                
+            private:
+                double _positionFilteringRadius;
+                double _angleFilteringRadius;
             };
 
         }

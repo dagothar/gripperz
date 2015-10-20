@@ -20,7 +20,7 @@ RobustnessIndexCalculator::~RobustnessIndexCalculator() {
 
 QualityIndexValue RobustnessIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
 
-    //TODO: implement
+    RW_WARN("Robustness is not implemented!")
     
     return 0;
 }
