@@ -23,14 +23,22 @@ namespace gripperz {
                 typedef rw::common::Ptr<AlignmentIndexCalculator> Ptr;
 
             public:
-                AlignmentIndexCalculator();
+                AlignmentIndexCalculator(double filteringRadius = 0.01);
 
                 virtual ~AlignmentIndexCalculator();
 
                 virtual models::QualityIndexValue calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 
-            private:
+                void setFilteringRadius(double _filteringRadius) {
+                    this->_filteringRadius = _filteringRadius;
+                }
 
+                double getFilteringRadius() const {
+                    return _filteringRadius;
+                }
+
+            private:
+                double _filteringRadius;
             };
 
         }

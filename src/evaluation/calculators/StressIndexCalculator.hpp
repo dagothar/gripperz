@@ -23,13 +23,30 @@ namespace gripperz {
                 typedef rw::common::Ptr<StressIndexCalculator> Ptr;
 
             public:
-                StressIndexCalculator();
+                /**
+                 * Constructor.
+                 * @param stressLimit [in] max. stress (in MPa)
+                 */
+                StressIndexCalculator(double stressLimit = 10);
 
                 virtual ~StressIndexCalculator();
-                
+
                 virtual models::QualityIndexValue calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 
+                                /**
+                 * Set max. stress.
+                 * @param _stressLimit [in] in MPa
+                 */
+                void setStressLimit(double _stressLimit) {
+                    this->_stressLimit = _stressLimit;
+                }
+
+                double getStressLimit() const {
+                    return _stressLimit;
+                }
+
             private:
+                double _stressLimit;
 
             };
 
