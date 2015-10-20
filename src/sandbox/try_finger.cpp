@@ -7,6 +7,7 @@
 #include <rw/geometry/GeometryUtil.hpp>
 #include <rw/math/InertiaMatrix.hpp>
 #include <rw/loaders/model3d/STLFile.hpp>
+#include <geometry/BeamFactory.hpp>
 
 using namespace std;
 using namespace rw::geometry;
@@ -17,10 +18,6 @@ using namespace rwlibs::csg;
 using namespace gripperz::geometry;
 
 int main(int argc, char* argv[]) {
-
-    const double sliceDepth = 0.001;
-    const double sliceSize = 1000.0;
-
     Q q(11);
 
     q(0) = 0;
@@ -30,19 +27,23 @@ int main(int argc, char* argv[]) {
     q(4) = 0.5;
     q(5) = 45 * Deg2Rad;
     q(6) = 0.075;
-    q(7) = 0.018;
+    q(7) = 0.01;
     q(8) = 110.0 * Deg2Rad;
     q(9) = 0.0;
     q(10) = 0 * Deg2Rad;
 
     Geometry::Ptr fingerGeo = ownedPtr(new Geometry(new JawPrimitive(q), std::string("FingerGeo")));
-    //fingerGeo->setTransform(Transform3D<>(RPY<>(0, -90 * Deg2Rad, 0).toRotation3D()));
     TriMesh::Ptr mesh = fingerGeo->getGeometryData()->getTriMesh();
+    Beam::Ptr beam = BeamFactory::makeBeam(mesh);
+    
+    beam->addMoment(-10, 0);
+    beam->addForce(100, 0);
+    beam->addForce(-100, 0.1);
 
-    unsigned n = 0;
-    for (double z = 0.0; z < 0.1; z += 0.001) {
+    //unsigned n = 0;
+    for (double x = 0.0; x < 0.101; x += 0.001) {
 
-        CSGModel::Ptr probe = CSGModelFactory::makeBox(sliceSize, sliceSize, sliceDepth);
+        /*CSGModel::Ptr probe = CSGModelFactory::makeBox(sliceSize, sliceSize, sliceDepth);
         probe->translate(0, 0, z + sliceDepth / 2);
 
         CSGModel::Ptr slice = new CSGModel(*mesh);
@@ -65,7 +66,9 @@ int main(int argc, char* argv[]) {
         string slicename = sstr.str();
         STLFile::save(*slice->getTriMesh(), slicename);
 
-        ++n;
+        ++n;*/
+        
+        cout << x << ", " << beam->moment(x) << ", " << beam->stress(x) << endl;
     }
 
     return 0;

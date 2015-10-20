@@ -31,7 +31,7 @@ namespace gripperz {
             virtual double stress(double x);
 
         protected:
-            virtual double calculateSecondMomentOfAreaAt(double x);
+            virtual double calculateHOverI(double x);
 
         private:
 
