@@ -26,8 +26,8 @@ SuccessIndexCalculator::~SuccessIndexCalculator() {
 }
 
 QualityIndexValue SuccessIndexCalculator::calculate(models::OldGripper::Ptr gripper, grasps::Grasps grasps) {
-
-    DEBUG << "CALCULATING SUCCESS - " << endl;
+    DEBUG << "CALCULATING SUCCESS" << endl;
+    
     vector<pair<class GraspSubTask*, class GraspTarget*> > allTargets = grasps->getAllTargets();
 
     int nAllTargets = allTargets.size();
