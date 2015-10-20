@@ -1,11 +1,11 @@
 /* 
- * File:   CostIndexCalculator.cpp
+ * File:   WrenchIndexCalculator.cpp
  * Author: dagothar
  * 
  * Created on October 13, 2015, 11:26 AM
  */
 
-#include "CostIndexCalculator.hpp"
+#include "WrenchIndexCalculator.hpp"
 #include <grasps/Types.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
@@ -19,13 +19,13 @@ using namespace gripperz::evaluation::calculators;
 using namespace rwlibs::task;
 using namespace rw::math;
 
-CostIndexCalculator::CostIndexCalculator() {
+WrenchIndexCalculator::WrenchIndexCalculator() {
 }
 
-CostIndexCalculator::~CostIndexCalculator() {
+WrenchIndexCalculator::~WrenchIndexCalculator() {
 }
 
-QualityIndexValue CostIndexCalculator::calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps) {
+QualityIndexValue WrenchIndexCalculator::calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps) {
 
     DEBUG << "CALCULATING WRENCH" << endl;
 
