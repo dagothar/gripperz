@@ -46,7 +46,7 @@ GripperEvaluationManagerBuilder& GripperEvaluationManagerBuilder::simulator(simu
     return *this;
 }
 
-GripperEvaluationManagerBuilder& GripperEvaluationManagerBuilder::evaluator(evaluation::OldGripperEvaluator::Ptr eval) {
+GripperEvaluationManagerBuilder& GripperEvaluationManagerBuilder::evaluator(evaluation::GripperEvaluator::Ptr eval) {
     _evaluator = eval;
 
     return *this;

@@ -5,7 +5,7 @@
  * Created on October 13, 2015, 11:26 AM
  */
 
-#include "CostIndexCalculator.hpp"
+#include "VolumeIndexCalculator.hpp"
 #include <rw/geometry/GeometryUtil.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
@@ -17,15 +17,15 @@ using namespace gripperz::evaluation;
 using namespace gripperz::evaluation::calculators;
 using namespace rw::geometry;
 
-CostIndexCalculator::CostIndexCalculator(double volumeLimit) :
+VolumeIndexCalculator::VolumeIndexCalculator(double volumeLimit) :
 _volumeLimit(volumeLimit) {
 
 }
 
-CostIndexCalculator::~CostIndexCalculator() {
+VolumeIndexCalculator::~VolumeIndexCalculator() {
 }
 
-QualityIndexValue CostIndexCalculator::calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps) {
+QualityIndexValue VolumeIndexCalculator::calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps) {
 
     DEBUG << "CALCULATING VOLUME" << endl;
 

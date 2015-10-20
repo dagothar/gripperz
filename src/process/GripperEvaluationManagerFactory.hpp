@@ -9,6 +9,7 @@
 #include "GripperEvaluationProcessManager.hpp"
 #include "StandardGripperEvaluationProcessManager.hpp"
 #include <grasps/SurfaceSample.hpp>
+#include <context/TaskDescription.hpp>
 
 namespace gripperz {
     namespace process {

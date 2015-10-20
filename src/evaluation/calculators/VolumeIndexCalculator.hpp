@@ -17,15 +17,15 @@ namespace gripperz {
              * @class CostIndexCalculator
              * @brief
              */
-            class CostIndexCalculator : public QualityIndexCalculator {
+            class VolumeIndexCalculator : public QualityIndexCalculator {
             public:
                 //! Smart pointer.
-                typedef rw::common::Ptr<CostIndexCalculator> Ptr;
+                typedef rw::common::Ptr<VolumeIndexCalculator> Ptr;
 
             public:
-                CostIndexCalculator(double volumeLimit = 100.0);
+                VolumeIndexCalculator(double volumeLimit = 100.0);
 
-                virtual ~CostIndexCalculator();
+                virtual ~VolumeIndexCalculator();
 
                 virtual models::QualityIndexValue calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 

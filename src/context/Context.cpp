@@ -9,10 +9,11 @@
 
 using namespace gripperz::context;
 
-
-Context::Context() {
+Context::Context(rwsim::dynamics::DynamicWorkCell::Ptr dwc) :
+_dynamicWorkCell(dwc) {
+    _workCell = _dynamicWorkCell->getWorkcell();
+    _initState = _workCell->getDefaultState();
 }
-
 
 Context::~Context() {
 }

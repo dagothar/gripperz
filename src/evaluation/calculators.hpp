@@ -13,5 +13,5 @@
 #include "calculators/StressIndexCalculator.hpp"
 #include "calculators/WrenchIndexCalculator.hpp"
 #include "calculators/RobustnessIndexCalculator.hpp"
-#include "calculators/CostIndexCalculator.hpp"
+#include "calculators/VolumeIndexCalculator.hpp"
 
