@@ -33,6 +33,7 @@ QualityIndexValue StressIndexCalculator::calculate(models::Gripper::Ptr gripper,
     DEBUG << "CALCULATING STRESS" << endl;
     
     const double Resolution = 0.001;
+    const double MPa = 1000000;
 
     /* 1. get finger geometry */
     TriMesh::Ptr left_mesh = gripper->getLeftFingerBody()->getGeometry()[0]->getGeometryData()->getTriMesh();
@@ -75,6 +76,10 @@ QualityIndexValue StressIndexCalculator::calculate(models::Gripper::Ptr gripper,
             max_stress = stress;
         }
     }
+    
+    max_stress /= MPa;
+    
+    DEBUG << "max_stress = " << max_stress << endl;
 
     /* 5. calculate index */
     double stress_index = 1.0 - (max_stress / _stressLimit);

@@ -73,18 +73,6 @@ public:
 
 	virtual ~TaskDescription();
 
-	rw::models::WorkCell* getWorkCell() {
-		return _wc;
-	}
-
-	rwsim::dynamics::DynamicWorkCell::Ptr getDynamicWorkCell() {
-		return _dwc;
-	}
-
-	rw::kinematics::State& getInitState() {
-		return _initState;
-	}
-
 	double getInterferenceLimit() const {
 		return _interferenceLimit;
 	}
@@ -171,7 +159,7 @@ public:
 	}
 	
 	void setTargetObject(const std::string& objectName) {
-		setTargetObject(_wc->findObject(objectName));
+		setTargetObject(getWorkCell()->findObject(objectName));
 	}
 	
 	rw::kinematics::Frame* getTargetFrame() {
@@ -250,9 +238,6 @@ public:
 
 protected:
 	// data
-	rwsim::dynamics::DynamicWorkCell::Ptr _dwc;
-	rw::models::WorkCell* _wc;
-	rw::kinematics::State _initState;
 	double _interferenceLimit;
 	double _wrenchLimit;
 	double _stressLimit;

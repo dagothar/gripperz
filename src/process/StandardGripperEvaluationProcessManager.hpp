@@ -8,8 +8,9 @@
 
 #include "GripperEvaluationProcessManager.hpp"
 #include <grasps/GraspSource.hpp>
+#include <context/Context.hpp>
 #include <simulation/GripperSimulator.hpp>
-#include <evaluation/OldGripperEvaluator.hpp>
+#include <evaluation/GripperEvaluator.hpp>
 
 namespace gripperz {
     namespace process {
@@ -25,16 +26,20 @@ namespace gripperz {
 
         public:
             StandardGripperEvaluationProcessManager(
-                    context::TaskDescription::Ptr context,
+                    context::Context::Ptr context,
                     grasps::GraspSource::Ptr graspSource,
                     simulation::GripperSimulator::Ptr simulator,
-                    evaluation::OldGripperEvaluator::Ptr evaluator
+                    evaluation::GripperEvaluator::Ptr evaluator
                     );
 
             virtual ~StandardGripperEvaluationProcessManager();
 
-            context::TaskDescription::Ptr getContext() {
+            context::Context::Ptr getContext() {
                 return _context;
+            }
+            
+            void setContext(context::Context::Ptr context) {
+                _context = context;
             }
 
             grasps::GraspSource::Ptr getGraspSource() {
@@ -53,11 +58,11 @@ namespace gripperz {
                 _simulator = sim;
             }
 
-            evaluation::OldGripperEvaluator::Ptr getEvaluator() {
+            evaluation::GripperEvaluator::Ptr getEvaluator() {
                 return _evaluator;
             }
 
-            void setEvaluator(evaluation::OldGripperEvaluator::Ptr evaluator) {
+            void setEvaluator(evaluation::GripperEvaluator::Ptr evaluator) {
                 _evaluator = evaluator;
             }
 
@@ -73,10 +78,10 @@ namespace gripperz {
             virtual models::GripperQuality::Ptr doEvaluation(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 
         private:
-            context::TaskDescription::Ptr _context;
+            context::Context::Ptr _context;
             grasps::GraspSource::Ptr _graspSource;
             simulation::GripperSimulator::Ptr _simulator;
-            evaluation::OldGripperEvaluator::Ptr _evaluator;
+            evaluation::GripperEvaluator::Ptr _evaluator;
 
         };
 

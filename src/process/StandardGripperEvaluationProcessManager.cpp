@@ -25,10 +25,10 @@ using namespace rw::common;
 using namespace std;
 
 StandardGripperEvaluationProcessManager::StandardGripperEvaluationProcessManager(
-        context::TaskDescription::Ptr context,
+        context::Context::Ptr context,
         grasps::GraspSource::Ptr graspSource,
         simulation::GripperSimulator::Ptr simulator,
-        evaluation::OldGripperEvaluator::Ptr evaluator
+        evaluation::GripperEvaluator::Ptr evaluator
         ) :
 _context(context),
 _graspSource(graspSource),

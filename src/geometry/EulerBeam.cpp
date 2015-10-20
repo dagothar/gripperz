@@ -87,12 +87,12 @@ double EulerBeam::calculateHOverI(double x) {
     
     double left_overlap = - slice_x0;
     double right_overlap = slice_x1 - beam_length;
-    
-    DEBUG << "slice_x0 = " << slice_x0 << endl;
-    DEBUG << "slice_x1 = " << slice_x1 << endl;
-    DEBUG << "left_overlap = " << left_overlap << endl;
-    DEBUG << "right_overlap = " << right_overlap << endl;
-    DEBUG << "area (before) = " << area << endl;
+//    
+//    DEBUG << "slice_x0 = " << slice_x0 << endl;
+//    DEBUG << "slice_x1 = " << slice_x1 << endl;
+//    DEBUG << "left_overlap = " << left_overlap << endl;
+//    DEBUG << "right_overlap = " << right_overlap << endl;
+//    DEBUG << "area (before) = " << area << endl;
     
     if (left_overlap > 0.0) {
         area *= sliceDepth / left_overlap;
@@ -102,7 +102,7 @@ double EulerBeam::calculateHOverI(double x) {
         area *= sliceDepth / right_overlap;
     }
     
-    DEBUG << "area (after) = " << area << endl;
+//    DEBUG << "area (after) = " << area << endl;
 
     Geometry::Ptr geometry = new Geometry(slice->getTriMesh());
     Vector3D<> cog = GeometryUtil::estimateCOG(*slice->getTriMesh());
