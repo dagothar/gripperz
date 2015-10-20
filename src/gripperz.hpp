@@ -20,6 +20,7 @@
 	namespace gripperz { \
 		using namespace gripperz::optimization; \
 		using namespace gripperz::evaluation; \
+		using namespace gripperz::evaluation::calculators; \
 		using namespace gripperz::process; \
 		using namespace gripperz::context; \
 		using namespace gripperz::loaders; \

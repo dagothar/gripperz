@@ -14,5 +14,10 @@ target_link_libraries(try_slice gripperz)
 add_executable(try_finger try_finger.cpp)
 add_dependencies(try_finger gripperz)
 target_link_libraries(try_finger gripperz)
+        
+#Target: try_process
+add_executable(try_process try_process.cpp)
+add_dependencies(try_process gripperz)
+target_link_libraries(try_process gripperz)
     
 endif()

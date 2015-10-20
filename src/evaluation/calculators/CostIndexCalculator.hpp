@@ -23,14 +23,22 @@ namespace gripperz {
                 typedef rw::common::Ptr<CostIndexCalculator> Ptr;
 
             public:
-                CostIndexCalculator();
+                CostIndexCalculator(double volumeLimit = 100.0);
 
                 virtual ~CostIndexCalculator();
-                
+
                 virtual models::QualityIndexValue calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps);
 
-            private:
+                void setVolumeLimit(double _volumeLimit) {
+                    this->_volumeLimit = _volumeLimit;
+                }
 
+                double getVolumeLimit() const {
+                    return _volumeLimit;
+                }
+
+            private:
+                double _volumeLimit;
             };
 
         }
