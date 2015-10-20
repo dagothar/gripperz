@@ -18,7 +18,6 @@ using namespace std;
 using namespace gripperz::models;
 using namespace gripperz::evaluation;
 using namespace gripperz::grasps;
-using namespace gripperz::context;
 using namespace gripperz::grasps::filters;
 using namespace gripperz::evaluation::calculators;
 using namespace rwlibs::task;
