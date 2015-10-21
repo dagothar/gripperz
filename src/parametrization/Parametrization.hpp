@@ -34,13 +34,13 @@ namespace gripperz {
              * Constructor.
              */
             Parametrization();
-            
+
             /**
              * Constructor. 
              * @param list [in] list of parameters
              */
             Parametrization(const ParameterList& list);
-            
+
             /**
              * Constructor.
              * @param nameList [in] list of parameter names
@@ -54,17 +54,17 @@ namespace gripperz {
             void addParameter(const ParameterName& name, const ParameterValue& value);
 
             void addParameter(const ParameterName& name);
-            
+
             ParameterList getParameterList() const;
-            
+
             ParameterNameList getParameterNameList() const;
-            
+
             bool hasParameter(const ParameterName& name) const;
-            
+
             ParameterValue getParameter(const ParameterName& name) const;
-            
+
             void setParameter(const Parameter& p);
-            
+
             void setParameter(const ParameterName& name, const ParameterValue& value);
 
         private:

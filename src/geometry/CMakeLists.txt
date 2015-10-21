@@ -7,5 +7,6 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/MeshGenerator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ParametrizedMeshGenerator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OldFingerGenerator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OpenSCADGenerator.cpp
 	CACHE INTERNAL ""
 )

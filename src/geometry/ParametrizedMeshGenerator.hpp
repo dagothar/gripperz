@@ -17,13 +17,14 @@ namespace gripperz {
          * @class ParametrizedMeshGenerator
          * @brief
          */
-        class ParametrizedMeshGenerator: public MeshGenerator, public parametrization::Parametrized {
+        class ParametrizedMeshGenerator : public MeshGenerator, public parametrization::Parametrized {
         public:
             //! Smart pointer.
             typedef rw::common::Ptr<ParametrizedMeshGenerator> Ptr;
 
         public:
-            ParametrizedMeshGenerator(parametrization::Parametrization::Ptr parametrization);
+            ParametrizedMeshGenerator(parametrization::Parametrization::Ptr parametrization =
+                    rw::common::ownedPtr(new parametrization::Parametrization()));
 
             virtual ~ParametrizedMeshGenerator();
 

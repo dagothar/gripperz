@@ -8,3 +8,4 @@
 #include "geometry/MeshGenerator.hpp"
 #include "geometry/ParametrizedMeshGenerator.hpp"
 #include "geometry/OldFingerGenerator.hpp"
+#include "geometry/OpenSCADGenerator.hpp"
