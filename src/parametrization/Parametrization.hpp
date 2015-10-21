@@ -68,6 +68,7 @@ namespace gripperz {
             void setParameter(const ParameterName& name, const ParameterValue& value);
 
         private:
+            ParameterNameList _parameterNameList;
             std::map<ParameterName, ParameterValue> _parameters;
         };
 

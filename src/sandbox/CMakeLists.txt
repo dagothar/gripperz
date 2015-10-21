@@ -19,5 +19,10 @@ target_link_libraries(try_finger gripperz)
 add_executable(try_process try_process.cpp)
 add_dependencies(try_process gripperz)
 target_link_libraries(try_process gripperz)
+        
+#Target: try_parametrized_geometry
+add_executable(try_parametrized_geometry try_parametrized_geometry.cpp)
+add_dependencies(try_parametrized_geometry gripperz)
+target_link_libraries(try_parametrized_geometry gripperz)
     
 endif()
