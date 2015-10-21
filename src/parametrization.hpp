@@ -10,3 +10,4 @@
 #include "parametrization/Types.hpp"
 #include "parametrization/Parametrized.hpp"
 #include "parametrization/Parametrization.hpp"
+#include "parametrization/ParametrizationTranslator.hpp"

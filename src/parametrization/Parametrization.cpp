@@ -71,6 +71,14 @@ Parametrization::ParameterNameList Parametrization::getParameterNameList() const
     return list;
 }
 
+bool Parametrization::hasParameter(const ParameterName& name) const {
+    if (_parameters.find(name) == _parameters.end()) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 void Parametrization::setParameter(const Parameter& p) {
     _parameters.at(p.first) = p.second;
 }

@@ -11,5 +11,10 @@ add_dependencies(test_beam gripperz)
 add_executable(test_parametrization testParametrization.cpp)
 target_link_libraries(test_parametrization gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_dependencies(test_parametrization gripperz)
+
+# Target: test_parametrization_translator
+add_executable(test_parametrization_translator testParametrizationTranslator.cpp)
+target_link_libraries(test_parametrization_translator gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+add_dependencies(test_parametrization_translator gripperz)
         
 endif ()
