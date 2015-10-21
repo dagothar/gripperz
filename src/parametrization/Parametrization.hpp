@@ -59,6 +59,8 @@ namespace gripperz {
             
             ParameterNameList getParameterNameList() const;
             
+            bool hasParameter(const ParameterName& name) const;
+            
             ParameterValue getParameter(const ParameterName& name) const;
             
             void setParameter(const Parameter& p);
