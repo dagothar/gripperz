@@ -24,5 +24,10 @@ target_link_libraries(try_process gripperz)
 add_executable(try_parametrized_geometry try_parametrized_geometry.cpp)
 add_dependencies(try_parametrized_geometry gripperz)
 target_link_libraries(try_parametrized_geometry gripperz)
+        
+#Target: try_openscad
+add_executable(try_openscad try_openscad.cpp)
+add_dependencies(try_openscad gripperz)
+target_link_libraries(try_openscad gripperz)
     
 endif()
