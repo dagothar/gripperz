@@ -24,19 +24,46 @@ namespace gripperz {
         public:
             //! Smart pointer.
             typedef rw::common::Ptr<Parametrization> Ptr;
-            
+
             typedef std::vector<Parameter> ParameterList;
-            
+
             typedef std::vector<ParameterName> ParameterNameList;
 
         public:
+            /**
+             * Constructor.
+             */
             Parametrization();
+            
+            /**
+             * Constructor. 
+             * @param list [in] list of parameters
+             */
+            Parametrization(const ParameterList& list);
+            
+            /**
+             * Constructor.
+             * @param nameList [in] list of parameter names
+             */
+            Parametrization(const ParameterNameList& nameList);
 
             virtual ~Parametrization();
+
+            void addParameter(const Parameter& p);
+
+            void addParameter(const ParameterName& name, const ParameterValue& value);
+
+            void addParameter(const ParameterName& name);
             
-            void addParameter(const Parameter& p) {
-                _parameters.insert(p);
-            }
+            ParameterList getParameterList() const;
+            
+            ParameterNameList getParameterNameList() const;
+            
+            ParameterValue getParameter(const ParameterName& name) const;
+            
+            void setParameter(const Parameter& p);
+            
+            void setParameter(const ParameterName& name, const ParameterValue& value);
 
         private:
             std::map<ParameterName, ParameterValue> _parameters;

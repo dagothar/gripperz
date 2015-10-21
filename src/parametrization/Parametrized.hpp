@@ -33,6 +33,14 @@ namespace gripperz {
             Parametrization::Ptr getParametrization() const {
                 return _parametrization;
             }
+            
+            void setParameter(const ParameterName& name, const ParameterValue& value) {
+                _parametrization->setParameter(name, value);
+            }
+            
+            ParameterValue getParameter(const ParameterName& name) const {
+                return _parametrization->getParameter(name);
+            }
 
         private:
             Parametrization::Ptr _parametrization;
