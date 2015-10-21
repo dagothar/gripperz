@@ -4,5 +4,8 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/Beam.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EulerBeam.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BeamFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MeshGenerator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ParametrizedMeshGenerator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OldFingerGenerator.cpp
 	CACHE INTERNAL ""
 )

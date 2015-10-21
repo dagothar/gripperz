@@ -1,12 +1,10 @@
-s = 0.001;
-
-length = 100;
-width = 25;
-depth = 20;
-chf_depth = 1;
+length = 0.1;
+width = 0.25;
+depth = 0.020;
+chf_depth = 0;
 chf_angle = 45;
-cut_pos = 75;
-cut_depth = 15;
+cut_pos = 0.075;
+cut_depth = 0;
 cut_angle = 90;
 cut_tilt = 0;
 
@@ -63,4 +61,4 @@ module finger(length, width, depth, chf_depth, chf_angle, cut_pos, cut_depth, cu
 }
 
 
-scale(s) finger(length, width, depth, chf_depth, chf_angle, cut_pos, cut_depth, cut_angle, cut_tilt);
+finger(length, width, depth, chf_depth, chf_angle, cut_pos, cut_depth, cut_angle, cut_tilt);

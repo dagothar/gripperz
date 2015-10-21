@@ -5,3 +5,6 @@
 #include "geometry/EulerBeam.hpp"
 #include "geometry/BeamFactory.hpp"
 #include "geometry/GeometryUtils.hpp"
+#include "geometry/MeshGenerator.hpp"
+#include "geometry/ParametrizedMeshGenerator.hpp"
+#include "geometry/OldFingerGenerator.hpp"
