@@ -12,7 +12,7 @@ using namespace boost;
 
 Shard::Shard(const std::string& cls, const std::string& id, boost::any object) :
 _cls(cls),
-_id(id),
+_qualifier(id),
 _object(object) {
 
 }

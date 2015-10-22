@@ -24,8 +24,8 @@ void ShardContainer::addShard(const Shard& shard) {
     _shards.insert(make_pair(shard.getClass(), shard));
 }
 
-Shard ShardContainer::getShard(const ShardClass& cls, const ShardId& id) const {
-    typedef multimap<ShardClass, Shard>::const_iterator ShardIterator;
+Shard ShardContainer::getShard(const Shard::ShardClass& cls, const Shard::ShardQualifier& qual) const {
+    typedef multimap<Shard::ShardClass, Shard>::const_iterator ShardIterator;
     typedef pair<ShardIterator, ShardIterator> ShardRange;
 
     ShardRange range = _shards.equal_range(cls);
@@ -40,11 +40,11 @@ Shard ShardContainer::getShard(const ShardClass& cls, const ShardId& id) const {
         return range.first->second;
         
     } else {
-        if (!id.empty()) {
+        if (!qual.empty()) {
             
             auto hasId = [&](const ShardPair & p) {
                 
-                return p.second.getId() == id;
+                return p.second.getQualifier() == qual;
             };
             
             if (count_if(range.first, range.second, hasId) == 1) {

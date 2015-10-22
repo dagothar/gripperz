@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(ShouldStoreAndReturnShards) {
     vector<ShardContainer::ShardPair> res = container.getShards();
     BOOST_CHECK(res.size() == 3);
     BOOST_CHECK(res[0].first == "string");
-    BOOST_CHECK(res[0].second.getId() == "s1");
+    BOOST_CHECK(res[0].second.getQualifier() == "s1");
     BOOST_CHECK(res[0].second.cast<string>() == "hello");
 }
 

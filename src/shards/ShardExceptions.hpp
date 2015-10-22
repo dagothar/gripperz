@@ -43,7 +43,7 @@ namespace gripperz {
 
             virtual const char* what() const throw () {
                 std::stringstream sstr;
-                sstr << "Cannot resolve shard '" + _cls + "'";
+                sstr << "Cannot resolve shard '" << _cls << "'";
                 return sstr.str().c_str();
             }
 
@@ -68,7 +68,7 @@ namespace gripperz {
 
             virtual const char* what() const throw () {
                 std::stringstream sstr;
-                sstr << "Ambiguous resolution for shard '" + _cls + "'";
+                sstr << "Ambiguous resolution for shard '" << _cls << "'";
                 return sstr.str().c_str();
             }
 

@@ -37,8 +37,8 @@ BOOST_AUTO_TEST_CASE(ShouldGetAndSetId) {
     Person person("Adam");
     Shard personShard("Person", "person1", person);
     
-    BOOST_CHECK(personShard.getId() == "person1");
+    BOOST_CHECK(personShard.getQualifier() == "person1");
 
-    personShard.setId("person2");
-    BOOST_CHECK(personShard.getId() == "person2");
+    personShard.Qualifier("person2");
+    BOOST_CHECK(personShard.getQualifier() == "person2");
 }

@@ -18,7 +18,14 @@ namespace gripperz {
          */
         class Shard {
         public:
-            Shard(const std::string& cls, const std::string& id, boost::any object);
+            //! Type for the the class stored by the shard
+            typedef std::string ShardClass;
+
+            //! Type for the shard id
+            typedef std::string ShardQualifier;
+            
+        public:
+            Shard(const ShardClass& cls, const ShardQualifier& qual, boost::any object);
 
             virtual ~Shard();
 
@@ -27,25 +34,25 @@ namespace gripperz {
                 return boost::any_cast<T>(_object);
             }
 
-            std::string getId() const {
-                return _id;
+            ShardQualifier getQualifier() const {
+                return _qualifier;
             }
 
-            void setId(const std::string& id) {
-                _id = id;
+            void Qualifier(const ShardQualifier& qual) {
+                _qualifier = qual;
             }
 
-            void setClass(const std::string& _cls) {
+            void setClass(const ShardClass& _cls) {
                 this->_cls = _cls;
             }
 
-            std::string getClass() const {
+            ShardClass getClass() const {
                 return _cls;
             }
 
         private:
-            std::string _cls;
-            std::string _id;
+            ShardClass _cls;
+            ShardQualifier _qualifier;
             boost::any _object;
         };
 
