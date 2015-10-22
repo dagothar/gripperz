@@ -31,9 +31,9 @@ add_dependencies(try_openscad gripperz)
 target_link_libraries(try_openscad gripperz)
         
 #Target: try_pointers
-add_executable(try_pointers try_pointers.cpp)
-add_dependencies(try_pointers gripperz)
-target_link_libraries(try_pointers gripperz)
+#add_executable(try_pointers try_pointers.cpp)
+#add_dependencies(try_pointers gripperz)
+#target_link_libraries(try_pointers gripperz)
     
 #Target: try_shards
 add_executable(try_shards try_shards.cpp)

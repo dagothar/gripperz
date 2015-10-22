@@ -19,14 +19,8 @@ namespace gripperz {
          */
         class ShardContainer {
         public:
-            //! Type for the the class stored by the shard
-            typedef std::string ShardClass;
-
-            //! Type for the shard id
-            typedef std::string ShardId;
-
             //! Type for internal shard storage
-            typedef std::pair<ShardClass, Shard> ShardPair;
+            typedef std::pair<Shard::ShardClass, Shard> ShardPair;
 
             //! List of stored ShardPairs
             typedef std::vector<ShardPair> ShardPairList;
@@ -38,12 +32,12 @@ namespace gripperz {
 
             void addShard(const Shard& shard);
 
-            Shard getShard(const ShardClass& cls, const ShardId& id = "") const;
+            Shard getShard(const Shard::ShardClass& cls, const Shard::ShardQualifier& qual = "") const;
 
             ShardPairList getShards() const;
 
         private:
-            std::multimap<ShardClass, Shard> _shards;
+            std::multimap<Shard::ShardClass, Shard> _shards;
         };
 
     }
