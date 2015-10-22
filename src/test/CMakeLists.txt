@@ -12,6 +12,11 @@ add_executable(test_Parametrization test_Parametrization.cpp)
 target_link_libraries(test_Parametrization gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_dependencies(test_Parametrization gripperz)
 
+# Target: test_ParametrizationLoader
+add_executable(test_ParametrizationLoader test_ParametrizationLoader.cpp)
+target_link_libraries(test_ParametrizationLoader gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+add_dependencies(test_ParametrizationLoader gripperz)
+
 # Target: test_ParametrizationTranslator
 add_executable(test_ParametrizationTranslator test_ParametrizationTranslator.cpp)
 target_link_libraries(test_ParametrizationTranslator gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
