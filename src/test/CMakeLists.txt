@@ -32,4 +32,9 @@ add_executable(test_Shard test_Shard.cpp)
 target_link_libraries(test_Shard gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_dependencies(test_Shard gripperz)
         
+# Target: test_ShardContainer
+add_executable(test_ShardContainer test_ShardContainer.cpp)
+target_link_libraries(test_ShardContainer gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+add_dependencies(test_ShardContainer gripperz)
+        
 endif ()

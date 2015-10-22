@@ -1,5 +1,7 @@
 SET(SRC_FILES
 	${SRC_FILES}
 	${CMAKE_CURRENT_SOURCE_DIR}/Shard.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ShardContainer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ShardExceptions.cpp
 	CACHE INTERNAL ""
 )
