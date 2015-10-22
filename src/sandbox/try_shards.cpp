@@ -27,7 +27,7 @@ public:
         Person::Ptr p = ownedPtr(new Person());
         p->setName(name);
         
-        return Shard("id", p);
+        return Shard("PersonPtr", "id", p);
     }
     
 private:
@@ -37,8 +37,8 @@ private:
 int main(int argc, char* argv[]) {
     ShardContainer container;
     
-    container.addShard("string", Shard("name", string("adam")));
-    container.addShard("PersonPtr", Person::makeShard(container));
+    container.addShard(Shard("string", "name", string("adam")));
+    container.addShard(Person::makeShard(container));
     
     Person::Ptr p = container.getShard("PersonPtr").cast<Person::Ptr>();
     cout << p->getName() << endl;

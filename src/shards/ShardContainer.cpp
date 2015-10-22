@@ -20,8 +20,8 @@ ShardContainer::ShardContainer() {
 ShardContainer::~ShardContainer() {
 }
 
-void ShardContainer::addShard(const ShardClass& cls, const Shard& shard) {
-    _shards.insert(make_pair(cls, shard));
+void ShardContainer::addShard(const Shard& shard) {
+    _shards.insert(make_pair(shard.getClass(), shard));
 }
 
 Shard ShardContainer::getShard(const ShardClass& cls, const ShardId& id) const {
@@ -58,7 +58,7 @@ Shard ShardContainer::getShard(const ShardClass& cls, const ShardId& id) const {
 
     // should never reach this spot!
     throw unresolved_shard_exception(cls);
-    return Shard("", 0);
+    return Shard("", "", 0);
 }
 
 ShardContainer::ShardPairList ShardContainer::getShards() const {

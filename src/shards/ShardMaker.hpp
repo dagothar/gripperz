@@ -14,7 +14,8 @@ namespace gripperz {
 
         /**
          * @class ShardMaker
-         * @brief Base for classes creating their Shards
+         * @brief Base for classes creating their Shards.
+         * Important: the class should have a default constructor!
          */
         template<class T>
         class ShardMaker {

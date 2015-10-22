@@ -26,7 +26,7 @@ private:
 
 BOOST_AUTO_TEST_CASE(InitializationTest) {
     Person person("Adam");
-    Shard personShard("p1", person);
+    Shard personShard("Person", "p1", person);
 
     Person result = personShard.cast<Person>();
 
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(InitializationTest) {
 
 BOOST_AUTO_TEST_CASE(ShouldGetAndSetId) {
     Person person("Adam");
-    Shard personShard("person1", person);
+    Shard personShard("Person", "person1", person);
     
     BOOST_CHECK(personShard.getId() == "person1");
 
