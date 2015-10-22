@@ -26,5 +26,10 @@ add_dependencies(test_ParametrizationTranslator gripperz)
 add_executable(test_BasicParametrizedGripper test_BasicParametrizedGripper.cpp)
 target_link_libraries(test_BasicParametrizedGripper gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_dependencies(test_BasicParametrizedGripper gripperz)
+
+# Target: test_Shard
+add_executable(test_Shard test_Shard.cpp)
+target_link_libraries(test_Shard gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+add_dependencies(test_Shard gripperz)
         
 endif ()

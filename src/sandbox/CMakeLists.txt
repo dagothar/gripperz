@@ -35,4 +35,9 @@ add_executable(try_pointers try_pointers.cpp)
 add_dependencies(try_pointers gripperz)
 target_link_libraries(try_pointers gripperz)
     
+#Target: try_shards
+add_executable(try_shards try_shards.cpp)
+add_dependencies(try_shards gripperz)
+target_link_libraries(try_shards gripperz)
+    
 endif()
