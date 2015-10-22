@@ -85,3 +85,14 @@ void Parametrization::setParameter(const Parameter& p) {
 void Parametrization::setParameter(const ParameterName& name, const ParameterValue& value) {
     setParameter({name, value});
 }
+
+void Parametrization::merge(Parametrization::Ptr parametrization) {
+
+    BOOST_FOREACH(const Parameter& p, parametrization->getParameterList()) {
+        if (!hasParameter(p.first)) {
+            addParameter(p);
+        } else {
+            RW_WARN("Skipped parameter " << p.first);
+        }
+    }
+}

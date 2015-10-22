@@ -7,7 +7,6 @@
 
 #include <geometry/JawPrimitive.hpp>
 #include <context/TaskDescription.hpp>
-#include "OldGripperQuality.hpp"
 #include "Gripper.hpp"
 
 namespace rw {
