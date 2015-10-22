@@ -16,3 +16,4 @@ namespace gripperz {
 #include "shards/Shard.hpp"
 #include "shards/ShardContainer.hpp"
 #include "shards/ShardExceptions.hpp"
+#include "shards/ShardMaker.hpp"
