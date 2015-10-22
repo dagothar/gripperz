@@ -16,6 +16,7 @@
 #include "math.hpp"
 #include "geometry.hpp"
 #include "parametrization.hpp"
+#include "shards.hpp"
 
 #define USE_GRIPPERZ_NAMESPACE \
 	namespace gripperz { \
@@ -36,4 +37,5 @@
 		using namespace gripperz::math; \
 		using namespace gripperz::geometry; \
 		using namespace gripperz::parametrization; \
+		using namespace gripperz::shards; \
 	}
