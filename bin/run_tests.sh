@@ -2,4 +2,4 @@
 
 echo "RUNNING TESTS..."
 
-for f in test_*; do ./$f; done
+for f in test_*; do echo "Running test ${f}"; ./$f; done
