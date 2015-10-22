@@ -66,6 +66,8 @@ namespace gripperz {
             void setParameter(const Parameter& p);
 
             void setParameter(const ParameterName& name, const ParameterValue& value);
+            
+            void merge(Parametrization::Ptr parametrization);
 
         private:
             ParameterNameList _parameterNameList;
