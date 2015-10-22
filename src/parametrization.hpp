@@ -11,3 +11,4 @@
 #include "parametrization/Parametrized.hpp"
 #include "parametrization/Parametrization.hpp"
 #include "parametrization/ParametrizationTranslator.hpp"
+#include "parametrization/loaders.hpp"

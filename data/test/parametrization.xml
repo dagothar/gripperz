@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<parametrization>
+	
+	<parameter name="pi">3.14</parameter>
+	<parameter name="length">1.0</parameter>
+	<parameter name="zero">0.0</parameter>
+	
+</parametrization>
