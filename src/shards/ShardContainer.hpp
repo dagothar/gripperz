@@ -36,7 +36,7 @@ namespace gripperz {
 
             virtual ~ShardContainer();
 
-            void addShard(const ShardClass& cls, const Shard& shard);
+            void addShard(const Shard& shard);
 
             Shard getShard(const ShardClass& cls, const ShardId& id = "") const;
 

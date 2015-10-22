@@ -18,7 +18,7 @@ namespace gripperz {
          */
         class Shard {
         public:
-            Shard(const std::string& id, boost::any object);
+            Shard(const std::string& cls, const std::string& id, boost::any object);
 
             virtual ~Shard();
 
@@ -35,7 +35,16 @@ namespace gripperz {
                 _id = id;
             }
 
+            void setClass(const std::string& _cls) {
+                this->_cls = _cls;
+            }
+
+            std::string getClass() const {
+                return _cls;
+            }
+
         private:
+            std::string _cls;
             std::string _id;
             boost::any _object;
         };

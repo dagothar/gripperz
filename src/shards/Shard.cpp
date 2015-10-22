@@ -10,7 +10,8 @@
 using namespace gripperz::shards;
 using namespace boost;
 
-Shard::Shard(const std::string& id, boost::any object) :
+Shard::Shard(const std::string& cls, const std::string& id, boost::any object) :
+_cls(cls),
 _id(id),
 _object(object) {
 
