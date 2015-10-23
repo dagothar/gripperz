@@ -23,6 +23,9 @@ namespace gripperz {
         public:
             //! Smart pointer.
             typedef rw::common::Ptr<GripperQuality> Ptr;
+            
+            //! List of indices
+            typedef std::vector<QualityIndex> IndexList;
 
         public:
             GripperQuality();
@@ -33,7 +36,7 @@ namespace gripperz {
 
             virtual void setIndex(const QualityIndexKey& key, const QualityIndexValue& value) = 0;
 
-            virtual std::vector<QualityIndex> getIndices() const = 0;
+            virtual IndexList getIndices() const = 0;
 
         private:
 

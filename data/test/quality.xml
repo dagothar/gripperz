@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<quality>
+	
+	<index name="success">1.0</index>
+	<index name="coverage">0.5</index>
+	<index name="alignment">0.0</index>
+	
+</quality>
