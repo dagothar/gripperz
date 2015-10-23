@@ -35,10 +35,20 @@ void GripperEvaluator::addQualityIndexCalculator(const models::QualityIndexKey& 
 
 vector<QualityIndexKey> GripperEvaluator::getIndexKeys() const {
     vector<QualityIndexKey> keys;
-    
+
     BOOST_FOREACH(const KeyCalculator& keyCalculator, _calculators) {
         keys.push_back(keyCalculator.first);
     }
-    
+
     return keys;
+}
+
+GripperQuality::Ptr GripperEvaluator::getBaseQuality() const {
+    GripperQuality::Ptr quality = GripperQualityFactory::makeGripperQuality();
+    
+    BOOST_FOREACH(const QualityIndexKey& key, getIndexKeys()) {
+        quality->setIndex(key, 0.0);
+    }
+    
+    return quality;
 }
