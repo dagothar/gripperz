@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "loaders/GripperLoader.hpp"
+#include "loaders/GripperLoaderFactory.hpp"
 #include "loaders/BaseGripperLoader.hpp"
 #include "loaders/ParametrizedGripperLoader.hpp"
 #include "loaders/GripperQualityLoader.hpp"
