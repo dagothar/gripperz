@@ -28,25 +28,25 @@ ParametrizedGripper::Ptr ParametrizedGripperLoader::read(const boost::property_t
     Gripper::Ptr basic_gripper = gripper_loader->read(tree);
     
     ParametrizationLoader::Ptr param_loader = new ParametrizationLoader();
-    Parametrization::Ptr param = param_loader->read(tree.get_child("gripper"));
+    Parametrization::Ptr param = param_loader->read(tree.get_child("parametrization"));
     
     ParametrizedGripper::Ptr parametrized_gripper = ownedPtr(new ParametrizedGripper(*basic_gripper, param));
     
     return parametrized_gripper;
 }
 
-boost::property_tree::ptree ParametrizedGripperLoader::write(ParametrizedGripper::Ptr object) {
+pair<string, ptree> ParametrizedGripperLoader::write(ParametrizedGripper::Ptr gripper) {
     GripperLoader::Ptr gripper_loader = new GripperLoader();
-    ptree tree = gripper_loader->write(object);
+    pair<string, ptree> trunk = gripper_loader->write(gripper);
+    ptree& tree = trunk.second;
     
-    //ptree name_node;
-    //name_node.put("<xmlattr>.class", "ParametrizedGripper");
-    //tree.add_child("gripper", name_node);
+    tree.put("<xmlattr>.name", gripper->getName());
+    tree.put("<xmlattr>.class", "ParametrizedGripper");
     
     ParametrizationLoader::Ptr param_loader = new ParametrizationLoader();
-    ptree param_node = param_loader->write(object->getParametrization());
+    auto param_node = param_loader->write(gripper->getParametrization());
     
-    tree.add_child("gripper", param_node);
+    tree.add_child("parametrization", param_node.second);
     
-    return tree;
+    return make_pair(trunk.first, trunk.second);
 }

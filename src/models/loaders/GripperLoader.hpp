@@ -30,7 +30,7 @@ namespace gripperz {
 
                 virtual Gripper::Ptr read(const boost::property_tree::ptree& tree);
 
-                virtual boost::property_tree::ptree write(Gripper::Ptr object);
+                virtual std::pair<std::string, boost::property_tree::ptree> write(Gripper::Ptr object);
 
 
             private:

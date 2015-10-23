@@ -21,17 +21,17 @@ ParametrizationLoader::ParametrizationLoader() {
 ParametrizationLoader::~ParametrizationLoader() {
 }
 
-Parameter readParameter(ptree& tree) {
+Parameter readParameter(const ptree& tree) {
     ParameterName name = tree.get<ParameterName>("<xmlattr>.name");
-    ParameterValue value = tree.get<ParameterValue>("");
+    ParameterValue value = tree.get_value<ParameterValue>();
 
     return Parameter(name, value);
 }
 
-Parametrization::Ptr readParametrization(ptree& tree) {
+Parametrization::Ptr ParametrizationLoader::read(const ptree& tree) {
     Parametrization::Ptr parametrization = ownedPtr(new Parametrization());
 
-    BOOST_FOREACH(ptree::value_type& node, tree) {
+    BOOST_FOREACH(const ptree::value_type& node, tree) {
         if (node.first == "parameter") {
             Parameter p = readParameter(node.second);
             parametrization->addParameter(p);
@@ -41,21 +41,15 @@ Parametrization::Ptr readParametrization(ptree& tree) {
     return parametrization;
 }
 
-Parametrization::Ptr ParametrizationLoader::read(const ptree& tree) {
-    ptree root = tree.get_child("parametrization");
-
-    return readParametrization(root);
-}
-
-ptree ParametrizationLoader::write(Parametrization::Ptr parametrization) {
+pair<string, ptree> ParametrizationLoader::write(Parametrization::Ptr parametrization) {
     ptree tree;
 
     BOOST_FOREACH(const Parameter& p, parametrization->getParameterList()) {
         ptree node;
         node.put("<xmlattr>.name", p.first);
         node.put_value(p.second);
-        tree.add_child("parametrization.parameter", node);
+        tree.add_child("parameter", node);
     }
     
-    return tree;
+    return make_pair("parametrization", tree);
 }

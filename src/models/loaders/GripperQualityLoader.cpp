@@ -8,6 +8,7 @@
 #include "GripperQualityLoader.hpp"
 #include <models/GripperQualityFactory.hpp>
 
+using namespace std;
 using namespace gripperz::models;
 using namespace gripperz::models::loaders;
 using namespace boost::property_tree;
@@ -25,7 +26,7 @@ QualityIndex readIndex(const boost::property_tree::ptree& tree) {
     return QualityIndex(key, value);
 }
 
-GripperQuality::Ptr readQuality(const boost::property_tree::ptree& tree) {
+GripperQuality::Ptr GripperQualityLoader::read(const boost::property_tree::ptree& tree) {
     GripperQuality::Ptr quality = GripperQualityFactory::makeGripperQuality();
 
     BOOST_FOREACH(const ptree::value_type& node, tree) {
@@ -38,21 +39,15 @@ GripperQuality::Ptr readQuality(const boost::property_tree::ptree& tree) {
     return quality;
 }
 
-GripperQuality::Ptr GripperQualityLoader::read(const boost::property_tree::ptree& tree) {
-    ptree root = tree.get_child("quality");
-
-    return readQuality(root);
-}
-
-boost::property_tree::ptree GripperQualityLoader::write(GripperQuality::Ptr object) {
+pair<string, ptree> GripperQualityLoader::write(GripperQuality::Ptr object) {
     ptree tree;
 
     BOOST_FOREACH(const QualityIndex& p, object->getIndices()) {
         ptree node;
         node.put("<xmlattr>.name", p.first);
         node.put_value(p.second);
-        tree.add_child("quality.index", node);
+        tree.add_child("index", node);
     }
 
-    return tree;
+    return make_pair("quality", tree);
 }
