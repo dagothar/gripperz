@@ -16,3 +16,11 @@ GripperLoader::GripperLoader() {
 GripperLoader::~GripperLoader() {
 }
 
+
+Gripper::Ptr GripperLoader::read(const boost::property_tree::ptree& tree) {
+
+}
+
+boost::property_tree::ptree GripperLoader::write(Gripper::Ptr object) {
+
+}

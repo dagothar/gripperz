@@ -9,6 +9,7 @@
 
 #include <rw/common/Ptr.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <util/XMLHelpers.hpp>
 
 namespace gripperz {
     namespace loaders {
@@ -31,11 +32,21 @@ namespace gripperz {
             virtual ~Loader() {
             }
 
-            virtual T load(const std::string& filename) = 0;
+            virtual T load(const std::string& filename) {
+                rw::common::Ptr<boost::property_tree::ptree> tree = util::XMLHelpers::parseXMLFile(filename);
+                
+                T object = read(*tree);
+                
+                return object;
+            }
 
             virtual T read(const boost::property_tree::ptree& tree) = 0;
 
-            virtual void save(const std::string& filename, T object) = 0;
+            virtual void save(const std::string& filename, T object) {
+                boost::property_tree::ptree tree = write(object);
+                
+                util::XMLHelpers::saveXMLFile(filename, &tree);
+            }
 
             virtual boost::property_tree::ptree write(T object) = 0;
 

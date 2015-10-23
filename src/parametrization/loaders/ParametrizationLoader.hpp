@@ -29,25 +29,11 @@ namespace gripperz {
                 virtual ~ParametrizationLoader();
 
                 /**
-                 * Loads the Parametrization from an XML file
-                 * @param filename
-                 * @return 
-                 */
-                virtual Parametrization::Ptr load(const std::string& filename);
-
-                /**
                  * Reads the Parametrization from a ptree
                  * @param tree
                  * @return 
                  */
                 virtual Parametrization::Ptr read(const boost::property_tree::ptree& tree);
-
-                /**
-                 * Saves the Parametrization to an XML file
-                 * @param filename
-                 * @param parametrization
-                 */
-                virtual void save(const std::string& filename, Parametrization::Ptr parametrization);
 
                 /**
                  * Writes the Parametrization to a ptree

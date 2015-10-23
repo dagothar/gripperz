@@ -21,13 +21,6 @@ ParametrizationLoader::ParametrizationLoader() {
 ParametrizationLoader::~ParametrizationLoader() {
 }
 
-Parametrization::Ptr ParametrizationLoader::load(const std::string& filename) {
-
-    rw::common::Ptr<ptree> tree = XMLHelpers::parseXMLFile(filename);
-
-    return read(*tree);
-}
-
 Parameter readParameter(ptree& tree) {
     ParameterName name = tree.get<ParameterName>("<xmlattr>.name");
     ParameterValue value = tree.get<ParameterValue>("");
@@ -52,12 +45,6 @@ Parametrization::Ptr ParametrizationLoader::read(const ptree& tree) {
     ptree root = tree.get_child("parametrization");
 
     return readParametrization(root);
-}
-
-void ParametrizationLoader::save(const std::string& filename, Parametrization::Ptr parametrization) {
-    ptree tree = write(parametrization);
-    
-    XMLHelpers::saveXMLFile(filename, &tree);
 }
 
 ptree ParametrizationLoader::write(Parametrization::Ptr parametrization) {

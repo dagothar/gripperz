@@ -27,12 +27,8 @@ namespace gripperz {
                 GripperLoader();
 
                 virtual ~GripperLoader();
-                
-                virtual Gripper::Ptr load(const std::string& filename);
 
                 virtual Gripper::Ptr read(const boost::property_tree::ptree& tree);
-
-                virtual void save(const std::string& filename, Gripper::Ptr object);
 
                 virtual boost::property_tree::ptree write(Gripper::Ptr object);
 
