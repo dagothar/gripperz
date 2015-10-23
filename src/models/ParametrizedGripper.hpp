@@ -27,6 +27,11 @@ namespace gripperz {
                     const std::string& name,
                     parametrization::Parametrization::Ptr parametrization = rw::common::ownedPtr(new parametrization::Parametrization())
                     );
+            
+            ParametrizedGripper(
+                    const Gripper& gripper,
+                    parametrization::Parametrization::Ptr parametrization = rw::common::ownedPtr(new parametrization::Parametrization())
+                    );
 
             virtual ~ParametrizedGripper();
 

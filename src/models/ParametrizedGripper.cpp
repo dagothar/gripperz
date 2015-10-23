@@ -15,6 +15,12 @@ Parametrized(parametrization) {
 
 }
 
+ParametrizedGripper::ParametrizedGripper(const Gripper& gripper, parametrization::Parametrization::Ptr parametrization) :
+Gripper(gripper),
+Parametrized(parametrization) {
+
+}
+
 ParametrizedGripper::~ParametrizedGripper() {
 }
 

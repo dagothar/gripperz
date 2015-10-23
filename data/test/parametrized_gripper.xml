@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gripper name="myLittleParametrizedGripper" class="ParametrizedGripper">
+	
+	<data>
+		<deviceId>gripper</deviceId>
+		<dynamicDeviceId>gripper</dynamicDeviceId>
+		<tcpFrameId>TCPgripper</tcpFrameId>
+		<movableFrameId>gripper.Base</movableFrameId>
+		<graspControllerId>graspController</graspControllerId>
+		<leftFingerId>gripper.LeftFinger</leftFingerId>
+		<rightFingerId>gripper.RightFinger</rightFingerId>
+	</data>
+	
+	<parametrization>
+		<parameter name="weight">9001</parameter>
+		<parameter name="cost">999</parameter>
+	</parametrization>
+	
+</quality>
