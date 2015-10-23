@@ -33,7 +33,17 @@ namespace gripperz {
 
             void addQualityIndexCalculator(const models::QualityIndexKey& indexName, QualityIndexCalculator::Ptr calculator);
             
+            /**
+             * Returns the keys of all the calculators added before
+             * @return 
+             */
             std::vector<models::QualityIndexKey> getIndexKeys() const;
+            
+            /**
+             * Returns the empty GripperQuality based on the calculators added before
+             * @return 
+             */
+            models::GripperQuality::Ptr getBaseQuality() const;
 
         private:
             std::vector<KeyCalculator> _calculators;
