@@ -8,7 +8,7 @@
 #pragma once
 
 #include "../Parametrization.hpp"
-#include <boost/property_tree/ptree.hpp>
+#include <loaders/Loader.hpp>
 
 namespace gripperz {
     namespace parametrization {
@@ -18,7 +18,7 @@ namespace gripperz {
              * @class ParametrizationLoader
              * @brief
              */
-            class ParametrizationLoader {
+            class ParametrizationLoader : public gripperz::loaders::Loader<Parametrization::Ptr> {
             public:
                 //! Smart pointer.
                 typedef rw::common::Ptr<ParametrizationLoader> Ptr;
@@ -40,7 +40,7 @@ namespace gripperz {
                  * @param tree
                  * @return 
                  */
-                virtual Parametrization::Ptr read(boost::property_tree::ptree& tree);
+                virtual Parametrization::Ptr read(const boost::property_tree::ptree& tree);
 
                 /**
                  * Saves the Parametrization to an XML file

@@ -48,7 +48,7 @@ Parametrization::Ptr readParametrization(ptree& tree) {
     return parametrization;
 }
 
-Parametrization::Ptr ParametrizationLoader::read(ptree& tree) {
+Parametrization::Ptr ParametrizationLoader::read(const ptree& tree) {
     ptree root = tree.get_child("parametrization");
 
     return readParametrization(root);
