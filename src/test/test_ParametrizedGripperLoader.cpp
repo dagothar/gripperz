@@ -14,7 +14,7 @@ using namespace gripperz::models::loaders;
 
 BOOST_AUTO_TEST_CASE(ShouldLoadParametrizedGripper) {
     ParametrizedGripperLoader::Ptr loader = new ParametrizedGripperLoader();
-    ParametrizedGripper::Ptr gripper = loader->load("../data/test/parametrized_gripper.xml");
+    ParametrizedGripper::Ptr gripper = loader->load("../data/test/parametrized_gripper.xml").cast<ParametrizedGripper>();
     
     BOOST_CHECK(gripper->getName() == "myLittleParametrizedGripper");
     BOOST_CHECK(gripper->getDeviceId() == "gripper");
@@ -28,10 +28,10 @@ BOOST_AUTO_TEST_CASE(ShouldLoadParametrizedGripper) {
 
 BOOST_AUTO_TEST_CASE(ShouldSaveQuality) {
     ParametrizedGripperLoader::Ptr loader = new ParametrizedGripperLoader();
-    ParametrizedGripper::Ptr gripper = loader->load("../data/test/parametrized_gripper.xml");
+    ParametrizedGripper::Ptr gripper = loader->load("../data/test/parametrized_gripper.xml").cast<ParametrizedGripper>();
     
     loader->save("pg.xml", gripper);
-    ParametrizedGripper::Ptr g = loader->load("pg.xml");
+    ParametrizedGripper::Ptr g = loader->load("pg.xml").cast<ParametrizedGripper>();
     
     BOOST_CHECK(g->getName() == "myLittleParametrizedGripper");
     BOOST_CHECK(g->getDeviceId() == "gripper");

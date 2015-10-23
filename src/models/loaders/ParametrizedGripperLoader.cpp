@@ -6,7 +6,7 @@
  */
 
 #include "ParametrizedGripperLoader.hpp"
-#include "GripperLoader.hpp"
+#include "BaseGripperLoader.hpp"
 #include <parametrization/loaders/ParametrizationLoader.hpp>
 
 using namespace std;
@@ -23,9 +23,8 @@ ParametrizedGripperLoader::ParametrizedGripperLoader() {
 ParametrizedGripperLoader::~ParametrizedGripperLoader() {
 }
 
-ParametrizedGripper::Ptr ParametrizedGripperLoader::read(const boost::property_tree::ptree& tree) {
-    GripperLoader::Ptr gripper_loader = new GripperLoader();
-    Gripper::Ptr basic_gripper = gripper_loader->read(tree);
+Gripper::Ptr ParametrizedGripperLoader::read(const boost::property_tree::ptree& tree) {
+    Gripper::Ptr basic_gripper = BaseGripperLoader::read(tree);
     
     ParametrizationLoader::Ptr param_loader = new ParametrizationLoader();
     Parametrization::Ptr param = param_loader->read(tree.get_child("parametrization"));
@@ -35,9 +34,10 @@ ParametrizedGripper::Ptr ParametrizedGripperLoader::read(const boost::property_t
     return parametrized_gripper;
 }
 
-pair<string, ptree> ParametrizedGripperLoader::write(ParametrizedGripper::Ptr gripper) {
-    GripperLoader::Ptr gripper_loader = new GripperLoader();
-    pair<string, ptree> trunk = gripper_loader->write(gripper);
+pair<string, ptree> ParametrizedGripperLoader::write(Gripper::Ptr grp) {
+    ParametrizedGripper::Ptr gripper = grp.cast<ParametrizedGripper>();
+    
+    pair<string, ptree> trunk = BaseGripperLoader::write(gripper);
     ptree& tree = trunk.second;
     
     tree.put("<xmlattr>.name", gripper->getName());

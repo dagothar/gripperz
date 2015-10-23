@@ -18,15 +18,15 @@ namespace gripperz {
              * @class GripperLoader
              * @brief
              */
-            class GripperLoader : public gripperz::loaders::Loader<Gripper::Ptr> {
+            class BaseGripperLoader : public gripperz::loaders::Loader<Gripper::Ptr> {
             public:
                 //! Smart pointer.
-                typedef rw::common::Ptr<GripperLoader> Ptr;
+                typedef rw::common::Ptr<BaseGripperLoader> Ptr;
 
             public:
-                GripperLoader();
+                BaseGripperLoader();
 
-                virtual ~GripperLoader();
+                virtual ~BaseGripperLoader();
 
                 virtual Gripper::Ptr read(const boost::property_tree::ptree& tree);
 

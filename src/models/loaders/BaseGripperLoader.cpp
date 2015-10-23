@@ -5,7 +5,7 @@
  * Created on October 23, 2015, 11:44 AM
  */
 
-#include "GripperLoader.hpp"
+#include "BaseGripperLoader.hpp"
 
 using namespace std;
 using namespace rw::common;
@@ -13,10 +13,10 @@ using namespace gripperz::models;
 using namespace gripperz::models::loaders;
 using namespace boost::property_tree;
 
-GripperLoader::GripperLoader() {
+BaseGripperLoader::BaseGripperLoader() {
 }
 
-GripperLoader::~GripperLoader() {
+BaseGripperLoader::~BaseGripperLoader() {
 }
 
 void readData(const boost::property_tree::ptree& tree, Gripper::Ptr gripper) {
@@ -38,7 +38,7 @@ void readData(const boost::property_tree::ptree& tree, Gripper::Ptr gripper) {
     gripper->setRightFingerId(rightFingerId);
 }
 
-Gripper::Ptr GripperLoader::read(const boost::property_tree::ptree& tree) {
+Gripper::Ptr BaseGripperLoader::read(const boost::property_tree::ptree& tree) {
     string name = tree.get<string>("<xmlattr>.name");
     Gripper::Ptr gripper = ownedPtr(new Gripper(name));
 
@@ -48,7 +48,7 @@ Gripper::Ptr GripperLoader::read(const boost::property_tree::ptree& tree) {
     return gripper;
 }
 
-pair<string, ptree> GripperLoader::write(Gripper::Ptr gripper) {
+pair<string, ptree> BaseGripperLoader::write(Gripper::Ptr gripper) {
     ptree tree;
 
     tree.put("<xmlattr>.name", gripper->getName());

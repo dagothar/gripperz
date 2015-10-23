@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <loaders/Loader.hpp>
 #include <models/ParametrizedGripper.hpp>
+#include "BaseGripperLoader.hpp"
 
 namespace gripperz {
     namespace models {
@@ -18,7 +18,7 @@ namespace gripperz {
              * @class ParametrizedGripperLoader
              * @brief
              */
-            class ParametrizedGripperLoader : public gripperz::loaders::Loader<ParametrizedGripper::Ptr> {
+            class ParametrizedGripperLoader : public BaseGripperLoader {
             public:
                 //! Smart pointer.
                 typedef rw::common::Ptr<ParametrizedGripperLoader> Ptr;
@@ -28,9 +28,9 @@ namespace gripperz {
 
                 virtual ~ParametrizedGripperLoader();
                 
-                virtual ParametrizedGripper::Ptr read(const boost::property_tree::ptree& tree);
+                virtual Gripper::Ptr read(const boost::property_tree::ptree& tree);
 
-                virtual std::pair<std::string, boost::property_tree::ptree> write(ParametrizedGripper::Ptr object);
+                virtual std::pair<std::string, boost::property_tree::ptree> write(Gripper::Ptr object);
 
             };
 
