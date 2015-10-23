@@ -11,6 +11,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <iostream>
 #include "Types.hpp"
 
 namespace gripperz {
@@ -66,13 +67,32 @@ namespace gripperz {
             void setParameter(const Parameter& p);
 
             void setParameter(const ParameterName& name, const ParameterValue& value);
-            
+
             void merge(Parametrization::Ptr parametrization);
 
         private:
             ParameterNameList _parameterNameList;
             std::map<ParameterName, ParameterValue> _parameters;
         };
+
+        template<class T>
+        T& operator<<(T& stream, const Parametrization& parametrization) {
+
+            stream << "Parametrization:\n";
+
+            Parametrization::ParameterList params = parametrization.getParameterList();
+
+            for (
+                    Parametrization::ParameterList::iterator i = params.begin();
+                    i != params.end();
+                    ++i
+                    ) {
+                stream << " - " << i->first << "= " << i->second << "\n";
+            }
+            stream << std::endl;
+
+            return stream;
+        }
 
     }
 }
