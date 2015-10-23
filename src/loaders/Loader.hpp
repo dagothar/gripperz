@@ -33,7 +33,7 @@ namespace gripperz {
 
             virtual T load(const std::string& filename) = 0;
 
-            virtual T read(boost::property_tree::ptree& tree) = 0;
+            virtual T read(const boost::property_tree::ptree& tree) = 0;
 
             virtual void save(const std::string& filename, T object) = 0;
 

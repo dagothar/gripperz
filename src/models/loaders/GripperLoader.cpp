@@ -7,7 +7,8 @@
 
 #include "GripperLoader.hpp"
 
-using namespace NAMESPACE1::NAMESPACE2;
+using namespace gripperz::models;
+using namespace gripperz::models::loaders;
 
 GripperLoader::GripperLoader() {
 }
