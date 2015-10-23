@@ -27,9 +27,6 @@ namespace gripperz {
                     rw::common::ownedPtr(new parametrization::Parametrization()));
 
             virtual ~ParametrizedMeshGenerator();
-
-        private:
-
         };
 
     }

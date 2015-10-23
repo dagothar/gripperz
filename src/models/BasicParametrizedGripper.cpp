@@ -28,6 +28,10 @@ ParametrizedGripper(name, parametrization) {
 
 }
 
+BasicParametrizedGripper::BasicParametrizedGripper(const ParametrizedGripper& gripper) :
+ParametrizedGripper(gripper) {
+}
+
 BasicParametrizedGripper::~BasicParametrizedGripper() {
 }
 

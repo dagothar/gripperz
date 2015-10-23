@@ -39,8 +39,7 @@ pair<string, ptree> ParametrizedGripperLoader::write(Gripper::Ptr grp) {
     
     pair<string, ptree> trunk = BaseGripperLoader::write(gripper);
     ptree& tree = trunk.second;
-    
-    tree.put("<xmlattr>.name", gripper->getName());
+
     tree.put("<xmlattr>.class", "ParametrizedGripper");
     
     ParametrizationLoader::Ptr param_loader = new ParametrizationLoader();

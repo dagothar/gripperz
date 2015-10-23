@@ -11,4 +11,5 @@
 #include "loaders/GripperLoaderFactory.hpp"
 #include "loaders/BaseGripperLoader.hpp"
 #include "loaders/ParametrizedGripperLoader.hpp"
+#include "loaders/BasicParametrizedGripperLoader.hpp"
 #include "loaders/GripperQualityLoader.hpp"
