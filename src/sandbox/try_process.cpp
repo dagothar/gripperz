@@ -1,13 +1,28 @@
 #include <iostream>
-#include <gripperz.hpp>
+#include <rw/rw.hpp>
+#include <rwsim/rwsim.hpp>
+#include <context/Context.hpp>
+#include <grasps/databases/RWGraspDatabase.hpp>
+#include <simulation/BasicSimulator.hpp>
+#include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/calculators.hpp>
+#include <loaders/GripperXMLLoader.hpp>
+#include <process/StandardGripperEvaluationProcessManager.hpp>
 
 using namespace std;
 USE_ROBWORK_NAMESPACE
         using namespace robwork;
 USE_ROBWORKSIM_NAMESPACE
         using namespace robworksim;
-USE_GRIPPERZ_NAMESPACE
-        using namespace gripperz;
+using namespace gripperz::context;
+using namespace gripperz::simulation;
+using namespace gripperz::evaluation;
+using namespace gripperz::evaluation::calculators;
+using namespace gripperz::process;
+using namespace gripperz::grasps;
+using namespace gripperz::models;
+using namespace gripperz::loaders;
+using namespace gripperz::grasps::databases;
 
 struct Configuration {
     string dwcFilename;
@@ -59,11 +74,11 @@ int main(int argc, char* argv[]) {
                                                         gripper_simulator,
                                                         gripper_evaluator
                                                         );
-    
+
     /* EVALUATE GRIPPER */
     Gripper::Ptr gripper = GripperXMLLoader::load(CONFIG.gripperFilename);
     GripperQuality::Ptr quality = evaluation_manager->evaluateGripper(gripper);
-    
+
     cout << *quality << endl;
 
     return 0;
