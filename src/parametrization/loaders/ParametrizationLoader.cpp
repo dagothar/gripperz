@@ -49,16 +49,26 @@ Parametrization::Ptr readParametrization(ptree& tree) {
 }
 
 Parametrization::Ptr ParametrizationLoader::read(ptree& tree) {
-
     ptree root = tree.get_child("parametrization");
 
     return readParametrization(root);
 }
 
 void ParametrizationLoader::save(const std::string& filename, Parametrization::Ptr parametrization) {
+    ptree tree = write(parametrization);
     
+    XMLHelpers::saveXMLFile(filename, &tree);
 }
 
-void ParametrizationLoader::write(boost::property_tree::ptree& tree) {
+ptree ParametrizationLoader::write(Parametrization::Ptr parametrization) {
+    ptree tree;
 
+    BOOST_FOREACH(const Parameter& p, parametrization->getParameterList()) {
+        ptree node;
+        node.put("<xmlattr>.name", p.first);
+        node.put_value(p.second);
+        tree.add_child("parametrization.parameter", node);
+    }
+    
+    return tree;
 }

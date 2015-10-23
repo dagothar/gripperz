@@ -24,3 +24,16 @@ BOOST_AUTO_TEST_CASE(ShouldLoadParametrization) {
     BOOST_CHECK_CLOSE(p->getParameter("length"), 1.0, 1e-6);
     BOOST_CHECK_CLOSE(p->getParameter("zero"), 0.0, 1e-6);
 }
+
+BOOST_AUTO_TEST_CASE(ShouldSaveParametrization) {
+    ParametrizationLoader::Ptr loader = new ParametrizationLoader();
+    Parametrization::Ptr p1 = loader->load("../data/test/parametrization.xml");
+    
+    loader->save("p.xml", p1);
+    Parametrization::Ptr p2 = loader->load("p.xml");
+    
+    Parametrization::ParameterNameList pl1 = p1->getParameterNameList();
+    Parametrization::ParameterNameList pl2 = p2->getParameterNameList();
+    
+    BOOST_CHECK_EQUAL_COLLECTIONS(pl1.begin(), pl1.end(), pl2.begin(), pl2.end());
+}
