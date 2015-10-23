@@ -1,12 +1,9 @@
 #include <iostream>
-#include <gripperz.hpp>
 #include <boost/any.hpp>
 
 using namespace std;
 USE_ROBWORK_NAMESPACE
         using namespace robwork;
-USE_GRIPPERZ_NAMESPACE
-        using namespace gripperz;
 using namespace boost;
 
 class A {

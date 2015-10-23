@@ -9,7 +9,18 @@
 #include <string>
 #include <rw/rw.hpp>
 #include <rwsim/rwsim.hpp>
-#include <gripperz.hpp>
+#include <loaders/GripperXMLLoader.hpp>
+#include <loaders/TaskDescriptionLoader.hpp>
+#include <evaluation/GripperObjectiveFunction.hpp>
+#include <evaluation/IndexGripperQualityExtractor.hpp>
+#include <context/TaskDescription.hpp>
+#include <math/CombineObjectivesFactory.hpp>
+#include <grasps/planners/BasicParallelGripperGraspPlanner.hpp>
+#include <grasps/filters.hpp>
+#include <grasps/decorators.hpp>
+#include <models/MapGripperBuilder.hpp>
+#include <process/StandardGripperEvaluationProcessManager.hpp>
+#include <process/GripperEvaluationManagerFactory.hpp>
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/option.hpp>
@@ -23,10 +34,19 @@ USE_ROBWORK_NAMESPACE
         using namespace robwork;
 USE_ROBWORKSIM_NAMESPACE
         using namespace robworksim;
-USE_GRIPPERZ_NAMESPACE
-        using namespace gripperz;
 using namespace boost::program_options;
 namespace po = boost::program_options;
+using namespace gripperz::context;
+using namespace gripperz::loaders;
+using namespace gripperz::models;
+using namespace gripperz::math;
+using namespace gripperz::process;
+using namespace gripperz::evaluation;
+using namespace gripperz::models;
+using namespace gripperz::grasps;
+using namespace gripperz::grasps::filters;
+using namespace gripperz::grasps::planners;
+using namespace gripperz::grasps::decorators;
 
 struct Configuration {
     int cores;
