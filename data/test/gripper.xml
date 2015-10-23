@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gripper name="myLittleGripper" class="Gripper">
+	
+	<data>
+		<deviceId>gripper</deviceId>
+		<dynamicDeviceId>gripper</dynamicDeviceId>
+		<tcpFrameId>TCPgripper</tcpFrameId>
+		<movableFrameId>gripper.Base</movableFrameId>
+		<graspControllerId>graspController</graspControllerId>
+		<leftFingerId>gripper.LeftFinger</leftFingerId>
+		<rightFingerId>gripper.RightFinger</rightFingerId>
+	</data>
+	
+</quality>
