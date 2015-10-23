@@ -39,7 +39,7 @@ namespace gripperz {
                  * Writes the Parametrization to a ptree
                  * @param tree
                  */
-                virtual boost::property_tree::ptree write(Parametrization::Ptr parametrization);
+                virtual std::pair<std::string, boost::property_tree::ptree> write(Parametrization::Ptr parametrization);
 
             };
 

@@ -38,8 +38,8 @@ public:
 	static rw::math::Q readQ(PTree& tree);		
 	static std::string QToString(rw::math::Q q);
         
-        static rw::common::Ptr<PTree> parseXMLFile(const std::string& filename);
-        static void saveXMLFile(const std::string& filename, rw::common::Ptr<PTree> tree);
+        static PTree parseXMLFile(const std::string& filename);
+        static void saveXMLFile(const std::string& filename, const PTree& tree);
 };
 
 } /* util */

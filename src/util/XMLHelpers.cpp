@@ -98,12 +98,12 @@ std::string XMLHelpers::QToString(rw::math::Q q) {
     return sstr.str();
 }
 
-Ptr<PTree> XMLHelpers::parseXMLFile(const std::string& filename) {
-    Ptr<PTree> tree = ownedPtr(new PTree());
+PTree XMLHelpers::parseXMLFile(const std::string& filename) {
+    PTree tree;
 
     try {
         boost::filesystem::path p(filename);
-        read_xml(filename, *tree);
+        read_xml(filename, tree);
 
     } catch (const ptree_error& e) {
         RW_THROW(e.what());
@@ -112,10 +112,10 @@ Ptr<PTree> XMLHelpers::parseXMLFile(const std::string& filename) {
     return tree;
 }
 
-void XMLHelpers::saveXMLFile(const std::string& filename, rw::common::Ptr<PTree> tree) {
+void XMLHelpers::saveXMLFile(const std::string& filename, const PTree& tree) {
     try {
         boost::property_tree::xml_writer_settings<char> settings('\t', 1);
-        write_xml(filename, *tree, std::locale(), settings);
+        write_xml(filename, tree, std::locale(), settings);
     } catch (const ptree_error& e) {
         RW_THROW(e.what());
     }

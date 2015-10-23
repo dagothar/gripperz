@@ -33,9 +33,9 @@ namespace gripperz {
             }
 
             virtual T load(const std::string& filename) {
-                rw::common::Ptr<boost::property_tree::ptree> tree = util::XMLHelpers::parseXMLFile(filename);
+               boost::property_tree::ptree tree = util::XMLHelpers::parseXMLFile(filename);
                 
-                T object = read(*tree);
+                T object = read(tree.begin()->second);
                 
                 return object;
             }
@@ -43,12 +43,20 @@ namespace gripperz {
             virtual T read(const boost::property_tree::ptree& tree) = 0;
 
             virtual void save(const std::string& filename, T object) {
-                boost::property_tree::ptree tree = write(object);
+                std::pair<std::string, boost::property_tree::ptree> trunk = write(object);
                 
-                util::XMLHelpers::saveXMLFile(filename, &tree);
+                boost::property_tree::ptree root;
+                root.put_child(trunk.first, trunk.second);
+                
+                util::XMLHelpers::saveXMLFile(filename, root);
             }
 
-            virtual boost::property_tree::ptree write(T object) = 0;
+            /**
+             * Writes the object to the property tree.
+             * @param object
+             * @return pair (suggested root tag; ptree)
+             */
+            virtual std::pair<std::string, boost::property_tree::ptree> write(T object) = 0;
 
         private:
 

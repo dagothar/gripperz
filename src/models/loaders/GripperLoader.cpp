@@ -38,7 +38,7 @@ void readData(const boost::property_tree::ptree& tree, Gripper::Ptr gripper) {
     gripper->setRightFingerId(rightFingerId);
 }
 
-Gripper::Ptr readGripper(const boost::property_tree::ptree& tree) {
+Gripper::Ptr GripperLoader::read(const boost::property_tree::ptree& tree) {
     string name = tree.get<string>("<xmlattr>.name");
     Gripper::Ptr gripper = ownedPtr(new Gripper(name));
 
@@ -48,23 +48,17 @@ Gripper::Ptr readGripper(const boost::property_tree::ptree& tree) {
     return gripper;
 }
 
-Gripper::Ptr GripperLoader::read(const boost::property_tree::ptree& tree) {
-    ptree root = tree.get_child("gripper");
-
-    return readGripper(root);
-}
-
-boost::property_tree::ptree GripperLoader::write(Gripper::Ptr gripper) {
+pair<string, ptree> GripperLoader::write(Gripper::Ptr gripper) {
     ptree tree;
 
-    tree.put("gripper.<xmlattr>.name", gripper->getName());
-    tree.put("gripper.data.deviceId", gripper->getDeviceId());
-    tree.put("gripper.data.dynamicDeviceId", gripper->getDynamicDeviceId());
-    tree.put("gripper.data.tcpFrameId", gripper->getTCPFrameId());
-    tree.put("gripper.data.movableFrameId", gripper->getMovableFrameId());
-    tree.put("gripper.data.graspControllerId", gripper->getGraspControllerId());
-    tree.put("gripper.data.leftFingerId", gripper->getLeftFingerId());
-    tree.put("gripper.data.rightFingerId", gripper->getRightFingerId());
+    tree.put("<xmlattr>.name", gripper->getName());
+    tree.put("data.deviceId", gripper->getDeviceId());
+    tree.put("data.dynamicDeviceId", gripper->getDynamicDeviceId());
+    tree.put("data.tcpFrameId", gripper->getTCPFrameId());
+    tree.put("data.movableFrameId", gripper->getMovableFrameId());
+    tree.put("data.graspControllerId", gripper->getGraspControllerId());
+    tree.put("data.leftFingerId", gripper->getLeftFingerId());
+    tree.put("data.rightFingerId", gripper->getRightFingerId());
 
-    return tree;
+    return make_pair("gripper", tree);
 }
