@@ -7,10 +7,5 @@
 
 #pragma once
 
-namespace gripperz {
-    namespace models {
-        namespace loaders {
-            
-        }
-    }
-}
+#include "loaders/Loader.hpp"
+#include "loaders/GripperQualityLoader.hpp"
