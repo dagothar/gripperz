@@ -34,6 +34,7 @@
                 using namespace gripperz::grasps::decorators; \
                 using namespace gripperz::simulation; \
 		using namespace gripperz::models; \
+		using namespace gripperz::models::loaders; \
 		using namespace gripperz::math; \
 		using namespace gripperz::geometry; \
 		using namespace gripperz::parametrization; \
