@@ -8,3 +8,4 @@
 #include "simulation/GripperSimulator.hpp"
 #include "simulation/BasicSimulator.hpp"
 #include "simulation/InterferenceSimulator.hpp"
+#include "simulation/AlignmentSimulator.hpp"
