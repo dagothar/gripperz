@@ -59,6 +59,7 @@ private slots:
         void clearStatus();
         void undoPerturb();
         void randomPerturb();
+        void regularPerturb();
 
 private:
 	void setupGUI();

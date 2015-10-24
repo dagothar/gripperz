@@ -38,6 +38,7 @@ namespace gripperz {
                 
             protected:
                 std::vector<rwlibs::task::GraspTarget> makeGrid(const rwlibs::task::GraspTarget& seed) const;
+                std::vector<rwlibs::task::GraspTarget> makeOneDimension(const std::vector<rwlibs::task::GraspTarget>& seeds, unsigned i) const;
 
             private:
                 std::vector<double> _min;
