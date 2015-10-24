@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>403</width>
-    <height>652</height>
+    <height>668</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,6 +64,13 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="thresholdLineEdit">
+            <property name="text">
+             <string>1</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_5">
             <property name="text">
@@ -71,10 +78,17 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="thresholdLineEdit">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_6">
             <property name="text">
-             <string>1</string>
+             <string>Alignment filtering</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="filteringLineEdit">
+            <property name="text">
+             <string>0.01</string>
             </property>
            </widget>
           </item>

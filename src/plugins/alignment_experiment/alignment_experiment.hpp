@@ -62,6 +62,7 @@ private slots:
 private:
 	void setupGUI();
         void printResults();
+        void postSimulation();
 
 	rw::models::WorkCell* _wc;
 	rwsim::dynamics::DynamicWorkCell::Ptr _dwc;
