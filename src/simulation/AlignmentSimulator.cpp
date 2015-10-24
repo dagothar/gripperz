@@ -46,7 +46,12 @@ void AlignmentSimulator::evaluateGrasp(SimState& sstate) {
             DEBUG << "Grasp above alignment threshold." << endl;
             sstate._target->getResult()->testStatus = GraspResult::Interference;
         }
+
+        INFO << "Expected pose: " << _expectedPose << endl;
+        INFO << "Pose: " << sstate._target->getResult()->objectTtcpLift << endl;
+        INFO << "misalignment = " << misalignment << endl;
     }
+
 }
 
 double AlignmentSimulator::calculateAlignmentDifference(SimState& sstate) {
@@ -57,6 +62,6 @@ double AlignmentSimulator::calculateAlignmentDifference(SimState& sstate) {
 
 void AlignmentSimulator::printGraspResult(SimState& sstate) {
     BasicSimulator::printGraspResult(sstate);
-    
-    INFO << "Pose: " << sstate._target->getResult()->objectTtcpLift << endl;
+
+    //INFO << "Pose: " << sstate._target->getResult()->objectTtcpLift << endl;
 }
