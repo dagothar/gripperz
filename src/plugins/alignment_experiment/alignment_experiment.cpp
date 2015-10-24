@@ -205,8 +205,8 @@ void alignment_experiment::loadTasks() {
 
     _grasps = GraspTask::load(taskfile.toStdString());
 
-    GraspFilter::Ptr clearStatusFilter = new ClearStatusFilter();
-    _grasps = clearStatusFilter->filter(_grasps);
+    //GraspFilter::Ptr clearStatusFilter = new ClearStatusFilter();
+    //_grasps = clearStatusFilter->filter(_grasps);
     _previousGrasps = _grasps;
 
     _ui.progressBar->setValue(0);
