@@ -4,13 +4,17 @@
 #include <rw/common/Log.hpp>
 #include <rw/math/Math.hpp>
 #include <rw/math/Transform3D.hpp>
+#include <rw/math/MetricFactory.hpp>
 #include <rws/RobWorkStudio.hpp>
 #include <rwsim/dynamics/DynamicWorkCell.hpp>
 #include <fstream>
 #include <iostream>
 #include <boost/foreach.hpp>
 #include <grasps/filters/ClearStatusFilter.hpp>
+#include <grasps/filters/RobustnessGraspFilter.hpp>
 #include "RenderTarget.hpp"
+#include "grasps/GraspStatistics.hpp"
+#include "simulation/AlignmentSimulator.hpp"
 
 using namespace std;
 using namespace rws;
@@ -33,6 +37,8 @@ RobWorkStudioPlugin("simple_sim", QIcon(":/pa_icon.png")) {
 
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(updateView()));
+    
+    _expectedPose = Transform3D<>(Vector3D<>(0, 0, 0), Rotation3D<>(1, 0, 0, 0, 0, -1, 0, 1, 0));
 }
 
 alignment_experiment::~alignment_experiment() {
@@ -76,6 +82,7 @@ void alignment_experiment::setupGUI() {
     connect(_ui.startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
     connect(_ui.stopButton, SIGNAL(clicked()), this, SLOT(stopSimulation()));
     connect(_ui.showButton, SIGNAL(clicked()), this, SLOT(showTasks()));
+    connect(_ui.randomPerturbButton, SIGNAL(clicked()), this, SLOT(randomPerturb()));
 }
 
 void alignment_experiment::updateView() {
@@ -89,8 +96,27 @@ void alignment_experiment::updateView() {
 
     if (!_simulator->isRunning()) {
         _timer->stop();
+        showTasks();
+        
+        printResults();
     }
 }
+
+void alignment_experiment::printResults() {
+    int all = GraspStatistics::countGraspTargets(_grasps);
+    int aligned = GraspStatistics::countGraspsWithStatus(_grasps, GraspResult::Success);
+    int misaligned = GraspStatistics::countGraspsWithStatus(_grasps, GraspResult::Interference);
+    int successes = aligned + misaligned;
+    int failures = all - successes;
+    
+    log().info() << "\nExperiment results:\n";
+    log().info() << " - grasps = " << all << '\n';
+    log().info() << " - aligned = " << aligned << "(" << 1.0 * aligned / all << "%)\n";
+    log().info() << " - misaligned = " << misaligned << "(" << 1.0 * misaligned / all << "%)\n";
+    log().info() << " - successes(a+m) = " << successes << "(" << 1.0 * successes / all << "%)\n";
+    log().info() << " - failures = " << failures << "(" << 1.0 * failures / all << "%)\n" << endl;
+}
+
 
 void alignment_experiment::genericEventListener(const std::string & event) {
     if (event == "DynamicWorkCellLoaded") {
@@ -192,8 +218,11 @@ void alignment_experiment::saveTasks() {
 }
 
 void alignment_experiment::startSimulation() {
+    
+    double threshold = _ui.thresholdLineEdit->text().toDouble() * Deg2Rad;
+    AlignmentSimulator::AlignmentMetric::Ptr metric = rw::math::MetricFactory::makeTransform3DMetric<double>(0.0, 1.0);
 
-    _simulator = ownedPtr(new BasicSimulator(_dwc, 1));
+    _simulator = ownedPtr(new AlignmentSimulator(_dwc, _expectedPose, threshold, 1, metric));
     _simulator->loadTasks(_grasps);
 
     Log::log().setLevel(Log::Info);
@@ -211,6 +240,26 @@ void alignment_experiment::stopSimulation() {
     if (_simulator->isRunning()) {
         _simulator->stop();
     }
+}
+
+void alignment_experiment::randomPerturb() {
+    int targets = _ui.randomTargetsLineEdit->text().toInt();
+    double sigma_p = _ui.randomPositionLineEdit->text().toDouble();
+    double sigma_a = _ui.randomAngleLineEdit->text().toDouble();
+
+    try {
+        GraspFilter::Ptr robustnessFilter = new RobustnessGraspFilter(targets, sigma_p, sigma_a * Deg2Rad);
+
+        _grasps = robustnessFilter->filter(_grasps);
+
+    } catch (rw::common::Exception& e) {
+        QMessageBox::critical(NULL, "RW Exception", e.what());
+    }
+
+    _ui.progressBar->setValue(0);
+    _ui.progressBar->setMaximum(_grasps->getAllTargets().size());
+    
+    showTasks();
 }
 
 void alignment_experiment::showTasks() {

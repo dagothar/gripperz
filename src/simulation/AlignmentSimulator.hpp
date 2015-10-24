@@ -8,6 +8,7 @@
 
 #include "BasicSimulator.hpp"
 
+#include <rw/math/Transform3D.hpp>
 #include <rw/math/Metric.hpp>
 #include <rw/math/MetricFactory.hpp>
 
@@ -29,19 +30,20 @@ namespace gripperz {
         public:
             AlignmentSimulator(
                     rwsim::dynamics::DynamicWorkCell::Ptr dwc,
-                    double limit = 0.01,
+                    const rw::math::Transform3D<>& expectedPose,
+                    double threshold = 0.01,
                     unsigned nThreads = 1,
                     AlignmentMetric::Ptr metric = rw::math::MetricFactory::makeTransform3DMetric<double>(1.0, 1.0)
                     );
 
             virtual ~AlignmentSimulator();
 
-            double getAlignmentLimit() const {
-                return _alignmentLimit;
+            double getAlignmentThreshold() const {
+                return _alignmentThreshold;
             }
 
-            void setAlignmentLimit(double limit) {
-                _alignmentLimit = limit;
+            void setAlignmentThreshold(double limit) {
+                _alignmentThreshold = limit;
             }
 
             AlignmentMetric::Ptr getMetric() {
@@ -52,15 +54,28 @@ namespace gripperz {
                 _metric = metric;
             }
 
+            void setExpectedPose(const rw::math::Transform3D<>& _expectedPose) {
+                this->_expectedPose = _expectedPose;
+            }
+
+            rw::math::Transform3D<> getExpectedPose() const {
+                return _expectedPose;
+            }
+
         protected:
             /**
              * @brief Evaluates a grasp and changes the status if necessary.
              * Changes status to Interference, if interference limit violated.
              */
             virtual void evaluateGrasp(SimState& sstate);
+            
+            virtual double calculateAlignmentDifference(SimState& sstate);
+            
+            virtual void printGraspResult(SimState& sstate);
 
         private:
-            double _alignmentLimit;
+            rw::math::Transform3D<> _expectedPose;
+            double _alignmentThreshold;
             AlignmentMetric::Ptr _metric;
         };
 
