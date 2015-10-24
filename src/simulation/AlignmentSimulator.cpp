@@ -21,12 +21,14 @@ using namespace std;
 
 AlignmentSimulator::AlignmentSimulator(
                                        rwsim::dynamics::DynamicWorkCell::Ptr dwc,
+                                       const Transform3D<>& expectedPose,
                                        double limit,
                                        unsigned nThreads,
                                        AlignmentMetric::Ptr metric
                                        ) :
 BasicSimulator(dwc, nThreads),
-_alignmentLimit(limit),
+_expectedPose(expectedPose),
+_alignmentThreshold(limit),
 _metric(metric) {
 }
 
@@ -36,34 +38,25 @@ AlignmentSimulator::~AlignmentSimulator() {
 void AlignmentSimulator::evaluateGrasp(SimState& sstate) {
     BasicSimulator::evaluateGrasp(sstate);
 
-    /* if the grasp is success, it may still cause too much interference */
+    /* if the grasp is success, it may still be misaligned */
     if (sstate._target->getResult()->testStatus == GraspResult::Success) {
-        double interference = 0.0; //calculateSceneInterference(getInitState(), sstate._state);
+        double misalignment = calculateAlignmentDifference(sstate);
 
-        if (interference > _alignmentLimit) {
-            DEBUG << "Grasp above interference limit." << endl;
+        if (misalignment > _alignmentThreshold) {
+            DEBUG << "Grasp above alignment threshold." << endl;
             sstate._target->getResult()->testStatus = GraspResult::Interference;
         }
     }
 }
 
-//double AlignmentSimulator::calculateSceneInterference(const rw::kinematics::State& state0, const rw::kinematics::State& state1) const {
-//    double interference = 0.0;
-//
-//    BOOST_FOREACH(Object::Ptr object, _interferenceObjects) {
-//        interference += calculateObjectInterference(object, state0, state1);
-//    }
-//
-//    return interference;
-//}
-//
-//double AlignmentSimulator::calculateObjectInterference(rw::models::Object::Ptr object, const rw::kinematics::State& state0, const rw::kinematics::State& state1) const {
-//    Transform3D<> Tbefore = object->getBase()->getTransform(state0);
-//    Transform3D<> Tafter = object->getBase()->getTransform(state1);
-//
-//    double objInt = _metric->distance(Tbefore, Tafter);
-//
-//    //INFO << "Interference " << object->getName() << ": " << objInt << endl;
-//
-//    return objInt;
-//}
+double AlignmentSimulator::calculateAlignmentDifference(SimState& sstate) {
+    Transform3D<> pose = sstate._target->getResult()->objectTtcpLift;
+    double diff = _metric->distance(_expectedPose, pose);
+    return diff;
+}
+
+void AlignmentSimulator::printGraspResult(SimState& sstate) {
+    BasicSimulator::printGraspResult(sstate);
+    
+    INFO << "Pose: " << sstate._target->getResult()->objectTtcpLift << endl;
+}

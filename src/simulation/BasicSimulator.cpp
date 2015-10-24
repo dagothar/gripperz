@@ -16,73 +16,60 @@ using namespace gripperz::simulation;
 using namespace rwlibs::task;
 using namespace std;
 
-
 BasicSimulator::BasicSimulator(rwsim::dynamics::DynamicWorkCell::Ptr dwc, unsigned threads) :
-	GraspTaskSimulator(dwc, threads),
-	_threads(threads)
-{
+GraspTaskSimulator(dwc, threads),
+_threads(threads) {
 }
-
 
 BasicSimulator::~BasicSimulator() {
 }
-	
 
 void BasicSimulator::loadTasks(rwlibs::task::GraspTask::Ptr tasks) {
-	GraspTaskSimulator::load(tasks);
+    GraspTaskSimulator::load(tasks);
 }
-
 
 rwlibs::task::GraspTask::Ptr BasicSimulator::getTasks() {
-	return GraspTaskSimulator::getTasks();
+    return GraspTaskSimulator::getTasks();
 }
-
 
 void BasicSimulator::start(const rw::kinematics::State& initState) {
-	_initState = initState;
-	
-	//GraspTaskSimulator::init(_dwc, initState);
-	GraspTaskSimulator::startSimulation(initState);
-}
+    _initState = initState;
 
+    //GraspTaskSimulator::init(_dwc, initState);
+    GraspTaskSimulator::startSimulation(initState);
+}
 
 void BasicSimulator::stop() {
-	GraspTaskSimulator::pauseSimulation();
+    GraspTaskSimulator::pauseSimulation();
 }
-
 
 bool BasicSimulator::isRunning() {
-	return GraspTaskSimulator::isRunning();
+    return GraspTaskSimulator::isRunning();
 }
-
 
 unsigned BasicSimulator::getNrTasksDone() const {
-	return const_cast<BasicSimulator*>(this)->GraspTaskSimulator::getNrTargetsDone();
+    return const_cast<BasicSimulator*> (this)->GraspTaskSimulator::getNrTargetsDone();
 }
-
 
 std::vector<rwsim::simulator::ThreadSimulator::Ptr> BasicSimulator::getSimulators() {
-	return GraspTaskSimulator::getSimulators();
+    return GraspTaskSimulator::getSimulators();
 }
-
 
 void BasicSimulator::graspFinished(SimState& sstate) {
-	evaluateGrasp(sstate);
-	
-	printGraspResult(sstate);
-}
+    evaluateGrasp(sstate);
 
+    printGraspResult(sstate);
+}
 
 void BasicSimulator::evaluateGrasp(SimState& sstate) {
-	/* count slippages as successes */
-	if (sstate._target->getResult()->testStatus	== GraspResult::ObjectSlipped) {
-		sstate._target->getResult()->testStatus = GraspResult::Success;
-	}
+    /* count slippages as successes */
+    if (sstate._target->getResult()->testStatus == GraspResult::ObjectSlipped) {
+        sstate._target->getResult()->testStatus = GraspResult::Success;
+    }
 }
 
-
 void BasicSimulator::printGraspResult(SimState& sstate) {
-	DEBUG << "Grasp result " << getNrTargetsDone() << ": "
-		<< GraspTask::toString((GraspTask::TestStatus) sstate._target->getResult()->testStatus)
-		<< endl;
+    INFO << "Grasp result " << getNrTargetsDone() << ": "
+            << GraspTask::toString((GraspTask::TestStatus) sstate._target->getResult()->testStatus)
+            << endl;
 }

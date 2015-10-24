@@ -56,15 +56,18 @@ private slots:
         void startSimulation();
         void stopSimulation();
         void showTasks();
+        void randomPerturb();
 
 private:
 	void setupGUI();
+        void printResults();
 
 	rw::models::WorkCell* _wc;
 	rwsim::dynamics::DynamicWorkCell::Ptr _dwc;
 	gripperz::simulation::BasicSimulator::Ptr _simulator;
 	rw::kinematics::State _initState;
         gripperz::grasps::Grasps _grasps;
+        rw::math::Transform3D<> _expectedPose;
 
 	rw::graphics::Render::Ptr _render; // used to render targets
 	QTimer *_timer; // used to update RWS view periodically
