@@ -56,6 +56,7 @@ private slots:
         void startSimulation();
         void stopSimulation();
         void showTasks();
+        void clearStatus();
         void randomPerturb();
 
 private:

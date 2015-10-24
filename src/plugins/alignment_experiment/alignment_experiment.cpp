@@ -83,6 +83,7 @@ void alignment_experiment::setupGUI() {
     connect(_ui.startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
     connect(_ui.stopButton, SIGNAL(clicked()), this, SLOT(stopSimulation()));
     connect(_ui.showButton, SIGNAL(clicked()), this, SLOT(showTasks()));
+    connect(_ui.clearButton, SIGNAL(clicked()), this, SLOT(clearStatus()));
     connect(_ui.randomPerturbButton, SIGNAL(clicked()), this, SLOT(randomPerturb()));
 }
 
@@ -218,7 +219,8 @@ void alignment_experiment::saveTasks() {
 }
 
 void alignment_experiment::startSimulation() {
-
+    if (_grasps == NULL) return;
+    
     double threshold = _ui.thresholdLineEdit->text().toDouble() * Deg2Rad;
     AlignmentSimulator::AlignmentMetric::Ptr metric = ownedPtr(new SimpleAlignmentMetric<double>(Vector3D<>(0, 1, 0)));
     //rw::math::MetricFactory::makeTransform3DMetric<double>(0.0, 1.0);
@@ -238,12 +240,16 @@ void alignment_experiment::startSimulation() {
 }
 
 void alignment_experiment::stopSimulation() {
+    if (_simulator == NULL) return;
+    
     if (_simulator->isRunning()) {
         _simulator->stop();
     }
 }
 
 void alignment_experiment::randomPerturb() {
+    if (_grasps == NULL) return;
+
     int targets = _ui.randomTargetsLineEdit->text().toInt();
     double sigma_p = _ui.randomPositionLineEdit->text().toDouble();
     double sigma_a = _ui.randomAngleLineEdit->text().toDouble();
@@ -310,5 +316,21 @@ void alignment_experiment::showTasks() {
     ((RenderTargets*) _render.get())->setTargets(rtargets);
     getRobWorkStudio()->postUpdateAndRepaint();
 }
+
+void alignment_experiment::clearStatus() {
+    if (_grasps == NULL) return;
+
+    try {
+        GraspFilter::Ptr filter = new ClearStatusFilter();
+
+        _grasps = filter->filter(_grasps);
+
+    } catch (rw::common::Exception& e) {
+        QMessageBox::critical(NULL, "RW Exception", e.what());
+    }
+    
+    showTasks();
+}
+
 
 Q_EXPORT_PLUGIN(alignment_experiment);
