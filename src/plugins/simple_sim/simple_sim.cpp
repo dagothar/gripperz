@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <boost/foreach.hpp>
+#include <grasps/filters/ClearStatusFilter.hpp>
 
 using namespace std;
 using namespace rws;
@@ -16,9 +17,11 @@ using namespace rw::common;
 using namespace rw::math;
 using namespace rw::models;
 using namespace rw::kinematics;
+using namespace rwlibs::task;
 using namespace rwsim::dynamics;
 using namespace gripperz::simulation;
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::filters;
 using namespace boost;
 
 simple_sim::simple_sim() :
@@ -38,11 +41,9 @@ void simple_sim::initialize() {
     /* Initialization is basically only adding an event listener to the plugin,
      * so we know when another DynamicWorkCell is loaded.
      */
-    getRobWorkStudio()->genericEvent().add(
-                                           boost::bind(&simple_sim::genericEventListener, this, _1), this);
+    getRobWorkStudio()->genericEvent().add(boost::bind(&simple_sim::genericEventListener, this, _1), this);
 
-    getRobWorkStudio()->keyEvent().add(
-                                       boost::bind(&simple_sim::keyEventListener, this, _1, _2), this);
+    getRobWorkStudio()->keyEvent().add(boost::bind(&simple_sim::keyEventListener, this, _1, _2), this);
 
     Log::log().setLevel(Log::Info);
 }
@@ -81,28 +82,11 @@ void simple_sim::close() {
 }
 
 void simple_sim::setupGUI() {
-    //    connect(ui.editSetupButton, SIGNAL(clicked()), this, SLOT(setupEvent()));
-    //    connect(ui.loadSetupButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.saveSetupButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.addHintButton, SIGNAL(clicked()), this, SLOT(addHint()));
-    //    connect(ui.clearHintsButton, SIGNAL(clicked()), this, SLOT(clearHints()));
-    //    connect(ui.designButton, SIGNAL(clicked()), this, SLOT(designEvent()));
-    //    connect(ui.loadGripperButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.saveGripperButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.gripperCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(guiEvent(int)));
-    //    connect(ui.clearButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.initialButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.loadTaskButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.saveTaskButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.planButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.nAutoEdit, SIGNAL(editingFinished()), this, SLOT(guiEvent()));
-    //    connect(ui.showCheck, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.samplesCheck, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.successCheck, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.startButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.stopButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.testButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
-    //    connect(ui.perturbButton, SIGNAL(clicked()), this, SLOT(guiEvent()));
+    connect(_ui.resetButton, SIGNAL(clicked()), this, SLOT(resetState()));
+    connect(_ui.loadButton, SIGNAL(clicked()), this, SLOT(loadTasks()));
+    connect(_ui.saveButton, SIGNAL(clicked()), this, SLOT(saveTasks()));
+    connect(_ui.startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
+    connect(_ui.stopButton, SIGNAL(clicked()), this, SLOT(stopSimulation()));
 }
 
 void simple_sim::updateView() {
@@ -112,7 +96,6 @@ void simple_sim::updateView() {
 
     getRobWorkStudio()->setState(_simulator->getSimulators()[0]->getState());
 
-    // check out the number of tasks already performed and update progress bar accordingly
     _ui.progressBar->setValue(_simulator->getNrTasksDone());
 }
 
@@ -177,6 +160,40 @@ void simple_sim::keyEventListener(int key, Qt::KeyboardModifiers modifier) {
             getRobWorkStudio()->updateAndRepaint();
             break;
     }
+}
+
+void simple_sim::resetState() {
+
+}
+
+void simple_sim::loadTasks() {
+    QString taskfile = QFileDialog::getOpenFileName(this, "Open file", "", tr("Task files (*.xml)"));
+
+    if (taskfile.isEmpty()) {
+        return;
+    }
+
+    log().info() << "Loading tasks from: " << taskfile.toStdString() << "\n";
+
+    _grasps = GraspTask::load(taskfile.toStdString());
+
+    GraspFilter::Ptr clearStatusFilter = new ClearStatusFilter();
+    _grasps = clearStatusFilter->filter(_grasps);
+
+    _ui.progressBar->setValue(0);
+    _ui.progressBar->setMaximum(_grasps->getAllTargets().size());
+}
+
+void simple_sim::saveTasks() {
+
+}
+
+void simple_sim::startSimulation() {
+
+}
+
+void simple_sim::stopSimulation() {
+
 }
 
 Q_EXPORT_PLUGIN(simple_sim);
