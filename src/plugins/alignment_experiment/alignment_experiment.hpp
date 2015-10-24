@@ -57,6 +57,7 @@ private slots:
         void stopSimulation();
         void showTasks();
         void clearStatus();
+        void undoPerturb();
         void randomPerturb();
 
 private:
@@ -69,6 +70,7 @@ private:
 	gripperz::simulation::BasicSimulator::Ptr _simulator;
 	rw::kinematics::State _initState;
         gripperz::grasps::Grasps _grasps;
+        gripperz::grasps::Grasps _previousGrasps;
         rw::math::Transform3D<> _expectedPose;
 
 	rw::graphics::Render::Ptr _render; // used to render targets

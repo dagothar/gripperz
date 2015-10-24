@@ -87,6 +87,7 @@ void alignment_experiment::setupGUI() {
     connect(_ui.stopButton, SIGNAL(clicked()), this, SLOT(stopSimulation()));
     connect(_ui.showButton, SIGNAL(clicked()), this, SLOT(showTasks()));
     connect(_ui.clearButton, SIGNAL(clicked()), this, SLOT(clearStatus()));
+    connect(_ui.undoButton, SIGNAL(clicked()), this, SLOT(undoPerturb()));
     connect(_ui.randomPerturbButton, SIGNAL(clicked()), this, SLOT(randomPerturb()));
 }
 
@@ -202,6 +203,7 @@ void alignment_experiment::loadTasks() {
 
     GraspFilter::Ptr clearStatusFilter = new ClearStatusFilter();
     _grasps = clearStatusFilter->filter(_grasps);
+    _previousGrasps = _grasps;
 
     _ui.progressBar->setValue(0);
     _ui.progressBar->setMaximum(_grasps->getAllTargets().size());
@@ -250,8 +252,15 @@ void alignment_experiment::stopSimulation() {
     }
 }
 
+void alignment_experiment::undoPerturb() {
+    _grasps = _previousGrasps;
+    showTasks();
+}
+
 void alignment_experiment::randomPerturb() {
     if (_grasps == NULL) return;
+
+    _previousGrasps = _grasps;
 
     int targets = _ui.randomTargetsLineEdit->text().toInt();
     double sigma_p = _ui.randomPositionLineEdit->text().toDouble();
@@ -337,10 +346,10 @@ void alignment_experiment::clearStatus() {
 
 void alignment_experiment::postSimulation() {
     printResults();
-    
+
     QualityIndexCalculator::Ptr calculator = new AlignmentIndexCalculator(_ui.filteringLineEdit->text().toDouble());
     double alignment_index = calculator->calculate(NULL, _grasps);
-    
+
     log().info() << "Alignment Index = " << alignment_index << endl;
 }
 
