@@ -55,6 +55,7 @@ private slots:
         void saveTasks();
         void startSimulation();
         void stopSimulation();
+        void showTasks();
 
 private:
 	void setupGUI();
@@ -65,7 +66,7 @@ private:
 	rw::kinematics::State _initState;
         gripperz::grasps::Grasps _grasps;
 
-	//rw::graphics::Render::Ptr _render; // used to render targets
+	rw::graphics::Render::Ptr _render; // used to render targets
 	QTimer *_timer; // used to update RWS view periodically
 
 	Ui::SimpleSimWidget _ui;

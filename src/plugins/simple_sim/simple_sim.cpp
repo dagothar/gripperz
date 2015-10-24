@@ -10,6 +10,7 @@
 #include <iostream>
 #include <boost/foreach.hpp>
 #include <grasps/filters/ClearStatusFilter.hpp>
+#include "RenderTarget.hpp"
 
 using namespace std;
 using namespace rws;
@@ -48,22 +49,6 @@ void simple_sim::initialize() {
     Log::log().setLevel(Log::Info);
 }
 
-//void simple_sim::startSimulation() {
-//
-//    _simulator = ownedPtr(new BasicSimulator(_dwc, 1));
-//    //_simulator->loadTasks(_grasps);
-//
-//    Log::log().setLevel(Log::Info);
-//
-//    try {
-//        _simulator->start(_initState);
-//    } catch (...) {
-//        return;
-//    }
-//
-//    _timer->start();
-//}
-
 void simple_sim::open(WorkCell * workcell) {
     try {
         Math::seed(TimerUtil::currentTimeUs());
@@ -71,6 +56,9 @@ void simple_sim::open(WorkCell * workcell) {
         _wc = workcell;
 
         _initState = getRobWorkStudio()->getState();
+
+        _render = ownedPtr(new RenderTargets());
+        getRobWorkStudio()->getWorkCellScene()->addRender("pointRender", _render, workcell->getWorldFrame());
 
     } catch (const rw::common::Exception& e) {
         QMessageBox::critical(NULL, "RW Exception", e.what());
@@ -87,6 +75,7 @@ void simple_sim::setupGUI() {
     connect(_ui.saveButton, SIGNAL(clicked()), this, SLOT(saveTasks()));
     connect(_ui.startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
     connect(_ui.stopButton, SIGNAL(clicked()), this, SLOT(stopSimulation()));
+    connect(_ui.showButton, SIGNAL(clicked()), this, SLOT(showTasks()));
 }
 
 void simple_sim::updateView() {
@@ -97,6 +86,10 @@ void simple_sim::updateView() {
     getRobWorkStudio()->setState(_simulator->getSimulators()[0]->getState());
 
     _ui.progressBar->setValue(_simulator->getNrTasksDone());
+
+    if (!_simulator->isRunning()) {
+        _timer->stop();
+    }
 }
 
 void simple_sim::genericEventListener(const std::string & event) {
@@ -163,7 +156,7 @@ void simple_sim::keyEventListener(int key, Qt::KeyboardModifiers modifier) {
 }
 
 void simple_sim::resetState() {
-
+    getRobWorkStudio()->setState(_wc->getDefaultState());
 }
 
 void simple_sim::loadTasks() {
@@ -182,18 +175,90 @@ void simple_sim::loadTasks() {
 
     _ui.progressBar->setValue(0);
     _ui.progressBar->setMaximum(_grasps->getAllTargets().size());
+
+    showTasks();
 }
 
 void simple_sim::saveTasks() {
+    QString taskfile = QFileDialog::getSaveFileName(this, "Save file", "", tr("Task files (*.xml)"));
 
+    if (taskfile.isEmpty()) {
+        return;
+    }
+
+    log().info() << "Saving tasks to: " << taskfile.toStdString() << endl;
+
+    GraspTask::saveRWTask(_grasps, taskfile.toStdString());
 }
 
 void simple_sim::startSimulation() {
 
+    _simulator = ownedPtr(new BasicSimulator(_dwc, 1));
+    _simulator->loadTasks(_grasps);
+
+    Log::log().setLevel(Log::Info);
+
+    try {
+        _simulator->start(_initState);
+    } catch (...) {
+        return;
+    }
+
+    _timer->start();
 }
 
 void simple_sim::stopSimulation() {
+    if (_simulator->isRunning()) {
+        _simulator->stop();
+    }
+}
 
+void simple_sim::showTasks() {
+    vector<RenderTargets::Target> rtargets;
+    Transform3D<> wTo = Kinematics::worldTframe(_wc->findFrame(_ui.targetEdit->text().toStdString()), _wc->getDefaultState());
+
+    rwlibs::task::GraspTask::Ptr tasks = _grasps;
+    if (tasks == NULL) {
+        return;
+    }
+
+    typedef std::pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
+
+    BOOST_FOREACH(TaskTarget p, tasks->getAllTargets()) {
+        RenderTargets::Target rt;
+        rt.ctask = p.first;
+        rt.ctarget = *p.second; //target;
+
+        if (rt.ctarget.getResult()->testStatus == GraspResult::UnInitialized) {
+            rt.color[0] = 0.0;
+            rt.color[1] = 0.9;
+            rt.color[2] = 1.0;
+            rt.color[3] = 0.5;
+        } else if (rt.ctarget.getResult()->testStatus == GraspResult::Success) {
+            rt.color[0] = 0.0;
+            rt.color[1] = 1.0;
+            rt.color[2] = 0.0;
+            rt.color[3] = 0.5;
+        } else if (rt.ctarget.getResult()->testStatus == GraspResult::Interference) {
+            rt.color[0] = 1.0;
+            rt.color[1] = 1.0;
+            rt.color[2] = 0.0;
+            rt.color[3] = 0.5;
+        } else {
+            rt.color[0] = 1.0;
+            rt.color[1] = 0.0;
+            rt.color[2] = 0.0;
+            rt.color[3] = 0.5;
+        }
+
+        rt.trans = wTo * rt.ctarget.pose;
+
+        rtargets.push_back(rt);
+    }
+
+
+    ((RenderTargets*) _render.get())->setTargets(rtargets);
+    getRobWorkStudio()->postUpdateAndRepaint();
 }
 
 Q_EXPORT_PLUGIN(simple_sim);
