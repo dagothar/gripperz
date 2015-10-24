@@ -12,6 +12,7 @@
 #include <boost/foreach.hpp>
 #include <grasps/filters/ClearStatusFilter.hpp>
 #include <grasps/filters/RobustnessGraspFilter.hpp>
+#include <evaluation/calculators/AlignmentIndexCalculator.hpp>
 #include "RenderTarget.hpp"
 #include "grasps/GraspStatistics.hpp"
 #include "simulation/AlignmentSimulator.hpp"
@@ -26,6 +27,8 @@ using namespace rw::kinematics;
 using namespace rwlibs::task;
 using namespace rwsim::dynamics;
 using namespace gripperz::simulation;
+using namespace gripperz::evaluation;
+using namespace gripperz::evaluation::calculators;
 using namespace gripperz::grasps;
 using namespace gripperz::grasps::filters;
 using namespace boost;
@@ -100,7 +103,7 @@ void alignment_experiment::updateView() {
         _timer->stop();
         showTasks();
 
-        printResults();
+        postSimulation();
     }
 }
 
@@ -220,7 +223,7 @@ void alignment_experiment::saveTasks() {
 
 void alignment_experiment::startSimulation() {
     if (_grasps == NULL) return;
-    
+
     double threshold = _ui.thresholdLineEdit->text().toDouble() * Deg2Rad;
     AlignmentSimulator::AlignmentMetric::Ptr metric = ownedPtr(new SimpleAlignmentMetric<double>(Vector3D<>(0, 1, 0)));
     //rw::math::MetricFactory::makeTransform3DMetric<double>(0.0, 1.0);
@@ -241,7 +244,7 @@ void alignment_experiment::startSimulation() {
 
 void alignment_experiment::stopSimulation() {
     if (_simulator == NULL) return;
-    
+
     if (_simulator->isRunning()) {
         _simulator->stop();
     }
@@ -328,9 +331,19 @@ void alignment_experiment::clearStatus() {
     } catch (rw::common::Exception& e) {
         QMessageBox::critical(NULL, "RW Exception", e.what());
     }
-    
+
     showTasks();
 }
+
+void alignment_experiment::postSimulation() {
+    printResults();
+    
+    QualityIndexCalculator::Ptr calculator = new AlignmentIndexCalculator(_ui.filteringLineEdit->text().toDouble());
+    double alignment_index = calculator->calculate(NULL, _grasps);
+    
+    log().info() << "Alignment Index = " << alignment_index << endl;
+}
+
 
 
 Q_EXPORT_PLUGIN(alignment_experiment);
