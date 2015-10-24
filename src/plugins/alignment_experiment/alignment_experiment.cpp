@@ -15,6 +15,7 @@
 #include "RenderTarget.hpp"
 #include "grasps/GraspStatistics.hpp"
 #include "simulation/AlignmentSimulator.hpp"
+#include "SimpleAlignmentMetric.hpp"
 
 using namespace std;
 using namespace rws;
@@ -37,7 +38,7 @@ RobWorkStudioPlugin("simple_sim", QIcon(":/pa_icon.png")) {
 
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(updateView()));
-    
+
     _expectedPose = Transform3D<>(Vector3D<>(0, 0, 0), Rotation3D<>(1, 0, 0, 0, 0, -1, 0, 1, 0));
 }
 
@@ -97,7 +98,7 @@ void alignment_experiment::updateView() {
     if (!_simulator->isRunning()) {
         _timer->stop();
         showTasks();
-        
+
         printResults();
     }
 }
@@ -108,15 +109,14 @@ void alignment_experiment::printResults() {
     int misaligned = GraspStatistics::countGraspsWithStatus(_grasps, GraspResult::Interference);
     int successes = aligned + misaligned;
     int failures = all - successes;
-    
+
     log().info() << "\nExperiment results:\n";
     log().info() << " - grasps = " << all << '\n';
-    log().info() << " - aligned = " << aligned << "(" << 1.0 * aligned / all << "%)\n";
-    log().info() << " - misaligned = " << misaligned << "(" << 1.0 * misaligned / all << "%)\n";
-    log().info() << " - successes(a+m) = " << successes << "(" << 1.0 * successes / all << "%)\n";
-    log().info() << " - failures = " << failures << "(" << 1.0 * failures / all << "%)\n" << endl;
+    log().info() << " - aligned = " << aligned << "(" << 100.0 * aligned / all << "%)\n";
+    log().info() << " - misaligned = " << misaligned << "(" << 100.0 * misaligned / all << "%)\n";
+    log().info() << " - successes(a+m) = " << successes << "(" << 100.0 * successes / all << "%)\n";
+    log().info() << " - failures = " << failures << "(" << 100.0 * failures / all << "%)\n" << endl;
 }
-
 
 void alignment_experiment::genericEventListener(const std::string & event) {
     if (event == "DynamicWorkCellLoaded") {
@@ -218,9 +218,10 @@ void alignment_experiment::saveTasks() {
 }
 
 void alignment_experiment::startSimulation() {
-    
+
     double threshold = _ui.thresholdLineEdit->text().toDouble() * Deg2Rad;
-    AlignmentSimulator::AlignmentMetric::Ptr metric = rw::math::MetricFactory::makeTransform3DMetric<double>(0.0, 1.0);
+    AlignmentSimulator::AlignmentMetric::Ptr metric = ownedPtr(new SimpleAlignmentMetric<double>(Vector3D<>(0, 1, 0)));
+    //rw::math::MetricFactory::makeTransform3DMetric<double>(0.0, 1.0);
 
     _simulator = ownedPtr(new AlignmentSimulator(_dwc, _expectedPose, threshold, 1, metric));
     _simulator->loadTasks(_grasps);
@@ -258,7 +259,7 @@ void alignment_experiment::randomPerturb() {
 
     _ui.progressBar->setValue(0);
     _ui.progressBar->setMaximum(_grasps->getAllTargets().size());
-    
+
     showTasks();
 }
 
