@@ -12,11 +12,13 @@
 #include <boost/foreach.hpp>
 #include <grasps/filters/ClearStatusFilter.hpp>
 #include <grasps/filters/RobustnessGraspFilter.hpp>
+#include <grasps/filters/GraspGridFilter.hpp>
 #include <evaluation/calculators/AlignmentIndexCalculator.hpp>
 #include "RenderTarget.hpp"
 #include "grasps/GraspStatistics.hpp"
 #include "simulation/AlignmentSimulator.hpp"
 #include "SimpleAlignmentMetric.hpp"
+#include "grasps/filters/GraspGridFilter.hpp"
 
 using namespace std;
 using namespace rws;
@@ -86,9 +88,11 @@ void alignment_experiment::setupGUI() {
     connect(_ui.startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
     connect(_ui.stopButton, SIGNAL(clicked()), this, SLOT(stopSimulation()));
     connect(_ui.showButton, SIGNAL(clicked()), this, SLOT(showTasks()));
+    //connect(_ui.progressBar, SIGNAL(clicked()), this, SLOT(showTasks()));
     connect(_ui.clearButton, SIGNAL(clicked()), this, SLOT(clearStatus()));
     connect(_ui.undoButton, SIGNAL(clicked()), this, SLOT(undoPerturb()));
     connect(_ui.randomPerturbButton, SIGNAL(clicked()), this, SLOT(randomPerturb()));
+    connect(_ui.regularPerturbButton, SIGNAL(clicked()), this, SLOT(regularPerturb()));
 }
 
 void alignment_experiment::updateView() {
@@ -270,6 +274,51 @@ void alignment_experiment::randomPerturb() {
         GraspFilter::Ptr robustnessFilter = new RobustnessGraspFilter(targets, sigma_p, sigma_a * Deg2Rad);
 
         _grasps = robustnessFilter->filter(_grasps);
+
+    } catch (rw::common::Exception& e) {
+        QMessageBox::critical(NULL, "RW Exception", e.what());
+    }
+
+    _ui.progressBar->setValue(0);
+    _ui.progressBar->setMaximum(_grasps->getAllTargets().size());
+
+    showTasks();
+}
+
+void alignment_experiment::regularPerturb() {
+if (_grasps == NULL) return;
+
+    _previousGrasps = _grasps;
+
+    vector<double> min{
+        _ui.xMinEdit->text().toDouble(),
+        _ui.yMinEdit->text().toDouble(),
+        _ui.zMinEdit->text().toDouble(),
+        _ui.rollMinEdit->text().toDouble() * Deg2Rad,
+        _ui.pitchMinEdit->text().toDouble() * Deg2Rad,
+        _ui.yawMinEdit->text().toDouble() * Deg2Rad
+    };
+    vector<double> max{
+        _ui.xMaxEdit->text().toDouble(),
+        _ui.yMaxEdit->text().toDouble(),
+        _ui.zMaxEdit->text().toDouble(),
+        _ui.rollMaxEdit->text().toDouble() * Deg2Rad,
+        _ui.pitchMaxEdit->text().toDouble() * Deg2Rad,
+        _ui.yawMaxEdit->text().toDouble() * Deg2Rad
+    };
+    vector<int> res{
+        _ui.xResEdit->text().toInt(),
+        _ui.yResEdit->text().toInt(),
+        _ui.zResEdit->text().toInt(),
+        _ui.rollResEdit->text().toInt(),
+        _ui.pitchResEdit->text().toInt(),
+        _ui.yawResEdit->text().toInt(),
+    };
+
+    try {
+        GraspFilter::Ptr regularFilter = new GraspGridFilter(min, max, res);
+
+        _grasps = regularFilter->filter(_grasps);
 
     } catch (rw::common::Exception& e) {
         QMessageBox::critical(NULL, "RW Exception", e.what());
