@@ -60,7 +60,7 @@ private slots:
     void showTasks();
     void clearStatus();
     void undoGrasps();
-    void redoGrasps();
+    void storeGrasps();
     void randomPerturb();
     void regularPerturb();
 
@@ -75,8 +75,7 @@ private:
     gripperz::simulation::BasicSimulator::Ptr _simulator;
     rw::kinematics::State _initState;
     gripperz::grasps::Grasps _grasps;
-    std::deque<gripperz::grasps::Grasps> _previousGrasps;
-    std::deque<gripperz::grasps::Grasps> _nextGrasps;
+    gripperz::grasps::Grasps _previousGrasps;
     rw::math::Transform3D<> _expectedPose;
 
     rw::graphics::Render::Ptr _render; // used to render targets
