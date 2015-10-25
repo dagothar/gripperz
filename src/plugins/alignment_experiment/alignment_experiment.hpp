@@ -53,7 +53,8 @@ private slots:
 
     void resetState();
     void loadTasks();
-    void saveTasks();
+    void saveTasksRW();
+    void saveTasksCSV();
     void startSimulation();
     void stopSimulation();
     void showTasks();
@@ -79,7 +80,8 @@ private:
     rw::math::Transform3D<> _expectedPose;
 
     rw::graphics::Render::Ptr _render; // used to render targets
-    QTimer *_timer; // used to update RWS view periodically
+    QTimer *_updateStateTimer;
+    QTimer *_showTasksTimer;
 
     Ui::AlignmentExpWidget _ui;
 };

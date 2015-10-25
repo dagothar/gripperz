@@ -21,6 +21,7 @@
 #include "grasps/filters/GraspGridFilter.hpp"
 
 const int HISTORY_LIMIT = 10;
+const int SHOW_TASKS_DELAY = 10000;
 
 using namespace std;
 using namespace rws;
@@ -43,8 +44,11 @@ RobWorkStudioPlugin("simple_sim", QIcon(":/pa_icon.png")) {
     _ui.setupUi(this);
     setupGUI();
 
-    _timer = new QTimer(this);
-    connect(_timer, SIGNAL(timeout()), this, SLOT(updateView()));
+    _updateStateTimer = new QTimer(this);
+    connect(_updateStateTimer, SIGNAL(timeout()), this, SLOT(updateView()));
+    
+    _showTasksTimer = new QTimer(this);
+    connect(_showTasksTimer, SIGNAL(timeout()), this, SLOT(showTasks()));
 
     _expectedPose = Transform3D<>(Vector3D<>(0, 0, 0), Rotation3D<>(1, 0, 0, 0, 0, -1, 0, 1, 0));
 }
@@ -80,16 +84,17 @@ void alignment_experiment::open(WorkCell * workcell) {
 }
 
 void alignment_experiment::close() {
-    _timer->stop();
+    _updateStateTimer->stop();
 }
 
 void alignment_experiment::setupGUI() {
     connect(_ui.resetButton, SIGNAL(clicked()), this, SLOT(resetState()));
     connect(_ui.loadButton, SIGNAL(clicked()), this, SLOT(loadTasks()));
-    connect(_ui.saveButton, SIGNAL(clicked()), this, SLOT(saveTasks()));
+    connect(_ui.saveRWButton, SIGNAL(clicked()), this, SLOT(saveTasksRW()));
+    connect(_ui.saveCSVButton, SIGNAL(clicked()), this, SLOT(saveTasksCSV()));
     connect(_ui.startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
     connect(_ui.stopButton, SIGNAL(clicked()), this, SLOT(stopSimulation()));
-    connect(_ui.showButton, SIGNAL(clicked()), this, SLOT(showTasks()));
+    //connect(_ui.showButton, SIGNAL(clicked()), this, SLOT(showTasks()));
     //connect(_ui.progressBar, SIGNAL(clicked()), this, SLOT(showTasks()));
     connect(_ui.clearButton, SIGNAL(clicked()), this, SLOT(clearStatus()));
     connect(_ui.undoButton, SIGNAL(clicked()), this, SLOT(undoGrasps()));
@@ -108,7 +113,9 @@ void alignment_experiment::updateView() {
     _ui.progressBar->setValue(_simulator->getNrTasksDone());
 
     if (!_simulator->isRunning()) {
-        _timer->stop();
+        _updateStateTimer->stop();
+        _showTasksTimer->stop();
+        
         showTasks();
 
         postSimulation();
@@ -214,7 +221,19 @@ void alignment_experiment::loadTasks() {
     showTasks();
 }
 
-void alignment_experiment::saveTasks() {
+void alignment_experiment::saveTasksRW() {
+    QString taskfile = QFileDialog::getSaveFileName(this, "Save file", "", tr("Task files (*.xml)"));
+
+    if (taskfile.isEmpty()) {
+        return;
+    }
+
+    log().info() << "Saving tasks to: " << taskfile.toStdString() << endl;
+
+    GraspTask::saveRWTask(_grasps, taskfile.toStdString());
+}
+
+void alignment_experiment::saveTasksCSV() {
     QString taskfile = QFileDialog::getSaveFileName(this, "Save file", "", tr("Task files (*.xml)"));
 
     if (taskfile.isEmpty()) {
@@ -230,10 +249,10 @@ void alignment_experiment::startSimulation() {
     if (_grasps == NULL) return;
 
     double threshold = _ui.thresholdLineEdit->text().toDouble() * Deg2Rad;
+    int threads = _ui.threadsEdit->text().toInt();
     AlignmentSimulator::AlignmentMetric::Ptr metric = ownedPtr(new SimpleAlignmentMetric<double>(Vector3D<>(0, 1, 0)));
-    //rw::math::MetricFactory::makeTransform3DMetric<double>(0.0, 1.0);
 
-    _simulator = ownedPtr(new AlignmentSimulator(_dwc, _expectedPose, threshold, 1, metric));
+    _simulator = ownedPtr(new AlignmentSimulator(_dwc, _expectedPose, threshold, threads, metric));
     _simulator->loadTasks(_grasps);
 
     Log::log().setLevel(Log::Info);
@@ -244,7 +263,8 @@ void alignment_experiment::startSimulation() {
         return;
     }
 
-    _timer->start();
+    _updateStateTimer->start();
+    _showTasksTimer->start(SHOW_TASKS_DELAY);
 }
 
 void alignment_experiment::stopSimulation() {
