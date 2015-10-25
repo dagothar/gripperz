@@ -46,7 +46,7 @@ RobWorkStudioPlugin("simple_sim", QIcon(":/pa_icon.png")) {
 
     _updateStateTimer = new QTimer(this);
     connect(_updateStateTimer, SIGNAL(timeout()), this, SLOT(updateView()));
-    
+
     _showTasksTimer = new QTimer(this);
     connect(_showTasksTimer, SIGNAL(timeout()), this, SLOT(showTasks()));
 
@@ -115,7 +115,7 @@ void alignment_experiment::updateView() {
     if (!_simulator->isRunning()) {
         _updateStateTimer->stop();
         _showTasksTimer->stop();
-        
+
         showTasks();
 
         postSimulation();
@@ -233,16 +233,49 @@ void alignment_experiment::saveTasksRW() {
     GraspTask::saveRWTask(_grasps, taskfile.toStdString());
 }
 
+int rwStatusToSimpleStatus(int status) {
+    switch (status) {
+        case 14: // misaligned
+            return 1;
+        case 1: // success
+            return 2;
+        default: // uninitialized + failure
+            return 0;
+    }
+}
+
 void alignment_experiment::saveTasksCSV() {
-    QString taskfile = QFileDialog::getSaveFileName(this, "Save file", "", tr("Task files (*.xml)"));
+    QString taskfile = QFileDialog::getSaveFileName(this, "Save file", "", tr("CSV files (*.csv)"));
 
     if (taskfile.isEmpty()) {
         return;
     }
 
     log().info() << "Saving tasks to: " << taskfile.toStdString() << endl;
+    
+    double x = _ui.xOffsetEdit->text().toDouble();
+    double y = _ui.yOffsetEdit->text().toDouble();
+    double z = _ui.zOffsetEdit->text().toDouble();
+    double roll = _ui.rollOffsetEdit->text().toDouble() * Deg2Rad;
+    double pitch = _ui.pitchOffsetEdit->text().toDouble() * Deg2Rad;
+    double yaw = _ui.yawOffsetEdit->text().toDouble() * Deg2Rad;
+    Transform3D<> offset(Vector3D<>(x, y, z), RPY<>(roll, pitch, yaw).toRotation3D());
 
-    GraspTask::saveRWTask(_grasps, taskfile.toStdString());
+    ofstream out(taskfile.toStdString());
+    typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
+
+    BOOST_FOREACH(const TaskTarget& tt, _grasps->getAllTargets()) {
+        GraspTarget* target = tt.second;
+        Transform3D<> pose = inverse(offset) * target->pose;
+        Vector3D<> p = pose.P();
+        RPY<> r = RPY<>(pose.R());
+        int status = rwStatusToSimpleStatus(target->getResult()->testStatus);
+
+        out << p[0] << ", " << p[1] << ", " << p[2] << ", ";
+        out << r[0] * Rad2Deg << ", " << r[1] * Rad2Deg << ", " << r[2] * Rad2Deg << ", ";
+        out << status << endl;
+    }
+    out.close();
 }
 
 void alignment_experiment::startSimulation() {
