@@ -33,6 +33,8 @@ namespace gripperz {
              * @param name
              */
             BasicParametrizedGripper(const std::string& name);
+            
+            BasicParametrizedGripper(const ParametrizedGripper& gripper);
 
             /**
              * Constructor.

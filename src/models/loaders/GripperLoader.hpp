@@ -2,13 +2,13 @@
  * File:   GripperLoader.hpp
  * Author: dagothar
  *
- * Created on October 23, 2015, 11:44 AM
+ * Created on October 23, 2015, 11:26 PM
  */
 
 #pragma once
 
-#include <models/Gripper.hpp>
 #include <loaders/Loader.hpp>
+#include <models/Gripper.hpp>
 
 namespace gripperz {
     namespace models {
@@ -27,17 +27,15 @@ namespace gripperz {
                 GripperLoader();
 
                 virtual ~GripperLoader();
+                
+                virtual Gripper::Ptr read(const boost::property_tree::ptree& tree) = 0;
 
-                virtual Gripper::Ptr read(const boost::property_tree::ptree& tree);
-
-                virtual std::pair<std::string, boost::property_tree::ptree> write(Gripper::Ptr object);
-
-
-            private:
+                virtual std::pair<std::string, boost::property_tree::ptree> write(Gripper::Ptr object) = 0;
 
             };
 
         }
     }
-
 }
+
+

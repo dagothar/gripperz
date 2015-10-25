@@ -7,11 +7,13 @@
 #include <rwsim/loaders/DynamicWorkCellLoader.hpp>
 #include <context/Context.hpp>
 #include <models/BasicParametrizedGripper.hpp>
+#include <models/loaders/BasicParametrizedGripperLoader.hpp>
 #include <parametrization/ParametrizationTranslator.hpp>
 
 using namespace std;
 using namespace gripperz::parametrization;
 using namespace gripperz::models;
+using namespace gripperz::models::loaders;
 using namespace gripperz::context;
 using namespace rwsim::dynamics;
 using namespace rwsim::loaders;
@@ -23,24 +25,13 @@ struct Fixture {
         /* load data */
         DynamicWorkCell::Ptr dwc = DynamicWorkCellLoader::load("../data/rotor/Scene.dwc.xml");
         context = ownedPtr(new Context(dwc));
-
-        /* create basic gripper */
-        gripper = ownedPtr(new BasicParametrizedGripper("gripper"));
-        gripper->setDeviceId("gripper");
-        gripper->setDynamicDeviceId("gripper");
-        gripper->setTCPFrameId("TCPgripper");
-        gripper->setMovableFrameId("gripper.Base");
-        gripper->setLeftFingerId("gripper.LeftFinger");
-        gripper->setRightFingerId("gripper.RightFinger");
-        
-        gripper->registerWithContext(context->getWorkCell(), context->getDynamicWorkCell(), context->getInitState());
     }
 
     ~Fixture() {
     }
 
     Context::Ptr context;
-    ParametrizedGripper::Ptr gripper;
+    
 };
 
 BOOST_AUTO_TEST_CASE(ShouldHaveBasicParametrization) {
@@ -53,23 +44,49 @@ BOOST_AUTO_TEST_CASE(ShouldHaveBasicParametrization) {
 }
 
 BOOST_FIXTURE_TEST_CASE(ShouldModifyWorkCell, Fixture) {
+    ParametrizedGripper::Ptr gripper;
+    
+    gripper = ownedPtr(new BasicParametrizedGripper("gripper"));
+    gripper->setDeviceId("gripper");
+    gripper->setDynamicDeviceId("gripper");
+    gripper->setTCPFrameId("TCPgripper");
+    gripper->setMovableFrameId("gripper.Base");
+    gripper->setLeftFingerId("gripper.LeftFinger");
+    gripper->setRightFingerId("gripper.RightFinger");
+
+    gripper->registerWithContext(context->getWorkCell(), context->getDynamicWorkCell(), context->getInitState());
+
     gripper->setParameter("tcpoffset", 0.09);
     gripper->setParameter("stroke", 0.05);
     gripper->setParameter("jawdist", 0.01);
     gripper->setParameter("force", 100.0);
+
+    rw::kinematics::State state = context->getInitState();
+    gripper->applyModifications(context->getWorkCell(), context->getDynamicWorkCell(), state);
+
+    double tcp_z = gripper->getTCPFrame()->getTransform(state).P()[2];
+    BOOST_CHECK(tcp_z == 0.09);
+
+    double min_q = gripper->getDevice()->getBounds().first(0);
+    double max_q = gripper->getDevice()->getBounds().second(0);
+
+    BOOST_CHECK_CLOSE(min_q, 0.005, 1e-5);
+    BOOST_CHECK_CLOSE(max_q, 0.03, 1e-5);
+
+    double force = gripper->getDynamicDevice()->getMotorForceLimits()[0];
+    BOOST_CHECK(force == 100.0);
+}
+
+BOOST_FIXTURE_TEST_CASE(ShouldLoad, Fixture) {
+    GripperLoader::Ptr loader = new BasicParametrizedGripperLoader();
+    ParametrizedGripper::Ptr gripper = loader->load("../data/test/basic_parametrized_gripper.xml").cast<ParametrizedGripper>();
     
+    BOOST_CHECK(gripper->getName() == "myLittleBasicParametrizedGripper");
+    
+     gripper->registerWithContext(context->getWorkCell(), context->getDynamicWorkCell(), context->getInitState());
     rw::kinematics::State state = context->getInitState();
     gripper->applyModifications(context->getWorkCell(), context->getDynamicWorkCell(), state);
     
     double tcp_z = gripper->getTCPFrame()->getTransform(state).P()[2];
-    BOOST_CHECK(tcp_z == 0.09);
-    
-    double min_q = gripper->getDevice()->getBounds().first(0);
-    double max_q = gripper->getDevice()->getBounds().second(0);
-    
-    BOOST_CHECK_CLOSE(min_q, 0.005, 1e-5);
-    BOOST_CHECK_CLOSE(max_q, 0.03, 1e-5);
-    
-    double force = gripper->getDynamicDevice()->getMotorForceLimits()[0];
-    BOOST_CHECK(force == 100.0);
+    BOOST_CHECK(tcp_z == 0.075);
 }

@@ -1,5 +1,5 @@
 /* 
- * File:   ParametrizedGripperLoader.hpp
+ * File:   BasicParametrizedGripperLoader.hpp
  * Author: dagothar
  *
  * Created on October 23, 2015, 2:54 PM
@@ -8,30 +8,29 @@
 #pragma once
 
 #include <models/ParametrizedGripper.hpp>
-#include "BaseGripperLoader.hpp"
+#include "ParametrizedGripperLoader.hpp"
 
 namespace gripperz {
     namespace models {
         namespace loaders {
 
             /**
-             * @class ParametrizedGripperLoader
+             * @class BasicParametrizedGripperLoader
              * @brief
              */
-            class ParametrizedGripperLoader : public BaseGripperLoader {
+            class BasicParametrizedGripperLoader : public ParametrizedGripperLoader {
             public:
                 //! Smart pointer.
-                typedef rw::common::Ptr<ParametrizedGripperLoader> Ptr;
+                typedef rw::common::Ptr<BasicParametrizedGripperLoader> Ptr;
 
             public:
-                ParametrizedGripperLoader();
+                BasicParametrizedGripperLoader();
 
-                virtual ~ParametrizedGripperLoader();
+                virtual ~BasicParametrizedGripperLoader();
                 
                 virtual Gripper::Ptr read(const boost::property_tree::ptree& tree);
 
                 virtual std::pair<std::string, boost::property_tree::ptree> write(Gripper::Ptr object);
-
             };
 
         }

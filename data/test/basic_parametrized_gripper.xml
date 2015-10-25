@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gripper name="myLittleBasicParametrizedGripper" class="BasicParametrizedGripper">
+	
+	<data>
+		<deviceId>gripper</deviceId>
+		<dynamicDeviceId>gripper</dynamicDeviceId>
+		<tcpFrameId>TCPgripper</tcpFrameId>
+		<movableFrameId>gripper.Base</movableFrameId>
+		<graspControllerId>graspController</graspControllerId>
+		<leftFingerId>gripper.LeftFinger</leftFingerId>
+		<rightFingerId>gripper.RightFinger</rightFingerId>
+	</data>
+	
+	<parametrization>
+		<parameter name="tcpoffset">0.075</parameter>
+		<parameter name="stroke">0.05</parameter>
+		<parameter name="jawdist">0</parameter>
+		<parameter name="force">100</parameter>
+	</parametrization>
+	
+</gripper>
