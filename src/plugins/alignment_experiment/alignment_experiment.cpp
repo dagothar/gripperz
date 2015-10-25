@@ -20,6 +20,8 @@
 #include "SimpleAlignmentMetric.hpp"
 #include "grasps/filters/GraspGridFilter.hpp"
 
+const int HISTORY_LIMIT = 10;
+
 using namespace std;
 using namespace rws;
 using namespace rw::common;
@@ -90,7 +92,8 @@ void alignment_experiment::setupGUI() {
     connect(_ui.showButton, SIGNAL(clicked()), this, SLOT(showTasks()));
     //connect(_ui.progressBar, SIGNAL(clicked()), this, SLOT(showTasks()));
     connect(_ui.clearButton, SIGNAL(clicked()), this, SLOT(clearStatus()));
-    connect(_ui.undoButton, SIGNAL(clicked()), this, SLOT(undoPerturb()));
+    connect(_ui.undoButton, SIGNAL(clicked()), this, SLOT(undoGrasps()));
+    connect(_ui.redoButton, SIGNAL(clicked()), this, SLOT(redoGrasps()));
     connect(_ui.randomPerturbButton, SIGNAL(clicked()), this, SLOT(randomPerturb()));
     connect(_ui.regularPerturbButton, SIGNAL(clicked()), this, SLOT(regularPerturb()));
 }
@@ -203,11 +206,7 @@ void alignment_experiment::loadTasks() {
 
     log().info() << "Loading tasks from: " << taskfile.toStdString() << "\n";
 
-    _grasps = GraspTask::load(taskfile.toStdString());
-
-    //GraspFilter::Ptr clearStatusFilter = new ClearStatusFilter();
-    //_grasps = clearStatusFilter->filter(_grasps);
-    _previousGrasps = _grasps;
+    setGrasps(GraspTask::load(taskfile.toStdString()));
 
     _ui.progressBar->setValue(0);
     _ui.progressBar->setMaximum(_grasps->getAllTargets().size());
@@ -256,15 +255,36 @@ void alignment_experiment::stopSimulation() {
     }
 }
 
-void alignment_experiment::undoPerturb() {
-    _grasps = _previousGrasps;
+void alignment_experiment::undoGrasps() {
+    if (_previousGrasps.empty()) return;
+
+    if (_grasps != NULL) {
+        _nextGrasps.push_back(_grasps);
+        if (_nextGrasps.size() > HISTORY_LIMIT) {
+            _nextGrasps.pop_front();
+        }
+    }
+    _grasps = _previousGrasps.back();
+    _previousGrasps.pop_back();
+    showTasks();
+}
+
+void alignment_experiment::redoGrasps() {
+    if (_nextGrasps.empty()) return;
+
+    if (_grasps != NULL) {
+        _previousGrasps.push_back(_grasps);
+        if (_previousGrasps.size() > HISTORY_LIMIT) {
+            _previousGrasps.pop_front();
+        }
+    }
+    _grasps = _nextGrasps.back();
+    _nextGrasps.pop_back();
     showTasks();
 }
 
 void alignment_experiment::randomPerturb() {
     if (_grasps == NULL) return;
-
-    _previousGrasps = _grasps;
 
     int targets = _ui.randomTargetsLineEdit->text().toInt();
     double sigma_p = _ui.randomPositionLineEdit->text().toDouble();
@@ -273,7 +293,7 @@ void alignment_experiment::randomPerturb() {
     try {
         GraspFilter::Ptr robustnessFilter = new RobustnessGraspFilter(targets, sigma_p, sigma_a * Deg2Rad);
 
-        _grasps = robustnessFilter->filter(_grasps);
+        setGrasps(robustnessFilter->filter(_grasps));
 
     } catch (rw::common::Exception& e) {
         QMessageBox::critical(NULL, "RW Exception", e.what());
@@ -286,9 +306,7 @@ void alignment_experiment::randomPerturb() {
 }
 
 void alignment_experiment::regularPerturb() {
-if (_grasps == NULL) return;
-
-    _previousGrasps = _grasps;
+    if (_grasps == NULL) return;
 
     vector<double> min{
         _ui.xMinEdit->text().toDouble(),
@@ -318,7 +336,7 @@ if (_grasps == NULL) return;
     try {
         GraspFilter::Ptr regularFilter = new GraspGridFilter(min, max, res);
 
-        _grasps = regularFilter->filter(_grasps);
+        setGrasps(regularFilter->filter(_grasps));
 
     } catch (rw::common::Exception& e) {
         QMessageBox::critical(NULL, "RW Exception", e.what());
@@ -384,7 +402,7 @@ void alignment_experiment::clearStatus() {
     try {
         GraspFilter::Ptr filter = new ClearStatusFilter();
 
-        _grasps = filter->filter(_grasps);
+        setGrasps(filter->filter(_grasps));
 
     } catch (rw::common::Exception& e) {
         QMessageBox::critical(NULL, "RW Exception", e.what());
@@ -401,6 +419,15 @@ void alignment_experiment::postSimulation() {
 
     log().info() << "Alignment Index = " << alignment_index << endl;
 }
+
+void alignment_experiment::setGrasps(gripperz::grasps::Grasps grasps) {
+    _previousGrasps.push_back(_grasps);
+    if (_previousGrasps.size() > HISTORY_LIMIT) {
+        _previousGrasps.pop_front();
+    }
+    _grasps = grasps;
+}
+
 
 
 
