@@ -32,7 +32,7 @@ void initialize() {
 struct Configuration {
     string input_filename;
     string output_filename;
-    Vector3D<> offset;
+    Transform3D<> offset;
 } CONFIG;
 
 bool parse_cli(int argc, char* argv[], Configuration& config) {
@@ -42,7 +42,7 @@ bool parse_cli(int argc, char* argv[], Configuration& config) {
     string usage =
             "Translates grasps saved in rwtask file to a csv file format\n\n"
             "Usage:\n"
-            "\trwtask_to_csv RWTASK_FILE CSV_FILE [-o \"X Y Z\"] \n\n";
+            "\trwtask_to_csv RWTASK_FILE CSV_FILE [-o \"X Y Z ROLL PITCH YAW\"] \n\n";
 
     options_description desc("Allowed options");
     desc
@@ -50,7 +50,7 @@ bool parse_cli(int argc, char* argv[], Configuration& config) {
             ("help,h", "help message")
             ("input", value<string>(&config.input_filename)->required(), "rwtask XML file")
             ("output", value<string>(&config.output_filename)->required(), "destination CSV filename")
-            ("offset", value<string>(&offset), "grasps position offset: \"x y z\"");
+            ("offset, o", value<string>(&offset), "grasps position offset: \"x y z roll pitch yaw\"");
     positional_options_description p;
     p
             .add("input", 1).add("output", 2);
@@ -75,11 +75,13 @@ bool parse_cli(int argc, char* argv[], Configuration& config) {
 
     if (!offset.empty()) {
         istringstream offset_sstr(offset);
-        double x, y, z;
+        double x, y, z, roll, pitch, yaw;
 
-        offset_sstr >> x >> y >> z;
+        offset_sstr >> x >> y >> z >> roll >> pitch >> yaw;
 
-        config.offset = Vector3D<>(x, y, z);
+        config.offset = Transform3D<>(
+                Vector3D<>(x, y, z),
+                RPY<>(roll * Deg2Rad, pitch * Deg2Rad, yaw * Deg2Rad).toRotation3D());
     }
 
     return true;
@@ -112,8 +114,8 @@ int main(int argc, char* argv[]) {
 
     BOOST_FOREACH(const TaskTarget& tt, grasps->getAllTargets()) {
         GraspTarget* target = tt.second;
-        Transform3D<> pose = target->pose;
-        Vector3D<> p = pose.P() - CONFIG.offset;
+        Transform3D<> pose = inverse(CONFIG.offset) * target->pose;
+        Vector3D<> p = pose.P();
         RPY<> r = RPY<>(pose.R());
         int status = rwStatusToSimpleStatus(target->getResult()->testStatus);
 
