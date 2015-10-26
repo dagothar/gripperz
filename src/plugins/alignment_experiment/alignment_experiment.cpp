@@ -448,11 +448,15 @@ bool sortingComparator(const GraspTarget& t1, const GraspTarget& t2) {
 
 void alignment_experiment::sortGrasps() {
     if (_grasps == NULL) return;
-    
+
     log().info() << "Sorting grasps..." << endl;
 
     try {
-        GraspFilter::Ptr filter = new SortingFilter(new GraspTargetCompare(getOffset()));
+        GraspFilter::Ptr filter = new SortingFilter(new GraspTargetCompare(
+                                                                           getOffset(),
+                                                                           _ui.sortLinWeightEdit->text().toDouble() * 1000,
+                                                                           _ui.sortAngWeightEdit->text().toDouble() * Deg2Rad
+                                                                           ));
 
         setGrasps(filter->filter(_grasps));
 

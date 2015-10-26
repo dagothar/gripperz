@@ -34,6 +34,7 @@ protected:
     T doDistance(const rw::math::Transform3D<T>& a, const rw::math::Transform3D<T>& b) const {
         return doDistance(inverse(b) * a);
     }
+    
 private:
     rw::math::Vector3D<T> _axis;
 };

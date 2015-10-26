@@ -19,7 +19,7 @@ public:
     typedef rw::common::Ptr<GraspTargetCompare> Ptr;
 
 public:
-    GraspTargetCompare(const rw::math::Transform3D<>& origin);
+    GraspTargetCompare(const rw::math::Transform3D<>& origin, double linWeight, double angWeight);
 
     virtual ~GraspTargetCompare();
 
@@ -27,6 +27,8 @@ public:
 
 private:
     rw::math::Transform3D<> _origin;
+    double _linWeight;
+    double _angWeight;
 };
 
 

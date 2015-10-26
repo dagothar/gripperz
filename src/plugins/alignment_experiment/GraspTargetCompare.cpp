@@ -15,7 +15,10 @@ using namespace std;
 using namespace rwlibs::task;
 using namespace rw::math;
 
-GraspTargetCompare::GraspTargetCompare(const rw::math::Transform3D<>& origin) : _origin(origin) {
+GraspTargetCompare::GraspTargetCompare(const rw::math::Transform3D<>& origin, double linWeight, double angWeight) :
+_origin(origin),
+_linWeight(linWeight),
+_angWeight(angWeight) {
 
 }
 
@@ -24,7 +27,7 @@ GraspTargetCompare::~GraspTargetCompare() {
 
 bool GraspTargetCompare::operator()(rwlibs::task::GraspTarget t1, rwlibs::task::GraspTarget t2) {
 
-    Transform3DMetric::Ptr metric = MetricFactory::makeTransform3DMetric<double>(1.0, 1.0);
+    Transform3DMetric::Ptr metric = MetricFactory::makeTransform3DMetric<double>(_linWeight, _angWeight);
 
     DEBUG << "g1 = " << t1.pose.P() << "dist = " << metric->distance(_origin, t1.pose) << endl;
     DEBUG << "g2 = " << t2.pose.P() << "dist = " << metric->distance(_origin, t2.pose) << endl;
