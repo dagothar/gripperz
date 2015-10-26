@@ -74,7 +74,7 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
     Q diff(3, radius, radius, radius);
 
     BOOST_FOREACH(NNSearch::KDNode& node, nodes) {
-        if (node.value->filtered != true) {
+        //if (node.value->filtered != true) {
             result.clear();
             Q key = node.key;
             nntree->nnSearchRect(key - diff, key + diff, result);
@@ -84,7 +84,7 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
 
                 const_cast<NNSearch::KDNode*> (n)->value->filtered = true;
             }
-        }
+        //}
     }
 
     /* store remaining points */
