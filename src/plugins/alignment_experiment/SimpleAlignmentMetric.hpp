@@ -27,8 +27,16 @@ protected:
 
     T doDistance(const rw::math::Transform3D<T>& t) const {
         rw::math::Vector3D<T> r = t.R() * _axis;
+        double a = rw::math::angle(r, _axis) * rw::math::Rad2Deg;
         
-        return rw::math::angle(r, _axis);
+        rw::math::Vector3D<> xy(t.P()[0], 0, t.P()[2]);
+        double p = xy.norm2() * 1000.0;
+        
+        rw::common::Log::infoLog() << "A = " << a << " P = " << p << std::endl;
+        
+        double dist = (a > p) ? a : p;
+        
+        return dist;
     }
 
     T doDistance(const rw::math::Transform3D<T>& a, const rw::math::Transform3D<T>& b) const {

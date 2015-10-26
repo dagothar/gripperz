@@ -287,7 +287,7 @@ void alignment_experiment::saveTasksCSV() {
 void alignment_experiment::startSimulation() {
     if (_grasps == NULL) return;
 
-    double threshold = _ui.thresholdLineEdit->text().toDouble() * Deg2Rad;
+    double threshold = _ui.thresholdLineEdit->text().toDouble();
     int threads = _ui.threadsEdit->text().toInt();
     AlignmentSimulator::AlignmentMetric::Ptr metric = ownedPtr(new SimpleAlignmentMetric<double>(Vector3D<>(0, 1, 0)));
 
@@ -455,7 +455,7 @@ void alignment_experiment::sortGrasps() {
         GraspFilter::Ptr filter = new SortingFilter(new GraspTargetCompare(
                                                                            getOffset(),
                                                                            _ui.sortLinWeightEdit->text().toDouble() * 1000,
-                                                                           _ui.sortAngWeightEdit->text().toDouble() * Deg2Rad
+                                                                           _ui.sortAngWeightEdit->text().toDouble() * Rad2Deg
                                                                            ));
 
         setGrasps(filter->filter(_grasps));
