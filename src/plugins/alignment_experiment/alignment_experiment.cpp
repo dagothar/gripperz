@@ -105,6 +105,7 @@ void alignment_experiment::setupGUI() {
     connect(_ui.randomPerturbButton, SIGNAL(clicked()), this, SLOT(randomPerturb()));
     connect(_ui.regularPerturbButton, SIGNAL(clicked()), this, SLOT(regularPerturb()));
     connect(_ui.alignmentIndexButton, SIGNAL(clicked()), this, SLOT(calculateAlignmentIndex()));
+    connect(_ui.saveVersorsButton, SIGNAL(clicked()), this, SLOT(saveVersors()));
 }
 
 void alignment_experiment::updateView() {
@@ -281,6 +282,33 @@ void alignment_experiment::saveTasksCSV() {
         out << p[0] << ", " << p[1] << ", " << p[2] << ", ";
         out << r[0] * Rad2Deg << ", " << r[1] * Rad2Deg << ", " << r[2] * Rad2Deg << ", ";
         out << status << endl;
+    }
+    out.close();
+}
+
+void alignment_experiment::saveVersors() {
+    QString taskfile = QFileDialog::getSaveFileName(this, "Save file", "", tr("CSV files (*.csv)"));
+
+    if (taskfile.isEmpty()) {
+        return;
+    }
+    
+    ofstream out(taskfile.toStdString());
+    typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
+
+    BOOST_FOREACH(const TaskTarget& tt, _grasps->getAllTargets()) {
+        GraspTarget* target = tt.second;
+        Transform3D<> pose = inverse(target->getResult()->objectTtcpLift);
+        Rotation3D<> r = pose.R();
+        
+        Vector3D<> vx = r * Vector3D<>::x();
+        Vector3D<> vy = r * Vector3D<>::y();
+        Vector3D<> vz = r * Vector3D<>::z();
+
+        out << vx[0] << ", " << vx[1] << ", " << vx[2] << ", " << 0 << endl;
+        out << vy[0] << ", " << vy[1] << ", " << vy[2] << ", " << 1 << endl;
+        out << vz[0] << ", " << vz[1] << ", " << vz[2] << ", " << 2 << endl;
+
     }
     out.close();
 }

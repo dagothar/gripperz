@@ -65,6 +65,7 @@ private slots:
     void regularPerturb();
     void sortGrasps();
     void calculateAlignmentIndex();
+    void saveVersors();
 
 private:
     void setGrasps(gripperz::grasps::Grasps grasps);
