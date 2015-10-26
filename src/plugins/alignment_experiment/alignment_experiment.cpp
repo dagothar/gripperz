@@ -104,6 +104,7 @@ void alignment_experiment::setupGUI() {
     connect(_ui.storeButton, SIGNAL(clicked()), this, SLOT(storeGrasps()));
     connect(_ui.randomPerturbButton, SIGNAL(clicked()), this, SLOT(randomPerturb()));
     connect(_ui.regularPerturbButton, SIGNAL(clicked()), this, SLOT(regularPerturb()));
+    connect(_ui.alignmentIndexButton, SIGNAL(clicked()), this, SLOT(calculateAlignmentIndex()));
 }
 
 void alignment_experiment::updateView() {
@@ -470,8 +471,16 @@ void alignment_experiment::sortGrasps() {
 void alignment_experiment::postSimulation() {
     printResults();
 
+
+}
+
+void alignment_experiment::calculateAlignmentIndex() {
+    Log::log().setLevel(Log::Debug);
+
     QualityIndexCalculator::Ptr calculator = new AlignmentIndexCalculator(_ui.filteringLineEdit->text().toDouble());
     double alignment_index = calculator->calculate(NULL, _grasps);
+    Log::log().flushAll();
+    Log::log().setLevel(Log::Info);
 
     log().info() << "Alignment Index = " << alignment_index << endl;
 }
