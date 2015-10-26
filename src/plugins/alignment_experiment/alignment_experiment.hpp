@@ -63,12 +63,14 @@ private slots:
     void storeGrasps();
     void randomPerturb();
     void regularPerturb();
+    void sortGrasps();
 
 private:
     void setGrasps(gripperz::grasps::Grasps grasps);
     void setupGUI();
     void printResults();
     void postSimulation();
+    rw::math::Transform3D<> getOffset();
 
     rw::models::WorkCell* _wc;
     rwsim::dynamics::DynamicWorkCell::Ptr _dwc;

@@ -19,6 +19,8 @@
 #include "simulation/AlignmentSimulator.hpp"
 #include "SimpleAlignmentMetric.hpp"
 #include "grasps/filters/GraspGridFilter.hpp"
+#include "grasps/filters/SortingFilter.hpp"
+#include "GraspTargetCompare.hpp"
 
 const int HISTORY_LIMIT = 10;
 const int SHOW_TASKS_DELAY = 10000;
@@ -96,6 +98,7 @@ void alignment_experiment::setupGUI() {
     connect(_ui.stopButton, SIGNAL(clicked()), this, SLOT(stopSimulation()));
     //connect(_ui.showButton, SIGNAL(clicked()), this, SLOT(showTasks()));
     //connect(_ui.progressBar, SIGNAL(clicked()), this, SLOT(showTasks()));
+    connect(_ui.sortButton, SIGNAL(clicked()), this, SLOT(sortGrasps()));
     connect(_ui.clearButton, SIGNAL(clicked()), this, SLOT(clearStatus()));
     connect(_ui.undoButton, SIGNAL(clicked()), this, SLOT(undoGrasps()));
     connect(_ui.storeButton, SIGNAL(clicked()), this, SLOT(storeGrasps()));
@@ -214,7 +217,7 @@ void alignment_experiment::loadTasks() {
     log().info() << "Loading tasks from: " << taskfile.toStdString() << "\n";
 
     setGrasps(GraspTask::load(taskfile.toStdString()));
-    
+
     if (_previousGrasps == NULL) storeGrasps();
 }
 
@@ -241,6 +244,18 @@ int rwStatusToSimpleStatus(int status) {
     }
 }
 
+rw::math::Transform3D<> alignment_experiment::getOffset() {
+    double x = _ui.xOffsetEdit->text().toDouble();
+    double y = _ui.yOffsetEdit->text().toDouble();
+    double z = _ui.zOffsetEdit->text().toDouble();
+    double roll = _ui.rollOffsetEdit->text().toDouble() * Deg2Rad;
+    double pitch = _ui.pitchOffsetEdit->text().toDouble() * Deg2Rad;
+    double yaw = _ui.yawOffsetEdit->text().toDouble() * Deg2Rad;
+    Transform3D<> offset(Vector3D<>(x, y, z), RPY<>(roll, pitch, yaw).toRotation3D());
+
+    return offset;
+}
+
 void alignment_experiment::saveTasksCSV() {
     QString taskfile = QFileDialog::getSaveFileName(this, "Save file", "", tr("CSV files (*.csv)"));
 
@@ -250,13 +265,7 @@ void alignment_experiment::saveTasksCSV() {
 
     log().info() << "Saving tasks to: " << taskfile.toStdString() << endl;
 
-    double x = _ui.xOffsetEdit->text().toDouble();
-    double y = _ui.yOffsetEdit->text().toDouble();
-    double z = _ui.zOffsetEdit->text().toDouble();
-    double roll = _ui.rollOffsetEdit->text().toDouble() * Deg2Rad;
-    double pitch = _ui.pitchOffsetEdit->text().toDouble() * Deg2Rad;
-    double yaw = _ui.yawOffsetEdit->text().toDouble() * Deg2Rad;
-    Transform3D<> offset(Vector3D<>(x, y, z), RPY<>(roll, pitch, yaw).toRotation3D());
+    Transform3D<> offset = getOffset();
 
     ofstream out(taskfile.toStdString());
     typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
@@ -423,6 +432,27 @@ void alignment_experiment::clearStatus() {
 
     try {
         GraspFilter::Ptr filter = new ClearStatusFilter();
+
+        setGrasps(filter->filter(_grasps));
+
+    } catch (rw::common::Exception& e) {
+        QMessageBox::critical(NULL, "RW Exception", e.what());
+    }
+
+    showTasks();
+}
+
+bool sortingComparator(const GraspTarget& t1, const GraspTarget& t2) {
+    return true;
+}
+
+void alignment_experiment::sortGrasps() {
+    if (_grasps == NULL) return;
+    
+    log().info() << "Sorting grasps..." << endl;
+
+    try {
+        GraspFilter::Ptr filter = new SortingFilter(new GraspTargetCompare(getOffset()));
 
         setGrasps(filter->filter(_grasps));
 

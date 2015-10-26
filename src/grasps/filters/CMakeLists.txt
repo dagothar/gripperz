@@ -8,5 +8,6 @@ SET(SRC_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/GraspGridFilter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/RobustnessGraspFilter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ClearStatusFilter.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/SortingFilter.cpp
 	CACHE INTERNAL ""
 )
