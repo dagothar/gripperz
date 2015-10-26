@@ -106,6 +106,7 @@ void alignment_experiment::setupGUI() {
     connect(_ui.regularPerturbButton, SIGNAL(clicked()), this, SLOT(regularPerturb()));
     connect(_ui.alignmentIndexButton, SIGNAL(clicked()), this, SLOT(calculateAlignmentIndex()));
     connect(_ui.saveVersorsButton, SIGNAL(clicked()), this, SLOT(saveVersors()));
+    connect(_ui.saveRPYButton, SIGNAL(clicked()), this, SLOT(saveRPY()));
 }
 
 void alignment_experiment::updateView() {
@@ -312,6 +313,27 @@ void alignment_experiment::saveVersors() {
     }
     out.close();
 }
+
+void alignment_experiment::saveRPY() {
+QString taskfile = QFileDialog::getSaveFileName(this, "Save RPY file", "", tr("CSV files (*.csv)"));
+
+    if (taskfile.isEmpty()) {
+        return;
+    }
+    
+    ofstream out(taskfile.toStdString());
+    typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
+
+    BOOST_FOREACH(const TaskTarget& tt, _grasps->getAllTargets()) {
+        GraspTarget* target = tt.second;
+        Transform3D<> pose = inverse(target->getResult()->objectTtcpLift);
+        RPY<> r = RPY<>(pose.R());
+
+        out << r[0] << ", " << r[1] << ", " << r[2] << endl;
+    }
+    out.close();
+}
+
 
 void alignment_experiment::startSimulation() {
     if (_grasps == NULL) return;

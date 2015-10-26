@@ -66,6 +66,7 @@ private slots:
     void sortGrasps();
     void calculateAlignmentIndex();
     void saveVersors();
+    void saveRPY();
 
 private:
     void setGrasps(gripperz::grasps::Grasps grasps);
