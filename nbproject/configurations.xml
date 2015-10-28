@@ -1,0 +1,3519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="plugins"
+                   displayName="plugins"
+                   projectFiles="true"
+                   root="build/src/plugins">
+      <logicalFolder name="alignment_experiment"
+                     displayName="alignment_experiment"
+                     projectFiles="true">
+        <itemPath>build/src/plugins/alignment_experiment/moc_alignment_experiment.cxx</itemPath>
+        <itemPath>build/src/plugins/alignment_experiment/qrc_resources.cxx</itemPath>
+        <itemPath>build/src/plugins/alignment_experiment/ui_alignment_experiment.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="GraspPlugin" displayName="GraspPlugin" projectFiles="true">
+        <itemPath>build/src/plugins/GraspPlugin/moc_DesignDialog.cxx</itemPath>
+        <itemPath>build/src/plugins/GraspPlugin/moc_GraspPlugin.cxx</itemPath>
+        <itemPath>build/src/plugins/GraspPlugin/moc_TaskDialog.cxx</itemPath>
+        <itemPath>build/src/plugins/GraspPlugin/qrc_resources.cxx</itemPath>
+        <itemPath>build/src/plugins/GraspPlugin/ui_DesignDialog.h</itemPath>
+        <itemPath>build/src/plugins/GraspPlugin/ui_GraspPlugin.h</itemPath>
+        <itemPath>build/src/plugins/GraspPlugin/ui_TaskDialog.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="simple_sim" displayName="simple_sim" projectFiles="true">
+        <itemPath>build/src/plugins/simple_sim/moc_simple_sim.cxx</itemPath>
+        <itemPath>build/src/plugins/simple_sim/qrc_resources.cxx</itemPath>
+        <itemPath>build/src/plugins/simple_sim/ui_simple_sim.h</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <df root="src" name="0">
+      <df name="context">
+        <in>Context.cpp</in>
+        <in>TaskDescription.cpp</in>
+      </df>
+      <df name="evaluation">
+        <df name="calculators">
+          <in>AlignmentIndexCalculator.cpp</in>
+          <in>CoverageIndexCalculator.cpp</in>
+          <in>RobustnessIndexCalculator.cpp</in>
+          <in>StressIndexCalculator.cpp</in>
+          <in>SuccessIndexCalculator.cpp</in>
+          <in>VolumeIndexCalculator.cpp</in>
+          <in>WrenchIndexCalculator.cpp</in>
+        </df>
+        <in>AlignmentCalculator.cpp</in>
+        <in>AllPosesAlignment.cpp</in>
+        <in>ClusteringAlignment.cpp</in>
+        <in>ConstrainedGripperEvaluator.cpp</in>
+        <in>GripperEvaluationManagerBuilder.cpp</in>
+        <in>GripperEvaluationManagerFactory.cpp</in>
+        <in>GripperEvaluator.cpp</in>
+        <in>GripperObjectiveFunction.cpp</in>
+        <in>GripperQualityExtractor.cpp</in>
+        <in>IndexGripperQualityExtractor.cpp</in>
+        <in>OldGripperEvaluator.cpp</in>
+        <in>QualityIndexCalculator.cpp</in>
+        <in>SimpleAlignment.cpp</in>
+        <in>StablePoseAlignment.cpp</in>
+        <in>VersorAlignment.cpp</in>
+      </df>
+      <df name="geometry">
+        <in>Beam.cpp</in>
+        <in>BeamFactory.cpp</in>
+        <in>EulerBeam.cpp</in>
+        <in>GeometryUtils.cpp</in>
+        <in>JawPrimitive.cpp</in>
+        <in>MeshGenerator.cpp</in>
+        <in>OldFingerGenerator.cpp</in>
+        <in>OpenSCADGenerator.cpp</in>
+        <in>ParametrizedMeshGenerator.cpp</in>
+      </df>
+      <df name="grasps">
+        <df name="databases">
+          <in>GraspDatabase.cpp</in>
+          <in>RWGraspDatabase.cpp</in>
+        </df>
+        <df name="decorators">
+          <in>FilteredGraspSource.cpp</in>
+          <in>GraspSourceDecorator.cpp</in>
+        </df>
+        <df name="filters">
+          <in>ClearStatusFilter.cpp</in>
+          <in>GraspFilter.cpp</in>
+          <in>GraspFilterChain.cpp</in>
+          <in>GraspGridFilter.cpp</in>
+          <in>GraspOffsetFilter.cpp</in>
+          <in>GraspStatusFilter.cpp</in>
+          <in>KDGraspFilter.cpp</in>
+          <in>RobustnessGraspFilter.cpp</in>
+          <in>SortingFilter.cpp</in>
+        </df>
+        <df name="planners">
+          <in>BasicParallelGripperGraspPlanner.cpp</in>
+          <in>GraspPlanner.cpp</in>
+        </df>
+        <in>GraspSource.cpp</in>
+        <in>GraspStatistics.cpp</in>
+        <in>SurfaceSample.cpp</in>
+        <in>Types.cpp</in>
+      </df>
+      <df name="loaders">
+        <in>GripperXMLLoader.cpp</in>
+        <in>Loader.cpp</in>
+        <in>TaskDescriptionLoader.cpp</in>
+      </df>
+      <df name="math">
+        <in>BoxConstraint.cpp</in>
+        <in>CallbackFunction.cpp</in>
+        <in>CombineLog.cpp</in>
+        <in>CombineObjectives.cpp</in>
+        <in>CombineObjectivesFactory.cpp</in>
+        <in>CombineProduct.cpp</in>
+        <in>CombineSum.cpp</in>
+        <in>CombinedFunction.cpp</in>
+        <in>ConstrainedFunction.cpp</in>
+        <in>Constraint.cpp</in>
+        <in>DlibFunction.cpp</in>
+        <in>DlibWrapper.cpp</in>
+        <in>MappedFunction.cpp</in>
+        <in>MultiObjectiveFunction.cpp</in>
+        <in>ObjectiveFunction.cpp</in>
+        <in>ObjectiveFunctionDecorator.cpp</in>
+        <in>ParameterMapping.cpp</in>
+        <in>RevertedFunction.cpp</in>
+        <in>Types.cpp</in>
+      </df>
+      <df name="models">
+        <df name="loaders">
+          <in>BaseGripperLoader.cpp</in>
+          <in>BasicParametrizedGripperLoader.cpp</in>
+          <in>GripperLoader.cpp</in>
+          <in>GripperLoaderFactory.cpp</in>
+          <in>GripperQualityLoader.cpp</in>
+          <in>ParametrizedGripperLoader.cpp</in>
+        </df>
+        <in>BasicParametrizedGripper.cpp</in>
+        <in>Gripper.cpp</in>
+        <in>GripperBuilder.cpp</in>
+        <in>GripperQuality.cpp</in>
+        <in>GripperQualityFactory.cpp</in>
+        <in>GripperQualityImpl.cpp</in>
+        <in>MapGripperBuilder.cpp</in>
+        <in>OldGripper.cpp</in>
+        <in>ParametrizedGeometryGripper.cpp</in>
+        <in>ParametrizedGripper.cpp</in>
+        <in>Types.cpp</in>
+      </df>
+      <df name="old">
+        <in>alignment_test.cpp</in>
+        <in>extract_constraints.cpp</in>
+        <in>extract_poses.cpp</in>
+        <in>extract_versors.cpp</in>
+        <in>gripper_slice.cpp</in>
+        <in>gripper_space.cpp</in>
+        <in>objective_example.cpp</in>
+        <in>testBOBYQA.cpp</in>
+        <in>testBasicSimulator.cpp</in>
+        <in>testCombineObjectives.cpp</in>
+        <in>testDlibRosenbrock.cpp</in>
+        <in>testGripperEvaluator.cpp</in>
+        <in>testGripperObjective.cpp</in>
+        <in>testMath.cpp</in>
+        <in>testOptimization.cpp</in>
+        <in>testRobustEvaluation.cpp</in>
+        <in>trying_opt.cpp</in>
+        <in>versor_test.cpp</in>
+      </df>
+      <df name="optimization">
+        <in>BOBYQAOptimizer.cpp</in>
+        <in>CoordinateDescentOptimizer.cpp</in>
+        <in>GripperOptimizationManager.cpp</in>
+        <in>OptimizationManager.cpp</in>
+        <in>Optimizer.cpp</in>
+        <in>OptimizerFactory.cpp</in>
+        <in>PowellOptimizer.cpp</in>
+        <in>SimplexOptimizer.cpp</in>
+        <in>SimulatedAnnealingOptimizer.cpp</in>
+      </df>
+      <df name="parametrization">
+        <df name="loaders">
+          <in>ParametrizationLoader.cpp</in>
+        </df>
+        <in>Parametrization.cpp</in>
+        <in>ParametrizationTranslator.cpp</in>
+        <in>Parametrized.cpp</in>
+        <in>Types.cpp</in>
+      </df>
+      <df name="plugins">
+        <df name="alignment_experiment">
+          <in>GraspTargetCompare.cpp</in>
+          <in>alignment_experiment.cpp</in>
+        </df>
+        <df name="GraspPlugin">
+          <in>DesignDialog.cpp</in>
+          <in>GraspPlugin.cpp</in>
+          <in>TaskDialog.cpp</in>
+        </df>
+        <df name="simple_sim">
+          <in>simple_sim.cpp</in>
+        </df>
+      </df>
+      <df name="process">
+        <in>GripperEvaluationManagerBuilder.cpp</in>
+        <in>GripperEvaluationManagerFactory.cpp</in>
+        <in>GripperEvaluationProcessManager.cpp</in>
+        <in>RobustGripperEvaluationProcessManager.cpp</in>
+        <in>StandardGripperEvaluationProcessManager.cpp</in>
+      </df>
+      <df name="sandbox">
+        <in>rwtask_to_csv.cpp</in>
+        <in>try_contour.cpp</in>
+        <in>try_finger.cpp</in>
+        <in>try_openscad.cpp</in>
+        <in>try_parametrized_geometry.cpp</in>
+        <in>try_pointers.cpp</in>
+        <in>try_process.cpp</in>
+        <in>try_shards.cpp</in>
+        <in>try_slice.cpp</in>
+      </df>
+      <df name="shards">
+        <in>Shard.cpp</in>
+        <in>ShardContainer.cpp</in>
+        <in>ShardExceptions.cpp</in>
+        <in>ShardMaker.cpp</in>
+      </df>
+      <df name="simulation">
+        <in>AlignmentSimulator.cpp</in>
+        <in>BasicSimulator.cpp</in>
+        <in>GraspTaskSimulator.cpp</in>
+        <in>GripperSimulator.cpp</in>
+        <in>InterferenceSimulator.cpp</in>
+      </df>
+      <df name="test">
+        <in>test_BasicParametrizedGripper.cpp</in>
+        <in>test_Beam.cpp</in>
+        <in>test_GripperLoader.cpp</in>
+        <in>test_GripperQualityLoader.cpp</in>
+        <in>test_Parametrization.cpp</in>
+        <in>test_ParametrizationLoader.cpp</in>
+        <in>test_ParametrizationTranslator.cpp</in>
+        <in>test_ParametrizedGripperLoader.cpp</in>
+        <in>test_Shard.cpp</in>
+        <in>test_ShardContainer.cpp</in>
+      </df>
+      <df name="tools">
+        <in>evaluatePerturbedTasks.cpp</in>
+        <in>generateSurfaceSamples.cpp</in>
+        <in>generateTasks.cpp</in>
+        <in>generate_grippers.cpp</in>
+        <in>gripper_evaluate.cpp</in>
+        <in>gripper_landscape.cpp</in>
+        <in>gripper_optimizer.cpp</in>
+      </df>
+      <df name="util">
+        <in>DlibUtil.cpp</in>
+        <in>Rosenbrock.cpp</in>
+        <in>XMLHelpers.cpp</in>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>CMakeLists.txt</itemPath>
+      <itemPath>Makefile</itemPath>
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>src</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <flagsDictionary>
+        <element flagsID="0" commonFlags="-O3 -fPIC -fPIC -fPIC -fPIC -fPIC -std=c++11"/>
+        <element flagsID="1" commonFlags="-O3 -fPIC -fPIC -fPIC -fPIC -std=c++11"/>
+      </flagsDictionary>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>build</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>build</preBuildCommandWorkingDir>
+          <preBuildCommand>cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=${IDE_CC} -DCMAKE_CXX_COMPILER=${IDE_CXX} ..</preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="build/src/plugins/GraspPlugin/moc_DesignDialog.cxx"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="build/src/plugins/GraspPlugin/moc_GraspPlugin.cxx"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="build/src/plugins/GraspPlugin/moc_TaskDialog.cxx"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="build/src/plugins/GraspPlugin/qrc_resources.cxx"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="build/src/plugins/alignment_experiment/moc_alignment_experiment.cxx"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="build/src/plugins/alignment_experiment/qrc_resources.cxx"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="build/src/plugins/simple_sim/moc_simple_sim.cxx"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="build/src/plugins/simple_sim/qrc_resources.cxx"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <folder path="0/context">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/evaluation/calculators">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/grasps/databases">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/grasps/decorators">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/loaders">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/math">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/models">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/old">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/optimization">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/parametrization">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/plugins">
+        <ccTool>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/plugins/GraspPlugin">
+        <ccTool>
+          <incDir>
+            <pElem>build/src/plugins/GraspPlugin</pElem>
+            <pElem>src/plugins/GraspPlugin</pElem>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>GraspPlugin_EXPORTS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/plugins/alignment_experiment">
+        <ccTool>
+          <incDir>
+            <pElem>build/src/plugins/alignment_experiment</pElem>
+            <pElem>src/plugins/alignment_experiment</pElem>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>alignment_experiment_EXPORTS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/plugins/simple_sim">
+        <ccTool>
+          <incDir>
+            <pElem>build/src/plugins/simple_sim</pElem>
+            <pElem>src/plugins/simple_sim</pElem>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>simple_sim_EXPORTS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/process">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/shards">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/test">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/test</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="plugins">
+        <ccTool>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="plugins/GraspPlugin">
+        <ccTool>
+          <incDir>
+            <pElem>build/src/plugins/GraspPlugin</pElem>
+            <pElem>src/plugins/GraspPlugin</pElem>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>GraspPlugin_EXPORTS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="plugins/alignment_experiment">
+        <ccTool>
+          <incDir>
+            <pElem>build/src/plugins/alignment_experiment</pElem>
+            <pElem>src/plugins/alignment_experiment</pElem>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>alignment_experiment_EXPORTS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="plugins/simple_sim">
+        <ccTool>
+          <incDir>
+            <pElem>build/src/plugins/simple_sim</pElem>
+            <pElem>src/plugins/simple_sim</pElem>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>simple_sim_EXPORTS</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <item path="src/context/Context.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/context/TaskDescription.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/evaluation/AlignmentCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/AllPosesAlignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/ClusteringAlignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/ConstrainedGripperEvaluator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/GripperEvaluationManagerBuilder.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/GripperEvaluationManagerFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/GripperEvaluator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/GripperObjectiveFunction.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/GripperQualityExtractor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/IndexGripperQualityExtractor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/OldGripperEvaluator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/QualityIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/SimpleAlignment.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/StablePoseAlignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/VersorAlignment.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/evaluation/calculators/AlignmentIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/evaluation/calculators/CoverageIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/evaluation/calculators/RobustnessIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/evaluation/calculators/StressIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/evaluation/calculators/SuccessIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/evaluation/calculators/VolumeIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/evaluation/calculators/WrenchIndexCalculator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/geometry/Beam.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/geometry/BeamFactory.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/geometry/EulerBeam.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/geometry/GeometryUtils.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/geometry/JawPrimitive.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/geometry/MeshGenerator.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/geometry/OldFingerGenerator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/geometry/OpenSCADGenerator.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/geometry/ParametrizedMeshGenerator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/grasps/GraspSource.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/grasps/GraspStatistics.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/grasps/SurfaceSample.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/grasps/Types.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/grasps/databases/GraspDatabase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/grasps/databases/RWGraspDatabase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/grasps/decorators/FilteredGraspSource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/grasps/decorators/GraspSourceDecorator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+      </item>
+      <item path="src/grasps/filters/ClearStatusFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/grasps/filters/GraspFilter.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/grasps/filters/GraspFilterChain.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/grasps/filters/GraspGridFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/grasps/filters/GraspOffsetFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/grasps/filters/GraspStatusFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/grasps/filters/KDGraspFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/grasps/filters/RobustnessGraspFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/grasps/filters/SortingFilter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/grasps/planners/BasicParallelGripperGraspPlanner.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/grasps/planners/GraspPlanner.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/loaders/GripperXMLLoader.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/loaders/Loader.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/loaders/TaskDescriptionLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/BoxConstraint.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/CallbackFunction.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/CombineLog.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/CombineObjectives.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/CombineObjectivesFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/CombineProduct.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/CombineSum.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/CombinedFunction.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/ConstrainedFunction.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/Constraint.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/DlibFunction.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/DlibWrapper.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/MappedFunction.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/MultiObjectiveFunction.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/ObjectiveFunction.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/ObjectiveFunctionDecorator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/ParameterMapping.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/RevertedFunction.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/math/Types.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/BasicParametrizedGripper.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/Gripper.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/GripperBuilder.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/GripperQuality.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/GripperQualityFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/GripperQualityImpl.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/MapGripperBuilder.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/OldGripper.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/ParametrizedGeometryGripper.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/ParametrizedGripper.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/Types.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/loaders/BaseGripperLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/loaders/BasicParametrizedGripperLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/loaders/GripperLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/loaders/GripperLoaderFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/loaders/GripperQualityLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/models/loaders/ParametrizedGripperLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/old/alignment_test.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/extract_constraints.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/extract_poses.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/extract_versors.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/gripper_slice.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/gripper_space.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/objective_example.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/testBOBYQA.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/testBasicSimulator.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/testCombineObjectives.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/testDlibRosenbrock.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/testGripperEvaluator.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/testGripperObjective.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/testMath.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/testOptimization.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/testRobustEvaluation.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/trying_opt.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/old/versor_test.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/optimization/BOBYQAOptimizer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/optimization/CoordinateDescentOptimizer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/optimization/GripperOptimizationManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/optimization/OptimizationManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/optimization/Optimizer.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/optimization/OptimizerFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/optimization/PowellOptimizer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/optimization/SimplexOptimizer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/optimization/SimulatedAnnealingOptimizer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/parametrization/Parametrization.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/parametrization/ParametrizationTranslator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/parametrization/Parametrized.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/parametrization/Types.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/parametrization/loaders/ParametrizationLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/plugins/GraspPlugin/DesignDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/plugins/GraspPlugin/GraspPlugin.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/plugins/GraspPlugin/TaskDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/plugins/alignment_experiment/GraspTargetCompare.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/plugins/alignment_experiment/alignment_experiment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/plugins/simple_sim/simple_sim.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="src/process/GripperEvaluationManagerBuilder.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/process/GripperEvaluationManagerFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/process/GripperEvaluationProcessManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/process/RobustGripperEvaluationProcessManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/process/StandardGripperEvaluationProcessManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/sandbox/rwtask_to_csv.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/sandbox</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/sandbox/try_contour.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/sandbox</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/sandbox/try_finger.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/sandbox</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/sandbox/try_openscad.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/sandbox</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/sandbox/try_parametrized_geometry.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/sandbox</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/sandbox/try_pointers.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/sandbox/try_process.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/sandbox</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/sandbox/try_shards.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/sandbox</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/sandbox/try_slice.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/sandbox</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/shards/Shard.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/shards/ShardContainer.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/shards/ShardExceptions.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/shards/ShardMaker.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/simulation/AlignmentSimulator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/simulation/BasicSimulator.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/simulation/GraspTaskSimulator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/simulation/GripperSimulator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/simulation/InterferenceSimulator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/test/test_BasicParametrizedGripper.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/test/test_Beam.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/test/test_GripperLoader.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/test/test_GripperQualityLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/test/test_Parametrization.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/test/test_ParametrizationLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/test/test_ParametrizationTranslator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/test/test_ParametrizedGripperLoader.cpp"
+            ex="false"
+            tool="1"
+            flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/test/test_Shard.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/test/test_ShardContainer.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+        </ccTool>
+      </item>
+      <item path="src/tools/evaluatePerturbedTasks.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/tools/generateSurfaceSamples.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/tools/generateTasks.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/tools/generate_grippers.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/tools</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/tools/gripper_evaluate.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/tools</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/tools/gripper_landscape.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/tools</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/tools/gripper_optimizer.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build/src/tools</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/util/DlibUtil.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="src/util/Rosenbrock.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+      <item path="src/util/XMLHelpers.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="1">
+          <incDir>
+            <pElem>/usr/include/qt4</pElem>
+            <pElem>/usr/include/qt4/QtOpenGL</pElem>
+            <pElem>/usr/include/qt4/QtDesigner</pElem>
+            <pElem>/usr/include/qt4/QtUiTools</pElem>
+            <pElem>/usr/include/qt4/QtGui</pElem>
+            <pElem>/usr/include/qt4/QtCore</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/boostbindings</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/eigen3</pElem>
+            <pElem>../robwork/trunk/RobWork/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwyaobi</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/rwpqp</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/lua/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/qhull/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/csgjs/src</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/zlib</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/unzip</pElem>
+            <pElem>../robwork/trunk/RobWork/ext/assimp/include</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/src</pElem>
+            <pElem>../robwork/trunk/RobWorkStudio/ext/qtpropertybrowser/src</pElem>
+            <pElem>../robwork/trunk/RobWorkSim/src</pElem>
+            <pElem>src</pElem>
+            <pElem>ext</pElem>
+            <pElem>build</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>BOOST_DISABLE_ASSERTS</Elem>
+            <Elem>NDEBUG</Elem>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_DESIGNER_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_UITOOLS_LIB</Elem>
+            <Elem>dDOUBLE</Elem>
+          </preprocessorList>
+        </ccTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

@@ -194,6 +194,12 @@ void load_data(const Configuration& config, Data& data) {
 
 int main(int argc, char* argv[]) {
     initialize();
+    
+    vector<string> engines = PhysicsEngine::Factory::getEngineIDs();
+    cout << "EngineIDS:" << endl;
+    BOOST_FOREACH(const string& s, engines) {
+        cout << "* " << s << endl;
+    }
 
     if (!parse_cli(argc, argv, configuration)) {
         return -1;
