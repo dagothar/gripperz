@@ -43,5 +43,9 @@ target_link_libraries(try_shards gripperz)
 #Target: rwtask_to_csv
 add_executable(rwtask_to_csv rwtask_to_csv.cpp)
 target_link_libraries(rwtask_to_csv ${ROBWORK_LIBRARIES})
+
+#Target: random_csv
+add_executable(random_csv random_csv.cpp)
+target_link_libraries(random_csv ${ROBWORK_LIBRARIES})
     
 endif()
