@@ -295,7 +295,7 @@ void alignment_experiment::saveVersors() {
     }
     
     ofstream out(taskfile.toStdString());
-    out << "x, y, z, a" << endl;
+    //out << "x, y, z, a" << endl;
     
     typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
 

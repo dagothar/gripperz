@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
 
     /* save csv file */
     ofstream out(CONFIG.output_filename);
-    out << "x, y, z, a" << endl;
+    //out << "x, y, z, a" << endl;
     
     for (int i = 0; i < CONFIG.n_poses; ++i) {
         RPY<> rpy(Math::ran(-Pi, Pi), Math::ran(-Pi, Pi), Math::ran(-Pi, Pi));
