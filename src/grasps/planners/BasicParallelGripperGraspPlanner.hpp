@@ -56,11 +56,22 @@ namespace gripperz {
                     return _state;
                 }
 
+                void setTargetObject(rw::models::Object::Ptr _targetObject) {
+                    this->_targetObject = _targetObject;
+                }
+
+                rw::models::Object::Ptr getTargetObject() const {
+                    return _targetObject;
+                }
+
             private:
 
                 rw::kinematics::State _state;
                 context::TaskDescription::Ptr _td;
                 std::vector<SurfaceSample> _ssamples;
+                
+                rw::models::Object::Ptr _targetObject;
+                
             };
 
         }

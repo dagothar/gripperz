@@ -150,7 +150,7 @@ SurfaceSample sample(TaskDescription::Ptr td, const rw::kinematics::State& state
 Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps) {
     vector<SurfaceSample> ssamples = _ssamples;
 
-    Transform3D<> wTobj = Kinematics::worldTframe(_td->getTargetObject()->getBase(), _state);
+    Transform3D<> wTobj = Kinematics::worldTframe(_targetObject->getBase(), _state);
 
     // setup task
     Grasps grasps = ownedPtr(new GraspTask);
@@ -166,7 +166,7 @@ Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps) {
     grasps->setGraspControllerID(_td->getControllerID());
 
     // prepare
-    TriMeshSurfaceSampler sampler(_td->getTargetObject()->getGeometry()[0]);
+    TriMeshSurfaceSampler sampler(_targetObject->getGeometry()[0]);
     sampler.setRandomPositionEnabled(false);
     sampler.setRandomRotationEnabled(false);
 
@@ -180,7 +180,7 @@ Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps) {
     ray->addGeometry(geom);
 
     ProximityModel::Ptr object = cstrategy->createModel();
-    cstrategy->addGeometry(object.get(), _td->getTargetObject()->getGeometry()[0]);
+    cstrategy->addGeometry(object.get(), _targetObject->getGeometry()[0]);
 
     CollisionDetector::Ptr cdetect = new CollisionDetector(_td->getWorkCell(), ProximityStrategyFactory::makeDefaultCollisionStrategy());
 
@@ -251,14 +251,6 @@ Grasps BasicParallelGripperGraspPlanner::planGrasps(unsigned nGrasps) {
             grasps->addSubTask(asubtask);
         }
     }
-
-    //    Q preDist = _td->getPrefilteringDistance();
-    //    double R = 2.0 * sin(0.25 * preDist(1));
-    //    Q diff(7, preDist(0), preDist(0), preDist(0), R, R, R, preDist(2));
-    //
-    //    _tasks = filterTasks(_tasks, diff);
-    //
-    //    _samples = filterTasks(_samples, diff);
 
 
     return grasps;

@@ -5,10 +5,10 @@ width = 0.025;
 depth = 0.020;
 chfdepth = 0;
 chfangle = 45;
-cutpos = 0.1;
-cutoffset = 0.0;
-cutdepth = 0.0;
-cutdiameter = 0.02;
+cutpos = 0.075;
+cutdepth = 0.01;
+cutangle = 90;
+cuttilt = 0;
 
 /* Produces basic box finger */
 module basicShape(length, width, depth)
@@ -31,32 +31,36 @@ module chamfering(length, start_depth, angle) {
 }
 
 /* Produces the geometry for the cutout.
- * cutpos -- the position of the cutout
- * cutoffset -- the offset along the y axis
- * cutdepth -- the depth of the cutout
- * cutdiameter -- the diameter of the cutout
+ * cutpos -- position of the cutout
+ * cutdepth -- depth of the cutout
+ * cutangle -- the angle of the cutout
+ * cuttilt -- the tilt of the cutout
  */
-module cutout(cutpos, cutoffset, cutdepth, cutdiameter) {
+module cutout(cutpos, cutdepth, cutangle, cuttilt) {
 	size = 1000;
 
-	translate([cutpos, cutoffset, -size + cutdepth])
-		cylinder(h = size, r = cutdiameter/2, $fn = 100);
+	s_x = tan(cutangle /2);
+
+	translate([cutpos, 0, 0])
+		rotate([0, 0, cuttilt])
+			rotate([90, 0, 0])
+				translate([0, 0, 0])
+					scale([s_x, 1, 1])
+						cylinder(h = size, r = cutdepth, center = true, $fn = 100);
 }
 
 /* Produces the finger geometry.
  * Parameters...
  */
-module finger(length, width, depth, chfdepth, chfangle, cutpos, cutoffset, cutdepth, cutdiameter) {
+module finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutangle, cuttilt) {
 	difference() {
 		difference() {
 			basicShape(length, width, depth);
 			chamfering(length, width - width * chfdepth, chfangle);
-
-echo(depth - chfdepth);
 		}
-		cutout(cutpos, cutoffset, cutdepth, cutdiameter);
+		cutout(cutpos, cutdepth, cutangle, cuttilt);
 	}
 }
 
 scale(s)
-	finger(length, width, depth, chfdepth, chfangle, cutpos, cutoffset, cutdepth, cutdiameter);
+	finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutangle, cuttilt);

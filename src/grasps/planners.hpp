@@ -5,11 +5,8 @@
  * Created on October 8, 2015, 3:22 PM
  */
 
-#ifndef PLANNERS_HPP
-#define	PLANNERS_HPP
+#pragma once
 
 #include "planners/GraspPlanner.hpp"
 #include "planners/BasicParallelGripperGraspPlanner.hpp"
-
-#endif	/* PLANNERS_HPP */
-
+#include "planners/ParallelGripperGraspPlanner.hpp"
