@@ -8,9 +8,9 @@ import random
 
 # parameter limits
 PARAM_LIMITS = {
-	'length': (0, 0.2),
-	'width': (0, 0.05),
-	'depth': (0, 0.05),
+	'length': (0.05, 0.15),
+	'width': (0.01, 0.04),
+	'depth': (0.01, 0.04),
 	'chfdepth': (0, 1),
 	'chfangle': (0, 90),
 	#'cutpos': (0, length),
@@ -18,7 +18,7 @@ PARAM_LIMITS = {
 	'cutangle': (0, 180),
 	#'cutoffset': (-depth/2, depth/2),
 	'cuttilt': (-90, 90),
-	'cutdiameter': (0, 0.05)
+	'cutdiameter': (0.01, 0.04)
 }
 
 

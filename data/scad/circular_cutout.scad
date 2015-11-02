@@ -9,7 +9,7 @@ cutpos = 0.1;
 cutoffset = 0.0;
 cutdepth = 0.01;
 cutdiameter = 0.02;
-cutangle = 45;
+cutangle = 0;
 
 /* Produces basic box finger */
 module basicShape(length, width, depth)
@@ -41,7 +41,7 @@ module cutout(cutpos, cutoffset, cutdepth, cutdiameter, cutangle) {
 	size = 1000;
 
 	r = cutdiameter/2;
-	dr = 2 * cutdepth * tan(cutangle);
+	dr = 2 * cutdepth * tan(cutangle/2);
 
 	translate([cutpos, cutoffset, 0])
 		cylinder(h = 2*cutdepth, r1 = r+dr, r2 = r, $fn = 100, center = true);
