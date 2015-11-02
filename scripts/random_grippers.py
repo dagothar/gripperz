@@ -24,6 +24,7 @@ PARAM_LIMITS = {
 
 def make_parameters():
 	parameters = {
+		's': 100,
 		'length': random.uniform(*PARAM_LIMITS['length']),
 		'width': random.uniform(*PARAM_LIMITS['width']),
 		'depth': random.uniform(*PARAM_LIMITS['depth']),
