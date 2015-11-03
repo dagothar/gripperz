@@ -9,6 +9,8 @@
 #include "BaseGripperLoader.hpp"
 #include "ParametrizedGripperLoader.hpp"
 #include "BasicParametrizedGripperLoader.hpp"
+#include "models/ParametrizedGeometryGripper.hpp"
+#include "ParametrizedGeometryGripperLoader.hpp"
 
 using namespace rw::common;
 using namespace gripperz::models;
@@ -25,6 +27,8 @@ GripperLoader::Ptr GripperLoaderFactory::getLoader(const std::string& cls) {
             return ownedPtr(new ParametrizedGripperLoader());
     } else if (cls == "BasicParametrizedGripper") {
         return ownedPtr(new BasicParametrizedGripperLoader());
+    } else if (cls == "ParametrizedGeometryGripper") {
+        return ownedPtr(new ParametrizedGeometryGripperLoader());
     }
             
     return ownedPtr(new BaseGripperLoader());

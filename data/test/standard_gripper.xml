@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gripper name="myLittleStandardGripper" class="StandardGripper">
+	
+	<data>
+		<deviceId>gripper</deviceId>
+		<dynamicDeviceId>gripper</dynamicDeviceId>
+		<tcpFrameId>TCPgripper</tcpFrameId>
+		<movableFrameId>gripper.Base</movableFrameId>
+		<graspControllerId>graspController</graspControllerId>
+		<leftFingerId>gripper.LeftFinger</leftFingerId>
+		<rightFingerId>gripper.RightFinger</rightFingerId>
+	</data>
+	
+	<parametrization>
+		<!-- geometry -->
+		<parameter name="length">0.1</parameter>
+		<parameter name="width">0.025</parameter>
+		<parameter name="depth">0.02</parameter>
+		<parameter name="chfdepth">0.5</parameter>
+		<parameter name="chfangle">45</parameter>
+		<parameter name="cutpos">0.075</parameter>
+		<parameter name="cutoffset">0.0</parameter>
+		<parameter name="cutdepth">0.01</parameter>
+		<parameter name="cutwidth">0.01</parameter>
+		<parameter name="cutangle">90</parameter>
+		<parameter name="cutangle2">90</parameter>
+		
+		<!-- basic -->
+		<parameter name="tcpoffset">0.075</parameter>
+		<parameter name="jawdist">0.0</parameter>
+		<parameter name="stroke">0.05</parameter>
+		<parameter name="force">50</parameter>
+	</parametrization>
+	
+	<meshGenerator class="OpenSCADGenerator">
+		<template>../data/scad/prismatic_cutout.scad</template>
+		<parametrization></parametrization>
+	</meshGenerator>
+	
+</gripper>

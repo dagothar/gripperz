@@ -8,6 +8,8 @@
 #include "models/Gripper.hpp"
 #include "models/ParametrizedGripper.hpp"
 #include "models/BasicParametrizedGripper.hpp"
+#include "models/ParametrizedGeometryGripper.hpp"
+#include "models/StandardGripper.hpp"
 #include "models/GripperQuality.hpp"
 #include "models/GripperQualityFactory.hpp"
 #include "models/GripperQualityImpl.hpp"

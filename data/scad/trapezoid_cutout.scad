@@ -8,8 +8,8 @@ chfangle = 45;
 cutpos = 0.075;
 cutdepth = 0.01;
 cutwidth = 0.01;
-cutangle1 = 45;
-cutangle2 = 45;
+cutangle = 90;
+cutangle2 = 90;
 cuttilt = 0;
 
 /* Produces basic box finger */
@@ -90,4 +90,4 @@ module finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutwid
 }
 
 scale(s)
-	finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutwidth, cutangle1, cutangle2, cuttilt);
+	finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutwidth, cutangle/2, cutangle2/2, cuttilt);

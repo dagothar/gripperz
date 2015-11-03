@@ -5,6 +5,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/ParametrizedGripper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BasicParametrizedGripper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ParametrizedGeometryGripper.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/StandardGripper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQuality.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQualityImpl.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQualityFactory.cpp

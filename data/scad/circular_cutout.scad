@@ -8,7 +8,7 @@ chfangle = 45;
 cutpos = 0.1;
 cutoffset = 0.0;
 cutdepth = 0.01;
-cutdiameter = 0.02;
+cutwidth = 0.02;
 cutangle = 0;
 
 /* Produces basic box finger */
@@ -63,4 +63,4 @@ echo(depth - chfdepth);
 }
 
 scale(s)
-	finger(length, width, depth, chfdepth, chfangle, cutpos, cutoffset, cutdepth, cutdiameter, cutangle);
+	finger(length, width, depth, chfdepth, chfangle, cutpos, cutoffset, cutdepth, cutwidth, cutangle);
