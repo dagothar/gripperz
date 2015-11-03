@@ -26,6 +26,8 @@ namespace gripperz {
             ParametrizedGeometryGripper(const std::string& name);
 
             virtual ~ParametrizedGeometryGripper();
+            
+            virtual void applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
 
         private:
             geometry::ParametrizedMeshGenerator::Ptr _meshGenerator;
