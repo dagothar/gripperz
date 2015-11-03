@@ -26,6 +26,10 @@ ParametrizedGeometryGripper::ParametrizedGeometryGripper(const std::string& name
 ParametrizedGripper(name) {
 }
 
+ParametrizedGeometryGripper::ParametrizedGeometryGripper(const ParametrizedGripper& gripper) :
+ParametrizedGripper(gripper) {
+}
+
 ParametrizedGeometryGripper::~ParametrizedGeometryGripper() {
 }
 

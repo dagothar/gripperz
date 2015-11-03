@@ -24,10 +24,20 @@ namespace gripperz {
 
         public:
             ParametrizedGeometryGripper(const std::string& name);
+            
+            ParametrizedGeometryGripper(const ParametrizedGripper& gripper);
 
             virtual ~ParametrizedGeometryGripper();
             
             virtual void applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
+
+            void setMeshGenerator(geometry::ParametrizedMeshGenerator::Ptr _meshGenerator) {
+                this->_meshGenerator = _meshGenerator;
+            }
+
+            geometry::ParametrizedMeshGenerator::Ptr getMeshGenerator() const {
+                return _meshGenerator;
+            }
 
         private:
             geometry::ParametrizedMeshGenerator::Ptr _meshGenerator;
