@@ -8,8 +8,8 @@ chfangle = 45;
 cutpos = 0.075;
 cutdepth = 0.01;
 cutwidth = 0.01;
-cutangle1 = 10;
-cutangle2 = 50;
+cutangle1 = 45;
+cutangle2 = 45;
 cuttilt = 0;
 
 /* Produces basic box finger */
@@ -52,13 +52,13 @@ module slot(cutdepth, cutwidth, cutangle1, cutangle2) {
         difference() {
             difference() {
                 cube([w, 2*cutdepth, size], center = true);
-                translate([-cutwidth/2 - l1/2, 0, 0])
+                translate([-w/2, 0, 0])
                     rotate([0, 0, 90-cutangle1])
-                        # translate([0, 0, -size/2]) cube(size);
+                        translate([0, 0, -size/2]) cube(size);
             };
-            translate([cutwidth/2 + l2/2, 0, 0])
+            translate([w/2, 0, 0])
                 rotate([0, 0, cutangle2])
-                    # translate([0, 0, -size/2]) cube(size);
+                    translate([0, 0, -size/2]) cube(size);
         };
 }
 
