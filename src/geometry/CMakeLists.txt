@@ -10,3 +10,5 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/OpenSCADGenerator.cpp
 	CACHE INTERNAL ""
 )
+
+add_subdirectory(loaders)
