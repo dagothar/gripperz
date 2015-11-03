@@ -8,14 +8,17 @@ import random
 
 # parameter limits
 PARAM_LIMITS = {
-	'length': (0.05, 0.15),
-	'width': (0.01, 0.04),
-	'depth': (0.01, 0.04),
+	'length': (0.075, 0.125),
+	'width': (0.02, 0.03),
+	'depth': (0.02, 0.03),
 	'chfdepth': (0, 1),
 	'chfangle': (0, 90),
-	#'cutpos': (0, length),
+	#'cutpos': (0.5 length, length),
 	#'cutdepth': (0, width),
+	'cutwidth': (0, 0.025),
 	'cutangle': (0, 180),
+	'cutangle1': (0, 90),
+	'cutangle2': (0, 90),
 	#'cutoffset': (-depth/2, depth/2),
 	'cuttilt': (-90, 90),
 	'cutdiameter': (0.01, 0.04)
@@ -30,13 +33,16 @@ def make_parameters():
 		'depth': random.uniform(*PARAM_LIMITS['depth']),
 		'chfdepth': random.uniform(*PARAM_LIMITS['chfdepth']),
 		'chfangle': random.uniform(*PARAM_LIMITS['chfangle']),
+		'cutwidth': random.uniform(*PARAM_LIMITS['cutwidth']),
 		'cutangle': random.uniform(*PARAM_LIMITS['cutangle']),
+		'cutangle1': random.uniform(*PARAM_LIMITS['cutangle1']),
+		'cutangle2': random.uniform(*PARAM_LIMITS['cutangle2']),
 		'cuttilt': random.uniform(*PARAM_LIMITS['cuttilt']),
 		'cutdiameter': random.uniform(*PARAM_LIMITS['cutdiameter'])
 	}
 	
-	parameters['cutpos'] = random.uniform(0, parameters['length'])
-	parameters['cutdepth'] = random.uniform(0, parameters['width'])
+	parameters['cutpos'] = random.uniform(0.5*parameters['length'], parameters['length'])
+	parameters['cutdepth'] = random.uniform(0, parameters['width']-0.005)
 	parameters['cutoffset'] = random.uniform(-parameters['depth']/2, parameters['depth']/2)
 	
 	return parameters
