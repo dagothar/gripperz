@@ -29,9 +29,9 @@ namespace gripperz {
                 //! Destructor.
                 virtual ~ParametrizedMeshGeneratorLoader();
 
-                virtual ParametrizedMeshGenerator::Ptr read(const boost::property_tree::ptree& tree) = 0;
+                virtual ParametrizedMeshGenerator::Ptr read(const boost::property_tree::ptree& tree);
 
-                virtual std::pair<std::string, boost::property_tree::ptree> write(ParametrizedMeshGenerator::Ptr object) = 0;
+                virtual std::pair<std::string, boost::property_tree::ptree> write(ParametrizedMeshGenerator::Ptr object);
             };
         }
     }

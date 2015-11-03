@@ -51,5 +51,10 @@ add_dependencies(test_Shard gripperz)
 add_executable(test_ShardContainer test_ShardContainer.cpp)
 target_link_libraries(test_ShardContainer gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_dependencies(test_ShardContainer gripperz)
+
+# Target: test_ParametrizedMeshGeneratorLoader
+add_executable(test_ParametrizedMeshGeneratorLoader test_ParametrizedMeshGeneratorLoader.cpp)
+target_link_libraries(test_ParametrizedMeshGeneratorLoader gripperz ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+add_dependencies(test_ParametrizedMeshGeneratorLoader gripperz)
         
 endif ()

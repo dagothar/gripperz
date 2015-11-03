@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<meshGenerator class="OpenSCADGenerator">
+	<template>../data/scad/prismatic_cutout.scad</template>
+	
+	<parametrization>
+		<parameter name="length">0.2</parameter>
+		<parameter name="width">0.01</parameter>
+	</parametrization>
+</meshGenerator>
