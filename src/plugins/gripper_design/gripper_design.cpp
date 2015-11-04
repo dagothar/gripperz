@@ -131,18 +131,22 @@ void gripper_design::applyGripper() {
     updateGripper();
 
     log().info() << "Registering gripper..." << endl;
-    _gripper->registerWithContext(_wc, _dwc, _state);
+    State state = _state;
+    _gripper->registerWithContext(_wc, _dwc, state);
     getRobWorkStudio()->setState(_state);
     log().info() << "Registered." << endl;
 
     log().info() << "Applying gripper modifications..." << endl;
-    _gripper->applyModifications(_wc, _dwc, _state);
+    _gripper->applyModifications(_wc, _dwc, state);
 
     getRobWorkStudio()->getWorkCellScene()->clearCache();
     getRobWorkStudio()->getWorkCellScene()->updateSceneGraph(_state);
     getRobWorkStudio()->setWorkcell(_wc);
+    _state = state;
     getRobWorkStudio()->setState(_state);
     log().info() << "Done." << endl;
+    
+    getRobWorkStudio()->genericEvent().fire("GripperApplied");
 }
 
 void gripper_design::makeGripper() {

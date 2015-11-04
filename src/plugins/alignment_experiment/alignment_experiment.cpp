@@ -154,6 +154,8 @@ void alignment_experiment::genericEventListener(const std::string & event) {
         }
 
         _dwc = dwc;
+    } else if (event == "GripperApplied") {
+        _initState = getRobWorkStudio()->getState();
     }
 }
 
