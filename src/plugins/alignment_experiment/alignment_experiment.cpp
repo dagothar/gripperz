@@ -297,6 +297,8 @@ void alignment_experiment::saveVersors() {
     }
     
     ofstream out(taskfile.toStdString());
+    //out << "x, y, z, a" << endl;
+    
     typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
 
     BOOST_FOREACH(const TaskTarget& tt, _grasps->getAllTargets()) {
