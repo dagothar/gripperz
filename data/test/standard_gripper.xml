@@ -33,7 +33,7 @@
 	</parametrization>
 	
 	<meshGenerator class="OpenSCADGenerator">
-		<template>../data/scad/prismatic_cutout.scad</template>
+		<template>${GRIPPERZ_ROOT}/data/scad/prismatic_cutout.scad</template>
 		<parametrization></parametrization>
 	</meshGenerator>
 	

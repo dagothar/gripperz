@@ -8,6 +8,7 @@
 #include <rwsim/dynamics/DynamicWorkCell.hpp>
 #include <QtGui>
 #include <QTimer>
+#include "models/StandardGripper.hpp"
 
 #include "ui_gripper_design.h"
 
@@ -42,14 +43,23 @@ public:
 	void genericEventListener(const std::string& event);
 
 private slots:
-	//! Updates RWS state according to the simulation
-	void updateView();
+        void makeGripper();
+        void loadGripper();
+        void saveGripper();
+        void applyGripper();
+        void updateGripper();
+        void updateGUI();
+        void updateParameterTable();
+        void updateParametrization();
 
 private:
 	void setupGUI();
+        gripperz::parametrization::Parametrization::Ptr makeParametrization();
 
 	rw::models::WorkCell* _wc;
 	rwsim::dynamics::DynamicWorkCell::Ptr _dwc;
+        rw::kinematics::State _state;
+        gripperz::models::StandardGripper::Ptr _gripper;
 
 	Ui::GripperDesignWidget _ui;
 };

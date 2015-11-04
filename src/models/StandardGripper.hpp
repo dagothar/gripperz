@@ -17,7 +17,7 @@ namespace gripperz {
          * @class StandardGripper
          * @brief
          */
-        class StandardGripper : virtual public BasicParametrizedGripper, virtual public ParametrizedGeometryGripper {
+        class StandardGripper : public ParametrizedGeometryGripper {
         public:
             //! Smart pointer.
             typedef rw::common::Ptr<StandardGripper> Ptr;

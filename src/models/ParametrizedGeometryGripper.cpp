@@ -21,6 +21,7 @@ using namespace rw::models;
 using namespace rw::geometry;
 using namespace rw::common;
 using namespace rw::graphics;
+using namespace std;
 
 ParametrizedGeometryGripper::ParametrizedGeometryGripper(const std::string& name) :
 ParametrizedGripper(name) {
@@ -34,6 +35,8 @@ ParametrizedGeometryGripper::~ParametrizedGeometryGripper() {
 }
 
 void ParametrizedGeometryGripper::applyModifications(WorkCell::Ptr wc, DynamicWorkCell::Ptr dwc, State& state) {
+    INFO << "Modifying gripper geometry" << endl;
+    
     /* remove old objects */
     wc->removeObject(getLeftFingerObject().get());
     wc->removeObject(getRightFingerObject().get());
