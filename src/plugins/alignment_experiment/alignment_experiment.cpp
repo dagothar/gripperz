@@ -41,7 +41,7 @@ using namespace gripperz::grasps::filters;
 using namespace boost;
 
 alignment_experiment::alignment_experiment() :
-RobWorkStudioPlugin("simple_sim", QIcon(":/pa_icon.png")) {
+RobWorkStudioPlugin("simple_sim", QIcon(":/lars_icon.png")) {
 
     _ui.setupUi(this);
     setupGUI();

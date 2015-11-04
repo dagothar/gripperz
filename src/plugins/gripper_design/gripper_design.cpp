@@ -21,7 +21,7 @@ using namespace rwsim::dynamics;
 using namespace boost;
 
 gripper_design::gripper_design() :
-RobWorkStudioPlugin("gripper_design", QIcon(":/pa_icon.png")) {
+RobWorkStudioPlugin("gripper_design", QIcon(":/design_icon.png")) {
 
     _ui.setupUi(this);
     setupGUI();
