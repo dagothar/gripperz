@@ -341,6 +341,7 @@ void GraspTaskSimulator::stepCB(
         ) {
     SimState &sstate = _simStates[sim];
 
+    /* take care of delay for slowing the simulation down */
     int delay = _stepDelayMs;
 
     if (delay != 0) {
@@ -351,10 +352,11 @@ void GraspTaskSimulator::stepCB(
         return;
     }
 
+    /* initialize */
     sstate._state = state;
-
     Q currentQ = _hand->getQ(state);
 
+    /* store paths */
     if (_storeTimedStatePaths) {
         std::map<GraspTarget*, TimedStatePath> &targetPaths = _timedStatePaths[sstate._task];
         TimedStatePath &targetPath = targetPaths[sstate._target];
@@ -362,6 +364,7 @@ void GraspTaskSimulator::stepCB(
         targetPath.push_back(timedState);
     }
 
+    /* check whether time limit not broken */
     if (sstate._wallTimer.getTime() > _wallTimeLimit
             && sim->getTime() > _simTimeLimit
             ) {
@@ -386,6 +389,7 @@ void GraspTaskSimulator::stepCB(
         graspFinished(sstate);
     }
 
+    /* take care of errors */
     if (sim->isInError()
             && sstate._currentState != NEW_GRASP
             ) {
@@ -436,8 +440,9 @@ void GraspTaskSimulator::stepCB(
         Transform3D<> ct3d = Kinematics::worldTframe(_mbase, state);
         bool isApproachReached = MetricUtil::dist2(ct3d.P(), sstate._wTmbase_approachTarget.P()) < 0.002;
 
+        /* close gripper when the approach is reached */
         if (isApproachReached) {
-            sstate._graspController->setTargetPos(sstate._closeQ);
+            sstate._graspController->setTargetPos(sstate._closeQ); // THIS
             sstate._currentState = GRASPING;
             sstate._approachedTime = sim->getTime();
             sstate._restingTime = sstate._approachedTime;
@@ -452,9 +457,9 @@ void GraspTaskSimulator::stepCB(
         if (sim->getTime() > sstate._approachedTime + 0.5) {
 
             // test if the grasp is in rest
-            if (DynamicUtil::isResting(_dhand, state, 0.001,
-                    0.3) /*|| _alwaysResting*/)
+            if (DynamicUtil::isResting(_dhand, state, 0.001, 0.3)) {
                 sstate._restCount++;
+            }
 
             bool isResting = sstate._restCount > 5;
 
@@ -466,8 +471,7 @@ void GraspTaskSimulator::stepCB(
             }
 
             // if it is in rest then lift object
-            if ((isResting && ((sim->getTime() - sstate._restingTime) > 1.5))
-                    || sim->getTime() > 8) {
+            if ((isResting && ((sim->getTime() - sstate._restingTime) > 1.5)) || sim->getTime() > 8) {
                 // remember to check the transform of object relative to gripper
                 sstate._graspTime = sim->getTime();
                 sstate._postLiftObjState = state;
@@ -508,25 +512,23 @@ void GraspTaskSimulator::stepCB(
     if (sstate._currentState == LIFTING) {
         // test if object has been lifted
         bool isLifted = true;
-        Transform3D<> ct3d = Kinematics::worldTframe(
-                _dhand->getBase()->getBodyFrame(), state);
-        isLifted &= MetricUtil::dist2(ct3d.P(),
-                sstate._wTmbase_retractTarget.P()) < 0.001;
+        Transform3D<> ct3d = Kinematics::worldTframe(_dhand->getBase()->getBodyFrame(), state);
+        isLifted &= MetricUtil::dist2(ct3d.P(), sstate._wTmbase_retractTarget.P()) < 0.001;
 
         SuctionCup::Ptr scup = _dhand.cast<SuctionCup>();
         if (scup != NULL) {
             isLifted = scup->isClosed(state);
         }
 
-        if (isLifted)
+        if (isLifted) {
             sstate._restCount++;
+        }
 
         // if its lifted then verify the object gripper transform
         if (isLifted && sstate._restCount > 5) {
 
             GraspedObject gobj = getObjectContacts(state, sstate);
-            if ((gobj.object == NULL && scup == NULL)
-                    || (scup != NULL && !scup->isClosed(state))) {
+            if ((gobj.object == NULL && scup == NULL) || (scup != NULL && !scup->isClosed(state))) {
                 _failed++;
                 sstate._target->getResult()->testStatus = GraspResult::ObjectDropped;
                 _stat[GraspResult::ObjectDropped]++;
@@ -551,8 +553,7 @@ void GraspTaskSimulator::stepCB(
                 }
                 contactAvg = contactAvg / ((double) sstate._target->getResult()->contactsLift.size());
 
-                Transform3D<> tcpTo_before = Kinematics::frameTframe(_tcp,
-                        object->getBodyFrame(), sstate._postLiftObjState);
+                Transform3D<> tcpTo_before = Kinematics::frameTframe(_tcp, object->getBodyFrame(), sstate._postLiftObjState);
                 Transform3D<> tcpTo_after = Kinematics::frameTframe(_tcp, object->getBodyFrame(), state);
                 sstate._target->getResult()->objectTtcpGrasp = inverse(tcpTo_before);
                 sstate._target->getResult()->objectTtcpLift = inverse(tcpTo_after);
@@ -577,8 +578,7 @@ void GraspTaskSimulator::stepCB(
                 BOOST_FOREACH(Contact3D& c, sstate._target->getResult()->contactsLift) {
                     contactAvg += c.p;
                 }
-                contactAvg =
-                        contactAvg / ((double) sstate._target->getResult()->contactsLift.size());
+                contactAvg = contactAvg / ((double) sstate._target->getResult()->contactsLift.size());
 
                 Transform3D<> tcpTo_before = Kinematics::frameTframe(_tcp, object->getBodyFrame(), sstate._postLiftObjState);
                 Transform3D<> tcpTo_after = Kinematics::frameTframe(_tcp, object->getBodyFrame(), state);
@@ -647,7 +647,7 @@ void GraspTaskSimulator::stepCB(
 
             if (!_forceSimulateAll) {
                 if (sstate._target->getResult()->testStatus != GraspResult::UnInitialized) {
-                    // if test status is set then we allready processed this task.
+                    // if test status is set then we already processed this task.
                     if (sstate._target->getResult()->testStatus < GraspResult::SizeOfStatusArray) {
                         _stat[sstate._target->getResult()->testStatus]++;
                     }
@@ -658,6 +658,7 @@ void GraspTaskSimulator::stepCB(
                     continue;
                 }
             }
+            
             Transform3D<> wTref = Kinematics::worldTframe(sstate._taskRefFrame, sstate._homeState);
             Transform3D<> refToffset = sstate._taskOffset;
             Transform3D<> offsetTtarget = sstate._target->pose;
@@ -695,8 +696,7 @@ void GraspTaskSimulator::stepCB(
                 }
             }
 
-            Transform3D<> t3d = Kinematics::frameTframe(_tcp,
-                    _objects[0]->getBodyFrame(), nstate);
+            Transform3D<> t3d = Kinematics::frameTframe(_tcp, _objects[0]->getBodyFrame(), nstate);
             sstate._target->getResult()->objectTtcpTarget = inverse(t3d);
 
             CollisionDetector::QueryResult res;
@@ -723,16 +723,13 @@ void GraspTaskSimulator::stepCB(
                     }
                 }
                 if (colObject) {
-                    sstate._target->getResult()->testStatus =
-                            GraspResult::CollisionObjectInitially;
+                    sstate._target->getResult()->testStatus = GraspResult::CollisionObjectInitially;
                     _stat[GraspResult::CollisionObjectInitially]++;
                 } else {
-                    sstate._target->getResult()->testStatus =
-                            GraspResult::CollisionEnvironmentInitially;
+                    sstate._target->getResult()->testStatus = GraspResult::CollisionEnvironmentInitially;
                     _stat[GraspResult::CollisionEnvironmentInitially]++;
                 }
-                sstate._target->getResult()->gripperConfigurationGrasp =
-                        sstate._openQ;
+                sstate._target->getResult()->gripperConfigurationGrasp = sstate._openQ;
 
                 _collision++;
             }
@@ -743,6 +740,7 @@ void GraspTaskSimulator::stepCB(
         if (_nrOfExperiments > _lastSaveTaskIndex + _autoSaveInterval) {
             _lastSaveTaskIndex = _nrOfExperiments;
         }
+        
         // reset simulation
         _dhand->getBase()->reset(nstate);
         sim->reset(nstate);
