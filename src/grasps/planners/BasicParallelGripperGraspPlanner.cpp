@@ -28,6 +28,7 @@ BasicParallelGripperGraspPlanner::BasicParallelGripperGraspPlanner(unsigned nGra
 GraspPlanner(nGrasps),
 _state(state),
 _td(td) {
+    _targetObject = _td->getTargetObject();
 }
 
 BasicParallelGripperGraspPlanner::~BasicParallelGripperGraspPlanner() {
