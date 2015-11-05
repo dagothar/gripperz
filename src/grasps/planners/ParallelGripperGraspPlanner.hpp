@@ -32,6 +32,9 @@ namespace gripperz {
                 
             protected:
                 
+            private:
+                
+                
             };
         }
     }

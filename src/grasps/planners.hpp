@@ -8,5 +8,6 @@
 #pragma once
 
 #include "planners/GraspPlanner.hpp"
+#include "planners/GraspSampler.hpp"
 #include "planners/BasicParallelGripperGraspPlanner.hpp"
 #include "planners/ParallelGripperGraspPlanner.hpp"
