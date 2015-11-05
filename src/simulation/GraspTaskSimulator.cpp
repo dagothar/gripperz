@@ -908,15 +908,14 @@ bool GraspTaskSimulator::getNextTarget(GraspTaskSimulator::SimState& sstate) {
         sstate._task = _currentTask;
 
         std::string refframename = _currentTask->getRefFrame();
-        sstate._taskRefFrame = _dwc->getWorkcell()->findFrame < Frame
-                > (refframename);
+        sstate._taskRefFrame = _dwc->getWorkcell()->findFrame<Frame>(refframename);
         RW_ASSERT(sstate._taskRefFrame);
         sstate._taskOffset = _currentTask->getOffset();
         sstate._approach = _currentTask->getApproach();
         sstate._retract = _currentTask->getRetract();
-        sstate._openQ = _currentTask->getOpenQ();
-        sstate._closeQ = _currentTask->getCloseQ();
-        sstate._tauMax = _currentTask->getTauMax();
+        sstate._openQ = _hand->getBounds().second;
+        sstate._closeQ = _hand->getBounds().first;
+        sstate._tauMax = _rhand->getMotorForceLimits();
     }
     return true;
 }
