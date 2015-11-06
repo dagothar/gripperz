@@ -478,6 +478,8 @@ void GraspPlugin::genericEventListener(const std::string& event) {
         _dwc = dwc;
 
         ui.startButton->setEnabled(true);
+    } else if (event == "GripperApplied") {
+        _initState = getRobWorkStudio()->getState();
     }
 }
 
