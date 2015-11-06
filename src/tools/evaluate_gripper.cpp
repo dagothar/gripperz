@@ -41,6 +41,7 @@ struct Configuration {
     string td_filename;
     string gripper_filename;
     string result_filename;
+    string index_calculators;
 } CONFIG;
 
 /******************************************************************************/
@@ -70,7 +71,8 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("dwc", value<string>(&conf.dwc_filename)->required(), "dynamic workcell file")
             ("td", value<string>(&conf.td_filename)->required(), "task description file")
             ("gripper,g", value<string>(&conf.gripper_filename)->required(), "base gripper file")
-            ("result,r", value<string>(&conf.result_filename), "result gripper file");
+            ("result,r", value<string>(&conf.result_filename), "result gripper file")
+            ("indices,i", value<string>(&conf.index_calculators)->default_value("success"), "quality indices to compute");
     variables_map vm;
 
     string usage = "Usage: ";
