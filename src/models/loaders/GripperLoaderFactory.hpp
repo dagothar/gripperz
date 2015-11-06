@@ -33,6 +33,13 @@ namespace gripperz {
                  * @return 
                  */
                 virtual GripperLoader::Ptr getLoader(const std::string& cls);
+                
+                /**
+                 * Creates gripper loader based on the gripper class
+                 * @param gripper
+                 * @return 
+                 */
+                virtual GripperLoader::Ptr getLoader(Gripper::Ptr gripper);
             };
 
         }

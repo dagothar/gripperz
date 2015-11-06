@@ -7,6 +7,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/BasicParametrizedGripperLoader.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ParametrizedGeometryGripperLoader.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/StandardGripperLoader.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MasterGripperLoader.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperQualityLoader.cpp
 	CACHE INTERNAL ""
 )
