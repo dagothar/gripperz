@@ -9,6 +9,7 @@
 
 #include "planners/GraspPlanner.hpp"
 #include "planners/GraspSampler.hpp"
+#include "planners/RayGraspSampler.hpp"
 #include "planners/SurfaceSampleGraspSampler.hpp"
 #include "planners/BasicParallelGripperGraspPlanner.hpp"
 #include "planners/ParallelGripperGraspPlanner.hpp"

@@ -8,6 +8,9 @@
 #pragma once
 
 #include "GraspPlanner.hpp"
+#include <rw/models/Object.hpp>
+#include <rw/kinematics/State.hpp>
+#include <models/Gripper.hpp>
 
 namespace gripperz {
     namespace grasps {
@@ -33,7 +36,12 @@ namespace gripperz {
             protected:
                 
             private:
+                rw::models::Object::Ptr _targetObject;
+                gripperz::models::Gripper::Ptr _gripper;
+                rw::kinematics::State _state;
                 
+                rw::math::Transform3D<> _approach;
+                rw::math::Transform3D<> _retract;
                 
             };
         }
