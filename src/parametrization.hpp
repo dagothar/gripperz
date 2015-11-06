@@ -12,4 +12,5 @@
 #include "parametrization/Parametrization.hpp"
 #include "parametrization/ParametrizationTranslator.hpp"
 #include "parametrization/VectorParametrizationTranslator.hpp"
+#include "parametrization/MultiParametrizationTranslator.hpp"
 #include "parametrization/loaders.hpp"

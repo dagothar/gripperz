@@ -6,6 +6,9 @@
 #include <boost/test/test_tools.hpp>
 
 #include <parametrization/VectorParametrizationTranslator.hpp>
+#include <parametrization/MultiParametrizationTranslator.hpp>
+
+#include "parametrization/Parametrization.hpp"
 
 using namespace std;
 using namespace gripperz::parametrization;
@@ -39,4 +42,20 @@ BOOST_AUTO_TEST_CASE(ShouldExtractParameterValues) {
     
     vector<double> expected{3, 1, 2};
     BOOST_CHECK_EQUAL_COLLECTIONS(v.begin(), v.end(), expected.begin(), expected.end());
+}
+
+BOOST_AUTO_TEST_CASE(ShouldControlMultipleParameters) {
+    Parametrization::Ptr p = new Parametrization(Parametrization::ParameterNameList{"a", "b", "c"});
+    typedef MultiParametrizationTranslator::Slot Slot;
+    ParametrizationTranslator::Ptr t = new MultiParametrizationTranslator({Slot("a"), Slot{"b", "c"}});
+    
+    vector<double> values{0.1, 0.2};
+    t->applyVectorToParametrization(p, values);
+    
+    BOOST_CHECK_CLOSE(p->getParameter("a"), 0.1, 1e-6);
+    BOOST_CHECK_CLOSE(p->getParameter("b"), 0.2, 1e-6);
+    BOOST_CHECK_CLOSE(p->getParameter("c"), 0.2, 1e-6);
+    
+    vector<double> v = t->parametrizationToVector(p);
+    BOOST_CHECK_EQUAL_COLLECTIONS(v.begin(), v.end(), values.begin(), values.end());
 }

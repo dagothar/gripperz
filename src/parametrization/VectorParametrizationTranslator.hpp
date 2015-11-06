@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Parametrization.hpp"
+#include "ParametrizationTranslator.hpp"
 
 namespace gripperz {
     namespace parametrization {
@@ -16,12 +16,10 @@ namespace gripperz {
          * @class ParametrizationTranslator
          * @brief Converts between Parametrization and numerical vectors
          */
-        class VectorParametrizationTranslator {
+        class VectorParametrizationTranslator: public ParametrizationTranslator {
         public:
             //! Smart pointer.
             typedef rw::common::Ptr<VectorParametrizationTranslator> Ptr;
-
-            typedef std::vector<ParameterValue> ValueVector;
 
         public:
 
