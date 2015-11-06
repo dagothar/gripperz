@@ -23,4 +23,9 @@ if (BUILD_TOOLS)
 	add_executable(gripper_evaluate gripper_evaluate.cpp)
 	add_dependencies(gripper_evaluate gripperz)
 	target_link_libraries(gripper_evaluate gripperz)
+
+        # Target: evaluate_gripper
+	add_executable(evaluate_gripper evaluate_gripper.cpp)
+	add_dependencies(evaluate_gripper gripperz)
+	target_link_libraries(evaluate_gripper gripperz)
 endif ()
