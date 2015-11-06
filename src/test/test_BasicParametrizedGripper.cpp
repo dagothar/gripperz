@@ -8,7 +8,7 @@
 #include <context/Context.hpp>
 #include <models/BasicParametrizedGripper.hpp>
 #include <models/loaders/BasicParametrizedGripperLoader.hpp>
-#include <parametrization/ParametrizationTranslator.hpp>
+#include <parametrization/VectorParametrizationTranslator.hpp>
 
 using namespace std;
 using namespace gripperz::parametrization;

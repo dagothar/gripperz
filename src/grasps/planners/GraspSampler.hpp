@@ -8,6 +8,7 @@
 #pragma once
 
 #include <rw/common/Ptr.hpp>
+#include <rw/math/Transform3D.hpp>
 
 namespace gripperz {
     namespace grasps {

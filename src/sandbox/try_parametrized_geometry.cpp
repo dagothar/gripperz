@@ -4,7 +4,7 @@
 #include <geometry/OldFingerGenerator.hpp>
 #include <rw/loaders/model3d/STLFile.hpp>
 #include "math/Types.hpp"
-#include "parametrization/ParametrizationTranslator.hpp"
+#include "parametrization/VectorParametrizationTranslator.hpp"
 
 using namespace std;
 using namespace rw::geometry;
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     ParametrizedMeshGenerator::Ptr generator = new OldFingerGenerator();
     Parametrization::Ptr parametrization = generator->getParametrization();
     Parametrization::ParameterNameList parameter_names = parametrization->getParameterNameList();
-    ParametrizationTranslator::Ptr translator = new ParametrizationTranslator(parameter_names);
+    VectorParametrizationTranslator::Ptr translator = new VectorParametrizationTranslator(parameter_names);
     
     vector<double> values = translator->parametrizationToVector(parametrization);
     cout << values << endl;

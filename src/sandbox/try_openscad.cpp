@@ -5,7 +5,7 @@
 #include <geometry/OpenSCADGenerator.hpp>
 #include <rw/loaders/model3d/STLFile.hpp>
 #include "math/Types.hpp"
-#include "parametrization/ParametrizationTranslator.hpp"
+#include "parametrization/VectorParametrizationTranslator.hpp"
 
 using namespace std;
 using namespace rw;
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     generator->setParametrization(parametrization);
 
     Parametrization::ParameterNameList parameter_names = parametrization->getParameterNameList();
-    ParametrizationTranslator::Ptr translator = new ParametrizationTranslator(parameter_names);
+    VectorParametrizationTranslator::Ptr translator = new VectorParametrizationTranslator(parameter_names);
 
     vector<double> values = translator->parametrizationToVector(parametrization);
     cout << values << endl;

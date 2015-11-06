@@ -5,7 +5,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 
-#include <parametrization/ParametrizationTranslator.hpp>
+#include <parametrization/VectorParametrizationTranslator.hpp>
 
 using namespace std;
 using namespace gripperz::parametrization;
@@ -13,7 +13,7 @@ using namespace gripperz::parametrization;
 BOOST_AUTO_TEST_CASE(ShouldCreateNewParametrization) {
     vector<string> paramNames{"length", "width", "depth"};
 
-    ParametrizationTranslator::Ptr t = new ParametrizationTranslator(paramNames);
+    VectorParametrizationTranslator::Ptr t = new VectorParametrizationTranslator(paramNames);
     Parametrization::Ptr p = t->vectorToParametrization({0, 1, 2});
 
     BOOST_CHECK(p != NULL);
@@ -33,9 +33,9 @@ BOOST_AUTO_TEST_CASE(ShouldExtractParameterValues) {
     BOOST_CHECK(p->getParameter("c") == 3);
     
     vector<string> paramNames{"c", "a", "b"};
-    ParametrizationTranslator::Ptr t = new ParametrizationTranslator(paramNames);
+    VectorParametrizationTranslator::Ptr t = new VectorParametrizationTranslator(paramNames);
     
-    ParametrizationTranslator::ValueVector v = t->parametrizationToVector(p);
+    VectorParametrizationTranslator::ValueVector v = t->parametrizationToVector(p);
     
     vector<double> expected{3, 1, 2};
     BOOST_CHECK_EQUAL_COLLECTIONS(v.begin(), v.end(), expected.begin(), expected.end());
