@@ -15,9 +15,11 @@
 #include <models/loaders/MasterGripperLoader.hpp>
 #include <process/GripperEvaluationManagerFactory.hpp>
 #include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/IndexGripperQualityExtractor.hpp>
 #include <evaluation/calculators.hpp>
 #include <grasps/SurfaceSample.hpp>
 #include <boost/tokenizer.hpp>
+#include <math/CombineObjectivesFactory.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -35,6 +37,7 @@ using namespace gripperz::models::loaders;
 using namespace gripperz::context;
 using namespace gripperz::process;
 using namespace gripperz::grasps;
+using namespace gripperz::math;
 using namespace gripperz::evaluation;
 using namespace gripperz::evaluation::calculators;
 
@@ -47,6 +50,8 @@ struct Configuration {
     string gripper_filename;
     string result_filename;
     vector<string> index_calculators;
+    vector<double> weights;
+    string method;
     
     double covPosFilteringRadius;
     double covAngleFilteringRadius;
@@ -75,7 +80,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
     string offset;
     string indices;
 
-    options_description desc("Options:");
+    options_description desc("Options");
     desc.add_options()
             ("help,h", "help message")
             ("threads,t", value<int>(&conf.threads)->default_value(1), "number of threads to use")
@@ -85,6 +90,8 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("gripper,g", value<string>(&conf.gripper_filename)->required(), "base gripper file")
             ("result,r", value<string>(&conf.result_filename), "result gripper file")
             ("indices,i", value<string>(&indices)->default_value("success,alignment,coverage,wrench,stress,volume"), "quality indices to compute")
+            ("weights,w", value<vector<double> >(&conf.weights)->multitoken()->default_value(vector<double>{1, 1, 1, 1, 1, 1}, "1 1 1 1 1 1"), "weights for individual objectives")
+            ("method,m", value<string>(&conf.method)->default_value("product"), "method for combining objectives (sum, product, log)")
             ("covP", value<double>(&conf.covPosFilteringRadius)->default_value(0.001), "pos. filtering radius for coverage")
             ("covA", value<double>(&conf.covAngleFilteringRadius)->default_value(15), "angle filtering radius for coverage")
             ("aliR", value<double>(&conf.aliFilteringRadius)->default_value(0.01), "filtering radius for alignment")
@@ -109,11 +116,11 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
         cout << desc << endl;
         return false;
     }
-    
+
     if (conf.result_filename.empty()) {
         conf.result_filename = conf.gripper_filename;
     }
-    
+
     boost::tokenizer<> tok(indices);
     for (boost::tokenizer<>::iterator i = tok.begin(); i != tok.end(); ++i) {
         conf.index_calculators.push_back(*i);
@@ -142,8 +149,8 @@ void load_data(const Configuration& config, Data& data) {
 /******************************************************************************/
 GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
     GripperEvaluator::Ptr evaluator = ownedPtr(new GripperEvaluator());
-    
-    BOOST_FOREACH (const string& idx, config.index_calculators) {
+
+    BOOST_FOREACH(const string& idx, config.index_calculators) {
         if (idx == "success") {
             QualityIndexCalculator::Ptr calc = ownedPtr(new SuccessIndexCalculator());
             evaluator->addQualityIndexCalculator(idx, calc);
@@ -162,9 +169,9 @@ GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
         } else if (idx == "wrench") {
             QualityIndexCalculator::Ptr calc = ownedPtr(new WrenchIndexCalculator());
             evaluator->addQualityIndexCalculator(idx, calc);
-        } 
+        }
     }
-    
+
     return evaluator;
 }
 
@@ -176,17 +183,28 @@ GripperEvaluationProcessManager::Ptr make_evaluation_manager(const Configuration
             config.threads,
             vector<SurfaceSample>()
             );
-    
+
     manager->setEvaluator(make_evaluator(config));
-    
+
     return manager;
 }
 
 /******************************************************************************/
-GripperQuality::Ptr evaluate_gripper(Gripper::Ptr gripper, GripperEvaluationProcessManager::Ptr manager) {
-    GripperQuality::Ptr quality = manager->evaluateGripper(gripper);
-    gripper->setQuality(quality);
+GripperQualityExtractor::Ptr make_extractor(const Configuration& config) {
+    GripperQualityExtractor::Ptr extractor = ownedPtr(new IndexGripperQualityExtractor(config.index_calculators));
     
+    return extractor;
+}
+
+/******************************************************************************/
+GripperQuality::Ptr evaluate_gripper(Gripper::Ptr gripper, GripperEvaluationProcessManager::Ptr manager, GripperQualityExtractor::Ptr extractor, CombineObjectives::Ptr method) {
+    GripperQuality::Ptr quality = manager->evaluateGripper(gripper);
+    
+    vector<double> objectives = extractor->extract(quality);
+    double Q = method->combine(objectives);
+    quality->setIndex("Q", Q);
+    
+    gripper->setQuality(quality);
     return quality;
 }
 
@@ -204,13 +222,15 @@ int main(int argc, char* argv[]) {
         INFO << "Exception during loading data: " << e.what() << endl;
         return -1;
     }
-    
+
     Gripper::Ptr gripper = DATA.gripper;
     GripperEvaluationProcessManager::Ptr manager = make_evaluation_manager(CONFIG, DATA);
-    GripperQuality::Ptr quality = evaluate_gripper(gripper, manager);
-    
+    GripperQualityExtractor::Ptr extractor = make_extractor(CONFIG);
+    CombineObjectives::Ptr method = CombineObjectivesFactory::make(CONFIG.method, CONFIG.weights);
+    GripperQuality::Ptr quality = evaluate_gripper(gripper, manager, extractor, method);
+
     INFO << *quality << endl;
-    
+
     GripperLoader::Ptr loader = new MasterGripperLoader();
     loader->save(CONFIG.result_filename, gripper);
 
