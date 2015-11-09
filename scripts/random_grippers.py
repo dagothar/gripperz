@@ -41,7 +41,7 @@ def make_parameters():
 		'cutdiameter': random.uniform(*PARAM_LIMITS['cutdiameter'])
 	}
 	
-	parameters['cutpos'] = random.uniform(0.5*parameters['length'], parameters['length'])
+	parameters['tcpoffset'] = random.uniform(0.5*parameters['length'], parameters['length'])
 	parameters['cutdepth'] = random.uniform(0, parameters['width']-0.005)
 	parameters['cutoffset'] = random.uniform(-parameters['depth']/2, parameters['depth']/2)
 	

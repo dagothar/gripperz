@@ -5,7 +5,8 @@ width = 0.025;
 depth = 0.020;
 chfdepth = 0;
 chfangle = 45;
-cutpos = 0.075;
+tcpoffset = 0.075;
+cutpos = 0.0;
 cutdepth = 0.01;
 cutwidth = 0.01;
 cutangle = 90;
@@ -90,4 +91,4 @@ module finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutwid
 }
 
 scale(s)
-	finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutwidth, cutangle/2, cutangle2/2, cuttilt);
+	finger(length, width, depth, chfdepth, chfangle, tcpoffset+cutpos, cutdepth, cutwidth, cutangle/2, cutangle2/2, cuttilt);
