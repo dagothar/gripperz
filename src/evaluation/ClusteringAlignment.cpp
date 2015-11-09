@@ -30,7 +30,7 @@ ClusteringAlignment::~ClusteringAlignment() {
 }
 
 
-vector<Vector3D<> > getVersors(const Vector3D<>& axis, const vector<Transform3D<> > transforms) {
+vector<Vector3D<> > getVersors1(const Vector3D<>& axis, const vector<Transform3D<> > transforms) {
 	vector<Vector3D<> > versors;
 	
 	BOOST_FOREACH (const Transform3D<>& t, transforms) {
@@ -55,7 +55,7 @@ struct Point {
 };
 
 
-vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radius=0.1) {
+vector<Vector3D<> > filterPoints1(const vector<Vector3D<> >& points, double radius=0.1) {
 	/* build search tree */
 	typedef Point::Ptr ValueType;
 	typedef KDTreeQ<ValueType> NNSearch;
@@ -105,11 +105,11 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
 }
 
 
-double getAxisAlignment(const Vector3D<>& axis, const vector<Transform3D<> > transforms, double radius) {
-	vector<Vector3D<> > versors = getVersors(axis, transforms);
+double getAxisAlignment1(const Vector3D<>& axis, const vector<Transform3D<> > transforms, double radius) {
+	vector<Vector3D<> > versors = getVersors1(axis, transforms);
 	if (versors.size() == 0) return 0.0;
 	
-	vector<Vector3D<> > filtered_versors = filterPoints(versors, radius);
+	vector<Vector3D<> > filtered_versors = filterPoints1(versors, radius);
 	
 	double axis_alignment = 1.0 - 1.0 * filtered_versors.size() / versors.size();
 	
@@ -145,11 +145,11 @@ double ClusteringAlignment::calculateAlignment(rwlibs::task::GraspTask::Ptr task
 	DEBUG << "Adjusted radius = " << filtering_radius << endl;
 	
 	DEBUG << "Calculating X alignment..." << endl;
-	double x_alignment = getAxisAlignment(Vector3D<>::x(), ts_after, filtering_radius);
+	double x_alignment = getAxisAlignment1(Vector3D<>::x(), ts_after, filtering_radius);
 	DEBUG << "Calculating Y alignment..." << endl;
-	double y_alignment = getAxisAlignment(Vector3D<>::y(), ts_after, filtering_radius);
+	double y_alignment = getAxisAlignment1(Vector3D<>::y(), ts_after, filtering_radius);
 	DEBUG << "Calculating Z alignment..." << endl;
-	double z_alignment = getAxisAlignment(Vector3D<>::z(), ts_after, filtering_radius);
+	double z_alignment = getAxisAlignment1(Vector3D<>::z(), ts_after, filtering_radius);
 	
 	DEBUG << "* x alignment = " << x_alignment << endl;
 	DEBUG << "* y alignment = " << y_alignment << endl;

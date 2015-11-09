@@ -14,7 +14,10 @@
 #include <models/Gripper.hpp>
 #include <models/loaders/MasterGripperLoader.hpp>
 #include <process/GripperEvaluationManagerFactory.hpp>
+#include <evaluation/GripperEvaluator.hpp>
+#include <evaluation/calculators.hpp>
 #include <grasps/SurfaceSample.hpp>
+#include <boost/tokenizer.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -32,6 +35,8 @@ using namespace gripperz::models::loaders;
 using namespace gripperz::context;
 using namespace gripperz::process;
 using namespace gripperz::grasps;
+using namespace gripperz::evaluation;
+using namespace gripperz::evaluation::calculators;
 
 /******************************************************************************/
 struct Configuration {
@@ -41,7 +46,13 @@ struct Configuration {
     string td_filename;
     string gripper_filename;
     string result_filename;
-    string index_calculators;
+    vector<string> index_calculators;
+    
+    double covPosFilteringRadius;
+    double covAngleFilteringRadius;
+    double aliFilteringRadius;
+    double stressLimit;
+    double volumeLimit;
 } CONFIG;
 
 /******************************************************************************/
@@ -62,6 +73,7 @@ void initialize() {
 bool parse_cli(int argc, char* argv[], Configuration& conf) {
     string values;
     string offset;
+    string indices;
 
     options_description desc("Options:");
     desc.add_options()
@@ -72,7 +84,12 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("td", value<string>(&conf.td_filename)->required(), "task description file")
             ("gripper,g", value<string>(&conf.gripper_filename)->required(), "base gripper file")
             ("result,r", value<string>(&conf.result_filename), "result gripper file")
-            ("indices,i", value<string>(&conf.index_calculators)->default_value("success"), "quality indices to compute");
+            ("indices,i", value<string>(&indices)->default_value("success,alignment,coverage,wrench,stress,volume"), "quality indices to compute")
+            ("covP", value<double>(&conf.covPosFilteringRadius)->default_value(0.001), "pos. filtering radius for coverage")
+            ("covA", value<double>(&conf.covAngleFilteringRadius)->default_value(15), "angle filtering radius for coverage")
+            ("aliR", value<double>(&conf.aliFilteringRadius)->default_value(0.01), "filtering radius for alignment")
+            ("maxS", value<double>(&conf.stressLimit)->default_value(10), "stress limit")
+            ("maxV", value<double>(&conf.volumeLimit)->default_value(200), "volume limit");
     variables_map vm;
 
     string usage = "Usage: ";
@@ -96,6 +113,11 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
     if (conf.result_filename.empty()) {
         conf.result_filename = conf.gripper_filename;
     }
+    
+    boost::tokenizer<> tok(indices);
+    for (boost::tokenizer<>::iterator i = tok.begin(); i != tok.end(); ++i) {
+        conf.index_calculators.push_back(*i);
+    }
 
     return true;
 }
@@ -118,13 +140,44 @@ void load_data(const Configuration& config, Data& data) {
 }
 
 /******************************************************************************/
+GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
+    GripperEvaluator::Ptr evaluator = ownedPtr(new GripperEvaluator());
+    
+    BOOST_FOREACH (const string& idx, config.index_calculators) {
+        if (idx == "success") {
+            QualityIndexCalculator::Ptr calc = ownedPtr(new SuccessIndexCalculator());
+            evaluator->addQualityIndexCalculator(idx, calc);
+        } else if (idx == "coverage") {
+            QualityIndexCalculator::Ptr calc = ownedPtr(new CoverageIndexCalculator(config.covPosFilteringRadius, config.covAngleFilteringRadius));
+            evaluator->addQualityIndexCalculator(idx, calc);
+        } else if (idx == "alignment") {
+            QualityIndexCalculator::Ptr calc = ownedPtr(new AlignmentIndexCalculator(config.aliFilteringRadius));
+            evaluator->addQualityIndexCalculator(idx, calc);
+        } else if (idx == "stress") {
+            QualityIndexCalculator::Ptr calc = ownedPtr(new StressIndexCalculator(config.stressLimit));
+            evaluator->addQualityIndexCalculator(idx, calc);
+        } else if (idx == "volume") {
+            QualityIndexCalculator::Ptr calc = ownedPtr(new VolumeIndexCalculator(config.volumeLimit));
+            evaluator->addQualityIndexCalculator(idx, calc);
+        } else if (idx == "wrench") {
+            QualityIndexCalculator::Ptr calc = ownedPtr(new WrenchIndexCalculator());
+            evaluator->addQualityIndexCalculator(idx, calc);
+        } 
+    }
+    
+    return evaluator;
+}
+
+/******************************************************************************/
 GripperEvaluationProcessManager::Ptr make_evaluation_manager(const Configuration& config, const Data& data) {
-    GripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(
+    StandardGripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(
             data.td,
             config.ngrasps,
             config.threads,
             vector<SurfaceSample>()
             );
+    
+    manager->setEvaluator(make_evaluator(config));
     
     return manager;
 }
