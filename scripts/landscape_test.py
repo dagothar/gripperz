@@ -10,10 +10,10 @@ import xml.etree.ElementTree as ET
 
 CMD = '/home/dagothar/gripperz-dev/bin/evaluate_gripper --dwc {dwc} --td {td} --gripper {gripper} -p {parameter} -v "{value}" -t {threads} -n {grasps} -r {result}'
 DWC = "/home/dagothar/grippers/scenes/rotor/Scene.dwc.xml"
-TD = "/home/dagothar/grippers/scenes/rotor/task1.td.xml"
+TD = "/home/dagothar/grippers/scenes/rotor/task3.td.xml"
 GRIPPER = "/home/dagothar/gripperz-dev/data/test/standard_gripper.xml"
-PARAM = "length"
-BOUNDS = (0.0, 0.1)
+PARAM = "cutdepth"
+BOUNDS = (0.0, 0.025)
 RESOLUTION = 100
 GRASPS = 100
 THREADS = 4

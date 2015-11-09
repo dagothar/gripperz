@@ -7,3 +7,5 @@ test/*
 CMakeFiles/*
 CMakeCache.txt
 nbproject/*
+*.xml
+*.csv
