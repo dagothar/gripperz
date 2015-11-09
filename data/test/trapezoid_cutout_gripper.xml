@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gripper name="myLittleStandardGripper" class="StandardGripper">
+<gripper name="trapezoidCutout" class="StandardGripper">
 	
 	<data>
 		<deviceId>gripper</deviceId>
@@ -33,7 +33,7 @@
 	</parametrization>
 	
 	<meshGenerator class="OpenSCADGenerator">
-		<template>${GRIPPERZ_ROOT}/data/scad/prismatic_cutout.scad</template>
+		<template>${GRIPPERZ_ROOT}/data/scad/trapezoid_cutout.scad</template>
 		<parametrization></parametrization>
 	</meshGenerator>
 	
