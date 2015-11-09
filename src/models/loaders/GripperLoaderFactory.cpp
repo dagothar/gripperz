@@ -40,15 +40,15 @@ GripperLoader::Ptr GripperLoaderFactory::getLoader(const std::string& cls) {
 }
 
 GripperLoader::Ptr GripperLoaderFactory::getLoader(Gripper::Ptr grp) {
-    if (dynamic_cast<ParametrizedGripper*>(grp.get())) {
-        return getLoader("ParametrizedGripper");
-    } else if (dynamic_cast<BasicParametrizedGripper*>(grp.get())) {
-        return getLoader("BasicParametrizedGripper");
+    if (dynamic_cast<StandardGripper*>(grp.get())) {
+        return getLoader("StandardGripper");
     } else if (dynamic_cast<ParametrizedGeometryGripper*>(grp.get())) {
         return getLoader("ParametrizedGeometryGripper");
-    } else if (dynamic_cast<StandardGripper*>(grp.get())) {
-        return getLoader("StandardGripper");
-    } 
+    } else if (dynamic_cast<BasicParametrizedGripper*>(grp.get())) {
+        return getLoader("BasicParametrizedGripper");
+    } else if (dynamic_cast<ParametrizedGripper*>(grp.get())) {
+        return getLoader("ParametrizedGripper");
+    }
     
     return getLoader("");
 }
