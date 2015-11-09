@@ -12,6 +12,7 @@
 #include <rwsim/dynamics/DynamicWorkCell.hpp>
 #include <rwsim/loaders/DynamicWorkCellLoader.hpp>
 #include <models/Gripper.hpp>
+#include <models/ParametrizedGripper.hpp>
 #include <models/loaders/MasterGripperLoader.hpp>
 #include <process/GripperEvaluationManagerFactory.hpp>
 #include <evaluation/GripperEvaluator.hpp>
@@ -38,6 +39,7 @@ using namespace gripperz::context;
 using namespace gripperz::process;
 using namespace gripperz::grasps;
 using namespace gripperz::math;
+using namespace gripperz::parametrization;
 using namespace gripperz::evaluation;
 using namespace gripperz::evaluation::calculators;
 
@@ -52,7 +54,9 @@ struct Configuration {
     vector<string> index_calculators;
     vector<double> weights;
     string method;
-    
+    vector<string> parameters;
+    vector<double> values;
+
     double covPosFilteringRadius;
     double covAngleFilteringRadius;
     double aliFilteringRadius;
@@ -79,6 +83,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
     string values;
     string offset;
     string indices;
+    string parameters;
 
     options_description desc("Options");
     desc.add_options()
@@ -96,7 +101,9 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("covA", value<double>(&conf.covAngleFilteringRadius)->default_value(15), "angle filtering radius for coverage")
             ("aliR", value<double>(&conf.aliFilteringRadius)->default_value(0.01), "filtering radius for alignment")
             ("maxS", value<double>(&conf.stressLimit)->default_value(10), "stress limit")
-            ("maxV", value<double>(&conf.volumeLimit)->default_value(200), "volume limit");
+            ("maxV", value<double>(&conf.volumeLimit)->default_value(200), "volume limit")
+            ("parameters,p", value<string>(&parameters), "parameters to modify")
+            ("values,v", value<string>(&values), "parameter values");
     variables_map vm;
 
     string usage = "Usage: ";
@@ -121,10 +128,26 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
         conf.result_filename = conf.gripper_filename;
     }
 
+    /* parse calculators */
     boost::tokenizer<> tok(indices);
     for (boost::tokenizer<>::iterator i = tok.begin(); i != tok.end(); ++i) {
         conf.index_calculators.push_back(*i);
     }
+    
+    /* parse parameters */
+    boost::tokenizer<> ptok(parameters);
+    for (boost::tokenizer<>::iterator i = ptok.begin(); i != ptok.end(); ++i) {
+        conf.parameters.push_back(*i);
+    }
+    
+    /* parse parameter values */
+    istringstream sstr(values);
+    double v;
+    while (sstr >> v) {
+        conf.values.push_back(v);
+    }
+    
+    RW_ASSERT(conf.parameters.size() == conf.values.size());
 
     return true;
 }
@@ -192,18 +215,30 @@ GripperEvaluationProcessManager::Ptr make_evaluation_manager(const Configuration
 /******************************************************************************/
 GripperQualityExtractor::Ptr make_extractor(const Configuration& config) {
     GripperQualityExtractor::Ptr extractor = ownedPtr(new IndexGripperQualityExtractor(config.index_calculators));
-    
+
     return extractor;
+}
+
+/******************************************************************************/
+void modify_parameters(Gripper::Ptr gripper, const Configuration& config) {
+    Parametrized::Ptr parametrized = gripper.cast<Parametrized>();
+    if (!parametrized) return;
+    
+    Parametrization::Ptr params = parametrized->getParametrization();
+    
+    for (int i = 0; i < config.parameters.size(); ++i) {
+        params->setParameter(config.parameters[i], config.values[i]);
+    }
 }
 
 /******************************************************************************/
 GripperQuality::Ptr evaluate_gripper(Gripper::Ptr gripper, GripperEvaluationProcessManager::Ptr manager, GripperQualityExtractor::Ptr extractor, CombineObjectives::Ptr method) {
     GripperQuality::Ptr quality = manager->evaluateGripper(gripper);
-    
+
     vector<double> objectives = extractor->extract(quality);
     double Q = method->combine(objectives);
     quality->setIndex("Q", Q);
-    
+
     gripper->setQuality(quality);
     return quality;
 }
@@ -224,13 +259,14 @@ int main(int argc, char* argv[]) {
     }
 
     Gripper::Ptr gripper = DATA.gripper;
+
+    modify_parameters(gripper, CONFIG);
+
     GripperEvaluationProcessManager::Ptr manager = make_evaluation_manager(CONFIG, DATA);
     GripperQualityExtractor::Ptr extractor = make_extractor(CONFIG);
     CombineObjectives::Ptr method = CombineObjectivesFactory::make(CONFIG.method, CONFIG.weights);
     GripperQuality::Ptr quality = evaluate_gripper(gripper, manager, extractor, method);
-
     INFO << *quality << endl;
-
     GripperLoader::Ptr loader = new MasterGripperLoader();
     loader->save(CONFIG.result_filename, gripper);
 
