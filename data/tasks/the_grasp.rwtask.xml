@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<CartesianTask>
+
+  <Targets/>
+
+  <Entities>
+    <CartesianTask>
+      <Targets>
+        <CartesianTarget id="0">
+          <Transform3D>
+            <Pos>0 0 0.075</Pos>
+            <Rotation3D>1 0 0 0 0 -1 0 1 0</Rotation3D>
+          </Transform3D>
+          <Id></Id>
+          <Index>0</Index>
+          <PropertyMap>
+            <Property>
+              <Name>Interference</Name>
+              <Value>
+                <Double>0</Double>
+              </Value>
+            </Property>
+            <Property>
+              <Name>InterferenceAngles</Name>
+              <Value>
+                <DoubleList></DoubleList>
+              </Value>
+            </Property>
+            <Property>
+              <Name>InterferenceDistances</Name>
+              <Value>
+                <DoubleList></DoubleList>
+              </Value>
+            </Property>
+            <Property>
+              <Name>Interferences</Name>
+              <Value>
+                <DoubleList></DoubleList>
+              </Value>
+            </Property>
+            <Property>
+              <Name>LiftStatus</Name>
+              <Value>
+                <Integer>4</Integer>
+              </Value>
+            </Property>
+            <Property>
+              <Name>ObjectTtcptTarget</Name>
+              <Value>
+                <Transform3D>
+                  <Pos>-0.0001350212743897565 -0.0004597315353459617 0.07583412649066626</Pos>
+                  <Rotation3D>0.9278503431355655 0.08763424411752588 -0.3625106619137753 -0.3729526398288864 0.2187063062851036 -0.9017060940438362 0.0002630358884314882 0.9718476170928634 0.2356101440155857</Rotation3D>
+                </Transform3D>
+              </Value>
+            </Property>
+            <Property>
+              <Name>TestStatus</Name>
+              <Value>
+                <Integer>0</Integer>
+              </Value>
+            </Property>
+          </PropertyMap>
+        </CartesianTarget>
+      </Targets>
+      <Entities/>
+      <Id></Id>
+      <Index>4</Index>
+      <PropertyMap>
+        <Property>
+          <Name>Approach</Name>
+          <Value>
+            <Transform3D>
+              <Pos>0 0 0.3</Pos>
+              <Rotation3D>1 0 0 0 1 0 0 0 1</Rotation3D>
+            </Transform3D>
+          </Value>
+        </Property>
+        <Property>
+          <Name>CloseQ</Name>
+          <Value>
+            <Q>0</Q>
+          </Value>
+        </Property>
+        <Property>
+          <Name>Offset</Name>
+          <Value>
+            <Transform3D>
+              <Pos>0 0 1e-05</Pos>
+              <Rotation3D>1 0 0 0 1 0 0 0 1</Rotation3D>
+            </Transform3D>
+          </Value>
+        </Property>
+        <Property>
+          <Name>OpenQ</Name>
+          <Value>
+            <Q>0.035</Q>
+          </Value>
+        </Property>
+        <Property>
+          <Name>Retract</Name>
+          <Value>
+            <Transform3D>
+              <Pos>0 0 0.1</Pos>
+              <Rotation3D>1 0 0 0 1 0 0 0 1</Rotation3D>
+            </Transform3D>
+          </Value>
+        </Property>
+        <Property>
+          <Name>TauMax</Name>
+          <Value>
+            <Q></Q>
+          </Value>
+        </Property>
+        <Property>
+          <Name>refframe</Name>
+          <Value>
+            <String></String>
+          </Value>
+        </Property>
+      </PropertyMap>
+    </CartesianTask>
+  </Entities>
+
+  <Id></Id>
+
+  <Index>-1</Index>
+
+  <PropertyMap>
+    <Property>
+      <Name>GraspController</Name>
+      <Value>
+        <String>graspController</String>
+      </Value>
+    </Property>
+    <Property>
+      <Name>Gripper</Name>
+      <Value>
+        <String>gripper</String>
+      </Value>
+    </Property>
+    <Property>
+      <Name>TCP</Name>
+      <Value>
+        <String>TCPgripper</String>
+      </Value>
+    </Property>
+  </PropertyMap>
+
+</CartesianTask>

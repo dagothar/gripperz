@@ -21,6 +21,11 @@
 #include <grasps/SurfaceSample.hpp>
 #include <boost/tokenizer.hpp>
 #include <math/CombineObjectivesFactory.hpp>
+#include <rwlibs/task/GraspTask.hpp>
+#include <grasps/Types.hpp>
+#include <grasps/databases/RWGraspDatabase.hpp>
+#include <grasps/filters.hpp>
+#include <grasps/decorators.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -31,6 +36,7 @@ using namespace rw::common;
 using namespace rw::math;
 using namespace rwsim::dynamics;
 using namespace rwsim::loaders;
+using namespace rwlibs::task;
 using namespace boost::program_options;
 using namespace gripperz::loaders;
 using namespace gripperz::models;
@@ -38,6 +44,9 @@ using namespace gripperz::models::loaders;
 using namespace gripperz::context;
 using namespace gripperz::process;
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::filters;
+using namespace gripperz::grasps::databases;
+using namespace gripperz::grasps::decorators;
 using namespace gripperz::math;
 using namespace gripperz::parametrization;
 using namespace gripperz::evaluation;
@@ -56,12 +65,15 @@ struct Configuration {
     string method;
     vector<string> parameters;
     vector<double> values;
+    string grasps_filename;
 
     double covPosFilteringRadius;
     double covAngleFilteringRadius;
     double aliFilteringRadius;
     double stressLimit;
     double volumeLimit;
+    double sigma_p;
+    double sigma_a;
 } CONFIG;
 
 /******************************************************************************/
@@ -103,7 +115,10 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("maxS", value<double>(&conf.stressLimit)->default_value(10), "stress limit")
             ("maxV", value<double>(&conf.volumeLimit)->default_value(200), "volume limit")
             ("parameters,p", value<string>(&parameters), "parameters to modify")
-            ("values,v", value<string>(&values), "parameter values");
+            ("values,v", value<string>(&values), "parameter values")
+            ("grasps", value<string>(&conf.grasps_filename), "RW task file")
+            ("sigma_a", value<double>(&conf.sigma_a)->default_value(15), "grasp perturbation angle sigma")
+            ("sigma_p", value<double>(&conf.sigma_p)->default_value(0.01), "grasp perturbation position sigma");
     variables_map vm;
 
     string usage = "Usage: ";
@@ -133,20 +148,20 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
     for (boost::tokenizer<>::iterator i = tok.begin(); i != tok.end(); ++i) {
         conf.index_calculators.push_back(*i);
     }
-    
+
     /* parse parameters */
     boost::tokenizer<> ptok(parameters);
     for (boost::tokenizer<>::iterator i = ptok.begin(); i != ptok.end(); ++i) {
         conf.parameters.push_back(*i);
     }
-    
+
     /* parse parameter values */
     istringstream sstr(values);
     double v;
     while (sstr >> v) {
         conf.values.push_back(v);
     }
-    
+
     RW_ASSERT(conf.parameters.size() == conf.values.size());
 
     return true;
@@ -201,12 +216,21 @@ GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
 /******************************************************************************/
 GripperEvaluationProcessManager::Ptr make_evaluation_manager(const Configuration& config, const Data& data) {
     StandardGripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(
-            data.td,
-            config.ngrasps,
-            config.threads,
-            vector<SurfaceSample>()
-            );
+                                                                                                                          data.td,
+                                                                                                                          config.ngrasps,
+                                                                                                                          config.threads,
+                                                                                                                          vector<SurfaceSample>()
+                                                                                                                          );
 
+    if (!config.grasps_filename.empty()) {
+        GraspSource::Ptr grasp_source = ownedPtr(new RWGraspDatabase(config.grasps_filename));
+        GraspFilterChain::Ptr filter_chain = ownedPtr(new GraspFilterChain());
+        GraspFilter::Ptr random_perturbation = ownedPtr(new RobustnessGraspFilter(config.ngrasps, config.sigma_p, Deg2Rad * config.sigma_a));
+        filter_chain->addFilter(random_perturbation);
+        grasp_source = ownedPtr(new FilteredGraspSource(grasp_source, filter_chain));
+        manager->setGraspSource(grasp_source);
+    }
+    
     manager->setEvaluator(make_evaluator(config));
 
     return manager;
@@ -223,10 +247,10 @@ GripperQualityExtractor::Ptr make_extractor(const Configuration& config) {
 void modify_parameters(Gripper::Ptr gripper, const Configuration& config) {
     Parametrized::Ptr parametrized = gripper.cast<Parametrized>();
     if (!parametrized) return;
-    
+
     Parametrization::Ptr params = parametrized->getParametrization();
-    
-    for (int i = 0; i < config.parameters.size(); ++i) {
+
+    for (unsigned i = 0; i < config.parameters.size(); ++i) {
         params->setParameter(config.parameters[i], config.values[i]);
     }
 }

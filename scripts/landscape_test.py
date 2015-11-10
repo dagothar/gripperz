@@ -8,10 +8,11 @@ import sys
 import xml.etree.ElementTree as ET
 
 
-CMD = '/home/dagothar/gripperz-dev/bin/evaluate_gripper --dwc {dwc} --td {td} --gripper {gripper} -p {parameter} -v "{value}" -t {threads} -n {grasps} -r {result}'
+CMD = '/home/dagothar/gripperz-dev/bin/evaluate_gripper --dwc {dwc} --td {td} --gripper {gripper} -p {parameter} -v "{value}" -t {threads} -n {grasps} -r {result} --grasps {task}'
 DWC = "/home/dagothar/grippers/scenes/rotor/Scene.dwc.xml"
 TD = "/home/dagothar/grippers/scenes/rotor/task3.td.xml"
 GRIPPER = "/home/dagothar/gripperz-dev/data/test/trapezoid_cutout_gripper.xml"
+TASK = "/home/dagothar/gripperz-dev/data/tasks/the_grasp.rwtask.xml"
 PARAM = "cutdepth"
 BOUNDS = (0.0, 0.025)
 RESOLUTION = 100
@@ -46,7 +47,8 @@ def main():
 			value = str(v),
 			threads = THREADS,
 			grasps = GRASPS,
-			result = result
+			result = result,
+			task = TASK
 		)
 		
 		# evaluate
