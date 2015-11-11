@@ -66,6 +66,7 @@ struct Configuration {
     vector<string> parameters;
     vector<double> values;
     string grasps_filename;
+    string saved_grasps_filename;
     string ssamples;
 
     double covPosFilteringRadius;
@@ -120,6 +121,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("parameters,p", value<string>(&parameters), "parameters to modify")
             ("values,v", value<string>(&values), "parameter values")
             ("grasps", value<string>(&conf.grasps_filename), "RW task file")
+            ("save_grasps", value<string>(&conf.saved_grasps_filename), "saved RW task file")
             ("sigma_a", value<double>(&conf.sigma_a)->default_value(15), "grasp perturbation angle sigma")
             ("sigma_p", value<double>(&conf.sigma_p)->default_value(0.01), "grasp perturbation position sigma")
             ("ssamples", value<string>(&conf.ssamples), "surface samples file")
@@ -230,7 +232,7 @@ GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
 }
 
 /******************************************************************************/
-GripperEvaluationProcessManager::Ptr make_evaluation_manager(const Configuration& config, const Data& data) {
+StandardGripperEvaluationProcessManager::Ptr make_evaluation_manager(const Configuration& config, const Data& data) {
     StandardGripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(
                                                                                                                           data.td,
                                                                                                                           config.ngrasps,
@@ -302,13 +304,18 @@ int main(int argc, char* argv[]) {
 
     modify_parameters(gripper, CONFIG);
 
-    GripperEvaluationProcessManager::Ptr manager = make_evaluation_manager(CONFIG, DATA);
+    StandardGripperEvaluationProcessManager::Ptr manager = make_evaluation_manager(CONFIG, DATA);
     GripperQualityExtractor::Ptr extractor = make_extractor(CONFIG);
     CombineObjectives::Ptr method = CombineObjectivesFactory::make(CONFIG.method, CONFIG.weights);
     GripperQuality::Ptr quality = evaluate_gripper(gripper, manager, extractor, method);
     INFO << *quality << endl;
     GripperLoader::Ptr loader = new MasterGripperLoader();
     loader->save(CONFIG.result_filename, gripper);
+    
+    if (!CONFIG.saved_grasps_filename.empty()) {
+        Grasps evaluated_grasps = manager->getSimulator()->getTasks();
+        GraspTask::saveRWTask(evaluated_grasps, CONFIG.saved_grasps_filename);
+    }
 
     return 0;
 }
