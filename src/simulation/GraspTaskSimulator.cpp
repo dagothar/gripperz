@@ -423,13 +423,17 @@ void GraspTaskSimulator::stepCB(
     bool collisionDuringExecution = _collisionDetector->inCollision(state, &collisionQueryResult, true);
 
     if (collisionDuringExecution) {
-        _simfailed++;
+        _collision++;
 
         DEBUG << "COLLISION" << endl;
+        
+        BOOST_FOREACH(FramePair pair, collisionQueryResult.collidingFrames) {
+            INFO << " # " << pair.first->getName() << " -- " << pair.second->getName() << endl;
+        }
 
         sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
         sstate._target->getResult()->testStatus = GraspResult::CollisionDuringExecution;
-        _stat[GraspResult::SimulationFailure]++;
+        _stat[GraspResult::CollisionDuringExecution]++;
 
         sstate._currentState = NEW_GRASP;
 
@@ -756,9 +760,9 @@ void GraspTaskSimulator::stepCB(
 }
 
 void GraspTaskSimulator::simulationFinished(SimState& sstate) {
-    Log::debugLog() << "Simulation finished:" << endl;
+    Log::infoLog() << "Simulation finished:" << endl;
 
-    Log::debugLog() << "-- target nr: " << std::setw(5) << _currentTargetIndex
+    Log::infoLog() << "-- target nr: " << std::setw(5) << _currentTargetIndex
             << " success:" << std::setw(5) << _success << " slipped:"
             << std::setw(5) << _slipped << " failed:" << std::setw(5) << _failed
             << " collisions:" << std::setw(5) << _collision << " timeouts:"
