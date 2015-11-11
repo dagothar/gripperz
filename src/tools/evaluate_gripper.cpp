@@ -75,6 +75,7 @@ struct Configuration {
     double volumeLimit;
     double sigma_p;
     double sigma_a;
+    unsigned seed;
 } CONFIG;
 
 /******************************************************************************/
@@ -121,7 +122,8 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("grasps", value<string>(&conf.grasps_filename), "RW task file")
             ("sigma_a", value<double>(&conf.sigma_a)->default_value(15), "grasp perturbation angle sigma")
             ("sigma_p", value<double>(&conf.sigma_p)->default_value(0.01), "grasp perturbation position sigma")
-            ("ssamples", value<string>(&conf.ssamples), "surface samples file");
+            ("ssamples", value<string>(&conf.ssamples), "surface samples file")
+            ("seed", value<unsigned>(&conf.seed), "RNG seed");
     variables_map vm;
 
     string usage = "Usage: ";
@@ -166,6 +168,11 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
     }
 
     RW_ASSERT(conf.parameters.size() == conf.values.size());
+    
+    /* re-initialize rng */
+    if (vm.count("seed")) {
+        Math::seed(conf.seed);
+    }
 
     return true;
 }

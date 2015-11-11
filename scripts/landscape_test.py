@@ -9,16 +9,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 
-CMD = '/home/dagothar/gripperz-dev/bin/evaluate_gripper --dwc {dwc} --td {td} --gripper {gripper} -p {parameter} -v "{value}" -t {threads} -n {ngrasps} -r {result}'
-DWC = "/home/dagothar/grippers/scenes/rotor/Scene.dwc.xml"
-TD = "/home/dagothar/grippers/scenes/rotor/task3.td.xml"
-GRIPPER = "/home/dagothar/gripperz-dev/data/test/trapezoid_cutout_gripper.xml"
-GRASPS = "/home/dagothar/gripperz-dev/data/tasks/the_grasp.rwtask.xml"
-PARAM = "cutdepth"
-BOUNDS = (0.0, 0.025)
-RES = 100
-NGRASPS = 100
-THREADS = 4
+CMD = '/home/dagothar/gripperz-dev/bin/evaluate_gripper --dwc {dwc} --td {td} --gripper {gripper} -p {parameter} -v "{value}" -t {threads} -n {ngrasps} -r {result} --aliR {alir} --seed {seed}'
 
 
 def signal_handler(signal, frame):
@@ -41,6 +32,8 @@ def main():
 	parser.add_argument("--ngrasps", "-n", metavar='NGRASPS', default=100, help="# of grasps per evaluation")
 	parser.add_argument("--threads", "-t", metavar='THREADS', default=4, help="# of threads to use")
 	parser.add_argument("--bounds", "-b", metavar='BOUNDS', nargs=2, required=True, help="parameter bounds")
+	parser.add_argument("--alir", metavar='ALIR', default=0.01, help="alignment filtering radius")
+	parser.add_argument("--seed", metavar='SEED', default=0, help="RNG seed")
 	args = parser.parse_args()
 	
 	DWC = args.dwc
@@ -50,7 +43,10 @@ def main():
 	PARAM = args.parameter
 	RES = int(args.res)
 	NGRASPS = int(args.ngrasps)
+	THREADS = int(args.threads)
 	BOUNDS = [float(b) for b in args.bounds]
+	ALIR = float(args.alir)
+	SEED = int(args.seed)
 		
 	data = open(PARAM + '.csv', 'w')
 	data.write(PARAM + ", success, alignment, coverage, wrench, stress, volume, qsum, qlog\n");
@@ -69,7 +65,9 @@ def main():
 			value = str(v),
 			threads = THREADS,
 			ngrasps = NGRASPS,
-			result = result
+			result = result,
+			alir = ALIR,
+			seed = SEED
 		)
 		
 		if (TD):

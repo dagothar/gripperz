@@ -10,7 +10,7 @@
 #include <rwlibs/algorithms/kdtree/KDTreeQ.hpp>
 
 
-#define DEBUG rw::common::Log::debugLog()
+#define DEBUG rw::common::Log::infoLog()
 #define INFO rw::common::Log::infoLog()
 
 using namespace std;
