@@ -66,6 +66,7 @@ struct Configuration {
     vector<string> parameters;
     vector<double> values;
     string grasps_filename;
+    string ssamples;
 
     double covPosFilteringRadius;
     double covAngleFilteringRadius;
@@ -81,6 +82,7 @@ struct Data {
     DynamicWorkCell::Ptr dwc;
     TaskDescription::Ptr td;
     Gripper::Ptr gripper;
+    vector<SurfaceSample> ssamples;
 } DATA;
 
 /******************************************************************************/
@@ -118,7 +120,8 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("values,v", value<string>(&values), "parameter values")
             ("grasps", value<string>(&conf.grasps_filename), "RW task file")
             ("sigma_a", value<double>(&conf.sigma_a)->default_value(15), "grasp perturbation angle sigma")
-            ("sigma_p", value<double>(&conf.sigma_p)->default_value(0.01), "grasp perturbation position sigma");
+            ("sigma_p", value<double>(&conf.sigma_p)->default_value(0.01), "grasp perturbation position sigma")
+            ("ssamples", value<string>(&conf.ssamples), "surface samples file");
     variables_map vm;
 
     string usage = "Usage: ";
@@ -182,6 +185,12 @@ void load_data(const Configuration& config, Data& data) {
     data.gripper = loader->load(config.gripper_filename);
     INFO << "Loaded." << endl;
     INFO << "Gripper name: " << data.gripper->getName() << endl;
+    
+    if (!config.ssamples.empty()) {
+        INFO << "* Loading samples... ";
+        data.ssamples = SurfaceSample::loadFromXML(config.ssamples);
+        INFO << "Loaded." << endl;
+    }
 }
 
 /******************************************************************************/
@@ -219,7 +228,7 @@ GripperEvaluationProcessManager::Ptr make_evaluation_manager(const Configuration
                                                                                                                           data.td,
                                                                                                                           config.ngrasps,
                                                                                                                           config.threads,
-                                                                                                                          vector<SurfaceSample>()
+                                                                                                                          data.ssamples
                                                                                                                           );
 
     if (!config.grasps_filename.empty()) {
