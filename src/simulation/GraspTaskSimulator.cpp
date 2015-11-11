@@ -377,9 +377,7 @@ void GraspTaskSimulator::stepCB(
         graspFinished(sstate);
     }
 
-    if (sim->getTime() > 5.0
-            && sstate._currentState != NEW_GRASP
-            ) {
+    if (sim->getTime() > 5.0 && sstate._currentState != NEW_GRASP ) {
         _timeout++;
         sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
         sstate._target->getResult()->testStatus = GraspResult::TimeOut;
@@ -390,9 +388,7 @@ void GraspTaskSimulator::stepCB(
     }
 
     /* take care of errors */
-    if (sim->isInError()
-            && sstate._currentState != NEW_GRASP
-            ) {
+    if (sim->isInError() && sstate._currentState != NEW_GRASP) {
         // the simulator is in error, reinitialize or fix the error
         _simfailed++;
         sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
@@ -400,11 +396,13 @@ void GraspTaskSimulator::stepCB(
         _stat[GraspResult::SimulationFailure]++;
         sim->reset(sstate._homeState);
         sstate._currentState = NEW_GRASP;
+        
+        INFO << "Simulator error" << endl;
 
         graspFinished(sstate);
     }
 
-    if (sstate._currentState != NEW_GRASP) {
+    /*if (sstate._currentState != NEW_GRASP) {
         if (getMaxObjectDistance(_objects, sstate._homeState, state) > _maxObjectGripperDistanceThreshold) {
             _simfailed++;
 
@@ -413,10 +411,12 @@ void GraspTaskSimulator::stepCB(
             _stat[GraspResult::SimulationFailure]++;
 
             sstate._currentState = NEW_GRASP;
+            
+            INFO << "Objects too far away from the gripper" << endl;
 
             graspFinished(sstate);
         }
-    }
+    }*/
 
     /* test whether runtime collision occurs */
     CollisionDetector::QueryResult collisionQueryResult;
