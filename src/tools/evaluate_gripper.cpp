@@ -225,6 +225,9 @@ GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
         } else if (idx == "wrench") {
             QualityIndexCalculator::Ptr calc = ownedPtr(new WrenchIndexCalculator());
             evaluator->addQualityIndexCalculator(idx, calc);
+        } else if (idx == "significance") {
+            QualityIndexCalculator::Ptr calc = ownedPtr(new SignificanceIndexCalculator());
+            evaluator->addQualityIndexCalculator(idx, calc);
         }
     }
 

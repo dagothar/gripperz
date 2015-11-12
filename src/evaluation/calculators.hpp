@@ -14,4 +14,5 @@
 #include "calculators/WrenchIndexCalculator.hpp"
 #include "calculators/RobustnessIndexCalculator.hpp"
 #include "calculators/VolumeIndexCalculator.hpp"
+#include "calculators/SignificanceIndexCalculator.hpp"
 
