@@ -365,9 +365,7 @@ void GraspTaskSimulator::stepCB(
     }
 
     /* check whether time limit not broken */
-    if (sstate._wallTimer.getTime() > _wallTimeLimit
-            && sim->getTime() > _simTimeLimit
-            ) {
+    if (sstate._wallTimer.getTime() > _wallTimeLimit && sim->getTime() > _simTimeLimit) {
         _timeout++;
         sstate._target->getResult()->gripperConfigurationGrasp = currentQ;
         sstate._target->getResult()->testStatus = GraspResult::TimeOut;

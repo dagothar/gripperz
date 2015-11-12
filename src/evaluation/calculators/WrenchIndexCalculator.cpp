@@ -36,15 +36,12 @@ QualityIndexValue WrenchIndexCalculator::calculate(models::Gripper::Ptr gripper,
 
     BOOST_FOREACH(TaskTarget p, grasps->getAllTargets()) {
 
-        if (
-                p.second->getResult()->testStatus == GraspResult::Success
-                || p.second->getResult()->testStatus == GraspResult::Interference
-                ) {
+        if (p.second->getResult()->testStatus == GraspResult::Success || p.second->getResult()->testStatus == GraspResult::Interference) {
             successes++;
 
             Q result = p.second->getResult()->qualityAfterLifting;
 
-            wrenchIndex += result(0);
+            wrenchIndex += result(1);
         }
     }
 
