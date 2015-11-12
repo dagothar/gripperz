@@ -24,7 +24,7 @@ namespace gripperz {
         public:
             OpenSCADGenerator(
                     const std::string& script,
-                    const std::string& temporaryFilename = ".mesh.stl",
+                    const std::string& temporaryFilename = ".mesh",
                     const std::string& command = "openscad"
                     );
 

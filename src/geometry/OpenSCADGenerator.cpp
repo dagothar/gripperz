@@ -10,6 +10,7 @@
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
 #include <rw/loaders/model3d/STLFile.hpp>
+#include <rw/math/Math.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -18,6 +19,7 @@ using namespace std;
 using namespace gripperz::geometry;
 using namespace gripperz::parametrization;
 using namespace rw::geometry;
+using namespace rw::math;
 using namespace rw::loaders;
 using namespace boost::filesystem;
 
@@ -32,10 +34,16 @@ OpenSCADGenerator::~OpenSCADGenerator() {
 }
 
 rw::geometry::TriMesh::Ptr OpenSCADGenerator::createMesh() {
+    /* prepare temporary filename */
+    int stamp = Math::ranI(0, 9999999);
+    stringstream tmp_sstr;
+    tmp_sstr << _temporaryFilename << stamp << ".stl";
+    string tmp = tmp_sstr.str();
+    
     /* construct command */
     stringstream sstr;
     sstr << _command;
-    sstr << " -o " << _temporaryFilename << " ";
+    sstr << " -o " << tmp << stamp << " ";
     sstr << _scriptFilename << " ";
 
     BOOST_FOREACH(const Parameter& p, getParametrization()->getParameterList()) {
@@ -47,8 +55,8 @@ rw::geometry::TriMesh::Ptr OpenSCADGenerator::createMesh() {
     DEBUG << "Command: " << command;
 
     /* call script */
-    if (exists(_temporaryFilename)) {
-        remove(_temporaryFilename);
+    if (exists(tmp)) {
+        remove(tmp);
     }
 
     int return_code = system(command.c_str());
@@ -57,11 +65,11 @@ rw::geometry::TriMesh::Ptr OpenSCADGenerator::createMesh() {
     }
 
     /* load result */
-    TriMesh::Ptr mesh = STLFile::load(_temporaryFilename);
+    TriMesh::Ptr mesh = STLFile::load(tmp);
 
     /* remove temporary file */
-    if (exists(_temporaryFilename)) {
-        remove(_temporaryFilename);
+    if (exists(tmp)) {
+        remove(tmp);
     }
 
     return mesh;
