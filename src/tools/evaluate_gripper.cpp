@@ -26,6 +26,7 @@
 #include <grasps/databases/RWGraspDatabase.hpp>
 #include <grasps/filters.hpp>
 #include <grasps/decorators.hpp>
+#include <grasps/planners/BasicParallelGripperGraspPlanner.hpp>
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -44,6 +45,7 @@ using namespace gripperz::models::loaders;
 using namespace gripperz::context;
 using namespace gripperz::process;
 using namespace gripperz::grasps;
+using namespace gripperz::grasps::planners;
 using namespace gripperz::grasps::filters;
 using namespace gripperz::grasps::databases;
 using namespace gripperz::grasps::decorators;
@@ -68,6 +70,7 @@ struct Configuration {
     string grasps_filename;
     string saved_grasps_filename;
     string ssamples;
+    vector<string> filters;
 
     double covPosFilteringRadius;
     double covAngleFilteringRadius;
@@ -99,6 +102,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
     string values;
     string offset;
     string indices;
+    string filters;
     string parameters;
 
     options_description desc("Options");
@@ -112,7 +116,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("result,r", value<string>(&conf.result_filename), "result gripper file")
             ("indices,i", value<string>(&indices)->default_value("success,alignment,coverage,wrench,stress,volume"), "quality indices to compute")
             ("weights,w", value<vector<double> >(&conf.weights)->multitoken()->default_value(vector<double>{1, 1, 1, 1, 1, 1}, "1 1 1 1 1 1"), "weights for individual objectives")
-            ("method,m", value<string>(&conf.method)->default_value("product"), "method for combining objectives (sum, product, log)")
+    ("method,m", value<string>(&conf.method)->default_value("product"), "method for combining objectives (sum, product, log)")
             ("covP", value<double>(&conf.covPosFilteringRadius)->default_value(0.001), "pos. filtering radius for coverage")
             ("covA", value<double>(&conf.covAngleFilteringRadius)->default_value(15), "angle filtering radius for coverage")
             ("aliR", value<double>(&conf.aliFilteringRadius)->default_value(0.01), "filtering radius for alignment")
@@ -121,6 +125,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("parameters,p", value<string>(&parameters), "parameters to modify")
             ("values,v", value<string>(&values), "parameter values")
             ("grasps", value<string>(&conf.grasps_filename), "RW task file")
+            ("filters,f", value<string>(&filters), "grasp filters to apply")
             ("save_grasps", value<string>(&conf.saved_grasps_filename), "saved RW task file")
             ("sigma_a", value<double>(&conf.sigma_a)->default_value(15), "grasp perturbation angle sigma")
             ("sigma_p", value<double>(&conf.sigma_p)->default_value(0.01), "grasp perturbation position sigma")
@@ -156,6 +161,12 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
         conf.index_calculators.push_back(*i);
     }
 
+    /* parse filters */
+    boost::tokenizer<> filters_tok(filters);
+    for (boost::tokenizer<>::iterator i = filters_tok.begin(); i != filters_tok.end(); ++i) {
+        conf.filters.push_back(*i);
+    }
+
     /* parse parameters */
     boost::tokenizer<> ptok(parameters);
     for (boost::tokenizer<>::iterator i = ptok.begin(); i != ptok.end(); ++i) {
@@ -170,7 +181,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
     }
 
     RW_ASSERT(conf.parameters.size() == conf.values.size());
-    
+
     /* re-initialize rng */
     if (vm.count("seed")) {
         Math::seed(conf.seed);
@@ -194,7 +205,7 @@ void load_data(const Configuration& config, Data& data) {
     data.gripper = loader->load(config.gripper_filename);
     INFO << "Loaded." << endl;
     INFO << "Gripper name: " << data.gripper->getName() << endl;
-    
+
     if (!config.ssamples.empty()) {
         INFO << "* Loading samples... ";
         data.ssamples = SurfaceSample::loadFromXML(config.ssamples);
@@ -235,26 +246,51 @@ GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
 }
 
 /******************************************************************************/
-StandardGripperEvaluationProcessManager::Ptr make_evaluation_manager(const Configuration& config, const Data& data) {
-    StandardGripperEvaluationProcessManager::Ptr manager = GripperEvaluationManagerFactory::makeStandardEvaluationManager(
-                                                                                                                          data.td,
-                                                                                                                          config.ngrasps,
-                                                                                                                          config.threads,
-                                                                                                                          data.ssamples
-                                                                                                                          );
-
+GraspSource::Ptr make_grasp_source(const Configuration& config, const Data& data) {
+    GraspSource::Ptr source;
+    
+    /* construct basic source */
     if (!config.grasps_filename.empty()) {
         INFO << "Grasp source: GRASPS" << endl;
-        GraspSource::Ptr grasp_source = ownedPtr(new RWGraspDatabase(config.grasps_filename));
-        GraspFilterChain::Ptr filter_chain = ownedPtr(new GraspFilterChain());
-        GraspFilter::Ptr random_perturbation = ownedPtr(new RobustnessGraspFilter(config.ngrasps, config.sigma_p, Deg2Rad * config.sigma_a));
-        filter_chain->addFilter(random_perturbation);
-        grasp_source = ownedPtr(new FilteredGraspSource(grasp_source, filter_chain));
-        manager->setGraspSource(grasp_source);
+
+        source = ownedPtr(new RWGraspDatabase(config.grasps_filename));
+        
     } else {
         INFO << "Grasp source: PLANNER" << endl;
+        
+        BasicParallelGripperGraspPlanner::Ptr planner = ownedPtr(new BasicParallelGripperGraspPlanner(config.ngrasps, data.td->getInitState(), data.td));
+        planner->setSurfaceSamples(data.ssamples);
+        
+        source = planner;
     }
     
+    /* apply filters */
+    GraspFilterChain::Ptr filter_chain = ownedPtr(new GraspFilterChain());
+    
+    BOOST_FOREACH (const string& f, config.filters) {
+        if (f == "perturb") {
+            GraspFilter::Ptr filter = ownedPtr(new RobustnessGraspFilter(config.ngrasps, config.sigma_p, Deg2Rad * config.sigma_a));
+            filter_chain->addFilter(filter);
+        }
+    }
+    
+    source = ownedPtr(new FilteredGraspSource(source, filter_chain));
+    
+    return source;
+}
+
+/******************************************************************************/
+StandardGripperEvaluationProcessManager::Ptr make_evaluation_manager(const Configuration& config, const Data& data) {
+
+    StandardGripperEvaluationProcessManager::Ptr manager =
+            GripperEvaluationManagerFactory::makeStandardEvaluationManager(
+                                                                           data.td,
+                                                                           config.ngrasps,
+                                                                           config.threads,
+                                                                           data.ssamples
+                                                                           );
+
+    manager->setGraspSource(make_grasp_source(config, data));
     manager->setEvaluator(make_evaluator(config));
 
     return manager;
@@ -317,7 +353,7 @@ int main(int argc, char* argv[]) {
     INFO << *quality << endl;
     GripperLoader::Ptr loader = new MasterGripperLoader();
     loader->save(CONFIG.result_filename, gripper);
-    
+
     if (!CONFIG.saved_grasps_filename.empty()) {
         Grasps evaluated_grasps = manager->getSimulator()->getTasks();
         GraspTask::saveRWTask(evaluated_grasps, CONFIG.saved_grasps_filename);
