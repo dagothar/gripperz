@@ -43,7 +43,7 @@ rw::geometry::TriMesh::Ptr OpenSCADGenerator::createMesh() {
     /* construct command */
     stringstream sstr;
     sstr << _command;
-    sstr << " -o " << tmp << stamp << " ";
+    sstr << " -o " << tmp << " ";
     sstr << _scriptFilename << " ";
 
     BOOST_FOREACH(const Parameter& p, getParametrization()->getParameterList()) {
