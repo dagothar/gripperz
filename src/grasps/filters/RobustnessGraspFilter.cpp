@@ -41,10 +41,10 @@ Grasps RobustnessGraspFilter::filter(Grasps grasps) {
         int idx = Math::ranI(0, n_targets);
         GraspTarget* target = targets[idx].second;
 
-        Vector3D<> pos(Math::ran(0, _positionUncertainty), Math::ran(0, _positionUncertainty), Math::ran(0, _positionUncertainty));
-
-        //EAA<> rot(Math::ranNormalDist(0, _angleUncertainty), Math::ranNormalDist(0, _angleUncertainty), Math::ranNormalDist(0, _angleUncertainty));
-        RPY<> rot(Math::ran(-_angleUncertainty, _angleUncertainty), Math::ran(-_angleUncertainty, _angleUncertainty), Math::ran(-_angleUncertainty, _angleUncertainty));
+        Vector3D<> pos(Math::ran(-_positionUncertainty, _positionUncertainty), Math::ran(-_positionUncertainty, _positionUncertainty), Math::ran(-_positionUncertainty, _positionUncertainty));
+        
+        EAA<> rot(Math::ran(-_angleUncertainty, _angleUncertainty), Math::ran(-_angleUncertainty, _angleUncertainty), Math::ran(-_angleUncertainty, _angleUncertainty));
+        //RPY<> rot(Math::ran(-_angleUncertainty, _angleUncertainty), Math::ran(-_angleUncertainty, _angleUncertainty), Math::ran(-_angleUncertainty, _angleUncertainty));
 
         Transform3D<> new_target = target->pose * Transform3D<>(pos, rot.toRotation3D());
         stask.addTarget(new_target);
