@@ -13,4 +13,7 @@
 #include "parametrization/ParametrizationTranslator.hpp"
 #include "parametrization/VectorParametrizationTranslator.hpp"
 #include "parametrization/MultiParametrizationTranslator.hpp"
+#include "parametrization/ParametrizedObjective.hpp"
+#include "parametrization/ParametrizedObjectiveFunction.hpp"
+#include "parametrization/ParametrizedMultiObjectiveFunction.hpp"
 #include "parametrization/loaders.hpp"

@@ -241,12 +241,15 @@ StandardGripperEvaluationProcessManager::Ptr make_evaluation_manager(const Confi
                                                                                                                           );
 
     if (!config.grasps_filename.empty()) {
+        INFO << "Grasp source: GRASPS" << endl;
         GraspSource::Ptr grasp_source = ownedPtr(new RWGraspDatabase(config.grasps_filename));
         GraspFilterChain::Ptr filter_chain = ownedPtr(new GraspFilterChain());
         GraspFilter::Ptr random_perturbation = ownedPtr(new RobustnessGraspFilter(config.ngrasps, config.sigma_p, Deg2Rad * config.sigma_a));
         filter_chain->addFilter(random_perturbation);
         grasp_source = ownedPtr(new FilteredGraspSource(grasp_source, filter_chain));
         manager->setGraspSource(grasp_source);
+    } else {
+        INFO << "Grasp source: PLANNER" << endl;
     }
     
     manager->setEvaluator(make_evaluator(config));
