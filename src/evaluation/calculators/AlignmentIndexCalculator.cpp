@@ -46,12 +46,17 @@ struct Point {
 
     Vector3D<> point;
     bool filtered;
+    vector<Point*> neighbours;
 
     Point(const Vector3D<> v) :
     point(v),
     filtered(false) {
     }
 };
+
+bool pointSort(const KDTreeQ<Point::Ptr>::KDNode& n1, const KDTreeQ<Point::Ptr>::KDNode& n2) {
+    return n1.value->neighbours.size() > n2.value->neighbours.size();
+}
 
 vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radius = 0.1) {
     /* build search tree */
@@ -69,22 +74,37 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
     }
     NNSearch *nntree = NNSearch::buildTree(nodes);
 
-    /* filter points */
+    /* find point neighbours */
     std::list<const NNSearch::KDNode*> result;
     Q diff(3, radius, radius, radius);
 
     BOOST_FOREACH(NNSearch::KDNode& node, nodes) {
-        //if (node.value->filtered != true) {
-            result.clear();
-            Q key = node.key;
-            nntree->nnSearchRect(key - diff, key + diff, result);
+        result.clear();
+        Q key = node.key;
+        nntree->nnSearchRect(key - diff, key + diff, result);
 
-            BOOST_FOREACH(const NNSearch::KDNode* n, result) {
-                if (n->key == node.key) continue;
+        BOOST_FOREACH(const NNSearch::KDNode* n, result) {
+            if (n->key == node.key) continue;
 
-                const_cast<NNSearch::KDNode*> (n)->value->filtered = true;
-            }
-        //}
+            //const_cast<NNSearch::KDNode*>(n)->value->filtered = true;
+            node.value->neighbours.push_back(n->value.get());
+        }
+    }
+
+    /* sort by the number of neighbours */
+    sort(nodes.begin(), nodes.end(), pointSort);
+
+    /* filter the points */
+    BOOST_FOREACH(NNSearch::KDNode& node, nodes) {
+
+        BOOST_FOREACH(Point* p, node.value->neighbours) {
+            // mark the node removed
+            p->filtered = true;
+
+            // remove the pointer to the parent node
+            auto predicate = [&node](Point* point) { return point == node.value.get(); };
+            remove_if(p->neighbours.begin(), p->neighbours.end(), predicate);
+        }
     }
 
     /* store remaining points */
