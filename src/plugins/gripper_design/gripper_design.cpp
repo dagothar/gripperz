@@ -178,7 +178,7 @@ gripperz::parametrization::Parametrization::Ptr gripper_design::makeParametrizat
         {"depth", 0.02},
         {"chfdepth", 0},
         {"chfangle", 45},
-        {"cutpos", 0.075},
+        {"cutpos", 0.0},
         {"cutoffset", 0},
         {"cutdepth", 0.01},
         {"cutwidth", 0.01},
