@@ -7,8 +7,8 @@ chfdepth = 0;
 chfangle = 45;
 tcpoffset = 0.075;
 cutpos = 0.0;
-cutdepth = 0.0;
-cutangle = 90;
+cutdepth = 0.01;
+cutangle = 50;
 cuttilt = 0;
 
 /* Produces basic box finger */
@@ -44,9 +44,9 @@ module cutout(cutpos, cutdepth, cutangle, cuttilt) {
 
 	translate([cutpos, 0, cutdepth])
 		rotate([0, 0, cuttilt])
-			rotate([0, 135, 0])
-				translate([0, -size/2, 0])
-					scale([s_x, 1, 1])
+            scale([s_x, 1, 1])
+                rotate([0, 135, 0])
+                    translate([0, -size/2, 0])
 						cube(size);
 }
 
