@@ -56,7 +56,7 @@ module slot(cutdepth, cutwidth, cutangle1, cutangle2) {
                 translate([-w/2, 0, 0])
                     rotate([0, 0, 90-cutangle1])
                         translate([0, 0, -size/2]) cube(size);
-            };
+            }
             translate([w/2, 0, 0])
                 rotate([0, 0, cutangle2])
                     translate([0, 0, -size/2]) cube(size);
