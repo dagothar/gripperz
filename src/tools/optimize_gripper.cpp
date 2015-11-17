@@ -133,7 +133,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
 
     options_description desc("Options");
     desc.add_options()
-            ("help,h", "help message")
+            ("help", "help message")
             ("threads,t", value<int>(&conf.threads)->default_value(1), "number of threads to use")
             ("ngrasps,n", value<int>(&conf.ngrasps)->default_value(100), "number of grasps to perform")
             ("dwc", value<string>(&conf.dwc_filename)->required(), "dynamic workcell file")
@@ -149,8 +149,8 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("maxS", value<double>(&conf.stressLimit)->default_value(10), "stress limit")
             ("maxV", value<double>(&conf.volumeLimit)->default_value(200), "volume limit")
             ("parameters,p", value<string>(&parameters), "parameters to optimize")
-            ("low,l", value<string>(&limits_low), "low limits for parameters")
-            ("high,h", value<string>(&limits_high), "high limits for parameters")
+            ("low,l", value<string>(&limits_low)->required(), "low limits for parameters")
+            ("high,h", value<string>(&limits_high)->required(), "high limits for parameters")
             ("grasps", value<string>(&conf.grasps_filename), "RW task file")
             ("filters,f", value<string>(&filters), "grasp filters to apply")
             ("save_grasps", value<string>(&conf.saved_grasps_filename), "saved RW task file")
@@ -177,6 +177,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
         }
 
     } catch (exception& e) {
+        cout << e.what() << endl;
         cout << usage << endl;
         cout << desc << endl;
         return false;
@@ -303,6 +304,8 @@ GraspSource::Ptr make_grasp_source(const Configuration& config, const Data& data
 
     /* apply filters */
     GraspFilterChain::Ptr filter_chain = ownedPtr(new GraspFilterChain());
+    
+    filter_chain->addFilter(ownedPtr(new ClearStatusFilter()));
 
     BOOST_FOREACH(const string& f, config.filters) {
         if (f == "perturb") {
@@ -404,6 +407,12 @@ void callback(Gripper::Ptr gripper1, GripperQualityExtractor::Ptr extractor, Com
     
     cout << q << endl;
     log_file << q <<  endl;
+    
+    stringstream sstr;
+    sstr << "step_" << step << ".grp.xml";
+    path gripper_file = path(sstr.str());
+    GripperLoader::Ptr loader = new MasterGripperLoader();
+    loader->save(gripper_file.string(), gripper);
 }
 
 /******************************************************************************/
@@ -439,6 +448,14 @@ int main(int argc, char* argv[]) {
     }
     
     log_file.open(path("log.csv").string());
+    log_file << "step, ";
+    for (unsigned i = 0; i < CONFIG.parameters.size(); ++i) {
+        log_file << CONFIG.parameters[i] << ", ";
+    }
+    for (unsigned i = 0; i < CONFIG.index_calculators.size(); ++i) {
+        log_file << CONFIG.index_calculators[i] << ", ";
+    }
+    log_file << "Q" << endl;
     
     ParametrizedGripper::Ptr gripper = DATA.gripper.cast<ParametrizedGripper>();
     RW_ASSERT(gripper != NULL);
