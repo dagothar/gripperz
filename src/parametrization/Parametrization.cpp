@@ -101,3 +101,14 @@ void Parametrization::merge(Parametrization::Ptr parametrization) {
         }
     }
 }
+
+void Parametrization::patch(Parametrization::Ptr parametrization) {
+
+    BOOST_FOREACH(const Parameter& p, parametrization->getParameterList()) {
+        if (!hasParameter(p.first)) {
+            addParameter(p);
+        } else {
+            setParameter(p.first, p.second);
+        }
+    }
+}

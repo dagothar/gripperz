@@ -70,7 +70,19 @@ namespace gripperz {
 
             void setParameter(const ParameterName& name, const ParameterValue& value);
 
+            /**
+             * Merges other parametrization into this one.
+             * Skips parameters that already exist.
+             * @param parametrization
+             */
             void merge(Parametrization::Ptr parametrization);
+            
+            /**
+             * Patches other parametrization into this one.
+             * Same as merge, but updates parameters that do already exist with new values.
+             * @param parametrization
+             */
+            void patch(Parametrization::Ptr parametrization);
 
         private:
             ParameterNameList _parameterNameList;
