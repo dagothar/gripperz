@@ -6,6 +6,7 @@
  */
 
 #include "RbfOptimizer.hpp"
+#include <Python.h>
 
 using namespace gripperz::optimization;
 
