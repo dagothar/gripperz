@@ -416,9 +416,7 @@ void callback(Gripper::Ptr gripper1, GripperQualityExtractor::Ptr extractor, Com
 }
 
 /******************************************************************************/
-ObjectiveFunction::Ptr make_objective_function(const Configuration& config, Data& data, GripperBuilder::Ptr builder) {    
-    GripperEvaluationProcessManager::Ptr evaluation_manager = make_evaluation_manager(config, data);
-    
+ObjectiveFunction::Ptr make_objective_function(const Configuration& config, Data& data, GripperEvaluationProcessManager::Ptr evaluation_manager, GripperBuilder::Ptr builder) {    
     GripperQualityExtractor::Ptr extractor = make_extractor(config);
     
     GripperObjectiveFunction::Ptr multi_function = new GripperObjectiveFunction(builder, evaluation_manager, extractor);
@@ -461,11 +459,25 @@ int main(int argc, char* argv[]) {
     RW_ASSERT(gripper != NULL);
 
     GripperBuilder::Ptr builder = make_gripper_builder(CONFIG, DATA);
-    ObjectiveFunction::Ptr objective = make_objective_function(CONFIG, DATA, builder);
-    OptimizationManager::Ptr manager = make_optimization_manager(CONFIG);
+    GripperEvaluationProcessManager::Ptr evaluation_manager = make_evaluation_manager(CONFIG, DATA);
+    ObjectiveFunction::Ptr objective = make_objective_function(CONFIG, DATA, evaluation_manager, builder);
+    OptimizationManager::Ptr optimization_manager = make_optimization_manager(CONFIG);
     
     Vector guess = builder->gripperToVector(gripper);
-    Vector result = manager->optimize(objective, guess, "maximize");
+    Vector result = optimization_manager->optimize(objective, guess, "maximize");
+    
+    Gripper::Ptr opt_gripper = builder->vectorToGripper(result);
+    GripperQuality::Ptr opt_gripper_q = evaluation_manager->evaluateGripper(opt_gripper);
+    gripper->setQuality(opt_gripper_q);
+
+    cout << "Optimization succesful!" << endl;
+
+    /* save results */
+    path opt_gripper_file = path(CONFIG.result_filename);
+    GripperLoader::Ptr loader = new MasterGripperLoader();
+    loader->save(opt_gripper_file.string(), opt_gripper);
+    
+    log_file.close();
 
     return 0;
 }
