@@ -1,0 +1,75 @@
+2015-10-26  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* README: Updated installation instructions for Windows systems.
+
+2015-09-23  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* rbfopt.py (rbf_optimize): Minor bug fixing and performance
+	improvements in handling the noisy oracle.
+
+2015-07-29  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* rbfopt_model_selection.py: Introduced stand-alone module for
+	model selection. Increased efficiency of cross-validation via LPs
+	solved with Cplex or Clp.
+	* rbfopt_settings.py (RbfSettings): Introduced unpacking of
+	parameters from dictionary.
+	* rbfopt_settings.py (RbfSettings): skip_targetval_clipping
+	flipped and renamed to targetval_clipping.
+	* rbfopt_cl_interface.py (rbfopt_cl_interface): Switched to
+	dictionary to pass algorithmic parameters.
+	* test_rbfopt: Switched to dictionary to pass algorithmic
+	parameters.	
+	Version 1.1.0 released. 
+
+2015-07-17  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	Switch to Pyomo 4. The relevant files have been updated to use the
+	pyomo module rather than coopr.
+
+2015-06-23  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* rbfopt_settings.py (RbfSettings): Added log_scaling_threshold
+	option. Moved RbfSettings here from the rbfopt module.
+	* rbfopt.py (rbf_optimize): Improved automatic function
+	scaling. Improved efficiencyhen skipping infstep.
+	* rbfopt_cl_interface.py (register_options): Parameters are now
+	read automatically from the rbfopt_settings module.
+
+2015-06-11  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* black_box.py: Introduced class BlackBox as a wrapper around the
+	black-box methods.
+	Improved docstrings following NumPy's format.
+	Added documentation in the doc/ directory.
+	Version 1.0.2 released.
+
+2015-06-03  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* rbfopt.py (rbf_optimize): Better printout of initialization
+	points.
+
+2015-05-17  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* rbfopt_cl_interface.py: Added module for command line interface.
+	* rbfopt_utils.py (initialize_nodes): Added test for linear
+	independence of the generated points.
+	* test_rbfopt.py (test_rbfopt): Function removed.
+	* test_rbfopt.py: Module restructured to integrate with
+	rbfopt_cl_interface.py.
+	Version 1.0.1 released.
+
+2015-05-03  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* rbfopt.py (RbfSettings): Added print_solver_output option.
+	* rbfopt_aux_problems: Added support for print_solver_output.
+	* rbfopt_aux_problems (maximize_h_k): Added initialization of
+	auxiliary variables for the problem.
+	* test_functions: Added several MINLP functions.
+
+2014-12-05  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	Version 1.0 released.
+
+2014-11-19  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* rbfopt.py (rbf_optimize): Added support for redirection of
+	output stream in rbfopt.py.
+	* rbfopt_utils.py (transform_function_values): Fixed division by
+	zero bug when fmin is zero.
+
+2014-11-05  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	* rbfopt_utils.py (transform_function_values): Fixed misspelled
+	keyword 'a ffine'.
+
+2014-09-24  Giacomo Nannicini  <nannicini@sutd.edu.sg>
+	Version 0.9 released.

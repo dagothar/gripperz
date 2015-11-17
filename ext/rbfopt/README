@@ -1,0 +1,219 @@
+#  File:      README
+#  Author(s): Giacomo Nannicini
+#             Singapore University of Technology and Design
+#             nannicini@sutd.edu.sg
+#  Last edit: 07/17/29
+#
+#  (C) Copyright Singapore University of Technology and Design 2015.
+#  You should have received a copy of the license with this code.
+#  Research supported by the SUTD-MIT International Design Center.
+
+This software is released under the Revised BSD License. By using
+this software, you are implicitly accepting the terms of the license.
+
+Contents of this directory:
+
+LICENSE:
+	Licensing information.
+VERSION:
+	Version of the library.
+AUTHORS:
+	Authors of the library.
+README:
+	This file.
+requirements.txt:
+	List of dependencies for this project.
+
+Contents of the src/ directory:
+
+black_box.py:
+	The file implementing the user-defined black-box function.
+rbfopt_aux_problems.py:
+	Interface for the auxiliary problems solved during
+	the optimization process.
+rbfopt_cl_interface.py:
+	Driver for the command-line interface, to run the library
+	on a user-defined black-box function.
+rbfopt_config.py:
+	(Static) configuration file for the machine.
+rbfopt_degreeX_models.py:
+	PyOmo models for the auxiliary problems necessary for RBF
+	functions with minimum required polynomial degree X.
+rbfopt_model_selection.py:
+	Routines for automatic model selection.
+rbfopt.py:
+	Main module for the end-user of this library.
+rbfopt_settings.py:
+	Global and algorithmic settings.
+rbfopt_utils.py:
+	Utility routines.
+test_functions.py:
+	Global optimization test functions.
+test_rbfopt.py:
+	Executable file to test the library on a standard global
+	optimization test set. 
+
+Contents of the doc/ directory:
+
+conf.py:
+	Configuration file for Sphinx.
+Makefile:
+	Makefile (for Linux/Mac) to build the documentation.
+make.bat:
+	Batch file (for Windows) to build the documentation.
+*.rst:
+	ReStructured Text files for the documentation.
+
+#--------------------------------------------------------------------------
+# Installation requirements
+#--------------------------------------------------------------------------
+
+This package requires the following software:
+
+Python 2.7.* (recommended Python 2.7.6)
+NumPy version >= 1.8.1
+Pyomo version 4.1.10509
+pyDOE version >= 0.3.5
+
+The software has been tested with the versions indicated above. It may
+work with earlier version and should work with subsequent version, if
+they are backward compatible.
+
+Note that Python 3.* is not compatible with Python 2.7. While our
+library is Python 3.3 compliant and consistently uses "from __future__
+import [...]", the code has not been tested on Python 3 yet. We
+recommend using Python 2.7.
+
+The easiest way to install all the dependencies is via the Python
+module manager pip, using the command:
+
+pip install -r requirements.txt
+
+The file requirements.txt contains the list of required modules and
+their latest version that has been tried and found to work
+correctly. If your want to install them one at a time, you can try:
+
+pip install numpy
+pip install pyomo
+pip install pyDOE
+
+To build the documentation, you also need numpydoc:
+
+pip install numpydoc
+
+On Windows systems, we recommend WinPython, available at
+http://winpython.sourceforge.net/ , which comes with NumPy, SciPy and
+pip already installed. After installing WinPython, it is typically
+necessary to update the PATH environment variable. The above command
+using pip to install missing libraries has been successfully tested on
+a fresh WinPython installation.
+
+RBFOpt requires the solution of convex and nonconvex nonlinear
+programs (NLPs), as well as nonconvex mixed-integer nonlinear programs
+(MINLPs) if some of the decision variables (design parameters) are
+constrained to be integer. Solution of these subproblems is performed
+through Pyomo, which supports any solver with an AMPL interface (.nl
+file format). In our tests we employed BonMin and Ipopt, that are
+open-source and available through the COIN-OR repository. The end-user
+is responsible for checking that they have the right to use whatever
+solver they employs.
+
+To obtain pre-compiled binaries for BonMin and Ipopt for several
+platforms, we suggest having a look at:
+http://ampl.com/products/solvers/open-source/
+and
+http://ampl.com/dl/open/
+(for static binaries).
+
+In case any of the packages indicated above is missing, some features
+may be disabled, not function properly, or the software may not run at
+all.
+
+This package can take advantage of supported linear programming
+solvers to increase the speed of the automatic model selection
+procedure. Supported solvers:
+
+IBM-ILOG Cplex via its Python API
+COIN-OR Clp via CyLP (see https://github.com/coin-or/CyLP).
+
+The two packages above are optional.
+
+
+#--------------------------------------------------------------------------
+# Installation instructions
+#--------------------------------------------------------------------------
+
+1) Install the required packages NumPy, Pyomo, pyDOE as indicated
+   above. If you use pip, you can verify that they are present with
+   the commands:
+
+   pip show numpy
+   pip show pyomo
+   pip show pyDOE
+
+2) Edit rbfopt_config.py to point to the correct location for the NLP
+   and MINLP solvers.
+
+3) Enjoy!
+
+4) You can test the installation by running:
+   python2.7 test_rbfopt.py branin
+   
+   See:
+   python2.7 test_rbfopt.py --help
+   for more details on command-line options for the testing utility.
+
+   Many more test functions, with different characteristics, are
+   implemented in the file test_functions.py. They can all be used for
+   testing.
+
+5) To run the library on a user-defined black-box function, modify the
+   file black_box.py accordingly, and run:
+   python2.7 rbfopt_cl_interface.py
+
+   See:
+   python2.7 rbfopt_cl_interface.py --help
+   for more details on command-line options.
+
+   By redefining the attributes and methods of the class BlackBox of
+   black_box.py, you can define your own black-box function.
+
+6) To take advantage of faster model selection procedures, you must
+   have either IBM-ILOG Cplex or COIN-OR Clp available on your
+   machine. By default, the model selection procedure uses
+   Numpy. Using Cplex (via its Python library) or Clp (via CyLP) can
+   increase its speed dramatically. If one of these packages is
+   installed and available via the corresponding "import" Python
+   command (i.e. "import cplex" and "import cylp.cy"), you can select
+   the corresponding value for the option model_selection_solver.
+
+
+#--------------------------------------------------------------------------
+# Documentation
+#--------------------------------------------------------------------------
+
+The documentation for the code can be built using Sphinx with the
+numpydoc extension. numpydoc can be installed with pip (if you
+followed our instructions above, it should already be installed):
+
+pip install numpydoc
+
+After that, the directory doc/ contains a Makefile (on Windows, use
+make.bat) and the Sphinx configuration file conf.py.
+
+You can build the HTML documentation (recommended) with:
+
+make html
+
+The output will be located in _build/html/ and the index can be found
+in _build/html/index.html .
+
+A PDF version of the documentation (much less readable than the HTML
+version) can be built using the command:
+
+make latexpdf
+
+An online version of the documentation for the latest master branch of
+the code is available on ReadTheDocs:
+
+http://rbfopt.readthedocs.org/en/latest/
