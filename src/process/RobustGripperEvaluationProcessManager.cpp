@@ -59,7 +59,7 @@ GripperQuality::Ptr RobustGripperEvaluationProcessManager::evaluateGripper(Gripp
      * extract parameters
      */
     GripperBuilder::Ptr builder = new MapGripperBuilder(gripper);
-    Vector parameters = builder->gripperToParameters(gripper);
+    Vector parameters = builder->gripperToVector(gripper);
     string parameterString = toString(parameters, " ");
 
     /*

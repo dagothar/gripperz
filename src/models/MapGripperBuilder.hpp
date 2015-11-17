@@ -57,9 +57,9 @@ public:
 	
 	virtual ~MapGripperBuilder();
 	
-	virtual OldGripper::Ptr parametersToGripper(const math::Vector& params);
+	virtual OldGripper::Ptr vectorToGripper(const math::Vector& params);
 
-	virtual math::Vector gripperToParameters(OldGripper::Ptr gripper);
+	virtual math::Vector gripperToVector(OldGripper::Ptr gripper);
 	
 	OldGripper::Ptr getPrototype() { return _prototype; }
 	void setPrototype(OldGripper::Ptr prototype) { _prototype = prototype; }

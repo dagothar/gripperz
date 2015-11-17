@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
             << " Log=" << logMethod->combine(result) << endl;
 
     /* save gripper */
-    OldGripper::Ptr grp = builder->parametersToGripper(param);
+    OldGripper::Ptr grp = builder->vectorToGripper(param);
     GripperXMLLoader::save(grp, "obj.grp.xml");
 
     return 0;

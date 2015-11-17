@@ -27,12 +27,12 @@ public:
 	/**
 	 * @brief Construct a gripper from a vector of parameters.
 	 */
-	virtual OldGripper::Ptr parametersToGripper(const math::Vector& params) = 0;
+	virtual OldGripper::Ptr vectorToGripper(const math::Vector& params) = 0;
 	
 	/**
 	 * @brief Convert a gripper into a vector of parameters.
 	 */
-	virtual math::Vector gripperToParameters(OldGripper::Ptr gripper) = 0;
+	virtual math::Vector gripperToVector(OldGripper::Ptr gripper) = 0;
 };
 
 } /* models */

@@ -79,7 +79,7 @@ void MapGripperBuilder::applyParameter(OldGripper::Ptr gripper, ParameterName na
     }
 }
 
-OldGripper::Ptr MapGripperBuilder::parametersToGripper(const std::vector<double>& params) {
+OldGripper::Ptr MapGripperBuilder::vectorToGripper(const std::vector<double>& params) {
     if (params.size() != _parameters.size()) {
         RW_THROW("Parameters vector size mismatch!");
     }
@@ -140,7 +140,7 @@ double MapGripperBuilder::fetchParameter(OldGripper::Ptr gripper, ParameterName 
     return 0.0;
 }
 
-std::vector<double> MapGripperBuilder::gripperToParameters(OldGripper::Ptr gripper) {
+std::vector<double> MapGripperBuilder::gripperToVector(OldGripper::Ptr gripper) {
 
     vector<double> params;
 

@@ -15,6 +15,6 @@
 #include "models/GripperQualityImpl.hpp"
 #include "models/OldGripper.hpp"
 #include "models/GripperBuilder.hpp"
-#include "models/MapGripperBuilder.hpp"
+//#include "models/MapGripperBuilder.hpp"
 #include "models/loaders.hpp"
 

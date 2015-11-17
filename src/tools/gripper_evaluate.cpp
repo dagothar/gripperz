@@ -229,7 +229,7 @@ int main(int argc, char* argv[]) {
     CombineObjectives::Ptr method = CombineObjectivesFactory::make(configuration.method, configuration.weights);
 
     INFO << "* Evaluating gripper:" << endl;
-    INFO << *objective->getBuilder()->parametersToGripper(configuration.values);
+    INFO << *objective->getBuilder()->vectorToGripper(configuration.values);
 
     vector<double> results = objective->evaluate(configuration.values);
 

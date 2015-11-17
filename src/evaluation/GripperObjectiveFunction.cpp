@@ -68,7 +68,7 @@ std::vector<double> GripperObjectiveFunction::evaluate(const std::vector<double>
     OldGripper::Ptr gripper = NULL;
     try {
 
-        gripper = _builder->parametersToGripper(x);
+        gripper = _builder->vectorToGripper(x);
         _lastGripper = gripper;
 
     } catch (const std::exception& e) {
