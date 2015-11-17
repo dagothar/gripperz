@@ -11,6 +11,7 @@
 #define INFO rw::common::Log::infoLog()
 
 using namespace gripperz::models;
+using namespace gripperz::parametrization;
 using namespace rw::math;
 using namespace std;
 
@@ -20,17 +21,25 @@ ParametrizedGeometryGripper(name) {
 
 StandardGripper::StandardGripper(const ParametrizedGeometryGripper& gripper) :
 ParametrizedGeometryGripper(gripper) {
-    
+
 }
 
 StandardGripper::~StandardGripper() {
 }
 
+StandardGripper* StandardGripper::clone() const {
+    Parametrization::Ptr p = this->getParametrization()->clone();
+    StandardGripper* gripper = new StandardGripper(*this);
+    gripper->setParametrization(p);
+    
+    return gripper;
+}
+
 void StandardGripper::applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state) {
     ParametrizedGeometryGripper::applyModifications(wc, dwc, state);
-    
+
     INFO << "Modifying offset, stroke, jawdist and force" << endl;
-    
+
     /* set TCP */
     double tcpoffset = getParameter("tcpoffset");
     getTCPFrame()->setTransform(Transform3D<>(Vector3D<>(0, 0, tcpoffset)), state);

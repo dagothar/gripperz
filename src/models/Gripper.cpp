@@ -31,3 +31,7 @@ void Gripper::registerWithContext(WorkCell::Ptr wc, DynamicWorkCell::Ptr dwc, St
     _leftFingerBody = dwc->findBody(_leftFingerId);
     _rightFingerBody = dwc->findBody(_rightFingerId);
 }
+
+Gripper* Gripper::clone() const {
+    return new Gripper(*this);
+}

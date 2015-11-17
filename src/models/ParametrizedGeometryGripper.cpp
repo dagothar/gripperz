@@ -19,6 +19,7 @@ using namespace rw::math;
 using namespace rw::kinematics;
 using namespace rw::models;
 using namespace rw::geometry;
+using namespace gripperz::parametrization;
 using namespace rw::common;
 using namespace rw::graphics;
 using namespace std;
@@ -34,13 +35,21 @@ ParametrizedGripper(gripper) {
 ParametrizedGeometryGripper::~ParametrizedGeometryGripper() {
 }
 
+ParametrizedGeometryGripper* ParametrizedGeometryGripper::clone() const {
+    Parametrization::Ptr p = this->getParametrization()->clone();
+    ParametrizedGeometryGripper* gripper = new ParametrizedGeometryGripper(*this);
+    gripper->setParametrization(p);
+
+    return gripper;
+}
+
 void ParametrizedGeometryGripper::applyModifications(WorkCell::Ptr wc, DynamicWorkCell::Ptr dwc, State& state) {
     INFO << "Modifying gripper geometry" << endl;
-    
+
     /* remove old objects */
     wc->removeObject(getLeftFingerObject().get());
     wc->removeObject(getRightFingerObject().get());
-    
+
     /* create finger geometries */
     _meshGenerator->setParametrization(getParametrization());
     TriMesh::Ptr left_mesh = _meshGenerator->createMesh();
@@ -49,7 +58,7 @@ void ParametrizedGeometryGripper::applyModifications(WorkCell::Ptr wc, DynamicWo
     Geometry::Ptr right_geo = ownedPtr(new Geometry(right_mesh, "rightFingerGeo"));
     left_geo->setTransform(Transform3D<>());
     right_geo->setTransform(Transform3D<>(Vector3D<>(), Rotation3D<>(1, 0, 0, 0, 1, 0, 0, 0, -1)));
-    
+
     /* create finger models */
     Model3D::Ptr left_model = ownedPtr(new Model3D("leftModel"));
     left_model->addTriMesh(Model3D::Material("stlmat", 0.6f, 0.6f, 0.6f), *left_mesh);
@@ -57,7 +66,7 @@ void ParametrizedGeometryGripper::applyModifications(WorkCell::Ptr wc, DynamicWo
     Model3D::Ptr right_model = ownedPtr(new Model3D("rightModel"));
     right_model->addTriMesh(Model3D::Material("stlmat", 0.6f, 0.6f, 0.6f), *right_mesh);
     right_model->setTransform(Transform3D<>(Vector3D<>(), Rotation3D<>(1, 0, 0, 0, 1, 0, 0, 0, -1)));
-    
+
     /* create finger objects */
     RigidObject::Ptr left_obj = ownedPtr(new RigidObject(getLeftFingerObject()->getBase()));
     left_obj->addGeometry(left_geo);
@@ -65,7 +74,7 @@ void ParametrizedGeometryGripper::applyModifications(WorkCell::Ptr wc, DynamicWo
     RigidObject::Ptr right_obj = ownedPtr(new RigidObject(getRightFingerObject()->getBase()));
     right_obj->addGeometry(right_geo);
     right_obj->addModel(right_model);
-    
+
     /* add objects to wc & dwc */
     wc->add(left_obj);
     getLeftFingerBody()->setObject(left_obj);

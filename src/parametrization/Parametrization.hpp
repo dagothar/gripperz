@@ -49,6 +49,8 @@ namespace gripperz {
             Parametrization(const ParameterNameList& nameList);
 
             virtual ~Parametrization();
+            
+            virtual Parametrization::Ptr clone() const;
 
             void addParameter(const Parameter& p);
 

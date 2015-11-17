@@ -34,9 +34,8 @@ namespace gripperz {
                     );
 
             virtual ~ParametrizedGripper();
-
-        private:
-
+            
+            virtual ParametrizedGripper* clone() const;
         };
 
     }

@@ -9,17 +9,24 @@
 
 using namespace gripperz::models;
 using namespace gripperz::math;
+using namespace rw::common;
 
-PrototypeGripperBuilder::PrototypeGripperBuilder() {
+PrototypeGripperBuilder::PrototypeGripperBuilder(ParametrizedGripper::Ptr prototype, parametrization::ParametrizationTranslator::Ptr translator) :
+_prototype(prototype),
+_translator(translator) {
+
 }
 
 PrototypeGripperBuilder::~PrototypeGripperBuilder() {
 }
 
 ParametrizedGripper::Ptr PrototypeGripperBuilder::vectorToGripper(const Vector& params) {
-
+    ParametrizedGripper::Ptr gripper = ownedPtr(_prototype->clone());
 }
 
 Vector PrototypeGripperBuilder::gripperToVector(ParametrizedGripper::Ptr gripper) {
-
+    RW_ASSERT(_translator != NULL);
+    
+    Vector x = _translator->parametrizationToVector(gripper->getParametrization());
+    return x;
 }

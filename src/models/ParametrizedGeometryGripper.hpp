@@ -29,6 +29,8 @@ namespace gripperz {
 
             virtual ~ParametrizedGeometryGripper();
             
+            virtual ParametrizedGeometryGripper* clone() const;
+            
             virtual void applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
 
             void setMeshGenerator(geometry::ParametrizedMeshGenerator::Ptr _meshGenerator) {

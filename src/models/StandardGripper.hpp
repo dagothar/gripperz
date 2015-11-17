@@ -30,6 +30,8 @@ namespace gripperz {
             //! Destructor.
             virtual ~StandardGripper();
             
+            virtual StandardGripper* clone() const;
+            
             virtual void applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dynamics::DynamicWorkCell::Ptr dwc, rw::kinematics::State& state);
         };
     }

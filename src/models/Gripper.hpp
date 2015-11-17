@@ -31,6 +31,8 @@ namespace gripperz {
             Gripper(const std::string& name);
 
             virtual ~Gripper();
+            
+            virtual Gripper* clone() const;
 
             /**
              * @brief Registers the gripper with the RW context

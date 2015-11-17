@@ -10,6 +10,7 @@
 #include <rw/common/macros.hpp>
 
 using namespace std;
+using namespace rw::common;
 using namespace gripperz::parametrization;
 
 Parametrization::Parametrization() {
@@ -30,6 +31,10 @@ Parametrization::Parametrization(const ParameterNameList& list) {
 }
 
 Parametrization::~Parametrization() {
+}
+
+Parametrization::Ptr Parametrization::clone() const {
+    return ownedPtr(new Parametrization(*this));
 }
 
 void Parametrization::addParameter(const Parameter& p) {
