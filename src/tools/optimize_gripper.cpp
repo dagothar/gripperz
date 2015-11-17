@@ -39,6 +39,7 @@
 #include <evaluation/GripperObjectiveFunction.hpp>
 #include <math/Types.hpp>
 #include <math/CombinedFunction.hpp>
+#include <boost/filesystem.hpp>
 
 #include "models/PrototypeGripperBuilder.hpp"
 #include "parametrization/VectorParametrizationTranslator.hpp"
@@ -54,6 +55,7 @@ using namespace rwsim::dynamics;
 using namespace rwsim::loaders;
 using namespace rwlibs::task;
 using namespace boost::program_options;
+using namespace boost::filesystem;
 using namespace gripperz::loaders;
 using namespace gripperz::models;
 using namespace gripperz::models::loaders;
@@ -69,6 +71,9 @@ using namespace gripperz::optimization;
 using namespace gripperz::parametrization;
 using namespace gripperz::evaluation;
 using namespace gripperz::evaluation::calculators;
+
+/******************************************************************************/
+ofstream log_file;
 
 /******************************************************************************/
 struct Configuration {
@@ -373,6 +378,35 @@ GripperBuilder::Ptr make_gripper_builder(const Configuration& config, Data& data
 }
 
 /******************************************************************************/
+void callback(Gripper::Ptr gripper1, GripperQualityExtractor::Ptr extractor, CombineObjectives::Ptr combiner, GripperBuilder::Ptr builder) {
+    ParametrizedGripper::Ptr gripper = gripper1.cast<ParametrizedGripper>();
+    RW_ASSERT(gripper != NULL);
+    
+    static unsigned step = 0;
+    
+    Vector x = builder->gripperToVector(gripper);
+    GripperQuality::Ptr quality = gripper->getQuality();
+    Vector r = extractor->extract(quality);
+    double q = combiner->combine(r);
+    ++step;
+    
+    log_file << step << ", ";
+
+    for (unsigned i = 0; i < x.size(); ++i) {
+        cout << x[i] << ", ";
+        log_file <<  x[i] << ", ";
+    }
+    
+    for (unsigned i = 0; i < r.size(); ++i) {
+        cout << r[i] << ", ";
+        log_file <<  r[i] << ", ";
+    }
+    
+    cout << q << endl;
+    log_file << q <<  endl;
+}
+
+/******************************************************************************/
 ObjectiveFunction::Ptr make_objective_function(const Configuration& config, Data& data, GripperBuilder::Ptr builder) {    
     GripperEvaluationProcessManager::Ptr evaluation_manager = make_evaluation_manager(config, data);
     
@@ -382,12 +416,12 @@ ObjectiveFunction::Ptr make_objective_function(const Configuration& config, Data
     
     CombineObjectives::Ptr comb_method = CombineObjectivesFactory::make(config.method, config.weights);
     
+    multi_function->setCallback(boost::bind<>(&callback, _1, extractor, comb_method, builder));
+    
     ObjectiveFunction::Ptr objective = new CombinedFunction(multi_function, comb_method);
     
     return objective;
 }
-
-/******************************************************************************/
 
 /******************************************************************************/
 int main(int argc, char* argv[]) {
@@ -403,6 +437,8 @@ int main(int argc, char* argv[]) {
         INFO << "Exception during loading data: " << e.what() << endl;
         return -1;
     }
+    
+    log_file.open(path("log.csv").string());
     
     ParametrizedGripper::Ptr gripper = DATA.gripper.cast<ParametrizedGripper>();
     RW_ASSERT(gripper != NULL);
