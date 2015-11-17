@@ -17,7 +17,6 @@ using namespace std;
 using namespace gripperz::evaluation;
 using namespace gripperz::process;
 using namespace gripperz::models;
-using namespace gripperz::context;
 using namespace gripperz::grasps;
 using namespace gripperz::math;
 using namespace rw::common;

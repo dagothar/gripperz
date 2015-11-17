@@ -201,7 +201,7 @@ namespace gripperz {
             double getVolume() const;
 
             // friends
-            friend class loaders::GripperXMLLoader;
+            //friend class loaders::GripperXMLLoader;
 
             friend std::ostream& operator<<(std::ostream& stream, const OldGripper& g);
 

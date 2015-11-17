@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <models/OldGripper.hpp>
 #include <models/GripperBuilder.hpp>
 #include <process/GripperEvaluationProcessManager.hpp>
 #include <evaluation/GripperQualityExtractor.hpp>

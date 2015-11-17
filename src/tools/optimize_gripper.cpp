@@ -1,3 +1,10 @@
+/* 
+ * File:   optimize_gripper.cpp
+ * Author: dagothar
+ * 
+ * Created on November 17, 2015, 1:46 PM
+ */
+
 #include <iostream>
 #include <rw/rw.hpp>
 #include <rw/RobWork.hpp>
@@ -27,6 +34,14 @@
 #include <grasps/filters.hpp>
 #include <grasps/decorators.hpp>
 #include <grasps/planners/BasicParallelGripperGraspPlanner.hpp>
+#include <optimization/OptimizationManager.hpp>
+#include <optimization/OptimizerFactory.hpp>
+#include <evaluation/GripperObjectiveFunction.hpp>
+#include <math/Types.hpp>
+#include <math/CombinedFunction.hpp>
+
+#include "models/PrototypeGripperBuilder.hpp"
+#include "parametrization/VectorParametrizationTranslator.hpp"
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -50,6 +65,7 @@ using namespace gripperz::grasps::filters;
 using namespace gripperz::grasps::databases;
 using namespace gripperz::grasps::decorators;
 using namespace gripperz::math;
+using namespace gripperz::optimization;
 using namespace gripperz::parametrization;
 using namespace gripperz::evaluation;
 using namespace gripperz::evaluation::calculators;
@@ -66,10 +82,12 @@ struct Configuration {
     vector<double> weights;
     string method;
     vector<string> parameters;
-    vector<double> values;
+    vector<double> limits_low;
+    vector<double> limits_high;
     string grasps_filename;
     string saved_grasps_filename;
     string ssamples;
+    string optimizer;
     vector<string> filters;
 
     double covPosFilteringRadius;
@@ -79,6 +97,8 @@ struct Configuration {
     double volumeLimit;
     double sigma_p;
     double sigma_a;
+    double rho0, rhof;
+    int maxfev;
     unsigned seed;
 } CONFIG;
 
@@ -99,11 +119,12 @@ void initialize() {
 
 /******************************************************************************/
 bool parse_cli(int argc, char* argv[], Configuration& conf) {
-    string values;
     string offset;
     string indices;
     string filters;
     string parameters;
+    string limits_low;
+    string limits_high;
 
     options_description desc("Options");
     desc.add_options()
@@ -122,13 +143,18 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("aliR", value<double>(&conf.aliFilteringRadius)->default_value(0.01), "filtering radius for alignment")
             ("maxS", value<double>(&conf.stressLimit)->default_value(10), "stress limit")
             ("maxV", value<double>(&conf.volumeLimit)->default_value(200), "volume limit")
-            ("parameters,p", value<string>(&parameters), "parameters to modify")
-            ("values,v", value<string>(&values), "parameter values")
+            ("parameters,p", value<string>(&parameters), "parameters to optimize")
+            ("low,l", value<string>(&limits_low), "low limits for parameters")
+            ("high,h", value<string>(&limits_high), "high limits for parameters")
             ("grasps", value<string>(&conf.grasps_filename), "RW task file")
             ("filters,f", value<string>(&filters), "grasp filters to apply")
             ("save_grasps", value<string>(&conf.saved_grasps_filename), "saved RW task file")
             ("sigma_a", value<double>(&conf.sigma_a)->default_value(15), "grasp perturbation angle sigma")
             ("sigma_p", value<double>(&conf.sigma_p)->default_value(0.01), "grasp perturbation position sigma")
+            ("optimizer", value<string>(&conf.optimizer)->default_value("simplex"), "optimization method (simplex, coord, bobyqa, simu, powell)")
+            ("rho0", value<double>(&conf.rho0)->default_value(0.1), "initial step size")
+            ("rhof", value<double>(&conf.rhof)->default_value(0.001), "final step size")
+            ("maxfev", value<int>(&conf.maxfev)->default_value(1e2), "max number of function evaluations")
             ("ssamples", value<string>(&conf.ssamples), "surface samples file")
             ("seed", value<unsigned>(&conf.seed), "RNG seed");
     variables_map vm;
@@ -173,14 +199,20 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
         conf.parameters.push_back(*i);
     }
 
-    /* parse parameter values */
-    istringstream sstr(values);
+    /* parse limit values */
+    istringstream low_sstr(limits_low);
     double v;
-    while (sstr >> v) {
-        conf.values.push_back(v);
+    while (low_sstr >> v) {
+        conf.limits_low.push_back(v);
     }
 
-    RW_ASSERT(conf.parameters.size() == conf.values.size());
+    istringstream high_sstr(limits_high);
+    while (high_sstr >> v) {
+        conf.limits_high.push_back(v);
+    }
+
+    RW_ASSERT(conf.parameters.size() == conf.limits_low.size());
+    RW_ASSERT(conf.parameters.size() == conf.limits_high.size());
 
     /* re-initialize rng */
     if (vm.count("seed")) {
@@ -248,34 +280,34 @@ GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
 /******************************************************************************/
 GraspSource::Ptr make_grasp_source(const Configuration& config, const Data& data) {
     GraspSource::Ptr source;
-    
+
     /* construct basic source */
     if (!config.grasps_filename.empty()) {
         INFO << "Grasp source: GRASPS" << endl;
 
         source = ownedPtr(new RWGraspDatabase(config.grasps_filename));
-        
+
     } else {
         INFO << "Grasp source: PLANNER" << endl;
-        
+
         BasicParallelGripperGraspPlanner::Ptr planner = ownedPtr(new BasicParallelGripperGraspPlanner(config.ngrasps, data.td->getInitState(), data.td));
         planner->setSurfaceSamples(data.ssamples);
-        
+
         source = planner;
     }
-    
+
     /* apply filters */
     GraspFilterChain::Ptr filter_chain = ownedPtr(new GraspFilterChain());
-    
-    BOOST_FOREACH (const string& f, config.filters) {
+
+    BOOST_FOREACH(const string& f, config.filters) {
         if (f == "perturb") {
             GraspFilter::Ptr filter = ownedPtr(new RobustnessGraspFilter(config.ngrasps, config.sigma_p, Deg2Rad * config.sigma_a));
             filter_chain->addFilter(filter);
         }
     }
-    
+
     source = ownedPtr(new FilteredGraspSource(source, filter_chain));
-    
+
     return source;
 }
 
@@ -304,28 +336,58 @@ GripperQualityExtractor::Ptr make_extractor(const Configuration& config) {
 }
 
 /******************************************************************************/
-void modify_parameters(Gripper::Ptr gripper, const Configuration& config) {
-    Parametrized::Ptr parametrized = gripper.cast<Parametrized>();
-    if (!parametrized) return;
-
-    Parametrization::Ptr params = parametrized->getParametrization();
-
-    for (unsigned i = 0; i < config.parameters.size(); ++i) {
-        params->setParameter(config.parameters[i], config.values[i]);
+OptimizationManager::Ptr make_optimization_manager(const Configuration& config) {
+    Optimizer::Ptr optimizer;
+    if (config.optimizer == "simplex") {
+        optimizer = OptimizerFactory::makeSimplexOptimizer(config.rho0, config.rhof, config.maxfev);
+    } else if (config.optimizer == "coord") {
+        optimizer = OptimizerFactory::makeCoordinateDescentOptimizer(config.rho0, config.rhof, config.maxfev);
+    } else if (config.optimizer == "bobyqa") {
+        optimizer = OptimizerFactory::makeBOBYQAOptimizer(config.parameters.size(), config.rho0, config.rhof, config.maxfev);
+    } else if (config.optimizer == "simu") {
+        optimizer = OptimizerFactory::makeSimulatedAnnealingOptimizer(config.rho0, config.rhof, config.maxfev);
+    } else if (config.optimizer == "powell") {
+        optimizer = OptimizerFactory::makePowellOptimizer(config.rho0, config.rhof, config.maxfev);
+    } else {
+        RW_THROW("Optimizer not supported!");
     }
+
+    RangeList limits;
+    for (unsigned i = 0; i < config.parameters.size(); ++i) {
+        limits.push_back(make_pair(config.limits_low[i], config.limits_high[i]));
+    }
+
+    OptimizationManager::Ptr optimization_manager = ownedPtr(new OptimizationManager(optimizer, limits, true));
+    return optimization_manager;
 }
 
 /******************************************************************************/
-GripperQuality::Ptr evaluate_gripper(Gripper::Ptr gripper, GripperEvaluationProcessManager::Ptr manager, GripperQualityExtractor::Ptr extractor, CombineObjectives::Ptr method) {
-    GripperQuality::Ptr quality = manager->evaluateGripper(gripper);
-
-    vector<double> objectives = extractor->extract(quality);
-    double Q = method->combine(objectives);
-    quality->setIndex("Q", Q);
-
-    gripper->setQuality(quality);
-    return quality;
+GripperBuilder::Ptr make_gripper_builder(const Configuration& config, Data& data) {
+    ParametrizedGripper::Ptr gripper = data.gripper.cast<ParametrizedGripper>();
+    RW_ASSERT(gripper != NULL);
+    
+    ParametrizationTranslator::Ptr translator = ownedPtr(new VectorParametrizationTranslator(config.parameters));
+    
+    GripperBuilder::Ptr builder = ownedPtr(new PrototypeGripperBuilder(gripper, translator));
+    return builder;
 }
+
+/******************************************************************************/
+ObjectiveFunction::Ptr make_objective_function(const Configuration& config, Data& data, GripperBuilder::Ptr builder) {    
+    GripperEvaluationProcessManager::Ptr evaluation_manager = make_evaluation_manager(config, data);
+    
+    GripperQualityExtractor::Ptr extractor = make_extractor(config);
+    
+    GripperObjectiveFunction::Ptr multi_function = new GripperObjectiveFunction(builder, evaluation_manager, extractor);
+    
+    CombineObjectives::Ptr comb_method = CombineObjectivesFactory::make(config.method, config.weights);
+    
+    ObjectiveFunction::Ptr objective = new CombinedFunction(multi_function, comb_method);
+    
+    return objective;
+}
+
+/******************************************************************************/
 
 /******************************************************************************/
 int main(int argc, char* argv[]) {
@@ -341,23 +403,16 @@ int main(int argc, char* argv[]) {
         INFO << "Exception during loading data: " << e.what() << endl;
         return -1;
     }
+    
+    ParametrizedGripper::Ptr gripper = DATA.gripper.cast<ParametrizedGripper>();
+    RW_ASSERT(gripper != NULL);
 
-    Gripper::Ptr gripper = DATA.gripper;
-
-    modify_parameters(gripper, CONFIG);
-
-    StandardGripperEvaluationProcessManager::Ptr manager = make_evaluation_manager(CONFIG, DATA);
-    GripperQualityExtractor::Ptr extractor = make_extractor(CONFIG);
-    CombineObjectives::Ptr method = CombineObjectivesFactory::make(CONFIG.method, CONFIG.weights);
-    GripperQuality::Ptr quality = evaluate_gripper(gripper, manager, extractor, method);
-    INFO << *quality << endl;
-    GripperLoader::Ptr loader = new MasterGripperLoader();
-    loader->save(CONFIG.result_filename, gripper);
-
-    if (!CONFIG.saved_grasps_filename.empty()) {
-        Grasps evaluated_grasps = manager->getSimulator()->getTasks();
-        GraspTask::saveRWTask(evaluated_grasps, CONFIG.saved_grasps_filename);
-    }
+    GripperBuilder::Ptr builder = make_gripper_builder(CONFIG, DATA);
+    ObjectiveFunction::Ptr objective = make_objective_function(CONFIG, DATA, builder);
+    OptimizationManager::Ptr manager = make_optimization_manager(CONFIG);
+    
+    Vector guess = builder->gripperToVector(gripper);
+    Vector result = manager->optimize(objective, guess, "maximize");
 
     return 0;
 }
