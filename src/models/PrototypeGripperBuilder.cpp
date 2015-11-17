@@ -22,6 +22,10 @@ PrototypeGripperBuilder::~PrototypeGripperBuilder() {
 
 ParametrizedGripper::Ptr PrototypeGripperBuilder::vectorToGripper(const Vector& params) {
     ParametrizedGripper::Ptr gripper = ownedPtr(_prototype->clone());
+    
+    _translator->applyVectorToParametrization(gripper->getParametrization(), params);
+    
+    return gripper;
 }
 
 Vector PrototypeGripperBuilder::gripperToVector(ParametrizedGripper::Ptr gripper) {
