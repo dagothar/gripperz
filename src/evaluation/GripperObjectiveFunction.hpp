@@ -24,13 +24,7 @@ namespace gripperz {
         public:
             //! Smart pointer.
             typedef rw::common::Ptr<GripperObjectiveFunction> Ptr;
-
-            //! Number of parameters.
-            static const unsigned NParameters = 9;
-
-            //! Number of objectives.
-            static const unsigned NObjectives = 7;
-
+            
         public:
             GripperObjectiveFunction(
                     models::GripperBuilder::Ptr builder,
@@ -40,15 +34,6 @@ namespace gripperz {
 
             virtual ~GripperObjectiveFunction();
 
-            /**
-             * @brief Evaluates gripper given as the parameter vector.
-             * 
-             * Takes following parameters (9):
-             * length, width, depth, chf. depth, chf. angle, cut depth, cut angle, cut tilt, tcp position
-             * 
-             * Returns following objectives (7):
-             * success, robustness, alignment, coverage, wrench, stress, volume
-             */
             virtual std::vector<double> evaluate(const std::vector<double>& x);
 
             models::GripperBuilder::Ptr getBuilder() {
@@ -77,7 +62,7 @@ namespace gripperz {
 
             //! Returns last evaluated gripper.
 
-            models::OldGripper::Ptr getLastGripper() const {
+            models::Gripper::Ptr getLastGripper() const {
                 return _lastGripper;
             }
 
@@ -88,8 +73,7 @@ namespace gripperz {
             }
 
             //! Sets function evaluation callback.
-
-            void setCallback(const boost::function<void(models::OldGripper::Ptr)>& cb) {
+            void setCallback(const boost::function<void(models::Gripper::Ptr)>& cb) {
                 _callback = cb;
             }
 
@@ -98,10 +82,10 @@ namespace gripperz {
             process::GripperEvaluationProcessManager::Ptr _manager;
             GripperQualityExtractor::Ptr _extractor;
 
-            models::OldGripper::Ptr _lastGripper;
+            models::Gripper::Ptr _lastGripper;
             models::GripperQuality::Ptr _lastQuality;
 
-            boost::function<void(models::OldGripper::Ptr) > _callback;
+            boost::function<void(models::Gripper::Ptr) > _callback;
         };
 
     } /* evaluation */

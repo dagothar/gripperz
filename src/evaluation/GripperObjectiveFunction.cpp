@@ -33,39 +33,13 @@ _extractor(extractor) {
 GripperObjectiveFunction::~GripperObjectiveFunction() {
 }
 
-bool areParametersOk(const std::vector<double>& p) {
-    // if tcp > length
-    if (p[8] > p[0]) {
-        DEBUG << "tcp > length" << endl;
-        return false;
-    }
-
-    // if cut depth > width
-    if (p[5] > p[2]) {
-        DEBUG << "cut depth > width" << endl;
-        return false;
-    }
-
-    // check if cutout doesn't fall under chamfer
-    double chflength = p[3] * p[1] * sin(p[4] * Deg2Rad);
-    if (p[8] > p[0] - chflength) {
-        double y = p[1] - (p[8] - chflength) * cos(p[4] * Deg2Rad);
-        if (p[5] > y) {
-            DEBUG << "too thin under cutout" << endl;
-            return false;
-        }
-    }
-
-    return true;
-}
-
 std::vector<double> GripperObjectiveFunction::evaluate(const std::vector<double>& x) {
-    Vector results(NObjectives, 0.0);
+    Vector results;
 
     /*
      * Build gripper.
      */
-    OldGripper::Ptr gripper = NULL;
+    Gripper::Ptr gripper = NULL;
     try {
 
         gripper = _builder->vectorToGripper(x);
@@ -78,7 +52,7 @@ std::vector<double> GripperObjectiveFunction::evaluate(const std::vector<double>
     /*
      * Evaluate gripper.
      */
-
+    RW_ASSERT(gripper != NULL);
     try {
 
         GripperQuality::Ptr q = _manager->evaluateGripper(gripper);
