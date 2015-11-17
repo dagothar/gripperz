@@ -470,7 +470,7 @@ int main(int argc, char* argv[]) {
     GripperQuality::Ptr opt_gripper_q = evaluation_manager->evaluateGripper(opt_gripper);
     gripper->setQuality(opt_gripper_q);
 
-    cout << "Optimization succesful!" << endl;
+    cout << "Optimization successful!" << endl;
 
     /* save results */
     path opt_gripper_file = path(CONFIG.result_filename);

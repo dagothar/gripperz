@@ -11,5 +11,6 @@
 #include "optimization/CoordinateDescentOptimizer.hpp"
 #include "optimization/SimulatedAnnealingOptimizer.hpp"
 #include "optimization/PowellOptimizer.hpp"
+#include "optimization/RbfOptimizer.hpp"
 #include "optimization/OptimizationManager.hpp"
 #include "optimization/GripperOptimizationManager.hpp"

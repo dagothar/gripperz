@@ -7,6 +7,7 @@ SET(SRC_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/CoordinateDescentOptimizer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SimulatedAnnealingOptimizer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PowellOptimizer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/RbfOptimizer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OptimizationManager.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GripperOptimizationManager.cpp
 	CACHE INTERNAL ""
