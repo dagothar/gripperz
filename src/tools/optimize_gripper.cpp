@@ -356,6 +356,8 @@ OptimizationManager::Ptr make_optimization_manager(const Configuration& config) 
         optimizer = OptimizerFactory::makeSimulatedAnnealingOptimizer(config.rho0, config.rhof, config.maxfev);
     } else if (config.optimizer == "powell") {
         optimizer = OptimizerFactory::makePowellOptimizer(config.rho0, config.rhof, config.maxfev);
+    } else if (config.optimizer == "rbf") {
+        optimizer = OptimizerFactory::makeRbfOptimizer(250, config.maxfev);
     } else {
         RW_THROW("Optimizer not supported!");
     }

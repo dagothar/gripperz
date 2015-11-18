@@ -13,6 +13,7 @@
 #include "CoordinateDescentOptimizer.hpp"
 #include "SimulatedAnnealingOptimizer.hpp"
 #include "PowellOptimizer.hpp"
+#include "RbfOptimizer.hpp"
 
 namespace gripperz {
 namespace optimization {
@@ -42,6 +43,9 @@ public:
 	
 	//! Creates Powell optimizer.
 	static PowellOptimizer::Ptr makePowellOptimizer(double rho_init=1e-1, double rho_stop=1e-3, unsigned max_fev=1e3);
+        
+        //! Creates RBF optimizer.
+	static RbfOptimizer::Ptr makeRbfOptimizer(unsigned max_iter = 1e3, unsigned max_fev=1e3);
 };
 
 } /* optimization */
