@@ -475,6 +475,7 @@ int main(int argc, char* argv[]) {
     opt_gripper->setQuality(opt_gripper_q);
 
     cout << "Optimization successful!" << endl;
+    cout << "Optimal values for parameters:" << result << endl;
 
     /* save results */
     path opt_gripper_file = path(CONFIG.result_filename);
