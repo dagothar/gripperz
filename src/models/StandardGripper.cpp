@@ -41,8 +41,9 @@ void StandardGripper::applyModifications(rw::models::WorkCell::Ptr wc, rwsim::dy
     INFO << "Modifying offset, stroke, jawdist and force" << endl;
 
     /* set TCP */
+    double length = getParameter("length");
     double tcpoffset = getParameter("tcpoffset");
-    getTCPFrame()->setTransform(Transform3D<>(Vector3D<>(0, 0, tcpoffset)), state);
+    getTCPFrame()->setTransform(Transform3D<>(Vector3D<>(0, 0, length-tcpoffset)), state);
 
     /* set bounds */
     double minopening = 0.5 * getParameter("jawdist");

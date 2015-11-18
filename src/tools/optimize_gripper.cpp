@@ -470,7 +470,7 @@ int main(int argc, char* argv[]) {
     
     Gripper::Ptr opt_gripper = builder->vectorToGripper(result);
     GripperQuality::Ptr opt_gripper_q = evaluation_manager->evaluateGripper(opt_gripper);
-    gripper->setQuality(opt_gripper_q);
+    opt_gripper->setQuality(opt_gripper_q);
 
     cout << "Optimization successful!" << endl;
 
