@@ -32,7 +32,7 @@ namespace gripperz {
             };
 
         public:
-            RbfOptimizer(const Configuration& configuration);
+            RbfOptimizer(const Configuration& configuration = Configuration());
 
             virtual ~RbfOptimizer();
 

@@ -21,7 +21,7 @@ public:
 	typedef rw::common::Ptr<Rosenbrock> Ptr;
 
 public:
-	Rosenbrock(double a, double b);
+	Rosenbrock(double a=1, double b=100);
 	virtual ~Rosenbrock() {};
 	
 	virtual double evaluate(const std::vector<double>& x);

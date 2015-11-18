@@ -39,6 +39,11 @@ target_link_libraries(try_openscad gripperz)
 add_executable(try_shards try_shards.cpp)
 add_dependencies(try_shards gripperz)
 target_link_libraries(try_shards gripperz)
+
+#Target: try_rbf
+add_executable(try_rbf try_rbf.cpp)
+add_dependencies(try_rbf gripperz)
+target_link_libraries(try_rbf gripperz)
     
 #Target: rwtask_to_csv
 add_executable(rwtask_to_csv rwtask_to_csv.cpp)

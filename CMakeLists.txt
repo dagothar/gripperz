@@ -55,7 +55,7 @@ SET(SRC_FILES CACHE INTERNAL "" FORCE)
 ADD_SUBDIRECTORY(src)
 
 add_library(gripperz ${SRC_FILES})
-target_link_libraries(gripperz -lGL -lGLU -lglut -lm ${ROBWORKSTUDIO_LIBRARIES} ${ROBWORK_LIBRARIES} ${ROBWORKSIM_LIBRARIES})
+target_link_libraries(gripperz -lGL -lGLU -lglut -lm ${PYTHON_LIBRARIES} ${ROBWORKSTUDIO_LIBRARIES} ${ROBWORK_LIBRARIES} ${ROBWORKSIM_LIBRARIES})
 
 # Target: docs
 IF(BUILD_DOCS)
