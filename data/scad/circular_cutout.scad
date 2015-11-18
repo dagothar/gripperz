@@ -64,4 +64,4 @@ echo(depth - chfdepth);
 }
 
 scale(s)
-	finger(length, width, depth, chfdepth, chfangle, tcpoffset+cutpos, cutoffset, cutdepth, cutwidth, cutangle);
+	finger(length, width, depth, chfdepth, chfangle, length-tcpoffset+cutpos, cutoffset, cutdepth, cutwidth, cutangle);

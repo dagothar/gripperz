@@ -91,4 +91,4 @@ module finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutwid
 }
 
 scale(s)
-	finger(length, width, depth, chfdepth, chfangle, tcpoffset+cutpos, cutdepth, cutwidth, cutangle/2, cutangle2/2, cuttilt);
+	finger(length, width, depth, chfdepth, chfangle, length-tcpoffset+cutpos, cutdepth, cutwidth, cutangle/2, cutangle2/2, cuttilt);
