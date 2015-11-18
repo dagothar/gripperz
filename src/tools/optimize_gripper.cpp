@@ -466,6 +466,8 @@ int main(int argc, char* argv[]) {
     OptimizationManager::Ptr optimization_manager = make_optimization_manager(CONFIG);
     
     Vector guess = builder->gripperToVector(gripper);
+    cout << "Initial guess: " << guess << endl;
+    
     Vector result = optimization_manager->optimize(objective, guess, "maximize");
     
     Gripper::Ptr opt_gripper = builder->vectorToGripper(result);

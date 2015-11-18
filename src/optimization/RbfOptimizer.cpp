@@ -95,6 +95,8 @@ PyObject* RbfOptimizer::callback(PyObject* module, PyObject* args) {
     ObjectiveFunction* objective = (ObjectiveFunction*) PyCObject_AsVoidPtr(arg1);
 
     int n = PyList_Size(arg2);
+    DEBUG << "RBF callback received argument vector of size " << n << endl;
+    
     vector<double> x(n);
     for (int i = 0; i < n; ++i) {
         x[i] = PyFloat_AsDouble(PyList_GetItem(arg2, i));

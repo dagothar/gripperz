@@ -20,10 +20,14 @@ class Proxy:
 def optimize(objective, callback, dimensions, max_iter, max_fev):
 	"""Wrapper function for RBF optimization"""
 	
+	#print "RBF dimensions= ", dimensions
+	#print "RBF max_iter= ", max_iter
+	#print "RBF max_fev= ", max_fev
+	
 	proxy = Proxy(objective, callback)
 	
 	settings = RbfSettings()
 	settings.max_iterations = max_iter
 	settings.max_evaluations = max_fev
 
-	return rbfopt.rbf_optimize(settings, dimensions, [0, 0], [1, 1], proxy.evaluate)
+	return rbfopt.rbf_optimize(settings, dimensions, [0] * dimensions, [1] * dimensions, proxy.evaluate)
