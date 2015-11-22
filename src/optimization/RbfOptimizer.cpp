@@ -52,12 +52,13 @@ Vector RbfOptimizer::minimize(ObjectiveFunction::Ptr function, const Vector& ini
     PyObject* cb = PyCFunction_NewEx(&cb_desc, NULL, cb_name);
     Py_DECREF(cb_name);
 
-    PyObject* optimize_args = PyTuple_New(5);
+    PyObject* optimize_args = PyTuple_New(6);
     PyTuple_SetItem(optimize_args, 0, PyCObject_FromVoidPtr(function.get(), NULL));
     PyTuple_SetItem(optimize_args, 1, cb);
     PyTuple_SetItem(optimize_args, 2, PyInt_FromLong(dimensions));
     PyTuple_SetItem(optimize_args, 3, PyInt_FromLong(_configuration.maxNOfIterations));
     PyTuple_SetItem(optimize_args, 4, PyInt_FromLong(_configuration.maxNOfEvaluations));
+    PyTuple_SetItem(optimize_args, 5, PyInt_FromLong(_configuration.seed));
     PyObject* result_tuple = PyObject_CallObject(optimize, optimize_args);
     if (!result_tuple) {
         RW_THROW("Call to rbfopt.optimize failed!");

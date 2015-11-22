@@ -17,7 +17,7 @@ class Proxy:
 		return self.callback(self.objective, x)
 
 
-def optimize(objective, callback, dimensions, max_iter, max_fev):
+def optimize(objective, callback, dimensions, max_iter, max_fev, rand_seed):
 	"""Wrapper function for RBF optimization"""
 	
 	#print "RBF dimensions= ", dimensions
@@ -29,5 +29,6 @@ def optimize(objective, callback, dimensions, max_iter, max_fev):
 	settings = RbfSettings()
 	settings.max_iterations = max_iter
 	settings.max_evaluations = max_fev
+	settings.rand_seed = rand_seed
 
 	return rbfopt.rbf_optimize(settings, dimensions, [0] * dimensions, [1] * dimensions, proxy.evaluate)

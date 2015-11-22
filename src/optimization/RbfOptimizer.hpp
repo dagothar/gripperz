@@ -9,6 +9,8 @@
 
 #include "Optimizer.hpp"
 #include <Python.h>
+#include <rw/math/Math.hpp>
+#include <climits>
 
 namespace gripperz {
     namespace optimization {
@@ -26,8 +28,10 @@ namespace gripperz {
             struct Configuration {
                 unsigned maxNOfIterations;
                 unsigned maxNOfEvaluations;
+                unsigned seed;
 
                 Configuration() : maxNOfIterations(100), maxNOfEvaluations(1000) {
+                    seed = rw::math::Math::ranI(0, INT_MAX);
                 }
             };
 
