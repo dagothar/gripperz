@@ -10,6 +10,7 @@ cutpos = 0.0;
 cutdepth = 0.01;
 cutangle = 90;
 cuttilt = 0;
+cutfill = 0;
 
 /* Produces basic box finger */
 module basicShape(length, width, depth)
@@ -37,31 +38,35 @@ module chamfering(length, start_depth, angle) {
  * cutangle -- the angle of the cutout
  * cuttilt -- the tilt of the cutout
  */
-module cutout(cutpos, cutdepth, cutangle, cuttilt) {
+module cutout(cutpos, cutdepth, cutangle, cuttilt, cutfill) {
 	size = 1000;
 
 	s_x = tan(cutangle /2);
 
-	translate([cutpos, 0, cutdepth])
-		rotate([0, 0, cuttilt])
-            scale([s_x, 1, 1])
-                rotate([0, 135, 0])
-                    translate([0, -size/2, 0])
-						cube(size);
+	difference () {
+        translate([cutpos, 0, cutdepth])
+            rotate([0, 0, cuttilt])
+                scale([s_x, 1, 1])
+                    rotate([0, 135, 0])
+                        translate([0, -size/2, 0])
+                            cube(size);
+        translate([0, 0, size/2+cutdepth-cutfill])
+            cube(size, center = true);
+    }
 }
 
 /* Produces the finger geometry.
  * Parameters...
  */
-module finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutangle, cuttilt) {
+module finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutangle, cuttilt, cutfill) {
 	difference() {
 		difference() {
 			basicShape(length, width, depth);
 			chamfering(length, width - width * chfdepth, chfangle);
 		}
-		cutout(cutpos, cutdepth, cutangle, cuttilt);
+		cutout(cutpos, cutdepth, cutangle, cuttilt, cutfill);
 	}
 }
 
 scale(s)
-	finger(length, width, depth, chfdepth, chfangle, length-tcpoffset+cutpos, cutdepth, cutangle, cuttilt);
+	finger(length, width, depth, chfdepth, chfangle, length-tcpoffset+cutpos, cutdepth, cutangle, cuttilt, cutfill);

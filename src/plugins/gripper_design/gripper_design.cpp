@@ -185,6 +185,7 @@ gripperz::parametrization::Parametrization::Ptr gripper_design::makeParametrizat
         {"cutangle", 90},
         {"cutangle2", 90},
         {"cuttilt", 0},
+        {"cutfill", 0},
         {"tcpoffset", 0.025},
         {"jawdist", 0},
         {"stroke", 0.05},
