@@ -5,10 +5,10 @@ width = 0.025;
 depth = 0.020;
 chfdepth = 0;
 chfangle = 45;
-tcpoffset = 0.075;
+tcpoffset = 0.025;
 cutpos = 0.0;
 cutdepth = 0.01;
-cutangle = 50;
+cutangle = 90;
 cuttilt = 0;
 
 /* Produces basic box finger */

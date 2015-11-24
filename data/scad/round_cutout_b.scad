@@ -1,3 +1,8 @@
+/* A box finger with round cutout
+ * The round cutout is parametrized by the diameter
+ * equal to 'cutwidth' and the depth ('cutdepth')
+ */
+
 s = 1;
 
 length = 0.1;
@@ -9,6 +14,7 @@ tcpoffset = 0.025;
 cutpos = 0.0;
 cutdepth = 0.01;
 cutangle = 90;
+cutwidth = 0.0325;
 cuttilt = 0;
 
 /* Produces basic box finger */
@@ -37,31 +43,30 @@ module chamfering(length, start_depth, angle) {
  * cutangle -- the angle of the cutout
  * cuttilt -- the tilt of the cutout
  */
-module cutout(cutpos, cutdepth, cutangle, cuttilt) {
+module cutout(cutpos, cutdepth, cutwidth, cuttilt) {
 	size = 1000;
 
 	s_x = tan(cutangle /2);
 
-	translate([cutpos, 0, 0])
+	translate([cutpos, 0, -cutwidth/2+cutdepth])
 		rotate([0, 0, cuttilt])
 			rotate([90, 0, 0])
 				translate([0, 0, 0])
-					scale([s_x, 1, 1])
-						cylinder(h = size, r = cutdepth, center = true, $fn = 100);
+					cylinder(h = size, r = cutwidth/2, center = true, $fn = 100);
 }
 
 /* Produces the finger geometry.
  * Parameters...
  */
-module finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutangle, cuttilt) {
+module finger(length, width, depth, chfdepth, chfangle, cutpos, cutdepth, cutwidth, cuttilt) {
 	difference() {
 		difference() {
 			basicShape(length, width, depth);
 			chamfering(length, width - width * chfdepth, chfangle);
 		}
-		cutout(cutpos, cutdepth, cutangle, cuttilt);
+		cutout(cutpos, cutdepth, cutwidth, cuttilt);
 	}
 }
 
 scale(s)
-	finger(length, width, depth, chfdepth, chfangle, length-tcpoffset+cutpos, cutdepth, cutangle, cuttilt);
+	finger(length, width, depth, chfdepth, chfangle, length-tcpoffset+cutpos, cutdepth, cutwidth, cuttilt);
