@@ -531,7 +531,7 @@ void alignment_experiment::postSimulation() {
 void alignment_experiment::calculateAlignmentIndex() {
     Log::log().setLevel(Log::Debug);
 
-    QualityIndexCalculator::Ptr calculator = new AlignmentIndexCalculator(_ui.filteringLineEdit->text().toDouble());
+    QualityIndexCalculator::Ptr calculator = new AlignmentIndexCalculator(_ui.positionFilteringLineEdit->text().toDouble(), _ui.angleFilteringLineEdit->text().toDouble());
     double alignment_index = calculator->calculate(NULL, _grasps);
     Log::log().flushAll();
     Log::log().setLevel(Log::Info);

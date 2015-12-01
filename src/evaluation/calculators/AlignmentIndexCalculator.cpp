@@ -22,8 +22,9 @@ using namespace gripperz::models;
 using namespace gripperz::evaluation;
 using namespace gripperz::evaluation::calculators;
 
-AlignmentIndexCalculator::AlignmentIndexCalculator(double filteringRadius) :
-_filteringRadius(filteringRadius) {
+AlignmentIndexCalculator::AlignmentIndexCalculator(double positionFilteringRadius, double angleFilteringRadius) :
+_positionFilteringRadius(positionFilteringRadius),
+_angleFilteringRadius(angleFilteringRadius) {
 
 }
 
@@ -122,7 +123,7 @@ vector<Vector3D<> > filterPoints(const vector<Vector3D<> >& points, double radiu
     return filtered;
 }
 
-double getAxisAlignment(const Vector3D<>& axis, const vector<Transform3D<> > transforms, double radius) {
+double getAxisAlignment(const Vector3D<>& axis, const vector<Transform3D<> >& transforms, double radius) {
     vector<Vector3D<> > versors = getVersors(axis, transforms);
     if (versors.size() == 0) return 0.0;
 
@@ -131,6 +132,21 @@ double getAxisAlignment(const Vector3D<>& axis, const vector<Transform3D<> > tra
     double axis_alignment = 1.0 - 1.0 * filtered_versors.size() / versors.size();
 
     return axis_alignment;
+}
+
+double getPositionAlignment(const vector<Transform3D<> >& transforms, double radius) {
+    vector<Vector3D<> > points;
+    BOOST_FOREACH (const Transform3D<>& t, transforms) {
+        points.push_back(t.P());
+    }
+    
+    if (points.size() == 0) return 0.0;
+
+    vector<Vector3D<> > filtered_points = filterPoints(points, radius);
+
+    double position_alignment = 1.0 - 1.0 * filtered_points.size() / points.size();
+
+    return position_alignment;
 }
 
 QualityIndexValue AlignmentIndexCalculator::calculate(models::Gripper::Ptr gripper, grasps::Grasps grasps) {
@@ -149,19 +165,22 @@ QualityIndexValue AlignmentIndexCalculator::calculate(models::Gripper::Ptr gripp
             ts_after.push_back(poseAfter);
         }
     }
-
+    
+    DEBUG << "Calculating position alignment..." << endl;
+    double p_alignment = getPositionAlignment(ts_after, _positionFilteringRadius);
     DEBUG << "Calculating X alignment..." << endl;
-    double x_alignment = getAxisAlignment(Vector3D<>::x(), ts_after, _filteringRadius);
+    double x_alignment = getAxisAlignment(Vector3D<>::x(), ts_after, _angleFilteringRadius);
     DEBUG << "Calculating Y alignment..." << endl;
-    double y_alignment = getAxisAlignment(Vector3D<>::y(), ts_after, _filteringRadius);
+    double y_alignment = getAxisAlignment(Vector3D<>::y(), ts_after, _angleFilteringRadius);
     DEBUG << "Calculating Z alignment..." << endl;
-    double z_alignment = getAxisAlignment(Vector3D<>::z(), ts_after, _filteringRadius);
+    double z_alignment = getAxisAlignment(Vector3D<>::z(), ts_after, _angleFilteringRadius);
 
+    DEBUG << "* P alignment = " << p_alignment << endl;
     DEBUG << "* x alignment = " << x_alignment << endl;
     DEBUG << "* y alignment = " << y_alignment << endl;
     DEBUG << "* z alignment = " << z_alignment << endl;
 
-    double alignment = (x_alignment + y_alignment + z_alignment) / 3.0;
+    double alignment = (p_alignment + x_alignment + y_alignment + z_alignment) / 4.0;
 
     DEBUG << "* total alignment = " << alignment << endl;
 

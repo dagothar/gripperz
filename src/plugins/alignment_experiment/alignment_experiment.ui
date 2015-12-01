@@ -576,21 +576,21 @@
               <string>QI</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_11">
-              <item row="1" column="2">
-               <widget class="QLineEdit" name="filteringLineEdit">
+              <item row="2" column="2">
+               <widget class="QLineEdit" name="angleFilteringLineEdit">
                 <property name="text">
-                 <string>0.01</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>A. filtering</string>
+                 <string>0.001</string>
                 </property>
                </widget>
               </item>
               <item row="2" column="0">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>A. angle filtering</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
                <widget class="QPushButton" name="saveVersorsButton">
                 <property name="text">
                  <string>Save versors</string>
@@ -604,10 +604,24 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="2">
+              <item row="3" column="2">
                <widget class="QPushButton" name="saveRPYButton">
                 <property name="text">
                  <string>Save RPY</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_26">
+                <property name="text">
+                 <string>A. pos. filtering</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLineEdit" name="positionFilteringLineEdit">
+                <property name="text">
+                 <string>0.0001</string>
                 </property>
                </widget>
               </item>
