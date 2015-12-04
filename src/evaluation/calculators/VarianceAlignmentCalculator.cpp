@@ -53,31 +53,31 @@ QualityIndexValue VarianceAlignmentCalculator::calculate(Gripper::Ptr gripper, G
         }
     }
     
-    double xs_var = Statistics<double>::meanAndVariance(xs).second;
-    double ys_var = Statistics<double>::meanAndVariance(ys).second;
-    double zs_var = Statistics<double>::meanAndVariance(zs).second;
-    double rolls_var = Statistics<double>::meanAndVariance(rolls).second;
-    double pitches_var = Statistics<double>::meanAndVariance(pitches).second;
-    double yaws_var = Statistics<double>::meanAndVariance(yaws).second;
+    double xs_dev = sqrt(Statistics<double>::meanAndVariance(xs).second);
+    double ys_dev = sqrt(Statistics<double>::meanAndVariance(ys).second);
+    double zs_dev = sqrt(Statistics<double>::meanAndVariance(zs).second);
+    double rolls_dev = sqrt(Statistics<double>::meanAndVariance(rolls).second);
+    double pitches_dev = sqrt(Statistics<double>::meanAndVariance(pitches).second);
+    double yaws_dev = sqrt(Statistics<double>::meanAndVariance(yaws).second);
     
-    DEBUG << "Calculating variances..." << endl;
-    DEBUG << " * X variance = " << xs_var << endl;
-    DEBUG << " * Y variance = " << ys_var << endl;
-    DEBUG << " * Z variance = " << zs_var << endl;
-    DEBUG << " * ROLL variance = " << rolls_var << endl;
-    DEBUG << " * PITCH variance = " << pitches_var << endl;
-    DEBUG << " * YAW variance = " << yaws_var << endl;
+    DEBUG << "Calculating std devs..." << endl;
+    DEBUG << " * X stddev = " << xs_dev << endl;
+    DEBUG << " * Y stddev = " << ys_dev << endl;
+    DEBUG << " * Z stddev = " << zs_dev << endl;
+    DEBUG << " * ROLL stddev = " << rolls_dev * Rad2Deg << endl;
+    DEBUG << " * PITCH stddev = " << pitches_dev * Rad2Deg << endl;
+    DEBUG << " * YAW stddev = " << yaws_dev  * Rad2Deg<< endl;
     
-    double pos_var = (xs_var + ys_var + zs_var) / 3.0;
-    double angle_var = (rolls_var + pitches_var + yaws_var) / 3.0;
+    double pos_dev = (xs_dev + ys_dev + zs_dev) / 3.0;
+    double angle_dev = (rolls_dev + pitches_dev + yaws_dev) / 3.0;
     
-    DEBUG << "Calculating average variances..." << endl;
-    DEBUG << " * average POSITION variance = " << pos_var << endl;
-    DEBUG << " * average ANGLE variance = " << angle_var << endl;
+    DEBUG << "Calculating average stddevs..." << endl;
+    DEBUG << " * average POSITION stddev = " << pos_dev << endl;
+    DEBUG << " * average ANGLE stddev = " << angle_dev * Rad2Deg << endl;
     
-    double pos_alignment = 1.0 - pos_var / _positionUncertainty;
+    double pos_alignment = 1.0 - pos_dev / _positionUncertainty;
     if (pos_alignment < 0.0) pos_alignment = 0.0;
-    double angle_alignment = 1.0 - angle_var / _angleUncertainty;
+    double angle_alignment = 1.0 - angle_dev / _angleUncertainty;
     if (angle_alignment < 0.0) angle_alignment = 0.0;
     
     DEBUG << "Calculating alignment..." << endl;

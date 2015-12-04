@@ -21,6 +21,7 @@
 #include "grasps/filters/GraspGridFilter.hpp"
 #include "grasps/filters/SortingFilter.hpp"
 #include "GraspTargetCompare.hpp"
+#include "evaluation/calculators/VarianceAlignmentCalculator.hpp"
 
 const int HISTORY_LIMIT = 10;
 const int SHOW_TASKS_DELAY = 10000;
@@ -531,7 +532,8 @@ void alignment_experiment::postSimulation() {
 void alignment_experiment::calculateAlignmentIndex() {
     Log::log().setLevel(Log::Debug);
 
-    QualityIndexCalculator::Ptr calculator = new AlignmentIndexCalculator(_ui.positionFilteringLineEdit->text().toDouble(), _ui.angleFilteringLineEdit->text().toDouble());
+    QualityIndexCalculator::Ptr calculator = new VarianceAlignmentCalculator(_ui.positionFilteringLineEdit->text().toDouble(), Deg2Rad*_ui.angleFilteringLineEdit->text().toDouble());
+            //new AlignmentIndexCalculator(_ui.positionFilteringLineEdit->text().toDouble(), _ui.angleFilteringLineEdit->text().toDouble());
     double alignment_index = calculator->calculate(NULL, _grasps);
     Log::log().flushAll();
     Log::log().setLevel(Log::Info);
