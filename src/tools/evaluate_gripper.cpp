@@ -28,6 +28,8 @@
 #include <grasps/decorators.hpp>
 #include <grasps/planners/BasicParallelGripperGraspPlanner.hpp>
 
+#include "evaluation/calculators/VarianceAlignmentCalculator.hpp"
+
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
 
@@ -227,7 +229,7 @@ GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
             QualityIndexCalculator::Ptr calc = ownedPtr(new CoverageIndexCalculator(config.covPosFilteringRadius, config.covAngleFilteringRadius));
             evaluator->addQualityIndexCalculator(idx, calc);
         } else if (idx == "alignment") {
-            QualityIndexCalculator::Ptr calc = ownedPtr(new AlignmentIndexCalculator(config.aliPositionFilteringRadius, config.aliAngleFilteringRadius));
+            QualityIndexCalculator::Ptr calc = ownedPtr(new VarianceAlignmentCalculator(config.aliPositionFilteringRadius, config.aliAngleFilteringRadius * Deg2Rad));
             evaluator->addQualityIndexCalculator(idx, calc);
         } else if (idx == "stress") {
             QualityIndexCalculator::Ptr calc = ownedPtr(new StressIndexCalculator(config.stressLimit));
