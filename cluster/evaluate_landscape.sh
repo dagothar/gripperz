@@ -10,4 +10,4 @@ ulimit -s 80000
 
 # Do things
 echo "evaluate_gripper --dwc ${DWC} --td ${TD} --gripper ${GRIPPER} --result ${RESULT} --grasps ${GRASPS} --save_grasps ${SAVE} -n ${NGRASPS} -t ${THREADS} -p ${PARAM} -v '${VALUE}' --seed ${SEED} -f ${FILTERS}"
-evaluate_gripper --dwc ${DWC} --td ${TD} --gripper ${GRIPPER} --result ${RESULT} --grasps ${GRASPS} --save_grasps ${SAVE} -n ${NGRASPS} -t ${THREADS} -p ${PARAM} -v "${VALUE}" --seed ${SEED} -f ${FILTERS} --aliP 0.003 --aliR 5
+evaluate_gripper --dwc ${DWC} --td ${TD} --gripper ${GRIPPER} --result ${RESULT} --grasps ${GRASPS} --save_grasps ${SAVE} -n ${NGRASPS} -t ${THREADS} -p ${PARAM} -v "${VALUE}" --seed ${SEED} -f ${FILTERS} --aliP 0.003 --aliA 5
