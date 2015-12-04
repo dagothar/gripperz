@@ -12,7 +12,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 
-CMD = 'qsub /home/awolniakowski/scripts/evaluate_landscape.sh -V -v DIRECTORY={dir},DWC={dwc},TD={td},GRIPPER={gripper},GRASPS={grasps},SAVE={save},PARAM={param},VALUE={value},THREADS={threads},NGRASPS={ngrasps},RESULT={result},SEED={seed},FILTERS={filters}'
+CMD = 'qsub /home/awolniakowski/gripperz/cluster/evaluate_landscape.sh -V -v DIRECTORY={dir},DWC={dwc},TD={td},GRIPPER={gripper},GRASPS={grasps},SAVE={save},PARAM={param},VALUE={value},THREADS={threads},NGRASPS={ngrasps},RESULT={result},SEED={seed},FILTERS={filters}'
 
 
 def signal_handler(signal, frame):
