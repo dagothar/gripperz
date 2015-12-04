@@ -8,5 +8,6 @@ SET(SRC_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/StressIndexCalculator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/RobustnessIndexCalculator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/SignificanceIndexCalculator.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/VarianceAlignmentCalculator.cpp
 	CACHE INTERNAL ""
 )
