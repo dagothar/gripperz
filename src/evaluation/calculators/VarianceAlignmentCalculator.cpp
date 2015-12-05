@@ -31,8 +31,11 @@ VarianceAlignmentCalculator::~VarianceAlignmentCalculator() {
 QualityIndexValue VarianceAlignmentCalculator::calculate(Gripper::Ptr gripper, Grasps grasps) {
     vector<double> xs, ys, zs, rolls, pitches, yaws;
     
+    if (grasps->getAllTargets().size() == 0) {
+        return 0.0;
+    }
+    
     typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
-
     BOOST_FOREACH(TaskTarget t, grasps->getAllTargets()) {
 
         // we take grasps with either success or interference
