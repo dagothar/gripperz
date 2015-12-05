@@ -75,9 +75,15 @@ QualityIndexValue VarianceAlignmentCalculator::calculate(Gripper::Ptr gripper, G
     DEBUG << " * average POSITION stddev = " << pos_dev << endl;
     DEBUG << " * average ANGLE stddev = " << angle_dev * Rad2Deg << endl;
     
-    double pos_alignment = 1.0 - pos_dev / _positionUncertainty;
+    double pos_dev_expected = 2.0 * _positionUncertainty / sqrt(12.0);
+    double angle_dev_expected = 2.0 * _angleUncertainty / sqrt(12.0);
+    
+    DEBUG << " * expected POSITION stddev = " << pos_dev_expected << endl;
+    DEBUG << " * expected ANGLE stddev = " << angle_dev_expected * Rad2Deg << endl;
+    
+    double pos_alignment = 1.0 - pos_dev / pos_dev_expected;
     if (pos_alignment < 0.0) pos_alignment = 0.0;
-    double angle_alignment = 1.0 - angle_dev / _angleUncertainty;
+    double angle_alignment = 1.0 - angle_dev / angle_dev_expected;
     if (angle_alignment < 0.0) angle_alignment = 0.0;
     
     DEBUG << "Calculating alignment..." << endl;
