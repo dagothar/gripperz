@@ -12,7 +12,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 
-CMD = 'qsub /home/awolniakowski/gripperz/cluster/evaluate_landscape.sh -V -v DIRECTORY={dir},DWC={dwc},TD={td},GRIPPER={gripper},GRASPS={grasps},SAVE={save},PARAM={param},VALUE={value},THREADS={threads},NGRASPS={ngrasps},RESULT={result},SEED={seed},FILTERS={filters}'
+CMD = 'qsub /home/awolniakowski/gripperz/cluster/evaluate_landscape.sh -V -v DIRECTORY={dir},DWC={dwc},TD={td},GRIPPER={gripper},GRASPS={grasps},SAVE={save},PARAM={param},VALUE={value},THREADS={threads},NGRASPS={ngrasps},RESULT={result},SEED={seed},FILTERS={filters},ALIP={alip},ALIA={alia}'
 
 
 def signal_handler(signal, frame):
@@ -38,7 +38,8 @@ def main():
 	parser.add_argument("--ngrasps", "-n", metavar='NGRASPS', default=100, help="# of grasps per evaluation")
 	parser.add_argument("--threads", "-t", metavar='THREADS', default=4, help="# of threads to use")
 	parser.add_argument("--bounds", "-b", metavar='BOUNDS', nargs=2, required=True, help="parameter bounds")
-	#parser.add_argument("--alir", metavar='ALIR', default=0.01, help="alignment filtering radius")
+	parser.add_argument("--aliP", metavar='ALIP', default=0.003, help="alignment position uncertainty")
+	parser.add_argument("--aliA", metavar='ALIA', default=5, help="alignment angle uncertainty")
 	parser.set_defaults(save_grasps=False)
 	args = parser.parse_args()
 	
@@ -52,7 +53,8 @@ def main():
 	NGRASPS = int(args.ngrasps)
 	THREADS = int(args.threads)
 	BOUNDS = [float(b) for b in args.bounds]
-	#ALIR = float(args.alir)
+	ALIP = float(args.aliP)
+	ALIA = float(args.aliA)
 	#SAVE = args.save_grasps
 	FILTERS = args.filters
 	
@@ -75,7 +77,8 @@ def main():
 			save = tasks,
 			ngrasps = NGRASPS,
 			result = result,
-			#alir = ALIR,
+			alip = ALIP,
+			alia = ALIA,
 			seed = i,
 			filters = FILTERS
 		)
