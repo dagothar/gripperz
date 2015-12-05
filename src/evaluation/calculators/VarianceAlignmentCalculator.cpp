@@ -31,10 +31,7 @@ VarianceAlignmentCalculator::~VarianceAlignmentCalculator() {
 QualityIndexValue VarianceAlignmentCalculator::calculate(Gripper::Ptr gripper, Grasps grasps) {
     vector<double> xs, ys, zs, rolls, pitches, yaws;
     
-    if (grasps->getAllTargets().size() == 0) {
-        return 0.0;
-    }
-    
+    unsigned n = 0;
     typedef pair<class GraspSubTask*, class GraspTarget*> TaskTarget;
     BOOST_FOREACH(TaskTarget t, grasps->getAllTargets()) {
 
@@ -53,7 +50,13 @@ QualityIndexValue VarianceAlignmentCalculator::calculate(Gripper::Ptr gripper, G
             rolls.push_back(r[0]);
             pitches.push_back(r[1]);
             yaws.push_back(r[2]);
+            
+            ++n;
         }
+    }
+    
+    if (n == 0) {
+        return 0.0;
     }
     
     double xs_dev = sqrt(Statistics<double>::meanAndVariance(xs).second);
