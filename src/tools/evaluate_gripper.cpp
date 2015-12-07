@@ -124,7 +124,7 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("covA", value<double>(&conf.covAngleFilteringRadius)->default_value(15), "angle filtering radius for coverage")
             ("aliP", value<double>(&conf.aliPositionFilteringRadius)->default_value(0.0001), "position filtering radius for alignment")
             ("aliA", value<double>(&conf.aliAngleFilteringRadius)->default_value(0.001), "angle filtering radius for alignment")
-            ("maxS", value<double>(&conf.stressLimit)->default_value(10), "stress limit")
+            ("maxS", value<double>(&conf.stressLimit)->default_value(25), "stress limit")
             ("maxV", value<double>(&conf.volumeLimit)->default_value(200), "volume limit")
             ("parameters,p", value<string>(&parameters), "parameters to modify")
             ("values,v", value<string>(&values), "parameter values")

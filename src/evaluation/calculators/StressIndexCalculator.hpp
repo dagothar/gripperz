@@ -27,7 +27,7 @@ namespace gripperz {
                  * Constructor.
                  * @param stressLimit [in] max. stress (in MPa)
                  */
-                StressIndexCalculator(double stressLimit = 10);
+                StressIndexCalculator(double stressLimit = 25);
 
                 virtual ~StressIndexCalculator();
 
