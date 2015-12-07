@@ -43,6 +43,7 @@
 
 #include "models/PrototypeGripperBuilder.hpp"
 #include "parametrization/VectorParametrizationTranslator.hpp"
+#include "evaluation/calculators/VarianceAlignmentCalculator.hpp"
 
 #define DEBUG rw::common::Log::debugLog()
 #define INFO rw::common::Log::infoLog()
@@ -97,7 +98,8 @@ struct Configuration {
 
     double covPosFilteringRadius;
     double covAngleFilteringRadius;
-    double aliFilteringRadius;
+    double aliPositionFilteringRadius;
+    double aliAngleFilteringRadius;
     double stressLimit;
     double volumeLimit;
     double sigma_p;
@@ -145,7 +147,8 @@ bool parse_cli(int argc, char* argv[], Configuration& conf) {
             ("method,m", value<string>(&conf.method)->default_value("product"), "method for combining objectives (sum, product, log)")
             ("covP", value<double>(&conf.covPosFilteringRadius)->default_value(0.001), "pos. filtering radius for coverage")
             ("covA", value<double>(&conf.covAngleFilteringRadius)->default_value(15), "angle filtering radius for coverage")
-            ("aliR", value<double>(&conf.aliFilteringRadius)->default_value(0.01), "filtering radius for alignment")
+            ("aliP", value<double>(&conf.aliPositionFilteringRadius)->default_value(0.003), "position uncertainty for alignment")
+            ("aliA", value<double>(&conf.aliAngleFilteringRadius)->default_value(5), "angle uncertainty for alignment")
             ("maxS", value<double>(&conf.stressLimit)->default_value(10), "stress limit")
             ("maxV", value<double>(&conf.volumeLimit)->default_value(200), "volume limit")
             ("parameters,p", value<string>(&parameters), "parameters to optimize")
@@ -263,7 +266,8 @@ GripperEvaluator::Ptr make_evaluator(const Configuration& config) {
             QualityIndexCalculator::Ptr calc = ownedPtr(new CoverageIndexCalculator(config.covPosFilteringRadius, config.covAngleFilteringRadius));
             evaluator->addQualityIndexCalculator(idx, calc);
         } else if (idx == "alignment") {
-            QualityIndexCalculator::Ptr calc = ownedPtr(new AlignmentIndexCalculator(config.aliFilteringRadius));
+            //QualityIndexCalculator::Ptr calc = ownedPtr(new AlignmentIndexCalculator(config.aliFilteringRadius));
+            QualityIndexCalculator::Ptr calc = ownedPtr(new VarianceAlignmentCalculator(config.aliPositionFilteringRadius, Deg2Rad * config.aliAngleFilteringRadius));
             evaluator->addQualityIndexCalculator(idx, calc);
         } else if (idx == "stress") {
             QualityIndexCalculator::Ptr calc = ownedPtr(new StressIndexCalculator(config.stressLimit));
